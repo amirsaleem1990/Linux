@@ -1,0 +1,24 @@
+open text editor, copy paste these lines, then save tha file with extention <.desktop>
+
+# tamplate
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=Link to 
+Type=Link
+URL= your link
+Icon=text-html
+Name[en_US]= name_the_icon
+
+
+
+
+
+# example:
+[Desktop Entry]
+Encoding=UTF-8
+Name=Link to 
+Type=Link
+URL=https://www.udacity.com/course/sql-for-data-analysis--ud198
+Icon=text-html
+Name[en_US]=course link
