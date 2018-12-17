@@ -103,7 +103,8 @@ pm-hibernate
 echo 'pm-suspend' | at now + 30 minutes
 # or echo 'systemctl suspend' | at now + 30 minutes
 ---------------------------------
-
+## pichly folder ki files list
+lst ..
 ---------------------------------
 
 ---------------------------------
