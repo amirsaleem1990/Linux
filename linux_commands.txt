@@ -1,4 +1,4 @@
-# list all files, size mesure = MB
+#  list all files, size mesure = MB
 ls -l --block-size=M
 ---------------------------------
 # remove not empty folder
@@ -78,6 +78,8 @@ xclip -selection clipboard -t image/png -o > file.png
 # this command is vary big, hence hard to type any time, so we can create an alias of this command,
 alias si="xclip -selection clipboard -t image/png -o >"
 # now we type like thi: si image_15
+
+
 # save this alias from perminent use:
 # open terminal and type:
 subl ~/.bashrc
@@ -106,7 +108,8 @@ echo 'pm-suspend' | at now + 30 minutes
 ## pichly folder ki files list
 lst ..
 ---------------------------------
-
+# foxit alias
+alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 ---------------------------------
 
 ---------------------------------
