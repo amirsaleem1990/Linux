@@ -111,9 +111,12 @@ lst ..
 # foxit alias
 alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 ---------------------------------
-
+# close terminal shortcut
+CTLR+D
 ---------------------------------
-
+# zip folder 
+# zip folder <Sentiment140> to file <Sentiment140.zip>
+zip -r Sentiment140.zip Sentiment140/
 ---------------------------------
 
 ---------------------------------
