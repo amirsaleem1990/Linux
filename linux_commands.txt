@@ -118,7 +118,8 @@ CTLR+D
 # zip folder <Sentiment140> to file <Sentiment140.zip>
 zip -r Sentiment140.zip Sentiment140/
 ---------------------------------
-
+# get file size
+du -sh file or folder name
 ---------------------------------
 
 ---------------------------------
