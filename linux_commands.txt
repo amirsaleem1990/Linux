@@ -105,8 +105,11 @@ pm-hibernate
 echo 'pm-suspend' | at now + 30 minutes
 # or echo 'systemctl suspend' | at now + 30 minutes
 ---------------------------------
-## pichly folder ki files list
-lst ..
+# pichly folder ki files list
+ls ..
+---------------------------------
+# agly folder ki list
+ls folder_name_in_current_directory
 ---------------------------------
 # foxit alias
 alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
