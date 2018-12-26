@@ -128,7 +128,8 @@ du -sh file or folder name
 #if you remove file or folder using terminal the removed file deleted perminantily, if we do mistake we can't restore our file, so we need alias, this alias move the file to particuler file, and if i remove file by mistake i can go to this particuler folder and recover from here.
 alias rm='mv -t /home/home/Desktop/Trash/'
 ---------------------------------
-
+# for count videos duration in particuler foler
+for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n" && echo " $f"; done
 ---------------------------------
 
 ---------------------------------
