@@ -134,7 +134,8 @@ for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s
 # Also we can use the following command to add alias without opening the ~/.bash_aliases file
 echo "alias vps='ssh user@ip_address_of_the_remote_server'" >> ~/.bash_aliases && source ~/.bashrc
 ---------------------------------
-
+# suspend
+systemctl suspend
 ---------------------------------
 
 ---------------------------------
