@@ -137,8 +137,10 @@ echo "alias vps='ssh user@ip_address_of_the_remote_server'" >> ~/.bash_aliases &
 # suspend
 systemctl suspend
 ---------------------------------
-
+# read first n lines from file
+head -5 R.r
 ---------------------------------
-
+# read all file in terminal
+cat file_name
 ---------------------------------
 
