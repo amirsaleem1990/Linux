@@ -32,6 +32,9 @@ NOTE: If you deleted the file by pressing Shift+Delete , or by using the command
 ---------------------------------
 # unzip / extract zip file
 unzip file.zip
+--------------------------------
+# unzip tar.gz file
+tar xvzf file.tar.gz
 ---------------------------------
 # unzip / extract bz2 file
 # unzip and remove bz2 file
@@ -152,5 +155,6 @@ alias si='xclip -selection clipboard -t image/png -o >'
 alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 alias rm='mv -t /home/home/Desktop/Trash/'
 alias cc="gcc p1.c -o p1 && ./p1"
+alias jp="jupyter-notebook"
 
 #Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
