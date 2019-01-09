@@ -1,3 +1,10 @@
+# multitasking in one shell.
+# eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of:
+jpyter-lab
+#  type 
+jupyter-lab &
+# now you can use that terminal for other command too.
+---------------------------------
 #  list all files, size mesure = MB
 ls -l --block-size=M
 ---------------------------------
@@ -16,6 +23,32 @@ Go to /sys/class/net you can see list of folders here.
 find wireless interface. It has wireless folder. for example in my case is wlp10 you can check it using ls wlp10. if the folder's name different use that folder's name.
 sudo iwlist wlp1s0 scan | grep ESSID
 ---------------------------------
+#####################
+Wildcards *
+#####################
+a*.txt
+# matches all file names that start with a lowercase letter a and end with .txt.
+---------------------------------
+# If you want files that start with an uppercase A or a lowercase a and end with .txt, use the expression
+[Aa]*.txt
+# This expression would match the following files:
+--------------------------------
+# You can use the star more than once — for example, with the expression a*v*.txt. This expression would match only one file in the example list of files:
+# among file: [a.txt, a_very_long_name.txt, A_FILE_NAME_WITH_UPPERCASE_LETTERS.txt]
+a_very_long_name.txt
+--------------------------------
+ls /usr/lib/l*z*.a
+# list of all files in path /user/lib/ that starts with <l> and contain <z> and fileExtention <.a>
+--------------------------------
+ls /usr/lib/l*[AFLz]*.a
+# list of all files in path /user/lib their names starts with <l>, and contains at least one of the <A, F, L, z] and ending with <.a>
+--------------------------------
+--------------------------------
+--------------------------------
+
+
+
+--------------------------------
 count all files with .py extention in current folder
 ls *.py | wc
 ---------------------------------
