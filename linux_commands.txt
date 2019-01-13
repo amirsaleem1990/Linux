@@ -189,11 +189,16 @@ alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 alias rm='mv -t /home/home/Desktop/Trash/'
 alias cc="gcc p1.c -o p1 && ./p1"
 alias jp="jupyter-notebook"
-alias copy="xclip -sel cli <"
+alias copyfrom="xclip -sel cli <"
+alias copyto="xsel -b >"
 
 #Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
 ----------------------------
 # copy file contant to clipboard
 xclip -sel cli < file_name
 NOTE: if you use (>) rather then (<) then all file contant will be removed. so give this command your attention.
+----------------------------
+# copy file contact to file.
+xsel -b > some.txt
+----------------------------
 
