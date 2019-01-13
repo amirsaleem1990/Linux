@@ -201,4 +201,6 @@ NOTE: if you use (>) rather then (<) then all file contant will be removed. so g
 # copy file contact to file.
 xsel -b > some.txt
 ----------------------------
-
+# add lines to end of file
+echo 'VNCSERVERS="1:root"' >> filename
+----------------------------
