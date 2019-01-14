@@ -95,6 +95,12 @@ alias p="ipython"
 # ab jab bhi terminal par <p> likh kar enter karun ga
 # to ipython khul jay ga
 ---------------------------------
+To see all the aliases defined in the environment:
+alias
+---------------------------------
+To remove an alias, the unalias command is used, like so:
+unalias alias_name
+---------------------------------
 # nautilus bookmark editing
 # first: open the file
 gio open .config/gtk-3.0/bookmarks
@@ -198,9 +204,61 @@ alias copyto="xsel -b >"
 xclip -sel cli < file_name
 NOTE: if you use (>) rather then (<) then all file contant will be removed. so give this command your attention.
 ----------------------------
-# copy file contact to file.
+# create a new file with cantant in clipboard.
 xsel -b > some.txt
 ----------------------------
 # add lines to end of file
 echo 'VNCSERVERS="1:root"' >> filename
+
+# Possibility2:
+echo "blablabla
+blablabla
+blablabla >> filename
 ----------------------------
+
+# cp file from another direcotry to currect directory
+eg:
+cp /blabla/blabla/bla.txt . # this <.> mean current directroy
+------------------------
+
+# ls for current and subdirectories
+ls *
+-------------------------
+combine two commands whith && or ;
+let us say you need to creat a derctory <folder> and then go into that directory, usually we solve this problam by two commands in two lines, we can write these two commands in one line saparated by <&&>:
+
+so:
+
+mkdir folder
+cd folder/ 
+ 
+same as:
+mkdir folder && cd folder/
+
+and same as:
+mkdir folder ; cd folder/
+--------------------------
+> frmoe everything in file and add current input
+eg:
+ls > a.txt
+yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
+
+>> append k lye use hota h.
+eg:
+ls >> b.txt
+yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay ga, or agar nahi exist karti ho gi to new file ban jay gi jis me <ls> ka result save ho jay ga.
+--------------------------
+create empty file:
+> a.txt
+> b.py
+--------------------------
+murgin +1 files:
+cat file_1.txt, file_2.txt... file_n.txt > new_file.txt
+
+now new_file.txt contain contant of all n files.
+--------------------------
+for creating a small text file, we should use cat.
+let us see we need to store one line text in file. usually we done this job by oppining the text editor, typing our line and save the file, we can do the same via cat. so:
+cat > file.txt
+# now want to type what we want to store, after typing we press CTRL+D. now we have file named file.txt contain text that we typed between <cat > file.txt> and <CTRL+D)
+--------------------------
