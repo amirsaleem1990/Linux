@@ -262,3 +262,7 @@ let us see we need to store one line text in file. usually we done this job by o
 cat > file.txt
 # now want to type what we want to store, after typing we press CTRL+D. now we have file named file.txt contain text that we typed between <cat > file.txt> and <CTRL+D)
 --------------------------
+
+# cout file lines:
+wc -l filename
+---------------------------
