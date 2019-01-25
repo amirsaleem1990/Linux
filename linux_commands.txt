@@ -266,3 +266,7 @@ cat > file.txt
 # cout file lines:
 wc -l filename
 ---------------------------
+
+# go to folder in home directory
+cd ~/Desktop/ 
+# it is equal to cd /home/amir/Desktop/ 
