@@ -162,6 +162,10 @@ CTLR+D
 # zip folder 
 # zip folder <Sentiment140> to file <Sentiment140.zip>
 zip -r Sentiment140.zip Sentiment140/
+
+
+# zip files
+zip imtiaz-list.zip imtiaz-list.*
 ---------------------------------
 # get file size
 du -sh file or folder name
