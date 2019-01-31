@@ -1,0 +1,2 @@
+https://askubuntu.com/questions/461825/how-to-connect-to-wifi-from-the-command-line
+nmcli -a c up amirsaleem199
