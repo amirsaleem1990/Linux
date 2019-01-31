@@ -278,3 +278,6 @@ cd ~/Desktop/
 # google search query from command line
 firefox google.com/search?q="query you want
 ---------------------------
+
+# only lines that contains specific text
+cat file_name.txt | grep text_you_want_to_search
