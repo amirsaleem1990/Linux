@@ -281,3 +281,7 @@ firefox google.com/search?q="query you want
 
 # only lines that contains specific text
 cat file_name.txt | grep text_you_want_to_search
+
+# only files that contain (statistics) in these names
+du -sh *statistics*
+
