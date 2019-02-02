@@ -61,6 +61,9 @@ find . | wc
 # count all files with .py extention in current folder and his childrens subfolders
 find . -name "*.py" | wc
 ---------------------------------
+# list all files with *.py in current folder and his chidrens subfolders.
+find . -name "*.py"
+---------------------------------
 NOTE: If you deleted the file by pressing Shift+Delete , or by using the command line, the file has been permanently deleted. Files that have been permanently deleted can’t be recovered from the Trash.
 ---------------------------------
 # unzip / extract zip file
