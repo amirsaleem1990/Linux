@@ -288,3 +288,11 @@ cat file_name.txt | grep text_you_want_to_search
 # only files that contain (statistics) in these names
 du -sh *statistics*
 
+
+# all files and files in folders only 
+ls  */
+
+
+# only folder names not files
+ls -d */
+
