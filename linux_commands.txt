@@ -1,9 +1,0 @@
-
------------------
-# files sorted by extention, so .py first and .txt after
-ls | rev | sort | rev
-
-# second way:
-ls -lX
-
------------------
