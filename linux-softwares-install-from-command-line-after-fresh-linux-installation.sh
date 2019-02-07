@@ -29,3 +29,8 @@ sudo apt update && sudo apt install git
 sudo apt install speedtest-cli
 
 
+# dukto
+sudo apt-get install gdebi
+wget download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb
+gdebi dukto_6.0-1_amd64.deb
+
