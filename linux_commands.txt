@@ -6,18 +6,15 @@ jpyter-lab
 jupyter-lab &
 # now you can use that terminal for other command too.
 ---------------------------------
-#  list all files, size mesure = MB
-ls -l --block-size=M
+#  list all files, size mesure = MB ................... ls -l --block-size=M
 ---------------------------------
-# remove not empty folder
-rm -r folder_name/
+# remove not empty folder ................... rm -r folder_name/
 ---------------------------------
 # Move a window to a different workspace
 Super+Shift+Page Up
 Super+Shift+Page Down
 ---------------------------------
-# connected wifi details
-nmcli dev wifi
+# connected wifi details ................... nmcli dev wifi
 ---------------------------------
 # all 
 Go to /sys/class/net you can see list of folders here.
@@ -50,35 +47,25 @@ ls /usr/lib/l*[AFLz]*.a
 
 
 --------------------------------
-count all files with .py extention in current folder
-ls *.py | wc
+count all files with .py extention in current folder ................... ls *.py | wc
 ---------------------------------
-# count all files in current folder
-ls | wc
+# count all files in current folder ................... ls | wc
 ---------------------------------
-# count all files in current folder and his childrens subfolders
-find . | wc
+# count all files in current folder and his childrens subfolders ................... find . | wc
 ---------------------------------
-# count all files with .py extention in current folder and his childrens subfolders
-find . -name "*.py" | wc
+# count all files with .py extention in current folder and his childrens subfolders ................... find . -name "*.py" | wc
 ---------------------------------
-# list all files with *.py in current folder and his chidrens subfolders.
-find . -name "*.py"
+# list all files with *.py in current folder and his chidrens subfolders. ................... find . -name "*.py"
 ---------------------------------
 NOTE: If you deleted the file by pressing Shift+Delete , or by using the command line, the file has been permanently deleted. Files that have been permanently deleted can’t be recovered from the Trash.
 ---------------------------------
-# unzip / extract zip file
-unzip file.zip
+# unzip / extract zip file ................... unzip file.zip
 --------------------------------
-# unzip tar.gz file
-tar xvzf file.tar.gz
+# unzip tar.gz file ................... tar xvzf file.tar.gz
 ---------------------------------
-# unzip / extract bz2 file
-# unzip and remove bz2 file
-bzip2 -d file.bz2
+# unzip and remove bz2 file ................... bzip2 -d file.bz2
 
-If you want to extract it and keep the original, run this command:
-bzip2 -dk file.bz2
+If you want to extract bz2 file and keep the original, run this command: ................... bzip2 -dk file.bz2
 ---------------------------------
 How to search for text string on multiple files?
 find . -type f -print | sed 's/ /\\ /g' | xargs grep -i "my text string"
@@ -94,30 +81,24 @@ find . -type f -print | sed 's/ /\\ /g' | xargs grep -i "my text string"
     Help stamp out MBR partition tables. Use GPT instead!
 https://ubuntuforums.org/showthread.php?t=1722145]
 ---------------------------------
-create alias for terminal
-alias p="ipython"
+create alias for terminal ................... alias p="ipython"
 # ab jab bhi terminal par <p> likh kar enter karun ga
 # to ipython khul jay ga
 ---------------------------------
-To see all the aliases defined in the environment:
-alias
+# To see all the aliases defined in the environment: ................... alias
 ---------------------------------
-To remove an alias, the unalias command is used, like so:
-unalias alias_name
+# To remove an alias, the unalias command is used, like so: ................... unalias alias_name
 ---------------------------------
 # nautilus bookmark editing
 # first: open the file
 gio open .config/gtk-3.0/bookmarks
 # then edit this file
 ---------------------------------
-# save text[currently in clipboard] in file
-xclip -o > new_file_name.txt
+# save text[currently in clipboard] in file ................... xclip -o > new_file_name.txt
 ---------------------------------
-# Put the contents of the selection into a file.
-xclip -t text/html index.html
+# Put the contents of the selection into a file. ................... xclip -t text/html index.html
 ---------------------------------
-# save text to file
-echo "my name is amir" > file_name.txt
+# save text to file ................... echo "my name is amir" > file_name.txt
 ---------------------------------
 # save image[currently in clipboar] in file
 xclip -selection clipboard -t image/png -o > file.png
@@ -135,15 +116,12 @@ subl ~/.bashrc
 # type on your terminal: 
 source ~/.bashrc
 ---------------------------------
-# list of all files in current folder, with size and date, sorted by time, most early on top
-ls -l  -S --sort=time -r
+# list of all files in current folder, with size and date, sorted by time, most early on top ................... ls -l  -S --sort=time -r
 ---------------------------------
-# suspend
-pm-suspend
+# suspend ................... pm-suspend
 # or sudo pm-suspend
 ---------------------------------
-# hibernate
-pm-hibernate
+# hibernate ................... pm-hibernate
 # or sudo pm-hibernate
 # or systemctl hibernate
 ---------------------------------
@@ -151,53 +129,35 @@ pm-hibernate
 echo 'pm-suspend' | at now + 30 minutes
 # or echo 'systemctl suspend' | at now + 30 minutes
 ---------------------------------
-# pichly folder ki files list
-ls ..
+# pichly folder ki files list ................... ls ..
 ---------------------------------
-# agly folder ki list
-ls folder_name_in_current_directory
+# agly folder ki list ................... ls folder_name_in_current_directory
 ---------------------------------
-# foxit alias
-alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
+# foxit alias ................... alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 ---------------------------------
-# close terminal shortcut
-CTLR+D
+# close terminal shortcut ................... CTLR+D
 ---------------------------------
-# zip folder 
-# zip folder <Sentiment140> to file <Sentiment140.zip>
-zip -r Sentiment140.zip Sentiment140/
+# zip folder <Sentiment140> to file <Sentiment140.zip> ................... zip -r Sentiment140.zip Sentiment140/
 
-
-# zip files
-zip imtiaz-list.zip imtiaz-list.*
+# zip files ................... zip imtiaz-list.zip imtiaz-list.*
 ---------------------------------
-# get file size
-du -sh file or folder name
+# get file size ................... du -sh file or folder name
 ---------------------------------
 #alias for rm remove
 #if you remove file or folder using terminal the removed file deleted perminantily, if we do mistake we can't restore our file, so we need alias, this alias move the file to particuler file, and if i remove file by mistake i can go to this particuler folder and recover from here.
 alias rm='mv -t /home/home/Desktop/Trash/'
 ---------------------------------
-# for count videos duration in particuler foler
-for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n" && echo " $f"; done
+# for count videos duration in particuler foler ................... for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n" && echo " $f"; done
 ---------------------------------
-# Also we can use the following command to add alias without opening the ~/.bash_aliases file
-echo "alias vps='ssh user@ip_address_of_the_remote_server'" >> ~/.bash_aliases && source ~/.bashrc
+# Also we can use the following command to add alias without opening the ~/.bash_aliases file ................... echo "alias vps='ssh user@ip_address_of_the_remote_server'" >> ~/.bash_aliases && source ~/.bashrc
 ---------------------------------
-# suspend
-systemctl suspend
+# suspend ................... systemctl suspend
 ---------------------------------
-# read first n lines from file
-head -5 R.r
+# read first n lines from file ................... head -5 R.r
 ---------------------------------
-# read all file in terminal
-cat file_name
+# read all file in terminal ................... cat file_name
 ---------------------------------
 # my very usefull aliases:
-
-# added by Anaconda3 installer
-export PATH="/home/home/anaconda3/bin:$PATH"
-
 alias si='xclip -selection clipboard -t image/png -o >'
 alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
 alias rm='mv -t /home/home/Desktop/Trash/'
@@ -208,15 +168,12 @@ alias copyto="xsel -b >"
 
 #Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
 ----------------------------
-# copy file contant to clipboard
-xclip -sel cli < file_name
+# copy file contant to clipboard ................... xclip -sel cli < file_name
 NOTE: if you use (>) rather then (<) then all file contant will be removed. so give this command your attention.
 ----------------------------
-# create a new file with cantant in clipboard.
-xsel -b > some.txt
+# create a new file with cantant in clipboard. ................... xsel -b > some.txt
 ----------------------------
-# add lines to end of file
-echo 'VNCSERVERS="1:root"' >> filename
+# add lines to end of file ................... echo 'VNCSERVERS="1:root"' >> filename
 
 # Possibility2:
 echo "blablabla
@@ -224,13 +181,10 @@ blablabla
 blablabla >> filename
 ----------------------------
 
-# cp file from another direcotry to currect directory
-eg:
-cp /blabla/blabla/bla.txt . # this <.> mean current directroy
+# cp file from another direcotry to currect directory ................... cp /blabla/blabla/bla.txt . # this <.> mean current directroy
 ------------------------
 
-# ls for current and subdirectories
-ls *
+# ls for current and subdirectories ................... ls *
 -------------------------
 combine two commands whith && or ;
 let us say you need to creat a derctory <folder> and then go into that directory, usually we solve this problam by two commands in two lines, we can write these two commands in one line saparated by <&&>:
@@ -246,7 +200,7 @@ mkdir folder && cd folder/
 and same as:
 mkdir folder ; cd folder/
 --------------------------
-> frmoe everything in file and add current input
+> remove everything in file and add current input
 eg:
 ls > a.txt
 yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
@@ -258,8 +212,7 @@ yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay
 --------------------------
 create empty file: ............... > a.txt
 --------------------------
-murgin +1 files:
-cat file_1.txt, file_2.txt... file_n.txt > new_file.txt
+murge +1 files: ................... cat file_1.txt, file_2.txt... file_n.txt > new_file.txt
 
 now new_file.txt contain contant of all n files.
 --------------------------
