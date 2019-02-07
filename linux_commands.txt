@@ -251,14 +251,12 @@ eg:
 ls > a.txt
 yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
 
->> append k lye use hota h.
+>> append k lye >> use hota h.
 eg:
 ls >> b.txt
 yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay ga, or agar nahi exist karti ho gi to new file ban jay gi jis me <ls> ka result save ho jay ga.
 --------------------------
-create empty file:
-> a.txt
-> b.py
+create empty file: ............... > a.txt
 --------------------------
 murgin +1 files:
 cat file_1.txt, file_2.txt... file_n.txt > new_file.txt
@@ -271,79 +269,44 @@ cat > file.txt
 # now want to type what we want to store, after typing we press CTRL+D. now we have file named file.txt contain text that we typed between <cat > file.txt> and <CTRL+D)
 --------------------------
 
-# cout file lines:
-wc -l filename
+# cout file lines: ............... wc -l filename
 ---------------------------
 
-# go to folder in home directory
-cd ~/Desktop/ 
+# go to folder in home directory ............... cd ~/Desktop/ 
 # it is equal to cd /home/amir/Desktop/ 
 ---------------------------
-# google search query from command line
-firefox google.com/search?q="query you want
+# google search query from command line ............... firefox google.com/search?q="query you want
 ---------------------------
 
-# only lines that contains specific text
-cat file_name.txt | grep text_you_want_to_search
+# only lines that contains specific text ............... cat file_name.txt | grep text_you_want_to_search
 
-# only files that contain (statistics) in these names
-du -sh *statistics*
+# only files that contain (statistics) in these names ............... du -sh *statistics*
 
+# all files and files in folders only  ............... ls  */
 
-# all files and files in folders only 
-ls  */
+# only folder names not files ............... ls -d */
 
+# files sorted by extention, so .py first and .txt after  ............... ls | rev | sort | rev
 
-# only folder names not files
-ls -d */
+# second way:  ...............  ls -lX
 
-------------------------
-# files sorted by extention, so .py first and .txt after
-ls | rev | sort | rev
+# zip 2 or more files ............... zip final.zip file1 file2 file_n
 
-# second way:
-ls -lX
+### WIFI
 
------------------
--------------------------
-# zip 2 or more files
-zip final.zip file1 file2 file_n
+# To see list of saved wifi connections, use:  ............... nmcli c
 
--------------------
-# connect wifi
-To see list of saved connections, use:
-nmcli c
+# To see list of available WiFi hotspots  ............... nmcli d wifi list ............... sudo iwlist wlan0 scanning
 
+# To see list of interfaces ............... ifconfig -a
 
-To see list of available WiFi hotspots 
-nmcli d wifi list
+# wifi - graphical interface in shell  ............... nmtui
 
-or
-sudo iwlist wlan0 scanning
+# turn on/off wifi  ............... nmcli radio wifi on ............... nmcli radio wifi off
 
+# all saved wifi ............... cd /etc/NetworkManager/system-connections && ls
 
-To see list of interfaces
-ifconfig -a
+# if you want to see datails of any saved wifi here:  ............... sudo cat wifi-name
 
--------------------------------------
-# wifi - graphical interface in shell
-nmtui
-
-# turn on/off wifi 
-nmcli radio wifi on
-nmcli radio wifi off
-
-
--------------------------
-# all saved wifi
-cd /etc/NetworkManager/system-connections
-ls
-
-if you want to see datails of any saved wifi here:
-sudo cat wifi-name
-
-
---------------------------
-# connect to saved wifi
-nmcli -a c up your_wifi_name
+# connect to saved wifi ............... nmcli -a c up your_wifi_name
 
