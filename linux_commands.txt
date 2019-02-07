@@ -310,3 +310,5 @@ cat > file.txt
 
 # connect to saved wifi ............... nmcli -a c up your_wifi_name
 
+
+# open only first ten jpg files ................... gio open $(ls *.jpg | head)
