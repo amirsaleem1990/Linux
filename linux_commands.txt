@@ -265,3 +265,9 @@ cat > file.txt
 
 
 # open only first ten jpg files ................... gio open $(ls *.jpg | head)
+
+# only lines with particuler keyword in all .txt files ........................... cat $(find . -name *.txt) | grep amir
+
+
+
+# grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
