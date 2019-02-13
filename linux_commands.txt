@@ -1,4 +1,5 @@
 
+
 # multitasking in one shell.
 # eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of:
 jpyter-lab
@@ -271,3 +272,8 @@ cat > file.txt
 
 
 # grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
+# dissconnect current wifi ................ nmcli con down wifi_name
+
+
+# connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password>
+
