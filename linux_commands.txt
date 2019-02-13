@@ -237,43 +237,23 @@ cat > file.txt
 # only files that contain (statistics) in these names ............... du -sh *statistics*
 
 # all files and files in folders only  ............... ls  */
-
 # only folder names not files ............... ls -d */
-
 # files sorted by extention, so .py first and .txt after  ............... ls | rev | sort | rev
-
 # second way:  ...............  ls -lX
-
 # zip 2 or more files ............... zip final.zip file1 file2 file_n
 
 ### WIFI
-
-# To see list of saved wifi connections, use:  ............... nmcli c
-
+# To see list of saved wifi connections:  ............... nmcli c
 # To see list of available WiFi hotspots  ............... nmcli d wifi list ............... sudo iwlist wlan0 scanning
-
 # To see list of interfaces ............... ifconfig -a
-
 # wifi - graphical interface in shell  ............... nmtui
-
-# turn on/off wifi  ............... nmcli radio wifi on ............... nmcli radio wifi off
-
+# turn on/off wifi  ............... <nmcli radio wifi on> or <nmcli networking on> ............... <nmcli radio wifi off> or <nmcli networking off>
 # all saved wifi ............... cd /etc/NetworkManager/system-connections && ls
-
 # if you want to see datails of any saved wifi here:  ............... sudo cat wifi-name
-
 # connect to saved wifi ............... nmcli -a c up your_wifi_name
-
-
 # open only first ten jpg files ................... gio open $(ls *.jpg | head)
-
 # only lines with particuler keyword in all .txt files ........................... cat $(find . -name *.txt) | grep amir
-
-
-
 # grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
 # dissconnect current wifi ................ nmcli con down wifi_name
-
-
 # connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password>
 
