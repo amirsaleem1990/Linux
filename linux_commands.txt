@@ -256,3 +256,21 @@ cat > file.txt
 # connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password> .... Note: if you connect to a network using this command the password will no show in wifi setting.
 
 
+# grep with more than one words .................. grep 'nmcli\|wifi' github/Linux/linux_commands.txt
+
+
+# Search all text files with grep ............ grep 'word*' *.txt
+# Search all python files for 'wordA' or 'wordB' .................. grep 'wordA*'\''wordB' *.py ............ grep -E 'word1|word2' *.doc .............. grep -e string1 -e string2 *.pl ................ egrep "word1|word2" *.c
+# To just match words, add the -w option: ...................... grep -w 'warning\|error\|critical' /var/log/messages ........... Note: here we find for words, so if there an words matches then we get our result, we need 'warning' so if 'warnings' not appear in the result though 'warning' in 'warnings'.
+---------------------------------------------
+# grep commands https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/
+grep 'word1\|word2\|word3' /path/to/file
+# Search all text files ..................... grep 'word*' *.txt
+# Search all python files for 'wordA' or 'wordB' ..................... grep 'wordA*'\''wordB' *.py .....................grep -E 'word1|word2' *.doc ..................... grep -e string1 -e string2 *.pl .....................egrep "word1|word2" *.c
+# In this example, search warning, error, and critical words in a text log file called /var/log/messages, enter: ..................... grep 'warning\|error\|critical' /var/log/messages
+# To just match words, add the -w option: ..................... grep -w 'warning\|error\|critical' /var/log/messages
+# Use the egrep command and you can skip the above syntax to search three words: ..................... egrep -w 'warning|error|critical' /var/log/messages ..................... grep -e 'warning|error|critical' /var/log/messages
+# I recommend that you pass the -i (ignore case) and --color option as follows too: ..................... egrep -wi --color 'warning|error|critical' /var/log/messages
+# To search all *.conf files under /etc/, enter: ..................... egrep -wi --color 'foo|bar' /etc/*.conf
+# To search recursively (including sub-directories) listed, run: ..................... egrep -Rwi --color 'foo|bar' /etc/
+---------------------------------------------
