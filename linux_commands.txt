@@ -274,3 +274,5 @@ grep 'word1\|word2\|word3' /path/to/file
 # To search all *.conf files under /etc/, enter: ..................... egrep -wi --color 'foo|bar' /etc/*.conf
 # To search recursively (including sub-directories) listed, run: ..................... egrep -Rwi --color 'foo|bar' /etc/
 ---------------------------------------------
+# while loop .................. while :; do sleep 3; ls newFolderForPictures/ | wc ; done .. explaination: sleep 3 seconds, then print files qty. in folder newFolderForPictures, do not stop this loop until any problums accur.
+
