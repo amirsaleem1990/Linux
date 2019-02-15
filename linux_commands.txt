@@ -280,3 +280,5 @@ grep 'word1\|word2\|word3' /path/to/file
 
 # ls only folders size ............. du -sh $(ls -d */)
 
+# cpu usage ................................ nmon
+
