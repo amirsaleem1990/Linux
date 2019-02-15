@@ -276,3 +276,7 @@ grep 'word1\|word2\|word3' /path/to/file
 ---------------------------------------------
 # while loop .................. while :; do sleep 3; ls newFolderForPictures/ | wc ; done .. explaination: sleep 3 seconds, then print files qty. in folder newFolderForPictures, do not stop this loop until any problums accur.
 
+ determine which process is monopolizing or eating the CPUs.  ..................... ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 ------------------- ps -eo pcpu,pid,user,args | sort -r -k1 | less 
+
+# ls only folders size ............. du -sh $(ls -d */)
+
