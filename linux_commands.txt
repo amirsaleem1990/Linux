@@ -1,3 +1,4 @@
+
 # multitasking in one shell.
 # eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of:
 jpyter-lab
