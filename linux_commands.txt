@@ -287,3 +287,9 @@ grep 'word1\|word2\|word3' /path/to/file
 my name is amir
 
 # multiple terminals in one screen ........................... tmux ............ CTRL+B SHIFT+% ............... CTRL+B D ...................... tmux new -s assig_a_name ................. tmux a -t assig_a_name ............... 
+
+# install .deb file from terminal ........... sudo dpkg -i example.deb
+
+
+# unzif .tar file ....................... tar xvf file_name.tar
+
