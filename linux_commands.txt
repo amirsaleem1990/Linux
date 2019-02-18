@@ -1,4 +1,3 @@
-
 # multitasking in one shell.
 # eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of:
 jpyter-lab
@@ -291,5 +290,5 @@ my name is amir
 # install .deb file from terminal ........... sudo dpkg -i example.deb
 
 
-# unzif .tar file ....................... tar xvf file_name.tar
+# unzip .tar file ....................... tar xvf file_name.tar
 
