@@ -247,7 +247,7 @@ cat > file.txt
 # wifi - graphical interface in shell  ............... nmtui
 # turn on/off wifi  ............... <nmcli radio wifi on> or <nmcli networking on> ............... <nmcli radio wifi off> or <nmcli networking off>
 # all saved wifi ............... cd /etc/NetworkManager/system-connections && ls
-# if you want to see datails of any saved wifi here:  ............... sudo cat wifi-name
+# if you want to see datails of any saved wifi here:  ............... sudo cat /etc/NetworkManager/system-connections/your_wifi_name | grep psk=
 # connect to saved wifi ............... nmcli -a c up your_wifi_name
 # open only first ten jpg files ................... gio open $(ls *.jpg | head)
 # only lines with particuler keyword in all .txt files ........................... cat $(find . -name *.txt) | grep amir
