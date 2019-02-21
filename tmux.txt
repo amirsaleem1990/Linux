@@ -1,0 +1,10 @@
+start tmux ............ tmux
+
+add new split in right side .............. CTRL+B SHIFT+"
+add new split in bottom ................ CTRL+B SHIFT+%
+
+go to left side window .............. CTRL+B LEFT-ARROW
+go to right side window ............... CTRL+B RIGHT-ARROW
+go to upper window .................. CTRL+B UPPER+ARROW
+go to bottom window ................. CTRL+B BOTTOM+ARROW
+
