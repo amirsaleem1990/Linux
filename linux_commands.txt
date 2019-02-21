@@ -241,14 +241,15 @@ cat > file.txt
 # zip 2 or more files ............... zip final.zip file1 file2 file_n
 
 ### WIFI
-# To see list of saved wifi connections:  ............... nmcli c
-# To see list of available WiFi hotspots  ............... nmcli d wifi list ............... sudo iwlist wlan0 scanning
+# refresh wifi list .......................... iwlist scan
+# saved wifi connections:  ............... nmcli c
+# check available WiFi hotspots after refresh  ............... iwlist scan && nmcli d wifi list ............... 
 # To see list of interfaces ............... ifconfig -a
 # wifi - graphical interface in shell  ............... nmtui
 # turn on/off wifi  ............... <nmcli radio wifi on> or <nmcli networking on> ............... <nmcli radio wifi off> or <nmcli networking off>
 # all saved wifi ............... cd /etc/NetworkManager/system-connections && ls
 # if you want to see datails of any saved wifi here:  ............... sudo cat /etc/NetworkManager/system-connections/your_wifi_name | grep psk=
-# connect to saved wifi ............... nmcli -a c up your_wifi_name
+# connect to saved wifi ............... nmcli connection up your_wifi_name ...............  nmcli -a c up your_wifi_name
 # open only first ten jpg files ................... gio open $(ls *.jpg | head)
 # only lines with particuler keyword in all .txt files ........................... cat $(find . -name *.txt) | grep amir
 # grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
@@ -291,4 +292,10 @@ my name is amir
 
 
 # unzip .tar file ....................... tar xvf file_name.tar
+
+
+# ls output to array and then slice this array , for learning by watching series of videos stored in HDD ............... array=($(ls -1)) ..... this is one time only, then : vlc ${array[0]} ........... change <0> for each video.
+
+
+open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
 
