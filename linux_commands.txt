@@ -299,3 +299,13 @@ my name is amir
 
 open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
 
+download package using pip with no installation ..................... pip download package_name
+
+download package using apt-get with no installation .................... apt-get download PACKAGE && apt-cache depends -i PACKAGE | awk '/Depends:/ {print $2}' | xargs  apt-get download 
+
+# check dependencies ....................... apt-get -s install packagename ....................... apt-cache depends package-name ......................... dpkg -I your_package.deb
+# execute python command from terminal .................. python -c "print(5/6)"     
+
+# list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
+# list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
+
