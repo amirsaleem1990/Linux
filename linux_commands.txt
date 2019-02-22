@@ -255,7 +255,7 @@ cat > file.txt
 # grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
 # dissconnect current wifi ................ nmcli con down wifi_name
 # connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password> .... Note: if you connect to a network using this command the password will no show in wifi setting.
-
+# nmcli --ask connection up wi-fi
 
 # grep with more than one words .................. grep 'nmcli\|wifi' github/Linux/linux_commands.txt
 
@@ -276,36 +276,18 @@ grep 'word1\|word2\|word3' /path/to/file
 # To search recursively (including sub-directories) listed, run: ..................... egrep -Rwi --color 'foo|bar' /etc/
 ---------------------------------------------
 # while loop .................. while :; do sleep 3; ls newFolderForPictures/ | wc ; done .. explaination: sleep 3 seconds, then print files qty. in folder newFolderForPictures, do not stop this loop until any problums accur.
-
  determine which process is monopolizing or eating the CPUs.  ..................... ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 ------------------- ps -eo pcpu,pid,user,args | sort -r -k1 | less 
-
 # ls only folders size ............. du -sh $(ls -d */)
-
 # cpu usage ................................ nmon
-
-
-my name is amir
-
 # multiple terminals in one screen ........................... tmux ............ CTRL+B SHIFT+% ............... CTRL+B D ...................... tmux new -s assig_a_name ................. tmux a -t assig_a_name ............... 
-
 # install .deb file from terminal ........... sudo dpkg -i example.deb
-
-
 # unzip .tar file ....................... tar xvf file_name.tar
-
-
 # ls output to array and then slice this array , for learning by watching series of videos stored in HDD ............... array=($(ls -1)) ..... this is one time only, then : vlc ${array[0]} ........... change <0> for each video.
-
-
-open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
-
-download package using pip with no installation ..................... pip download package_name
-
-download package using apt-get with no installation .................... apt-get download PACKAGE && apt-cache depends -i PACKAGE | awk '/Depends:/ {print $2}' | xargs  apt-get download 
-
+# open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
+# download package using pip with no installation ..................... pip download package_name
+# download package using apt-get with no installation .................... apt-get download PACKAGE && apt-cache depends -i PACKAGE | awk '/Depends:/ {print $2}' | xargs  apt-get download 
 # check dependencies ....................... apt-get -s install packagename ....................... apt-cache depends package-name ......................... dpkg -I your_package.deb
 # execute python command from terminal .................. python -c "print(5/6)"     
-
 # list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
 # list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
 
