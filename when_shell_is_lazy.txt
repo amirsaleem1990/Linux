@@ -1,2 +1,4 @@
-# i fond that Downloading a small file more faster in browser than from cammand line via curl or wget.
-# cut and paste from mobile to computer is more more dificult and very slow via command line, and very easy and quick via x-windows nautilus.
+1-Downloading a small file more faster in browser than from cammand line via curl or wget.
+2- cut and paste from mobile to computer is more more dificult and very slow via command line, and very easy and quick via x-windows nautilus.
+3- seach via command line is lazy compared to searh in gnome, (i use this syntax to search a file <find . -name my_key_word>)
+
