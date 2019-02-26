@@ -370,3 +370,6 @@ pinta
 # suspend
 systemctl suspend
 
+
+# create password protected zip file ................. zip --encrypt secure.zip your_file
+
