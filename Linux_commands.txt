@@ -373,3 +373,7 @@ systemctl suspend
 
 # create password protected zip file ................. zip --encrypt secure.zip your_file
 
+# find all files except those have end with .py  .................. find . -not -name "*.py"
+# calculator using python and alias ........................................ alias p="python3 -c 't=input(); print(eval(t))'"
+
+# find all files except files with .txt or .pdf .......................... ls -I "*.txt" -I "*.pdf"
