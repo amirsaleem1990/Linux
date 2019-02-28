@@ -164,6 +164,8 @@ alias cc="gcc p1.c -o p1 && ./p1"
 alias jp="jupyter-notebook"
 alias copyfrom="xclip -sel cli <"
 alias copyto="xsel -b >"
+alias rm="rm -i"
+alias calc="gcalccmd"
 
 #Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
 ----------------------------
@@ -227,7 +229,7 @@ cat > file.txt
 # go to folder in home directory ............... cd ~/Desktop/ 
 # it is equal to cd /home/amir/Desktop/ 
 ---------------------------
-# google search query from command line ............... firefox google.com/search?q="query you want
+# google search query from command line ............... firefox google.com/search?q="query you want"
 ---------------------------
 
 # only lines that contains specific text ............... cat file_name.txt | grep text_you_want_to_search
@@ -320,7 +322,7 @@ nautilus .
     # if you write a name without " " and use space in your folder name than ubuntu will create 
     # a folders eg: <mkdir amir noman hassan> create 3 folders and  <mkdir "amir noman hassan"> will create one folder
 -------------------------------
-# create txt file and open in one command from terminal
+# create txt file and open it in one command from terminal
 subl file.txt # if sublime exist in your computer, else: gedit file_name
 -------------------------------
 # open picture in full mode
@@ -387,4 +389,9 @@ systemctl suspend
 
 
 # google search alias shortcut ........................ function t { firefox --new-tab google.com/search?q=$@; } ............................ alias blah='function m(){ firefox google.com/search?q=$1; };m'
+
+
+# create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
+
+# kill process .................... pkill application_name
 
