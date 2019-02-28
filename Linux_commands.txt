@@ -385,3 +385,6 @@ systemctl suspend
 # search in pdf ......................... pdfgrep -i -H -n data learning/ISLR/ISLR.pdf.......... <-i> ignore case, <-H> with file name, <-n> with page number .................... 
 # search in pdf ......................... find /path -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "your pattern"' \; <https://stackoverflow.com/questions/4643438/how-to-search-contents-of-multiple-pdf-files>
 
+
+# google search alias shortcut ........................ function t { firefox --new-tab google.com/search?q=$@; } ............................ alias blah='function m(){ firefox google.com/search?q=$1; };m'
+
