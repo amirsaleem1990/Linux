@@ -1,0 +1,1 @@
+# python ka koi bhi code likhty waqt us waqt to modules use kar rahy hen un ka version requairment.txt me save kar len, or jis python par ye chala rahy hen us ka version bhi, kafi dafa packages ka masla isi wajah sy hota h.
