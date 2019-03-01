@@ -401,4 +401,14 @@ systemctl suspend
 # only files not folder ........................... ls -p | grep -v /
 # mute video without voice .......................... ffmpeg -i input.mp4 -vcodec copy -an output.mp4
 # mute audio from mp3 file from only specific portions ........................ ffmpeg -i *.mp3  -af "volume=enable='between(t,5,10)':volume=0, volume=enable='between(t,15,20)':volume=0" ok.mp3
-
+-------------------------
+# Bash Bang (!) Commands
+!! 			– execute last command.
+!top 		– execute the most recent command that starts with ‘top’ (e.g. !).
+!top:p 		– displays the command that !top would run (also adds it as the latest command in the command history).
+!$ 			– execute the last word of the previous command (same as Alt +., e.g. if last command is ‘cat tecmint.txt’, then !$ would try to run ‘tecmint.txt’).
+!$:p 		– displays the word that !$ would execute.
+!* 			– displays the last word of the previous command.
+!*:p 		– displays the last word that !* would substitute.
+---------------------------
+# create nested directories ...................... mkdir -p some/other/directories
