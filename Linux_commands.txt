@@ -412,3 +412,4 @@ systemctl suspend
 !*:p 		– displays the last word that !* would substitute.
 ---------------------------
 # create nested directories ...................... mkdir -p some/other/directories
+# to know pdf file pages qty ............................... pdfinfo file.pdf| grep 'Pages:'
