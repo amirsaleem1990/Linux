@@ -1,20 +1,9 @@
 
 # multitasking in one shell.
-# eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of:
-jpyter-lab
-#  type 
-jupyter-lab &
-# now you can use that terminal for other command too.
----------------------------------
+# eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of <jpyter-lab>  type  <jupyter-lab &> ............ now you can use that terminal for other command too.
 #  list all files, size mesure = MB ................... ls -l --block-size=M
----------------------------------
 # remove not empty folder ................... rm -r folder_name/
----------------------------------
-# Move a window to a different workspace
-Super+Shift+Page Up
-Super+Shift+Page Down
----------------------------------
-# connected wifi details ................... nmcli dev wifi
+# Move a window to a different workspace .................... Super+Shift+Page Up ................ Super+Shift+Page Down
 ---------------------------------
 # all 
 Go to /sys/class/net you can see list of folders here.
@@ -41,31 +30,17 @@ ls /usr/lib/l*z*.a
 ls /usr/lib/l*[AFLz]*.a
 # list of all files in path /user/lib their names starts with <l>, and contains at least one of the <A, F, L, z] and ending with <.a>
 --------------------------------
---------------------------------
---------------------------------
-
-
-
---------------------------------
 count all files with .py extention in current folder ................... ls *.py | wc
----------------------------------
 # count all files in current folder ................... ls | wc
----------------------------------
 # count all files in current folder and his childrens subfolders ................... find . | wc
----------------------------------
 # count all files with .py extention in current folder and his childrens subfolders ................... find . -name "*.py" | wc
----------------------------------
 # list all files with *.py in current folder and his chidrens subfolders. ................... find . -name "*.py"
 ---------------------------------
-NOTE: If you deleted the file by pressing Shift+Delete , or by using the command line, the file has been permanently deleted. Files that have been permanently deleted can’t be recovered from the Trash.
----------------------------------
+NOTE: If you deleted the file using the command line, the file has been permanently deleted. Files that have been permanently deleted can’t be recovered from the Trash.
 # unzip / extract zip file ................... unzip file.zip
---------------------------------
 # unzip tar.gz file ................... tar xvzf file.tar.gz
----------------------------------
 # unzip and remove bz2 file ................... bzip2 -d file.bz2
-
-If you want to extract bz2 file and keep the original, run this command: ................... bzip2 -dk file.bz2
+# If you want to extract bz2 file and keep the original, run this command: ................... bzip2 -dk file.bz2
 ---------------------------------
 How to search for text string on multiple files?
 find . -type f -print | sed 's/ /\\ /g' | xargs grep -i "my text string"
@@ -82,11 +57,8 @@ find . -type f -print | sed 's/ /\\ /g' | xargs grep -i "my text string"
 https://ubuntuforums.org/showthread.php?t=1722145]
 ---------------------------------
 create alias for terminal ................... alias p="ipython"
-# ab jab bhi terminal par <p> likh kar enter karun ga
-# to ipython khul jay ga
----------------------------------
+# ab jab bhi terminal par <p> likh kar enter karun ga to ipython khul jay ga, magar ye srif isi session tak valid h, jesy hi terminal band ho ga ye alias bhi remove ho jay ga, ksi bhi alias ko perminently use karny k lye usy ~/.bashrc file me append karty hen.
 # To see all the aliases defined in the environment: ................... alias
----------------------------------
 # To remove an alias, the unalias command is used, like so: ................... unalias alias_name
 ---------------------------------
 # nautilus bookmark editing
@@ -95,52 +67,25 @@ gio open .config/gtk-3.0/bookmarks
 # then edit this file
 ---------------------------------
 # save text[currently in clipboard] in file ................... xclip -o > new_file_name.txt
----------------------------------
 # Put the contents of the selection into a file. ................... xclip -t text/html index.html
----------------------------------
 # save text to file ................... echo "my name is amir" > file_name.txt
 ---------------------------------
-# save image[currently in clipboar] in file
-xclip -selection clipboard -t image/png -o > file.png
-# this command is vary big, hence hard to type any time, so we can create an alias of this command,
+# save image[currently in clipboar] in file ....................... xclip -selection clipboard -t image/png -o > file.png
+# this command is vary big, hence hard to type every time, so we can create an alias of this command,
 alias si="xclip -selection clipboard -t image/png -o >"
 # now we type like thi: si image_15
-
-
-# save this alias from perminent use:
-# open terminal and type:
-subl ~/.bashrc
-# go to last line and pest your alias command there, <alias si="xclip -selection clipboard -t image/png -o >">
-# One gotcha is that there cannot be a space between the “aliasname” and the EQUAL sign. Also, there can’t be a space between the EQUAL sign and the opening quote for the command.
-# close the file
-# type on your terminal: 
-source ~/.bashrc
+# save this alias from perminent use: echo 'alias si="xclip -selection clipboard -t image/png -o >"' >> ~/.bashrc && source ~/.bashrc
 ---------------------------------
 # list of all files in current folder, with size and date, sorted by time, most early on top ................... ls -l  -S --sort=time -r
----------------------------------
-# suspend ................... pm-suspend
-# or sudo pm-suspend
----------------------------------
-# hibernate ................... pm-hibernate
-# or sudo pm-hibernate
-# or systemctl hibernate
----------------------------------
-# How Do I Put My Computer To Sleep After a Certain Amount Of Time?
-echo 'pm-suspend' | at now + 30 minutes
-# or echo 'systemctl suspend' | at now + 30 minutes
----------------------------------
+# suspend ................... pm-suspend ................ sudo pm-suspend ....................systemctl suspend
+# hibernate ................... pm-hibernate ----------------- or: sudo pm-hibernate ................... or: systemctl hibernate
+# How Do I Put My Computer To Sleep After a Certain Amount Of Time? ...................... echo 'pm-suspend' | at now + 30 minutes ................ or: echo 'systemctl suspend' | at now + 30 minutes
 # pichly folder ki files list ................... ls ..
----------------------------------
 # agly folder ki list ................... ls folder_name_in_current_directory
----------------------------------
 # foxit alias ................... alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
----------------------------------
 # close terminal shortcut ................... CTLR+D
----------------------------------
 # zip folder <Sentiment140> to file <Sentiment140.zip> ................... zip -r Sentiment140.zip Sentiment140/
-
 # zip files ................... zip imtiaz-list.zip imtiaz-list.*
----------------------------------
 # get file size ................... du -sh file or folder name
 ---------------------------------
 #alias for rm remove
@@ -149,12 +94,7 @@ alias rm='mv -t /home/home/Desktop/Trash/'
 ---------------------------------
 # for count videos duration in particuler foler ................... for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n" && echo " $f"; done
 ---------------------------------
-# Also we can use the following command to add alias without opening the ~/.bash_aliases file ................... echo "alias vps='ssh user@ip_address_of_the_remote_server'" >> ~/.bash_aliases && source ~/.bashrc
----------------------------------
-# suspend ................... systemctl suspend
----------------------------------
 # read first n lines from file ................... head -5 R.r
----------------------------------
 # read all file in terminal ................... cat file_name
 ---------------------------------
 # my very usefull aliases:
@@ -166,7 +106,7 @@ alias jp="jupyter-notebook"
 alias copyfrom="xclip -sel cli <"
 alias copyto="xsel -b >"
 alias rm="rm -i"
-alias calc="gcalccmd"
+alias calc="gcalccmd" # terminal calculator
 
 #Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
 ----------------------------
@@ -174,69 +114,29 @@ alias calc="gcalccmd"
 NOTE: if you use (>) rather then (<) then all file contant will be removed. so give this command your attention.
 ----------------------------
 # create a new file with cantant in clipboard. ................... xsel -b > some.txt
-----------------------------
-# add lines to end of file ................... echo 'VNCSERVERS="1:root"' >> filename
-
-# Possibility2:
-echo "blablabla
-blablabla
-blablabla >> filename
-----------------------------
-
-# cp file from another direcotry to currect directory ................... cp /blabla/blabla/bla.txt . # this <.> mean current directroy
-------------------------
-
+# add lines to end of file ................... echo 'VNCSERVERS="1:root"' >> filename ................ echo "blablabla blablabla blablabla >> filename
+# copy file from another direcotry to currect directory ................... cp /blabla/blabla/bla.txt . # this <.> mean current directroy
 # ls for current and subdirectories ................... ls *
 -------------------------
 combine two commands whith && or ;
-let us say you need to creat a derctory <folder> and then go into that directory, usually we solve this problam by two commands in two lines, we can write these two commands in one line saparated by <&&>:
-
-so:
-
-mkdir folder
-cd folder/ 
- 
-same as:
-mkdir folder && cd folder/
-
-and same as:
-mkdir folder ; cd folder/
+let us say you need to creat a derctory <folder> and then go into that directory, usually we solve this problam by two commands in two lines, we can write these two commands in one line saparated by <&&>: so <mkdir folder> and then in next line <cd folder/>  is equal to: <mkdir folder && cd folder/> and same as: <mkdir folder ; cd folder/>
 --------------------------
-> remove everything in file and add current input
-eg:
-ls > a.txt
-yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
+> remove everything in file and add current input. eg: ls > a.txt............  yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
 
->> append k lye >> use hota h.
-eg:
-ls >> b.txt
-yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay ga, or agar nahi exist karti ho gi to new file ban jay gi jis me <ls> ka result save ho jay ga.
---------------------------
+>> append k lye >> use hota h. eg: ls >> b.txt ...............  yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay ga, or agar nahi exist karti ho gi to new file ban jay gi jis me <ls> ka result save ho jay ga.
 create empty file: ............... > a.txt
---------------------------
-murge +1 files: ................... cat file_1.txt, file_2.txt... file_n.txt > new_file.txt
-
-now new_file.txt contain contant of all n files.
+murge +1 files: ................... cat file_1.txt, file_2.txt... file_n.txt > new_file.txt................... now new_file.txt contain contant of all n files.
 --------------------------
 for creating a small text file, we should use cat.
 let us see we need to store one line text in file. usually we done this job by oppining the text editor, typing our line and save the file, we can do the same via cat. so:
 cat > file.txt
 # now want to type what we want to store, after typing we press CTRL+D. now we have file named file.txt contain text that we typed between <cat > file.txt> and <CTRL+D)
 --------------------------
-
 # cout file lines: ............... wc -l filename
----------------------------
-
-# go to folder in home directory ............... cd ~/Desktop/ 
-# it is equal to cd /home/amir/Desktop/ 
----------------------------
-# google search query from command line ............... firefox google.com/search?q="query you want"
----------------------------
-
+# go to folder in home directory ............... cd ~/Desktop/ .............. it is equal to cd /home/amir/Desktop/ 
+# google search query ............... firefox google.com/search?q="query you want"
 # only lines that contains specific text ............... cat file_name.txt | grep text_you_want_to_search
-
 # only files that contain (statistics) in these names ............... du -sh *statistics*
-
 # all files and files in folders only  ............... ls  */
 # only folder names not files ............... ls -d */
 # files sorted by extention, so .py first and .txt after  ............... ls | rev | sort | rev
@@ -245,6 +145,7 @@ cat > file.txt
 
 ### WIFI
 # refresh wifi list .......................... iwlist scan
+# connected wifi details ................... nmcli dev wifi
 # saved wifi connections:  ............... nmcli c
 # check available WiFi hotspots after refresh  ............... iwlist scan && nmcli d wifi list ............... 
 # To see list of interfaces ............... ifconfig -a
@@ -260,9 +161,9 @@ cat > file.txt
 # connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password> .... Note: if you connect to a network using this command the password will no show in wifi setting.
 # nmcli --ask connection up wi-fi
 
-# grep with more than one words .................. grep 'nmcli\|wifi' github/Linux/linux_commands.txt
 
 
+# grep with more than one words .................. grep 'text1\|text2' github/Linux/linux_commands.txt
 # Search all text files with grep ............ grep 'word*' *.txt
 # Search all python files for 'wordA' or 'wordB' .................. grep 'wordA*'\''wordB' *.py ............ grep -E 'word1|word2' *.doc .............. grep -e string1 -e string2 *.pl ................ egrep "word1|word2" *.c
 # To just match words, add the -w option: ...................... grep -w 'warning\|error\|critical' /var/log/messages ........... Note: here we find for words, so if there an words matches then we get our result, we need 'warning' so if 'warnings' not appear in the result though 'warning' in 'warnings'.
@@ -293,109 +194,43 @@ grep 'word1\|word2\|word3' /path/to/file
 # execute python command from terminal .................. python -c "print(5/6)"     
 # list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
 # list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
-
-
-$ history
-# terminal commands history
-
-$ history
-1 cd Photos/
-2 lt
-3 find . -name "*AMES*"
-4 cfdisk /dev/hda
-5 ssh ubuntu@192.168.1.1
-
-You can quickly run a command again by typing the number preceded by an exclama-
-tion mark ( ! ) character. For example, to run the command numbered 3 in the history
-list, you can type !3 and press the Enter key.
-
-
------------------------------------------
-
-$ nmap localhost
-# local host par kya chal raha h?
+# terminal commands history: history
+#  You can quickly run a command again by typing the number preceded by an exclamation mark ( ! ) character. For example, to run the command numbered 3 in the history list, you can type !3 and press the Enter key.
+# local host par kya chal raha h?: nmap localhost
+# Open current foler from terminal: nautilus .
+# create folder from terminal: mkdir foder_name .................. if you write a name without " " and use space in your folder name than ubuntu will create a folders eg: <mkdir amir noman hassan> create 3 folders and  <mkdir "amir noman hassan"> will create one folder
+# create txt file and open it in one command from terminal: subl file.txt .................  if sublime exist in your computer, else: gedit file_name
+# open picture in full mode ............ eog -f file_path
+# open file (almost for any file type): gio open file_path
+# run video on vlc without interface: cvlc video_file_name
 -------------------------------
-# Open current foler from terminal
-nautilus .
--------------------------------
-# create folder from terminal
-    mkdir foder_name
-    # if you write a name without " " and use space in your folder name than ubuntu will create 
-    # a folders eg: <mkdir amir noman hassan> create 3 folders and  <mkdir "amir noman hassan"> will create one folder
--------------------------------
-# create txt file and open it in one command from terminal
-subl file.txt # if sublime exist in your computer, else: gedit file_name
--------------------------------
-# open picture in full mode
-eog -f file_path
--------------------------------
-# open file (almost for any file type)
-gio open file_path
--------------------------------
-# run video on vlc without interface
-# cvlc video_file_name
--------------------------------
-
-
 # tmux .... multiple terminals in one window
 start tmux ............ tmux
 
 add new split in right side .............. CTRL+B SHIFT+"
 add new split in bottom ................ CTRL+B SHIFT+%
-
 go to left side window .............. CTRL+B LEFT-ARROW
 go to right side window ............... CTRL+B RIGHT-ARROW
 go to upper window .................. CTRL+B UPPER+ARROW
 go to bottom window ................. CTRL+B BOTTOM+ARROW
-
---------------------------------------
 ----------------------------------
-#ubuntu_folder_shortcut
-press Ctrl + Shift + drag/drop the icon
+#ubuntu_folder_shortcut: press Ctrl + Shift + drag/drop the icon
 ------------------------------------
 
-#shutdown
-poweroff
-# or 
-shutdown -h no
-
-
-#current window screenshot and copy to clipboard
-gnome-screenshot -w -c
-
-# selected area screenshot  and copy to clipboard
-gnome-screenshot -a -c
-
-
-#pinta
-pinta
-
-# suspend
-systemctl suspend
-
-
+#shutdown: poweroff ............. or: shutdown -h no
+#current window screenshot and copy to clipboard: gnome-screenshot -w -c
+# selected area screenshot  and copy to clipboard: gnome-screenshot -a -c
 # create password protected zip file ................. zip --encrypt secure.zip your_file
-
 # find all files except those have end with .py  .................. find . -not -name "*.py"
 # calculator using python and alias ........................................ alias p="python3 -c 't=input(); print(eval(t))'"
-
 # find all files except files with .txt or .pdf .......................... ls -I "*.txt" -I "*.pdf"
-
 # eject usb ............. first: sudo fdisk -l ,this will be return devices, select your device name eg: /dev/sdb1 ......... second: sudo eject your_device_name
-
 # convert .mkv file to .mp4 .................. sudo ffmpeg -i *.mkv -codec copy output.mp4 
-
 # search in pdf ......................... pdfgrep -i -H -n data learning/ISLR/ISLR.pdf.......... <-i> ignore case, <-H> with file name, <-n> with page number .................... 
 # search in pdf ......................... find /path -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "your pattern"' \; <https://stackoverflow.com/questions/4643438/how-to-search-contents-of-multiple-pdf-files>
-
-
 # google search alias shortcut ........................ function t { firefox --new-tab google.com/search?q=$@; } ............................ alias blah='function m(){ firefox google.com/search?q=$1; };m'
-
-
 # create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
-
 # kill process .................... pkill application_name
-
 # find file ................. locate "*.pdf" ............ if regex not specified then assume "*keyword*"
 # last modified file or folder in particuler directory ............................ ls -t github/Linux/ | head -1
 # only files not folder ........................... ls -p | grep -v /
