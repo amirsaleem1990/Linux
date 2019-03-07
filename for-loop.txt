@@ -1,0 +1,34 @@
+
+sleep 5 &&;
+for i in {1..10} :
+do 
+	sleep 1 
+	gnome-screenshot  -a -f $i.png
+done
+
+
+
+# orignal, copied from stackoverflow
+(gnome-screenshot -a &); sleep 1 && xdotool mousemove 100 100 mousedown 1 mousemove 500 500 mouseup 1
+
+
+---------
+# har dafa khud hi jaga par chala jay ga, aap ko srif drag ko complete karna h, complete hony k bad khud hi save ho jay ga.
+sleep 5 &&
+for i in {1..2}:
+do 
+	sleep 3
+	xdotool mousemove 100 100
+	gnome-screenshot  -a -f $i.png
+done
+------------
+
+# khud hi jaga par ja kar picture ly kar save kar dy ga, 2 seconds wait kary ga
+# sleep 5 &&
+for i in {1..10}:
+do 
+	sleep 1
+	(gnome-screenshot -a  -f $i.png &)
+	sleep 1 
+	xdotool mousemove 100 100 mousedown 2 mousemove 500 500 mouseup 2
+done

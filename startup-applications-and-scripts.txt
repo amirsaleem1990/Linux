@@ -1,0 +1,19 @@
+# press WINDOWS KEY and type <startup applications>, heere you can add commands you need to perfom .......
+
+# pehly 
+name: diry is directory </home/amir/DATA/diry/> me ye <bash-script.sh> file bana kar us me ye <subl  ~/DATA/diry/$(date -d "1 day ago" '+%m-%d-%y').txt> line likh kar save kar len.
+command: bash /home/amir/DATA/diry/bash-script.sh
+comment: privies-day diry
+
+name: Expenses
+command: firefox --new-tab https://docs.google.com/spreadsheets/d/1ynsGnyXW7EfYWiOUz0IBUMJqY8BD82gR-ieMzcsYS48/edit#gid=0
+comment: Expenses
+
+name: terminal
+command: gnome-terminal
+comment: terminal
+
+name: LFD mail
+command: firefox --new-tab https://mail.google.com/mail/u/0/#inbox
+comment: LFD mail auto start with boot
+
