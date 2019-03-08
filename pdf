@@ -1,0 +1,6 @@
+#!/bin/sh
+# linux ka foxt use karty hwy foxit ka header aankho me lagta h, is lye 1 black pic banai h, jo k header ko cover kar leta h.
+(gio open $@ &)
+sleep 1
+(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)
+exit
