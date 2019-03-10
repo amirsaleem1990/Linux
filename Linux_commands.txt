@@ -265,3 +265,4 @@ $ get previous command argument ant put into new command, eg: touch amir-saleem-
 
 # the output of <find> contain lots of <permission denied ......... > massages, to avoid these masseges use: < -readable> option, eg: <find . -readable -name "*.pdf"> instead of <find . -name "*.pdf">
 
+# <gopen> == <geo open>
