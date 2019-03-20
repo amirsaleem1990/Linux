@@ -269,3 +269,4 @@ $ get previous command argument ant put into new command, eg: touch amir-saleem-
 # for loop example: for i in *.txt ; do echo $i ; cat $i ; echo "
 > " ; done
 ...... 
+# convert all .ipynb files to .py files ....................... for i in *.ipynb; do ipython nbconvert --to=python $i ; done
