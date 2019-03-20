@@ -252,7 +252,7 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 ---------------------------
 # create nested directories ...................... mkdir -p some/other/directories
 # to know pdf file pages qty ............................... pdfinfo file.pdf| grep 'Pages:'
-# battery status: upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage
+# battery status: upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"
 # current date only: date '+%d-%m-%y'
 # yesterday date: date -d "1 day ago" '+%Y-%m-%d'
 # last command in history starts with <emg> ............... !emg
