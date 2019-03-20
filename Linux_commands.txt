@@ -270,3 +270,4 @@ $ get previous command argument ant put into new command, eg: touch amir-saleem-
 > " ; done
 ...... 
 # convert all .ipynb files to .py files ....................... for i in *.ipynb; do ipython nbconvert --to=python $i ; done
+# remove all file AND folders that contains in their names <ipy> AND <check> ................. rm -r -f $(find $(find . -iname "*ipy*") -name "*check*")
