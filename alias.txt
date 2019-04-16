@@ -1,0 +1,12 @@
+alias si='xclip -selection clipboard -t image/png -o >'
+alias jp="jupyter-notebook"
+alias copyfrom="xclip -sel cli <"
+alias copyto="xsel -b >"
+alias rm="rm -i"
+alias calc="gcalccmd"
+#alias pdf="(gio open -t &)&& (feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &) ; exit"
+
+alias p="python3 -c 't=input(); print(eval(t))'"
+alias calc="gcalccmd"
+alias blah='function m(){ firefox google.com/search?q=; };m'
+alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
