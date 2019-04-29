@@ -305,3 +305,5 @@ Search a string “myname” in all files in all subdirectories recursively ----
 
 
 # passwd --------------- change your password
+
+# kill / terminate process--------------- see list of currently running applications by <ps -al>, note <PID> number of application which you want to kill, and finally <kill -9 your_noted_PID_number>
