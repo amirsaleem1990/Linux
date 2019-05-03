@@ -328,9 +328,9 @@ data scince csv file manupulation on bash
 # replace particuler text by onather ---------------- sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file> ............ eg: grep ", ?," adult.csv | wc -l ................. privious command tell us how many rows that contain at least one "?" ...... no we need to replace this "?" by empty string so: ................... sed "s/, ?,/,,/g" adult.csv >  adult.csv.
 # subset large file, we need 20 lines from 100 till 120 ---------------- head -n 120 adult.csv | tail -n 20 > adult_sample.csv
 # Finding duplicates with uniq ---------------- counts the number of duplicated lines---------------- sort adult.csv | uniq -d | wc -l
-# ----------------
-# ----------------
-# ----------------
+# this takes the output of all lines with added repetition counts, sorts in reverse and outputs the first 3 duplicates ---------------- sort adult.csv | uniq -c | sort -r | head -n 3
+# only 2nd column ---------------- cut -d "," -f 2 adult.csv
+# uniques ant its counts in 2cnd column---------------- cut -d "," -f 2 adult.csv | sort | uniq -c
 # ----------------
 # ----------------
 # ----------------
