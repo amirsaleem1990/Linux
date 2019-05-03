@@ -316,9 +316,6 @@ Search a string “myname” in all files in all subdirectories recursively ----
 # get file name from user and using this name save picture (which is in the clipboard) ............ read v; si $v.png .......... Note: <si> here alias for copy screen shot to clipboard
 
 
-
-
-
 #===========================================================
 data scince csv file manupulation on bash
 # count file lines ---------------- wc -l adult.data
@@ -332,32 +329,5 @@ data scince csv file manupulation on bash
 # only 2nd column ---------------- cut -d "," -f 2 adult.csv
 # uniques ant its counts in 2cnd column---------------- cut -d "," -f 2 adult.csv | sort | uniq -c
 # loop over all file names, replace each space (in file name) by under score ---------------- replace_source=' '; replace_target='_'; for filename in ./*.csv; do new_filename=${filename//$replace_source/$replace_target}; mv "$filename" "$new_filename"; done
-# ----------------
-# ----------------
-# ----------------
-# ----------------
-# ----------------
-# ---------------- 
-# ---------------- 
-# ----------------
-# ----------------
-# ----------------
-# ----------------
-# ----------------
- ----------------
- ----------------
- ----------------
- ----------------
- ----------------
- ----------------
- ----------------
- ----------------
-
-
-
-
-
-
-
-
+# https://www.datacamp.com/community/tutorials/shell-commands-data-scientist
 #===========================================================
