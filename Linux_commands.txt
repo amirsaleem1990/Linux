@@ -331,7 +331,7 @@ data scince csv file manupulation on bash
 # this takes the output of all lines with added repetition counts, sorts in reverse and outputs the first 3 duplicates ---------------- sort adult.csv | uniq -c | sort -r | head -n 3
 # only 2nd column ---------------- cut -d "," -f 2 adult.csv
 # uniques ant its counts in 2cnd column---------------- cut -d "," -f 2 adult.csv | sort | uniq -c
-# ----------------
+# loop over all file names, replace each space (in file name) by under score ---------------- replace_source=' '; replace_target='_'; for filename in ./*.csv; do new_filename=${filename//$replace_source/$replace_target}; mv "$filename" "$new_filename"; done
 # ----------------
 # ----------------
 # ----------------
