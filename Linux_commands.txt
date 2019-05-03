@@ -326,7 +326,7 @@ data scince csv file manupulation on bash
 # first 2 lines of file ---------------- head -n 2 adult.data 
 # header not exist in file, so we need to add header ----------------first: echo "col_1, col_2, col_3, col_n, " > header.csv .......... 2nd: cat header.csv adult.data > adult.csv
 # replace particuler text by onather ---------------- sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file> ............ eg: grep ", ?," adult.csv | wc -l ................. privious command tell us how many rows that contain at least one "?" ...... no we need to replace this "?" by empty string so: ................... sed "s/, ?,/,,/g" adult.csv >  adult.csv.
-# ----------------
+# subset large file, we need 20 lines from 100 till 120 ---------------- head -n 120 adult.csv | tail -n 20 > adult_sample.csv
 # ----------------
 # ----------------
 # ----------------
