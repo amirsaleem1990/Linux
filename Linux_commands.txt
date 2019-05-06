@@ -331,3 +331,8 @@ data scince csv file manupulation on bash
 # loop over all file names, replace each space (in file name) by under score ---------------- replace_source=' '; replace_target='_'; for filename in ./*.csv; do new_filename=${filename//$replace_source/$replace_target}; mv "$filename" "$new_filename"; done
 # https://www.datacamp.com/community/tutorials/shell-commands-data-scientist
 #===========================================================
+# ignore first line ............... cat filename | sed 1d > filename_without_first_line.............. application: mery pas kafi csv file thin, jin k header same thy, mujhy un sab ko 1 hi file banani thi, leking headar exclude kar k, to me ny pehly 1 new file banai jis me srif 1 header daal dya, or phir loop chala kar har file (exclude header) us new file me append kar dya ...................... for i in *.csv ; do cat $i | sed 1d >> ../all_data_in_one_file.csv; done
+
+
+
+
