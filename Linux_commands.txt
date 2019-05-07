@@ -333,6 +333,7 @@ data scince csv file manupulation on bash
 #===========================================================
 # ignore first line ............... cat filename | sed 1d > filename_without_first_line.............. application: mery pas kafi csv file thin, jin k header same thy, mujhy un sab ko 1 hi file banani thi, leking headar exclude kar k, to me ny pehly 1 new file banai jis me srif 1 header daal dya, or phir loop chala kar har file (exclude header) us new file me append kar dya ...................... for i in *.csv ; do cat $i | sed 1d >> ../all_data_in_one_file.csv; done
 
+# convert file chracter set .......... iconv -f ISO-8859-1 -t UTF-16//TRANSLIT input.txt -o output.csv
 
 
 
