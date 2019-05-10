@@ -336,4 +336,4 @@ data scince csv file manupulation on bash
 # convert file chracter set .......... iconv -f ISO-8859-1 -t UTF-16//TRANSLIT input.txt -o output.csv
 
 
-
+# csv column qty ------------------ head -1 file.csv | sed 's/,/\t/g' | wc -w
