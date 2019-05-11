@@ -337,3 +337,4 @@ data scince csv file manupulation on bash
 
 
 # csv column qty ------------------ head -1 file.csv | sed 's/,/\t/g' | wc -w
+# split large file in small files .................. split -C size_you_want(like: 300K, 50M, 1G) --numeric-suffixes input_file output_prefix
