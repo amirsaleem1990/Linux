@@ -206,8 +206,8 @@ grep 'word1\|word2\|word3' /path/to/file
 # tmux .... multiple terminals in one window
 start tmux ............ tmux
 
-add new split in right side .............. CTRL+B SHIFT+"
-add new split in bottom ................ CTRL+B SHIFT+%
+add new split in bottom side .............. CTRL+B SHIFT+"
+add new split in right ................ CTRL+B SHIFT+%
 go to left side window .............. CTRL+B LEFT-ARROW
 go to right side window ............... CTRL+B RIGHT-ARROW
 go to upper window .................. CTRL+B UPPER+ARROW
