@@ -279,7 +279,7 @@ xml_split -l 1 *.xml
 # find
 # Find a file or directory on the system using this command
 # Find a file myfile.txt in current directory and its subdirectories-----------------find . -name “myfile.txt”
-# Find all files in Documents directory that are larger that 25MB in size-------------find . -size +25M -exec du -h {} \;
+# Find all files in current directory that are larger than 1GB ..................... find . -size  +1G
 # Find all .doc files on the system that have been modified in the last 5 days.--------------find . –name “*.doc” –mtime -5
 # Find all .txt files on the system that were modified in last 15 minutes-----------------------find . –name “*.txt” –mmin -15
 # Find all files that contain a string “I am inside file”.------------find . -name "*" -exec grep -i -H "I am inside file" {} \;
