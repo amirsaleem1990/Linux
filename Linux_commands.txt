@@ -340,3 +340,4 @@ data scince csv file manupulation on bash
 # split large file in small files .................. split -C size_you_want(like: 300K, 50M, 1G) --numeric-suffixes input_file output_prefix
 # string to binary ............. echo AB | perl -lpe '$_=unpack"B*"' 
 # binary to string ............ echo 0100000101000010 | perl -lpe '$_=pack"B*",$_'
+# binary to text ............... strings fileanme
