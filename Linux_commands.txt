@@ -341,3 +341,4 @@ data scince csv file manupulation on bash
 # string to binary ............. echo AB | perl -lpe '$_=unpack"B*"' 
 # binary to string ............ echo 0100000101000010 | perl -lpe '$_=pack"B*",$_'
 # binary to text ............... strings fileanme
+# ignore / exclude certien files /extentions from <ls> ................... ls -I "*.st*"
