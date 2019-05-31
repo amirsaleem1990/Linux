@@ -343,3 +343,4 @@ data scince csv file manupulation on bash
 # binary to text ............... strings fileanme
 # ignore / exclude certien files /extentions from <ls> ................... ls -I "*.st*"
 # open file/app in fix sized window and fix location in screen ................. subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660" ............... sleep command to load file properly and then change its size and place, so we can not remove sleep from this command.
+unzip tar.xz file ........... tar xf file.tar.xz
