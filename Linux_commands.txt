@@ -344,3 +344,4 @@ data scince csv file manupulation on bash
 # ignore / exclude certien files /extentions from <ls> ................... ls -I "*.st*"
 # open file/app in fix sized window and fix location in screen ................. subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660" ............... sleep command to load file properly and then change its size and place, so we can not remove sleep from this command.
 unzip tar.xz file ........... tar xf file.tar.xz
+unable an application; suppose i need no one can use google-chrome; first i type <which google-chrome> this will return a directory where googl-chrome application file is located, now it is /usr/bin/ , second: i am open the file <sudo gedit /usr/bin/google-chrome> and then commit all lines, and save it. Now if some one try to open google-chrome (either from command line or application icon) nothing happen, becouse the file </usr/bin/google-chrome> is not contain any code
