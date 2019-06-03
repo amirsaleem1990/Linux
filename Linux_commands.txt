@@ -228,7 +228,7 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 # convert .mkv file to .mp4 .................. sudo ffmpeg -i *.mkv -codec copy output.mp4 
 # search in pdf ......................... pdfgrep -i -H -n data learning/ISLR/ISLR.pdf.......... <-i> ignore case, <-H> with file name, <-n> with page number .................... 
 # search in pdf ......................... find /path -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "your pattern"' \; <https://stackoverflow.com/questions/4643438/how-to-search-contents-of-multiple-pdf-files>
-# google search alias shortcut ........................ function t { firefox --new-tab google.com/search?q=$@; } ............................ alias blah='function m(){ firefox google.com/search?q=$1; };m'
+# google search alias shortcut ........................alias g='read a; firefox google.com/search?q="$a"'
 # create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
 # kill process .................... pkill application_name
 # find file ................. locate "*.pdf" ............ if regex not specified then assume "*keyword*"
