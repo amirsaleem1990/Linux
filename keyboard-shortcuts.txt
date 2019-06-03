@@ -1,0 +1,18 @@
+system monitor
+gnome-system-monitor
+ALT + P
+
+
+pinta
+pinta
+Supter + ]
+
+selected area screenshot and copy to clipboard
+gnome-screenshot -a -c
+ALT + A
+
+
+current window screenshot and copy to clipboard
+gnome-screenshot -w -c
+ALT + S
+

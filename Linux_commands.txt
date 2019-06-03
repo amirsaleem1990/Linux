@@ -346,3 +346,7 @@ data scince csv file manupulation on bash
 # open file/app in fix sized window and fix location in screen ................. subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660" ............... sleep command to load file properly and then change its size and place, so we can not remove sleep from this command.
 unzip tar.xz file ........... tar xf file.tar.xz
 unable an application; suppose i need no one can use google-chrome; first i type <which google-chrome> this will return a directory where googl-chrome application file is located, now it is /usr/bin/ , second: i am open the file <sudo gedit /usr/bin/google-chrome> and then commit all lines, and save it. Now if some one try to open google-chrome (either from command line or application icon) nothing happen, becouse the file </usr/bin/google-chrome> is not contain any code
+# get input from user with prompt ................. read -p "Enter your Name: " variable_name 
+# open picture file [in kali linux] ................. eog picture_file_name
+# set application to defaul ..................... mimeopen -d your_file ......... and then chose option to set it default, next time you will be able to use: mimeopen your_file
+# general file openor for kali linux ................. xdg-open file_name
