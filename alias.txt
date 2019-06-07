@@ -1,17 +1,18 @@
+
 alias si='xclip -selection clipboard -t image/png -o >'
 alias jp="jupyter-notebook"
 alias copyfrom="xclip -sel cli <"
 alias copyto="xsel -b >"
 # alias rm="rm -i"
-alias calc="gcalccmd"
+# alias calc="gcalccmd"
 #alias pdf="(gio open -t &)&& (feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &) ; exit"
 
 alias p="python3 -c 't=input(); print(eval(t))'"
 alias calc="gcalccmd"
-alias blah='function m(){ firefox google.com/search?q=; };m'
+alias g='read a; firefox google.com/search?q="$a"'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"'
 alias jl='jupyter-lab'
-alias c="rm -rf c_program; gcc -o c_program c_program.c ; ./c_program"
+alias c="rm c_program; gcc -o c_program c_program.c ; ./c_program"
 alias c_subl="subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660"
-alias c_p="cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c_program.c ; (gopen *.pdf &); gnome-terminal ; (jl *.ipynb &) ; sleep 3; exit"
+alias c_p="cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c_program.c ; (FoxitReader *.pdf &); gnome-terminal ; (jl *.ipynb &) ; sleep 3; exit"
 alias rm='mv -t ~/.local/share/Trash/files'
