@@ -352,3 +352,4 @@ unable an application; suppose i need no one can use google-chrome; first i type
 # general file openor for kali linux ................. xdg-open file_name
 # create bootable usb from command line ............... sudo dd if=/dev/sdv iso_file_path bs=4M
 webcam application ............. cheese
+# motherboard model ................ sudo dmidecode -t baseboard | grep -i 'Product'
