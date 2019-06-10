@@ -354,3 +354,4 @@ unable an application; suppose i need no one can use google-chrome; first i type
 webcam application ............. cheese
 # motherboard model ................ sudo dmidecode -t baseboard | grep -i 'Product'
 # protect folder / asking for root user ................. chmod 600  folder/
+copy from vim to another application .............. Position the cursor where you want to begin copying ............ Press v to select characters, or uppercase V to select whole lines ................. Move the cursor to the end of what you want to cut .............. press: "+y .............. now the text on your clipboard
