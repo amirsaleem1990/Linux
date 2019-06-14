@@ -350,7 +350,7 @@ unable an application; suppose i need no one can use google-chrome; first i type
 # open picture file [in kali linux] ................. eog picture_file_name
 # set application to defaul ..................... mimeopen -d your_file ......... and then chose option to set it default, next time you will be able to use: mimeopen your_file
 # general file openor for kali linux ................. xdg-open file_name
-# create bootable usb from command line ............... sudo dd if=/dev/sdv iso_file_path bs=4M
+# create bootable usb from command line ............... sudo dd if=iso_file_path of=/dev/sdd bs=4M
 webcam application ............. cheese
 # motherboard model ................ sudo dmidecode -t baseboard | grep -i 'Product'
 # protect folder / asking for root user ................. chmod 600  folder/
