@@ -1,0 +1,10 @@
+install.packages(c(
+	"xlsx", 
+	"XML", 
+	"funModeling",  
+	"tidyverse",  
+	"Hmisc", 
+	"dplyr", 
+	"tidyverse", 
+	"caret"
+	))
