@@ -6,6 +6,7 @@ name_and_command = {'diry' : 'bash /home/amir/github/Amir-personal/diry/bash-scr
 
 
 import os
+os.chdir("/home/amir/")
 import sys
 home = os.environ["HOME"]
 
