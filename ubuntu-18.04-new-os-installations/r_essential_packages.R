@@ -9,3 +9,6 @@ install.packages(c(
 	"caret",
 	"swirl"
 	))
+
+library(swirl)
+install_from_swirl("R_Programming")
