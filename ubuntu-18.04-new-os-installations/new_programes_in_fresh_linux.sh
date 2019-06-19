@@ -46,6 +46,8 @@ sudo apt-get install -y libssl-dev
 
 sudo Rscript r_essential_packages.R
 
+# to work my alis <copyto>
+sudo apt install xsel
 
 #jupyter
 sudo apt install -y jupyter-notebook
