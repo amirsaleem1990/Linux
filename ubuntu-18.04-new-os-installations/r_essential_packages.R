@@ -12,4 +12,5 @@ install.packages(c(
 
 library(swirl)
 install_from_swirl("R_Programming")
-install_from_swirl("Getting and Cleaning Data")
+install_course("Getting and Cleaning Data")
+install_course("Exploratory Data Analysis")
