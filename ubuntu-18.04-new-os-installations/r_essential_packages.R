@@ -6,5 +6,6 @@ install.packages(c(
 	"Hmisc", 
 	"dplyr", 
 	"tidyverse", 
-	"caret"
+	"caret",
+	"swirl"
 	))
