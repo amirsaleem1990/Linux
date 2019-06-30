@@ -355,3 +355,4 @@ webcam application ............. cheese
 # motherboard model ................ sudo dmidecode -t baseboard | grep -i 'Product'
 # protect folder / asking for root user ................. chmod 600  folder/
 copy from vim to another application .............. Position the cursor where you want to begin copying ............ Press v to select characters, or uppercase V to select whole lines ................. Move the cursor to the end of what you want to cut .............. press: "+y .............. now the text on your clipboard
+#conver .m4a to .mp3 ...................... ffmpeg -v 5 -y -i input.m4a -acodec libmp3lame -ac 2 -ab 192k output.mp3
