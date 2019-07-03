@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Untitled3</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>ubuntu-file-sharing-at-same-network</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -12595,53 +12595,72 @@ div#notebook {
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="1--Get-your-local-ip-address-of-system-which-has-files-you-want-to-access">1- Get your local ip address of system which has files you want to access<a class="anchor-link" href="#1--Get-your-local-ip-address-of-system-which-has-files-you-want-to-access">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ip address show</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="ubuntu-file-sharing-at-same-network-1.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>if connected to wifi pick 3: wl01 or in case of Ethernet pick 2: enp3s0</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="you-are-done-with-host,-move-to-the-system-form-which-you-want-to-access,-open-file-manager-(nautilus)-and-chose-Other-Locations-at-the-bottom-notice-connect-to-Server-input-box">you are done with host, move to the system form which you want to access, open file manager (nautilus) and chose Other Locations at the bottom notice connect to Server input box<a class="anchor-link" href="#you-are-done-with-host,-move-to-the-system-form-which-you-want-to-access,-open-file-manager-(nautilus)-and-chose-Other-Locations-at-the-bottom-notice-connect-to-Server-input-box">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="ubuntu-file-sharing-at-same-network-2.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Enter">Enter<a class="anchor-link" href="#Enter">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1- Get your local ip address of system which has files you want to access</span>
-<span class="n">ip</span> <span class="n">address</span> <span class="n">show</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1><img src="a.png"></h1>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="if-connected-to-wifi-pick-3:-wl01-or-in-case-of-Ethernet-pick-2:-enp3s0">if connected to wifi pick 3: wl01 or in case of Ethernet pick 2: enp3s0<a class="anchor-link" href="#if-connected-to-wifi-pick-3:-wl01-or-in-case-of-Ethernet-pick-2:-enp3s0">&#182;</a></h3><h3 id="you-are-done-with-host,-move-to-the-system-form-which-you-want-to-access,-open-file-manager-(nautilus)-and-chose-Other-Locations-at-the-bottom-notice-connect-to-Server-input-box">you are done with host, move to the system form which you want to access, open file manager (nautilus) and chose Other Locations at the bottom notice connect to Server input box<a class="anchor-link" href="#you-are-done-with-host,-move-to-the-system-form-which-you-want-to-access,-open-file-manager-(nautilus)-and-chose-Other-Locations-at-the-bottom-notice-connect-to-Server-input-box">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="b.png"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Enter</span>
-<span class="n">sftp</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">the_IP_of_the_server</span><span class="o">&gt;/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sftp</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">the_IP_of_the_server</span><span class="o">&gt;/</span><span class="n">home</span><span class="o">/&lt;</span><span class="n">username</span><span class="o">&gt;</span>
 </pre></div>
 
 </div>
