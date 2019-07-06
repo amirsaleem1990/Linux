@@ -1,0 +1,5 @@
+1- write python code to file <here we assume file name is: mycode> 
+2- write: chmod +x mycode
+3- mv this file to /bin/
+
+4- nwo execute this file from any where by writing <mycode> #without grater than and less then signs
