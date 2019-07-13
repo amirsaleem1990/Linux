@@ -1,4 +1,3 @@
-
 # pdf book me sy excesises ko screenshot jupyter notebook me dalna tha:
 # 1:
 alias si='xclip -selection clipboard -t image/png -o >'
