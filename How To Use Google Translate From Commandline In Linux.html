@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://www.ostechnix.com/xmlrpc.php">
+<title>How To Use Google Translate From Commandline In Linux - OSTechNix</title>
+<script type="c1072f042ca12200de738cd1-text/javascript">document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+
+<meta name="description" content="Translate Shell is a command line tool that helps you to use Google Translate from commandline in Unix-like operating systems." />
+<link rel="canonical" href="https://www.ostechnix.com/use-google-translate-commandline-linux/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How To Use Google Translate From Commandline In Linux - OSTechNix" />
+<meta property="og:description" content="Translate Shell is a command line tool that helps you to use Google Translate from commandline in Unix-like operating systems." />
+<meta property="og:url" content="https://www.ostechnix.com/use-google-translate-commandline-linux/" />
+<meta property="og:site_name" content="OSTechNix" />
+<meta property="article:publisher" content="https://www.facebook.com/ostechnix/" />
+<meta property="article:tag" content="command line translators" />
+<meta property="article:tag" content="Google translate" />
+<meta property="article:tag" content="Translate Shell" />
+<meta property="article:tag" content="Use google translate in Terminal" />
+<meta property="article:section" content="Command line utilities" />
+<meta property="article:published_time" content="2019-01-22T10:55:24+00:00" />
+<meta property="article:modified_time" content="2019-01-22T11:02:52+00:00" />
+<meta property="og:updated_time" content="2019-01-22T11:02:52+00:00" />
+<meta property="og:image" content="https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate.png" />
+<meta property="og:image:secure_url" content="https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Translate Shell is a command line tool that helps you to use Google Translate from commandline in Unix-like operating systems." />
+<meta name="twitter:title" content="How To Use Google Translate From Commandline In Linux - OSTechNix" />
+<meta name="twitter:site" content="@ostechnix" />
+<meta name="twitter:image" content="https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate.png" />
+<meta name="twitter:creator" content="@ostechnix" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.ostechnix.com/#organization","name":"OSTechNix","url":"https://www.ostechnix.com/","sameAs":["https://www.facebook.com/ostechnix/","https://in.linkedin.com/in/ostechnix","https://twitter.com/ostechnix"],"logo":{"@type":"ImageObject","@id":"https://www.ostechnix.com/#logo","url":"https://www.ostechnix.com/wp-content/uploads/2016/10/OSTechNix_280915-01.png","width":3333,"height":1667,"caption":"OSTechNix"},"image":{"@id":"https://www.ostechnix.com/#logo"}},{"@type":"WebSite","@id":"https://www.ostechnix.com/#website","url":"https://www.ostechnix.com/","name":"OSTechNix","publisher":{"@id":"https://www.ostechnix.com/#organization"},"potentialAction":{"@type":"SearchAction","target":"https://www.ostechnix.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#primaryimage","url":"https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate.png","width":1200,"height":630,"caption":"use google translate from commandline"},{"@type":"WebPage","@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#webpage","url":"https://www.ostechnix.com/use-google-translate-commandline-linux/","inLanguage":"en-US","name":"How To Use Google Translate From Commandline In Linux - OSTechNix","isPartOf":{"@id":"https://www.ostechnix.com/#website"},"primaryImageOfPage":{"@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#primaryimage"},"datePublished":"2019-01-22T10:55:24+00:00","dateModified":"2019-01-22T11:02:52+00:00","description":"Translate Shell is a command line tool that helps you to use Google Translate from commandline in Unix-like operating systems."},{"@type":"Article","@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#article","isPartOf":{"@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#webpage"},"author":{"@id":"https://www.ostechnix.com/#/schema/person/e4f4cd4c175ef6a91695a056cbaed01a"},"headline":"How To Use Google Translate From Commandline In Linux","datePublished":"2019-01-22T10:55:24+00:00","dateModified":"2019-01-22T11:02:52+00:00","commentCount":"1","mainEntityOfPage":{"@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#webpage"},"publisher":{"@id":"https://www.ostechnix.com/#organization"},"image":{"@id":"https://www.ostechnix.com/use-google-translate-commandline-linux/#primaryimage"},"keywords":"command line translators,Google translate,Translate Shell,Use google translate in Terminal","articleSection":"Command line utilities,FAQ,Linux,Linux Basics,Linux Distributions,Opensource,Tips and Tricks,Unix/Linux Beginners,Utilities"},{"@type":["Person"],"@id":"https://www.ostechnix.com/#/schema/person/e4f4cd4c175ef6a91695a056cbaed01a","name":"sk","image":{"@type":"ImageObject","@id":"https://www.ostechnix.com/#authorlogo","url":"https://secure.gravatar.com/avatar/82930172130088777d42141847e45c10?s=96&d=mm&r=g","caption":"sk"},"sameAs":[]}]}</script>
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="OSTechNix &raquo; Feed" href="https://www.ostechnix.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="OSTechNix &raquo; Comments Feed" href="https://www.ostechnix.com/comments/feed/" />
+<link id="hu-user-gfont" href="//fonts.googleapis.com/css?family=Ubuntu:400,400italic,300italic,300,700&subset=latin,latin-ext" rel="stylesheet" type="text/css"><link rel="alternate" type="application/rss+xml" title="OSTechNix &raquo; How To Use Google Translate From Commandline In Linux Comments Feed" href="https://www.ostechnix.com/use-google-translate-commandline-linux/feed/" />
+<script type="c1072f042ca12200de738cd1-text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.ostechnix.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='font-customizer-style-css' href='https://www.ostechnix.com/wp-content/themes/hueman-pro/addons/pro/wfc/front/assets/css/font_customizer.min.css?ver=3.0.8' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css' href='https://www.ostechnix.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-swipebox-css' href='https://www.ostechnix.com/wp-content/plugins/responsive-lightbox/assets/swipebox/css/swipebox.min.css?ver=2.1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='hph-front-style-css' href='https://www.ostechnix.com/wp-content/themes/hueman-pro/addons/assets/front/css/hph-front.min.css?ver=1.1.24' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-main-style-css' href='https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/css/main.min.css?ver=1.1.24' type='text/css' media='all' />
+<style id='hueman-main-style-inline-css' type='text/css'>
+body { font-family:'Ubuntu', Arial, sans-serif;font-size:1.00rem }@media only screen and (min-width: 720px) {
+        .nav > li { font-size:1.00rem; }
+      }::selection { background-color: #3b8dbd; }
+::-moz-selection { background-color: #3b8dbd; }a,a+span.hu-external::after,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #3b8dbd; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #3b8dbd; }.post-format .format-container { border-color: #3b8dbd; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #3b8dbd!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #82b965; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #82b965; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #82b965; }
+.post-comments::before { border-right-color: #82b965; }
+      .search-expand,
+              #nav-topbar.nav-container { background-color: #00aeef}@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: #00aeef; }
+              }.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: #00aeef; background-color: rgba(0,174,239,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #00aeef; background-color: rgba(0,174,239,0.95) }#header { background-color: #eaeaea; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #eaeaea; }
+}
+        .is-scrolled #header #nav-mobile { background-color: #454e5c; background-color: rgba(69,78,92,0.90) }#nav-header.nav-container, #main-header-search .search-expand { background-color: #ef4423; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #ef4423; }
+}
+        .site-title a img { max-height: 120px; }body { background-color: #eaeaea; }
+</style>
+<link rel='stylesheet' id='theme-stylesheet-css' href='https://www.ostechnix.com/wp-content/themes/ostechnix_child_theme/style.css?ver=1.1.24' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-font-awesome-css' href='https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/css/font-awesome.min.css?ver=1.1.24' type='text/css' media='all' />
+<link rel='stylesheet' id='social-logos-css' href='https://www.ostechnix.com/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css' href='https://www.ostechnix.com/wp-content/plugins/jetpack/css/jetpack.css?ver=7.5.2' type='text/css' media='all' />
+<script type="c1072f042ca12200de738cd1-text/javascript">if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/plugins/responsive-lightbox/assets/swipebox/js/jquery.swipebox.min.js?ver=2.1.0'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/plugins/responsive-lightbox/assets/infinitescroll/infinite-scroll.pkgd.min.js?ver=5.2.2'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+/* <![CDATA[ */
+var rlArgs = {"script":"swipebox","selector":"lightbox","customEvents":"","activeGalleries":"1","animation":"1","hideCloseButtonOnMobile":"0","removeBarsOnMobile":"0","hideBars":"1","hideBarsDelay":"5000","videoMaxWidth":"1080","useSVG":"1","loopAtEnd":"0","woocommerce_gallery":"0","ajaxurl":"https:\/\/www.ostechnix.com\/wp-admin\/admin-ajax.php","nonce":"d0085fe339"};
+/* ]]> */
+</script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/plugins/responsive-lightbox/js/front.js?ver=2.1.0'></script>
+<link rel='https://api.w.org/' href='https://www.ostechnix.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.ostechnix.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.ostechnix.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 5.2.2" />
+<link rel='shortlink' href='https://www.ostechnix.com/?p=6438' />
+<link rel="alternate" type="application/json+oembed" href="https://www.ostechnix.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.ostechnix.com%2Fuse-google-translate-commandline-linux%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.ostechnix.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.ostechnix.com%2Fuse-google-translate-commandline-linux%2F&#038;format=xml" />
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="c1072f042ca12200de738cd1-text/javascript"></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6701402139964678",
+    enable_page_level_ads: true
+  });
+</script><style type='text/css'>img#wpstats{display:none}</style><!--[if lt IE 9]>
+<script src="https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/js/ie/html5shiv-printshiv.min.js"></script>
+<script src="https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/js/ie/selectivizr.js"></script>
+<![endif]-->
+<link rel="icon" href="https://www.ostechnix.com/wp-content/uploads/2016/10/cropped-favicon-500x500-150x150.png" sizes="32x32" />
+<link rel="icon" href="https://www.ostechnix.com/wp-content/uploads/2016/10/cropped-favicon-500x500-300x300.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.ostechnix.com/wp-content/uploads/2016/10/cropped-favicon-500x500-300x300.png" />
+<meta name="msapplication-TileImage" content="https://www.ostechnix.com/wp-content/uploads/2016/10/cropped-favicon-500x500-300x300.png" />
+
+<script type="c1072f042ca12200de738cd1-text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75259810-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<style type="text/css" id="wp-custom-css">
+			/*
+You can add your own CSS here.
+
+Click the help icon above to learn more.
+
+Use this field to test small chunks of CSS code. For important CSS customizations, it is recommended to modify the style.css file of a child theme.
+http//codex.wordpress.org/Child_Themes
+*/
+		</style>
+<style id="grids-css" type="text/css">
+                .post-list .grid-item {float: left; }
+                .cols-1 .grid-item { width: 100%; }
+                .cols-2 .grid-item { width: 50%; }
+                .cols-3 .grid-item { width: 33.3%; }
+                .cols-4 .grid-item { width: 25%; }
+                @media only screen and (max-width: 719px) {
+                      #grid-wrapper .grid-item{
+                        width: 100%;
+                      }
+                }
+            </style>
+</head>
+<body data-rsssl=1 class="post-template-default single single-post postid-6438 single-format-image wp-custom-logo wp-embed-responsive col-2cl full-width topbar-enabled header-desktop-sticky gecko">
+<div id="wrapper">
+<header id="header" class="both-menus-mobile-on two-mobile-menus both_menus header-ads-desktop header-ads-mobile topbar-transparent no-header-img">
+<nav class="nav-container group desktop-menu desktop-sticky " id="nav-topbar" data-menu-id="header-1">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="topbar-toggle-down">
+<i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="Expand menu"></i>
+<i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="Collapse menu"></i>
+</div>
+<div class="nav-wrap container">
+<ul id="menu-top-menu" class="nav container-inner group"><li id="menu-item-9" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-9"><a href="https://www.ostechnix.com/">Home</a></li>
+<li id="menu-item-11" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-11"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/opensource/">Open Source</a></li>
+<li id="menu-item-10" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/technology/">Technology</a></li>
+<li id="menu-item-12" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-12"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/linux/">Linux</a>
+<ul class="sub-menu">
+<li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-14"><a href="https://www.ostechnix.com/category/linux-basics/">Linux Basics</a></li>
+<li id="menu-item-15" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-15"><a href="https://www.ostechnix.com/category/linux_distributions/">Linux Distributions</a>
+<ul class="sub-menu">
+<li id="menu-item-16" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a href="https://www.ostechnix.com/category/linux_distributions/arch-linux/">Arch Linux</a></li>
+<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-17"><a href="https://www.ostechnix.com/category/linux_distributions/centos/">CentOS</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="https://www.ostechnix.com/category/linux_distributions/debian/">Debian</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19"><a href="https://www.ostechnix.com/category/linux_distributions/fedora/">Fedora</a></li>
+<li id="menu-item-20" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-20"><a href="https://www.ostechnix.com/category/linux_distributions/linuxmint/">Linux Mint</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-21"><a href="https://www.ostechnix.com/category/linux_distributions/mageia/">Mageia</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-22"><a href="https://www.ostechnix.com/category/linux_distributions/mandrake/">Mandrake</a></li>
+<li id="menu-item-23" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-23"><a href="https://www.ostechnix.com/category/linux_distributions/mandriva/">Mandriva</a></li>
+<li id="menu-item-24" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24"><a href="https://www.ostechnix.com/category/linux_distributions/opensuse/">openSUSE</a></li>
+<li id="menu-item-929" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-929"><a href="https://www.ostechnix.com/category/linux_distributions/red-hat-enterprise-linux/">Red Hat Enterprise Linux</a></li>
+<li id="menu-item-930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-930"><a href="https://www.ostechnix.com/category/linux_distributions/scientific-linux/">Scientific Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-13"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/unix/">Unix</a>
+<ul class="sub-menu">
+<li id="menu-item-931" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-931"><a href="https://www.ostechnix.com/category/unix/freebsd/">FreeBSD</a></li>
+</ul>
+</li>
+<li id="menu-item-5925" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5925"><a target="_blank" rel="noopener noreferrer" href="http://ostechnix.tradepub.com/category/information-technology/1207/">Free Videos and EBooks</a></li>
+<li id="menu-item-7430" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7430"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/donate/">Donate</a></li>
+</ul> </div>
+<div id="topbar-header-search" class="container">
+<div class="container-inner">
+<div class="toggle-search"><i class="fas fa-search"></i></div>
+<div class="search-expand">
+<div class="search-expand-inner"><form method="get" class="searchform themeform" action="https://www.ostechnix.com/">
+<div>
+<input type="text" class="search" name="s" onblur="if (!window.__cfRLUnblockHandlers) return false; if(this.value=='')this.value='To search type and hit enter';" onfocus="if (!window.__cfRLUnblockHandlers) return false; if(this.value=='To search type and hit enter')this.value='';" value="To search type and hit enter" data-cf-modified-c1072f042ca12200de738cd1-="" />
+</div>
+</form></div>
+</div>
+</div>
+</div>
+</nav>
+<div class="container group">
+<div class="container-inner">
+<div class="group pad central-header-zone">
+<div class="logo-tagline-group">
+<p class="site-title"><a class="custom-logo-link" href="https://www.ostechnix.com/" rel="home" title="OSTechNix | Home page"><img src="https://www.ostechnix.com/wp-content/uploads/2016/12/cropped-OSTechNix.png" alt="OSTechNix" width="250" height="100" " /></a></p>
+</div>
+<div id="header-widgets">
+<div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="c1072f042ca12200de738cd1-text/javascript"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6701402139964678" data-ad-slot="3238338142"></ins>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div> </div>
+</div>
+<nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-2">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="nav-wrap container">
+<ul id="menu-top-menu-1" class="nav container-inner group"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-9"><a href="https://www.ostechnix.com/">Home</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-11"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/opensource/">Open Source</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/technology/">Technology</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-12"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/linux/">Linux</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-14"><a href="https://www.ostechnix.com/category/linux-basics/">Linux Basics</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-15"><a href="https://www.ostechnix.com/category/linux_distributions/">Linux Distributions</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a href="https://www.ostechnix.com/category/linux_distributions/arch-linux/">Arch Linux</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-17"><a href="https://www.ostechnix.com/category/linux_distributions/centos/">CentOS</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="https://www.ostechnix.com/category/linux_distributions/debian/">Debian</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19"><a href="https://www.ostechnix.com/category/linux_distributions/fedora/">Fedora</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-20"><a href="https://www.ostechnix.com/category/linux_distributions/linuxmint/">Linux Mint</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-21"><a href="https://www.ostechnix.com/category/linux_distributions/mageia/">Mageia</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-22"><a href="https://www.ostechnix.com/category/linux_distributions/mandrake/">Mandrake</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-23"><a href="https://www.ostechnix.com/category/linux_distributions/mandriva/">Mandriva</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24"><a href="https://www.ostechnix.com/category/linux_distributions/opensuse/">openSUSE</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-929"><a href="https://www.ostechnix.com/category/linux_distributions/red-hat-enterprise-linux/">Red Hat Enterprise Linux</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-930"><a href="https://www.ostechnix.com/category/linux_distributions/scientific-linux/">Scientific Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-13"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/category/unix/">Unix</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-931"><a href="https://www.ostechnix.com/category/unix/freebsd/">FreeBSD</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5925"><a target="_blank" rel="noopener noreferrer" href="http://ostechnix.tradepub.com/category/information-technology/1207/">Free Videos and EBooks</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7430"><a target="_blank" rel="noopener noreferrer" href="https://www.ostechnix.com/donate/">Donate</a></li>
+</ul> </div>
+</nav>
+</div>
+</div>
+</header>
+
+<div class="container" id="page">
+<div class="container-inner">
+<div class="main">
+<div class="main-inner group">
+<section class="content">
+<div class="page-title pad group">
+<ul class="meta-single group">
+<li class="category"><a href="https://www.ostechnix.com/category/command-line-utilities/" rel="category tag">Command line utilities</a> <span>/</span> <a href="https://www.ostechnix.com/category/faq/" rel="category tag">FAQ</a> <span>/</span> <a href="https://www.ostechnix.com/category/linux/" rel="category tag">Linux</a> <span>/</span> <a href="https://www.ostechnix.com/category/linux-basics/" rel="category tag">Linux Basics</a> <span>/</span> <a href="https://www.ostechnix.com/category/linux_distributions/" rel="category tag">Linux Distributions</a> <span>/</span> <a href="https://www.ostechnix.com/category/opensource/" rel="category tag">Opensource</a> <span>/</span> <a href="https://www.ostechnix.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a> <span>/</span> <a href="https://www.ostechnix.com/category/unixlinux-beginners/" rel="category tag">Unix/Linux Beginners</a> <span>/</span> <a href="https://www.ostechnix.com/category/utilities/" rel="category tag">Utilities</a></li>
+</ul>
+</div>
+<div class="pad group">
+<article class="post-6438 post type-post status-publish format-image has-post-thumbnail hentry category-command-line-utilities category-faq category-linux category-linux-basics category-linux_distributions category-opensource category-tips-and-tricks category-unixlinux-beginners category-utilities tag-command-line-translators tag-google-translate tag-translate-shell tag-use-google-translate-in-terminal post_format-post-format-image">
+<div class="post-inner group">
+<h1 class="post-title entry-title">How To Use Google Translate From Commandline In Linux</h1>
+<p class="post-byline">
+by <span class="vcard author">
+<span class="fn"><a href="https://www.ostechnix.com/author/sk/" title="Posts by sk" rel="author">sk</a></span>
+</span>
+&middot;
+Published <time class="published" datetime="January 22, 2019">January 22, 2019</time>
+&middot; Updated <time class="updated" datetime="January 22, 2019">January 22, 2019</time>
+</p>
+<div class="post-format">
+<div class="image-container">
+<img width="720" height="340" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate-720x340.png" class="attachment-thumb-large size-thumb-large wp-post-image" alt="use google translate from commandline" data-srcset="https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate-720x340.png 720w, https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate-520x245.png 520w" data-sizes="(max-width: 720px) 100vw, 720px" /> </div>
+</div>
+<div class="clear"></div>
+<div class="entry themeform share">
+<div class="entry-inner">
+<p>Howdy fellow Linux users! I just stumbled upon this cool utility, and I couldn&#8217;t resist myself to share it <span id="GingerWidget-correction-0" class="correction alternate">with</span> you all. Meet <strong>Translate Shell</strong> (formerly known as <strong>Google Translate CLI</strong>), a command-line translator powered by popular translation engines such as <strong>Google Translate</strong> (default), <strong>Bing Translator</strong>, <strong>Yandex.Translate</strong> and <strong>Apertium</strong>. It allows you to access one of these translation engines from your terminal. Google Translate is my first preferred source to translate English to Tamil and vice versa. Since I am not a native English speaker, I mostly depend on Google Translate for both my professional and personal use. Translate Shell utility is very useful and handy when it comes to translate words from English to your native language and vice versa. It is a cross-platform utility, so it will work on most modern operating systems, including GNU/Linux, FreeBSD, MS Windows, and Mac OS X.</p>
+<div></div>
+<div id="exam_announcement"><i class="fa fa-book" style="color: #28557a; font-size: 20px;"></i><b>Download</b> &#8211; <a style="text-decoration: underline;" href="https://ostechnix.tradepub.com/free/w_makb16/prgm.cgi?a=1" target="_blank" rel="noopener"><strong>Free Cheat Sheet: &#8220;25 Google Search Hacks to Make Life Easier&#8221;</strong></a></div>
+<p>In this tutorial, we will be discussing how to translate a word, a sentence, or even a webpage from your preferred language to English and vice versa. Let&#8217;s get started!</p>
+<h4>Install Translate Shell</h4>
+<p>Translate Shell can be installed in three ways.</p>
+<p><strong>Method1 &#8211; Using Package manager</strong></p>
+<p>Translate Shell is available in the official repositories of popular Linux operating systems.</p>
+<p>On Arch Linux and derivatives:</p>
+<pre>$ sudo pacman -S translate-shell
+</pre>
+<p>On Debian, Ubuntu, Linux Mint:</p>
+<pre>$ sudo apt-get install translate-shell
+</pre>
+<p>On Fedora:</p>
+<pre>$ sudo dnf install translate-shell
+</pre>
+<p>If it is not available in the official repositories, you can install it as described in any one of the following two methods.</p>
+<p><strong>Method2 &#8211; Direct download<br />
+</strong></p>
+<p>Download the self-contained executable file, make it as executable. move it to your $PATH and start using it.</p>
+<pre>$ wget git.io/trans</pre>
+<pre>$ chmod +x trans</pre>
+<pre>$ sudo mv trans /usr/local/bin/</pre>
+<p><strong>Method3 &#8211; Install from source<br />
+</strong></p>
+<p>Clone Translate Shell git repository, compile and install it as shown below.</p>
+<pre>$ git clone https://github.com/soimort/translate-shell
+</pre>
+<pre>$ cd translate-shell/
+</pre>
+<pre>$ make</pre>
+<pre>$ sudo make install</pre>
+<h4>Use Google Translate From Commandline In Linux using &#8220;Translate Shell&#8221;</h4>
+<p><strong>1. Translate a word/sentence</strong></p>
+<p>To translate a word, just type:</p>
+<pre>$ trans வணக்கம்</pre>
+<p><strong>Sample output:</strong></p>
+<pre>வணக்கம்
+(Vaṇakkam)
+
+Hello
+
+Translations of வணக்கம்
+[ தமிழ் -&gt; English ]
+
+வணக்கம்
+ Hello, Greetings, Good, Hi, Salute</pre>
+<p>As you see in the above output, I have translated a Tamil word called &#8220;வணக்கம்&#8221; (Vanakkam), which is used to greet people, to English. By default, Translate Shell will translate the given words/sentences to English.</p>
+<p>To translate a whole sentence at once, Just type &#8216;trans&#8217; command followed by the sentence within quotes like below.</p>
+<pre>$ trans "எப்படி இருக்கீங்க?"</pre>
+<p><strong>Sample output:</strong></p>
+<pre>எப்படி இருக்கீங்க?
+(Eppaṭi irukkīṅka?)
+
+How are you?
+
+Translations of எப்படி இருக்கீங்க?
+[ தமிழ் -&gt; English ]
+
+எப்படி இருக்கீங்க?
+ How are you?</pre>
+<p>As you see in the above example, Translate Shell gives you the detailed translation of the given sentence.</p>
+<p>When translating a sentence, put them inside quotes. If you don&#8217;t put them inside the quotes, each word in the sentence will be translated alone like below.</p>
+<pre>$ trans எப்படி இருக்கீங்க?
+எப்படி null
+(null Eppaṭi)
+
+How null
+/null null/
+
+Definitions of எப்படி null
+[ தமிழ் -&gt; English ]
+
+adverb
+how
+எப்படி
+இருக்கீங்க? null
+(null Irukkīṅka?)
+
+Are you? null
+/null null/
+
+Translations of இருக்கீங்க? null
+[ தமிழ் -&gt; English ]
+
+இருக்கீங்க ?
+Are you?</pre>
+<p>To get the brief translation of the given sentence, type the sentence with <strong>-brief</strong> parameter as shown below.</p>
+<pre>$ trans -brief "எப்படி இருக்கீங்க?"</pre>
+<p>The sample output would be:</p>
+<pre>How are you?</pre>
+<p>This above command will just display the actual translation.</p>
+<p><strong>2. Translate the contents of a file<br />
+</strong></p>
+<p>I want to translate a whole text file to English, is it possible? Yes you can!</p>
+<p>Let us see the contents of text file</p>
+<pre>$ cat greet.txt</pre>
+<p>Here is what I have in the text file.</p>
+<pre>வணக்கம். எப்படி இருக்கீங்க?</pre>
+<p>To translate this text file, just type:</p>
+<pre>$ trans file:///home/sk/greet.txt</pre>
+<p><strong>Sample output:</strong></p>
+<pre>Hello. How are you?</pre>
+<p>Cool isn&#8217;t it?</p>
+<p><strong>3. Find language codes</strong></p>
+<p>As you know already, Google translate supports over 100 languages. So it is important to know the language codes to translate sentences to other languages.</p>
+<p>To display the language codes, type:</p>
+<pre>$ trans -R</pre>
+<p>Sample output:</p>
+<div id="attachment_16374" style="width: 1376px" class="wp-caption aligncenter"><a href="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2.png" data-rel="lightbox-image-0" data-rl_title="" data-rl_caption="" title=""><img aria-describedby="caption-attachment-16374" class="size-full wp-image-16374" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2.png" alt="translate shell 1" width="1366" height="725" data-srcset="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2.png 1366w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2-300x159.png 300w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2-768x408.png 768w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2-1024x543.png 1024w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-1-2-520x276.png 520w" data-sizes="(max-width: 1366px) 100vw, 1366px" /></a><p id="caption-attachment-16374" class="wp-caption-text">Language codes</p></div>
+<p>Just pick any language of your choice and translate the sentence instantly. You don&#8217;t need a web browser. Everything will be displayed right from your Terminal.</p>
+<p><strong>4. Translate to one or more languages<br />
+</strong></p>
+<p>As you noticed, all the translations that we have done so far are from other languages (Tamil in my case) to English. If you want to change the target language, type <strong>:(colon)</strong> followed by specific language code.</p>
+<p>Say for example, to translate a word to <strong>Hindi</strong>, just type:</p>
+<pre>$ trans :hi வணக்கம்</pre>
+<p>This command will translate the Tamil word &#8220;வணக்கம்&#8221; to Hindi language.</p>
+<p><strong>Sample output:</strong></p>
+<pre>வணக்கம்
+(Vaṇakkam)
+
+नमस्ते
+(namaste)
+
+Translations of வணக்கம்
+[ தமிழ் -&gt; हिन्दी ]
+
+வணக்கம்
+ नमस्ते, करें Hello, नमस्कार, Hello</pre>
+<p>We can also translate words to multiple languages in one go. To do so, use use a plus sign &#8220;<code>+</code>&#8221; as the delimiter. For instance, the following command will translate the given word to Hindi and Telugu.</p>
+<pre>$ trans :hi+te வணக்கம்
+வணக்கம் null
+(null Vaṇakkam)
+
+नमस्ते null
+(null namaste)
+
+Translations of வணக்கம் null
+[ தமிழ் -&gt; हिन्दी ]
+
+வணக்கம்
+नमस्ते, को नमस्कार, Hello, नमस्कार
+
+வணக்கம் null
+(null Vaṇakkam)
+
+హలో null
+(null Halō)
+
+Translations of வணக்கம் null
+[ தமிழ் -&gt; తెలుగు ]
+
+வணக்கம்
+హలో, h- ఇ- llo, కిట్టి, కు హలో</pre>
+<p>Alternatively, you can use <strong>-t</strong> option (instead of colon) to specify the target language(s). This command translates the given word to Hindi, Telugu and Kannada.</p>
+<pre>$ trans -t hi+te+kn வணக்கம்</pre>
+<p>To translate a sentence to multiple languages, quote the sentence like one argument as shown below.</p>
+<pre>$ trans :hi+te+kn "எப்படி இருக்கீங்க?"
+எப்படி இருக்கீங்க? null
+(null Eppaṭi irukkīṅka?)
+
+आप कैसे हैं null
+(null aap kaise hain)
+
+Translations of எப்படி இருக்கீங்க? null
+[ தமிழ் -&gt; हिन्दी ]
+
+எப்படி இருக்கீங்க?
+आप कैसे हैं, आप कैसे हैं?
+
+எப்படி இருக்கீங்க? null
+(null Eppaṭi irukkīṅka?)
+
+మీరు ఎలా ఉన్నారు null
+(null Mīru elā unnāru)
+
+Translations of எப்படி இருக்கீங்க? null
+[ தமிழ் -&gt; తెలుగు ]
+
+எப்படி இருக்கீங்க?
+మీరు ఎలా ఉన్నారు, మీరు ఎలా ఉన్నారు?
+
+எப்படி இருக்கீங்க? null
+(null Eppaṭi irukkīṅka?)
+
+ನೀನು ಹೇಗೆ? null
+(null Nīnu hēge?)
+
+Translations of எப்படி இருக்கீங்க? null
+[ தமிழ் -&gt; ಕನ್ನಡ ]
+
+எப்படி இருக்கீங்க?
+ನೀನು ಹೇಗೆ?, ಹೇಗಿರುವಿರಿ?</pre>
+<p>Or, use -t option.</p>
+<pre>$ trans -t hi+te+kn "எப்படி இருக்கீங்க?"</pre>
+<p><strong>5. Translate from a specific language</strong></p>
+<p>Sometimes, Google translate may wrongly identify the source text as some other language than you expected. In such cases, you need to specify the source language explicitly like below.</p>
+<pre>$ trans ta: வணக்கம்
+வணக்கம் null
+(null Vaṇakkam)
+
+Hello null
+/null null/
+
+Translations of வணக்கம் null
+[ தமிழ் -&gt; English ]
+
+வணக்கம்
+Hello, Greetings, Good, Hi, Salute</pre>
+<p>Please mind that you must put the colon after the language code, not before. If you put the colon before language, it will be recognized as target language.</p>
+<p>Alternatively, just use <strong>-s</strong> option (instead of colon) to specify the source language as shown below.</p>
+<pre>$ trans -s ta வணக்கம்</pre>
+<p><strong>6. Interactive Translation</strong></p>
+<p>Translate Shell can also be used as interactive translator. That means you can translate line by line interactively.</p>
+<p>To do so, use -shell option like below.</p>
+<pre>$ trans -shell -brief
+Translate Shell
+(:q to quit)
+&gt; வணக்கம்
+Hello null
+&gt; எப்படி இருக்கீங்க?
+How are you? null
+&gt;</pre>
+<p>Press <strong>Ctrl+c</strong> to quit the interactive translation.</p>
+<p><strong>7. Translate a website</strong></p>
+<p>What about translating a website? That&#8217;s also possible.</p>
+<pre>$ trans https://www.ostechnix.com/</pre>
+<p>This command will open a new browser window and translate the website into English. Since the above website is already in English, It just displayed:</p>
+<pre>The page you have attempted to translate is already in English.</pre>
+<p>To translate ostechnix.com site to some other language, for example Tamil, just type:</p>
+<pre>$ trans :ta https://www.ostechnix.com/</pre>
+<div id="attachment_16375" style="width: 1376px" class="wp-caption aligncenter"><a href="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2.png" data-rel="lightbox-image-1" data-rl_title="" data-rl_caption="" title=""><img aria-describedby="caption-attachment-16375" class="size-full wp-image-16375" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2.png" alt="translate shell 2" width="1366" height="685" data-srcset="https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2.png 1366w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2-300x150.png 300w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2-768x385.png 768w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2-1024x513.png 1024w, https://www.ostechnix.com/wp-content/uploads/2017/01/translate-shell-2-520x261.png 520w" data-sizes="(max-width: 1366px) 100vw, 1366px" /></a><p id="caption-attachment-16375" class="wp-caption-text">Translate a website from command line</p></div>
+<p><strong>8. Dictionary mode</strong></p>
+<p>Google translate can also be used as a dictionary. To know the meaning of a given word, run:</p>
+<pre>$ trans :en வணக்கம்
+வணக்கம் null
+(null Vaṇakkam)
+
+Hello null
+/null null/
+
+Translations of வணக்கம் null
+[ தமிழ் -&gt; English ]
+
+வணக்கம்
+    Hello, Greetings, Good, Hi, Salute</pre>
+<p>To enable dictionary mode no matter whether the source language and the target language are identical, use the <strong>-d</strong> option like below.</p>
+<pre>$ trans -d te: வணக்கம்
+</pre>
+<p><strong>9. Language identification</strong></p>
+<p>To identify the language of a given text, use <strong>-id</strong> option.</p>
+<pre>$ trans -id வணக்கம்
+தமிழ்
+Name Tamil
+Family Dravidian
+Writing system Tamil
+Code ta
+ISO 639-3 tam
+SIL http://www-01.sil.org/iso639-3/documentation.asp?id=tam
+Glottolog http://glottolog.org/resource/languoid/id/tami1289
+Wikipedia http://en.wikipedia.org/wiki/Tamil_language</pre>
+<p>As you can see in the above output, I have used Tamil language.</p>
+<p><strong>10. Text-to-Speech</strong></p>
+<p>This another cool thing that I liked in Translate Shell. Just like the Google translate web service, we can listen to the translation and original text. Put your headphone on and type the language of your choice to listen.</p>
+<p>To listen to the translation, run:</p>
+<pre>$ trans -b -p :ta வணக்கம்</pre>
+<p>To listen to the original text, run:</p>
+<pre>$ trans -sp "எப்படி இருக்கீங்க?"</pre>
+<p><strong>11. Terminal paging</strong></p>
+<p>Sometimes, the contents of translation might be too much for display in one screen. In such cases, use -v option to display the translation result page by page.</p>
+<pre>$ trans -d -v word
+</pre>
+<p><strong>12. Getting help</strong></p>
+<p>To display help section, run:</p>
+<pre>$ trans --help</pre>
+<p>To display Translate shell man page:</p>
+<pre>$ trans -M</pre>
+<p><strong>Note:</strong> Here M is capital letter.</p>
+<p>And, that&#8217;s all for now. You know how to use Google translate from command line on Unix-like systems. As you can see, using Google translate service from command line is easy, kind of fun and interesting.</p>
+<p>More good stuffs to come. Stay tuned!</p>
+<p>Cheers!</p>
+<p><strong>Resource: </strong></p>
+<ul>
+<li><a href="https://github.com/soimort/translate-shell" target="_blank" rel="noopener"><strong>Translate Shell on GitHub</strong></a></li>
+</ul>
+<div class="after-post-box">
+<p style="text-align: center;"><strong style="color: #ef4423; font-size: 20px;">Thanks for stopping by! </strong></p>
+<h4>Help us to help you:</h4>
+<ul>
+<li>Subscribe to our Email Newsletter : <strong><a title="Subscribe to our Email newsletter" href="http://feedburner.google.com/fb/a/mailverify?uri=ostechnix" target="_blank" rel="nofollow noopener noreferrer">Sign Up Now</a></strong></li>
+<li>Support OSTechNix : <strong><a title="Donate Via PayPal" href="https://www.paypal.me/ostechnix" target="_blank" rel="nofollow noopener noreferrer">Donate Via PayPal</a></strong></li>
+<li>Download free E-Books and Videos : <a href="http://ostechnix.tradepub.com/category/information-technology/1207/" target="_blank" rel="noopener noreferrer"><strong>OSTechNix on TradePub</strong></a></li>
+<li>Connect with us: <a href="https://www.facebook.com/ostechnix/" target="_blank" rel="noopener noreferrer"><strong>Facebook</strong></a> | <a href="https://twitter.com/ostechnix" target="_blank" rel="noopener noreferrer"><strong>Twitter</strong></a> | <strong><a href="https://plus.google.com/+SenthilkumarP/" target="_blank" rel="noopener noreferrer">Google Plus</a> </strong>|<strong> <a href="https://www.linkedin.com/in/ostechnix" target="_blank" rel="noopener noreferrer">LinkedIn</a> </strong>|<strong> <a href="http://feeds.feedburner.com/Ostechnix" target="_blank" rel="noopener noreferrer">RSS feeds</a></strong></li>
+</ul>
+<p style="text-align: center;"><strong style="color: #ef4423; font-size: 20px;">Have a Good day!!</strong></p>
+</div>
+<div class="widget_text awac-wrapper"><div class="widget_text awac widget custom_html-2"><div class="textwidget custom-html-widget"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="c1072f042ca12200de738cd1-text/javascript"></script>
+<ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-6701402139964678" data-ad-slot="4635513743"></ins>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-6438" class="share-twitter sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-6438" class="share-facebook sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-6438" class="share-linkedin sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=pocket" target="_blank" title="Click to share on Pocket"><span>Pocket</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow noopener noreferrer" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=jetpack-whatsapp" target="_blank" title="Click to share on WhatsApp"><span>WhatsApp</span></a></li><li class="share-telegram"><a rel="nofollow noopener noreferrer" data-shared="" class="share-telegram sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=telegram" target="_blank" title="Click to share on Telegram"><span>Telegram</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://www.ostechnix.com/use-google-translate-commandline-linux/#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-end"></li></ul></div></div></div> <nav class="pagination group">
+</nav>
+</div>
+<div class="sharrre-container no-counter">
+<span>Share</span>
+<div id="twitter" data-url="https://www.ostechnix.com/use-google-translate-commandline-linux/" data-text="How To Use Google Translate From Commandline In Linux" data-title="Tweet"><a class="box" href="#"><div class="count" href="#"><i class="fas fa-plus"></i></div><div class="share"><i class="fab fa-twitter"></i></div></a></div>
+<div id="facebook" data-url="https://www.ostechnix.com/use-google-translate-commandline-linux/" data-text="How To Use Google Translate From Commandline In Linux" data-title="Like"></div>
+<div id="linkedin" data-url="https://www.ostechnix.com/use-google-translate-commandline-linux/" data-text="How To Use Google Translate From Commandline In Linux" data-title="Publish on Linked In"></div>
+</div>
+<style type="text/css"></style>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+  	// Sharrre
+  	jQuery( function($) {
+      //<temporary>
+      $('head').append( $( '<style>', { id : 'hide-sharre-count', type : 'text/css', html:'.sharrre-container.no-counter .box .count {display:none;}' } ) );
+      //</temporary>
+                		$('#twitter').sharrre({
+        			share: {
+        				twitter: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-twitter"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+        			buttons: { twitter: {via: 'ostechnix'}},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('twitter');
+        			}
+        		});
+            		            $('#facebook').sharrre({
+        			share: {
+        				facebook: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-facebook-square"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+              buttons:{layout: 'box_count'},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('facebook');
+        			}
+        		});
+                                    $('#linkedin').sharrre({
+              share: {
+                linkedin: true
+              },
+              template: '<a class="box" href="#" rel="nofollow"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-linkedin"></i></div></a>',
+              enableHover: false,
+              enableTracking: true,
+              buttons: {
+              linkedin: {
+                description: 'How To Use Google Translate From Commandline In Linux',media: 'https://www.ostechnix.com/wp-content/uploads/2017/01/google-translate.png'                }
+              },
+              click: function(api, options){
+                api.simulateClick();
+                api.openPopup('linkedin');
+              }
+            });
+        
+    		
+    			// Scrollable sharrre bar, contributed by Erik Frye. Awesome!
+    			var $_shareContainer = $(".sharrre-container"),
+    			    $_header         = $('#header'),
+    			    $_postEntry      = $('.entry'),
+        			$window          = $(window),
+        			startSharePosition = $_shareContainer.offset(),//object
+        			contentBottom    = $_postEntry.offset().top + $_postEntry.outerHeight(),
+        			topOfTemplate    = $_header.offset().top,
+              topSpacing       = _setTopSpacing();
+
+          //triggered on scroll
+    			shareScroll = function(){
+      				var scrollTop     = $window.scrollTop() + topOfTemplate,
+      				    stopLocation  = contentBottom - ($_shareContainer.outerHeight() + topSpacing);
+
+              $_shareContainer.css({position : 'fixed'});
+
+      				if( scrollTop > stopLocation ){
+      					  $_shareContainer.css( { position:'relative' } );
+                  $_shareContainer.offset(
+                      {
+                        top: contentBottom - $_shareContainer.outerHeight(),
+                        left: startSharePosition.left,
+                      }
+                  );
+      				}
+      				else if (scrollTop >= $_postEntry.offset().top - topSpacing){
+      					 $_shareContainer.css( { position:'fixed',top: '100px' } );
+                 $_shareContainer.offset(
+                      {
+                        //top: scrollTop + topSpacing,
+                        left: startSharePosition.left,
+                      }
+                  );
+      				} else if (scrollTop < startSharePosition.top + ( topSpacing - 1 ) ) {
+      					 $_shareContainer.css( { position:'relative' } );
+                 $_shareContainer.offset(
+                      {
+                        top: $_postEntry.offset().top,
+                        left:startSharePosition.left,
+                      }
+                  );
+      				}
+    			},
+
+          //triggered on resize
+    			shareMove = function() {
+      				startSharePosition = $_shareContainer.offset();
+      				contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+      				topOfTemplate = $_header.offset().top;
+      				_setTopSpacing();
+    			};
+
+    			/* As new images load the page content body gets longer. The bottom of the content area needs to be adjusted in case images are still loading. */
+    			setTimeout( function() {
+    				  contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+    			}, 2000);
+
+          function _setTopSpacing(){
+              var distanceFromTop  = 20;
+
+              if( $window.width() > 1024 ) {
+                topSpacing = distanceFromTop + $('.nav-wrap').outerHeight();
+              } else {
+                topSpacing = distanceFromTop;
+              }
+              return topSpacing;
+          }
+
+          //setup event listeners
+          $window.scroll( _.throttle( function() {
+              if ( $window.width() > 719 ) {
+                  shareScroll();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+          $window.resize( _.debounce( function() {
+              if ( $window.width() > 719 ) {
+                  shareMove();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+    		
+  	});
+</script>
+<div class="clear"></div>
+</div>
+</div>
+</article>
+<div class="clear"></div>
+<p class="post-tags"><span>Tags:</span> <a href="https://www.ostechnix.com/tag/command-line-translators/" rel="tag">command line translators</a><a href="https://www.ostechnix.com/tag/google-translate/" rel="tag">Google translate</a><a href="https://www.ostechnix.com/tag/translate-shell/" rel="tag">Translate Shell</a><a href="https://www.ostechnix.com/tag/use-google-translate-in-terminal/" rel="tag">Use google translate in Terminal</a></p>
+<ul class="post-nav group">
+<li class="next"><a href="https://www.ostechnix.com/how-to-configure-system-wide-proxy-settings-easily-and-quickly/" rel="next"><i class="fas fa-chevron-right"></i><strong>Next story</strong> <span>How To Configure System-wide Proxy Settings Easily And Quickly</span></a></li>
+<li class="previous"><a href="https://www.ostechnix.com/top-10-artificial-intelligence-technology-trends-that-will-dominate-in-2019/" rel="prev"><i class="fas fa-chevron-left"></i><strong>Previous story</strong> <span>Top 10 Artificial Intelligence Technology Trends That Will Dominate In 2019</span></a></li>
+</ul>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+        jQuery( function($) {
+              czrapp.proRelPostsRendered = $.Deferred();
+              var waypoint = new Waypoint({
+                  element: document.getElementById('pro-related-posts-wrapper'),
+                  handler: function(direction) {
+                        if ( 'pending' == czrapp.proRelPostsRendered.state() ) {
+                              var $wrap = $('#pro-related-posts-wrapper');
+                              $wrap.addClass('loading');
+                              czrapp.doAjax( {
+                                      action: "ha_inject_pro_related",
+                                      // => Always get the option from the $_POSTED data in ajax
+                                      related_post_id : 6438,
+                                      pro_related_posts_opt : [],
+                                      free_related_posts_opt : "tags",
+                                      layout_class : "col-2cl"
+                                  } ).done( function( r ) {
+                                        if ( r && r.data && r.data.html ) {
+                                            if ( 'pending' == czrapp.proRelPostsRendered.state() ) {
+                                                $.when( $('#pro-related-posts-wrapper').append( r.data.html ) ).done( function() {
+                                                      czrapp.proRelPostsRendered.resolve();
+                                                      $wrap.find('.czr-css-loader').css('opacity', 0);
+                                                      _.delay( function() {
+                                                            $wrap.removeClass('loading').addClass('loaded');
+                                                      }, 800 );
+                                                });
+                                            }
+                                        }
+                                  });
+                        }
+                  },
+                  offset: '110%'
+              });
+        });//jQuery()
+    </script>
+<div id="pro-related-posts-wrapper"><div class="czr-css-loader czr-mr-loader dark"><div></div><div></div><div></div></div></div>
+<section id="comments" class="themeform">
+<h3 class="heading">1 Response</h3>
+<ul class="comment-tabs group">
+<li class="active"><a href="#commentlist-container"><i class="far fa-comments"></i>Comments<span>1</span></a></li>
+<li><a href="#pinglist-container"><i class="fas fa-share"></i>Pingbacks<span>0</span></a></li>
+</ul>
+<div id="commentlist-container" class="comment-tab">
+<ol class="commentlist">
+<li class="comment even thread-even depth-1" id="comment-45276">
+<div id="div-comment-45276" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/4fd15b98be0ccaa4bf9c3b62d17cb972?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/4fd15b98be0ccaa4bf9c3b62d17cb972?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Axel López</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.ostechnix.com/use-google-translate-commandline-linux/#comment-45276">
+June 24, 2019 at 10:24 am </a>
+</div>
+<p>Good contribution!</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-45276' data-commentid="45276" data-postid="6438" data-belowelement="div-comment-45276" data-respondelement="respond" aria-label='Reply to Axel López'>Reply</a></div>
+</div>
+</li>
+</ol>
+</div>
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/use-google-translate-commandline-linux/#respond" style="display:none;">Cancel reply</a></small></h3> <form action="https://www.ostechnix.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='6438' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="d6e9094ee4" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="217" /></p> </form>
+</div>
+<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</section> </div>
+</section>
+<div class="sidebar s1 collapsed" data-position="right" data-layout="col-2cl" data-sb-id="s1">
+<a class="sidebar-toggle" title="Expand Sidebar"><i class="fas icon-sidebar-toggle"></i></a>
+<div class="sidebar-content">
+<div class="sidebar-top group">
+<p>Follow:</p>
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Reddit-square" aria-label="Follow us on Reddit-square" href="https://www.reddit.com/r/OSTechNix/" target="_blank"><i class="fab fa-reddit-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook-square" aria-label="Follow us on Facebook-square" href="https://www.facebook.com/ostechnix/" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter-square" aria-label="Follow us on Twitter-square" href="https://twitter.com/ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Linkedin-square" aria-label="Follow us on Linkedin-square" href="https://in.linkedin.com/in/ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-linkedin"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="http://feeds.feedburner.com/Ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+<div id="custom_html-4" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="c1072f042ca12200de738cd1-text/javascript"></script>
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6701402139964678" data-ad-slot="3689433741" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div><div id="custom_html-6" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script type="c1072f042ca12200de738cd1-text/javascript">
+  (function() {
+    var cx = '008602152458925632792:qnuzfwvz-gy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only></div></div><div id="responsive_lightbox_image_widget-2" class="widget rl-image-widget"><h3 class="widget-title">Free eBook Of the Week</h3><a href="https://ostechnix.tradepub.com/free/w_goaa22/prgm.cgi" class="rl-image-widget-link"><img class="rl-image-widget-image" src="https://www.ostechnix.com/wp-content/uploads/2018/03/w_goaa22c8-768x995.jpg" width="100%" height="auto" title="Linux Notes" alt="Linux Notes for Professionals" style="margin-left: auto; margin-right: auto; display: block;" /></a><div class="rl-image-widget-text"></div></div><div id="custom_html-5" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="c1072f042ca12200de738cd1-text/javascript"></script>
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6701402139964678" data-ad-slot="4424653341" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div>
+</div>
+</div>
+﻿ </div>
+</div>
+</div>
+</div>
+<footer id="footer">
+<section class="container" id="footer-widgets">
+<div class="container-inner">
+<div class="pad group">
+<div class="footer-widget-1 grid one-third ">
+<div id="text-5" class="widget widget_text"><h3 class="widget-title">Email Newsletter</h3> <div class="textwidget"><form style="border:3px solid #ccc;border-color:#a8a9ad;padding:10px;text-align:center; font-weight:bold; font-size:18px;line-height: 29px;background-color: #00AEEF; color: #FFFFFF;
+" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="if (!window.__cfRLUnblockHandlers) return false; window.open('https://feedburner.google.com/fb/a/mailverify?uri=Ostechnix', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" data-cf-modified-c1072f042ca12200de738cd1-=""><p>Subscribe to our mailing list</p><p><input type="text" style="width:240px" name="email" /></p><input type="hidden" value="Ostechnix" name="uri" /><input type="hidden" name="loc" value="en_US" /><input type="submit" value="Sign Up Now" /><p>We respect your privacy</p></form></div>
+</div> </div>
+<div class="footer-widget-2 grid one-third ">
+<div id="archives-4" class="widget widget_archive"><h3 class="widget-title">Blog Archive</h3> <label class="screen-reader-text" for="archives-dropdown-4">Blog Archive</label>
+<select id="archives-dropdown-4" name="archive-dropdown">
+<option value="">Select Month</option>
+<option value='https://www.ostechnix.com/2019/07/'> July 2019 &nbsp;(9)</option>
+<option value='https://www.ostechnix.com/2019/06/'> June 2019 &nbsp;(11)</option>
+<option value='https://www.ostechnix.com/2019/05/'> May 2019 &nbsp;(13)</option>
+<option value='https://www.ostechnix.com/2019/04/'> April 2019 &nbsp;(12)</option>
+<option value='https://www.ostechnix.com/2019/03/'> March 2019 &nbsp;(10)</option>
+<option value='https://www.ostechnix.com/2019/02/'> February 2019 &nbsp;(11)</option>
+<option value='https://www.ostechnix.com/2019/01/'> January 2019 &nbsp;(9)</option>
+<option value='https://www.ostechnix.com/2018/12/'> December 2018 &nbsp;(9)</option>
+<option value='https://www.ostechnix.com/2018/11/'> November 2018 &nbsp;(13)</option>
+<option value='https://www.ostechnix.com/2018/10/'> October 2018 &nbsp;(19)</option>
+<option value='https://www.ostechnix.com/2018/09/'> September 2018 &nbsp;(20)</option>
+<option value='https://www.ostechnix.com/2018/08/'> August 2018 &nbsp;(19)</option>
+<option value='https://www.ostechnix.com/2018/07/'> July 2018 &nbsp;(16)</option>
+<option value='https://www.ostechnix.com/2018/06/'> June 2018 &nbsp;(15)</option>
+<option value='https://www.ostechnix.com/2018/05/'> May 2018 &nbsp;(16)</option>
+<option value='https://www.ostechnix.com/2018/04/'> April 2018 &nbsp;(23)</option>
+<option value='https://www.ostechnix.com/2018/03/'> March 2018 &nbsp;(24)</option>
+<option value='https://www.ostechnix.com/2018/02/'> February 2018 &nbsp;(16)</option>
+<option value='https://www.ostechnix.com/2018/01/'> January 2018 &nbsp;(25)</option>
+<option value='https://www.ostechnix.com/2017/12/'> December 2017 &nbsp;(25)</option>
+<option value='https://www.ostechnix.com/2017/11/'> November 2017 &nbsp;(23)</option>
+<option value='https://www.ostechnix.com/2017/10/'> October 2017 &nbsp;(17)</option>
+<option value='https://www.ostechnix.com/2017/09/'> September 2017 &nbsp;(25)</option>
+<option value='https://www.ostechnix.com/2017/08/'> August 2017 &nbsp;(26)</option>
+<option value='https://www.ostechnix.com/2017/07/'> July 2017 &nbsp;(23)</option>
+<option value='https://www.ostechnix.com/2017/06/'> June 2017 &nbsp;(16)</option>
+<option value='https://www.ostechnix.com/2017/05/'> May 2017 &nbsp;(25)</option>
+<option value='https://www.ostechnix.com/2017/04/'> April 2017 &nbsp;(25)</option>
+<option value='https://www.ostechnix.com/2017/03/'> March 2017 &nbsp;(34)</option>
+<option value='https://www.ostechnix.com/2017/02/'> February 2017 &nbsp;(36)</option>
+<option value='https://www.ostechnix.com/2017/01/'> January 2017 &nbsp;(28)</option>
+<option value='https://www.ostechnix.com/2016/12/'> December 2016 &nbsp;(21)</option>
+<option value='https://www.ostechnix.com/2016/11/'> November 2016 &nbsp;(16)</option>
+<option value='https://www.ostechnix.com/2016/10/'> October 2016 &nbsp;(10)</option>
+<option value='https://www.ostechnix.com/2016/09/'> September 2016 &nbsp;(14)</option>
+<option value='https://www.ostechnix.com/2016/08/'> August 2016 &nbsp;(24)</option>
+<option value='https://www.ostechnix.com/2016/07/'> July 2016 &nbsp;(6)</option>
+<option value='https://www.ostechnix.com/2016/06/'> June 2016 &nbsp;(15)</option>
+<option value='https://www.ostechnix.com/2016/05/'> May 2016 &nbsp;(13)</option>
+<option value='https://www.ostechnix.com/2016/04/'> April 2016 &nbsp;(21)</option>
+<option value='https://www.ostechnix.com/2016/03/'> March 2016 &nbsp;(26)</option>
+<option value='https://www.ostechnix.com/2016/02/'> February 2016 &nbsp;(24)</option>
+<option value='https://www.ostechnix.com/2016/01/'> January 2016 &nbsp;(4)</option>
+<option value='https://www.ostechnix.com/2015/11/'> November 2015 &nbsp;(1)</option>
+<option value='https://www.ostechnix.com/2015/10/'> October 2015 &nbsp;(5)</option>
+<option value='https://www.ostechnix.com/2015/09/'> September 2015 &nbsp;(9)</option>
+<option value='https://www.ostechnix.com/2015/08/'> August 2015 &nbsp;(2)</option>
+<option value='https://www.ostechnix.com/2013/12/'> December 2013 &nbsp;(3)</option>
+<option value='https://www.ostechnix.com/2013/04/'> April 2013 &nbsp;(1)</option>
+<option value='https://www.ostechnix.com/2013/03/'> March 2013 &nbsp;(2)</option>
+<option value='https://www.ostechnix.com/2013/02/'> February 2013 &nbsp;(3)</option>
+<option value='https://www.ostechnix.com/2013/01/'> January 2013 &nbsp;(11)</option>
+<option value='https://www.ostechnix.com/2012/12/'> December 2012 &nbsp;(8)</option>
+<option value='https://www.ostechnix.com/2012/11/'> November 2012 &nbsp;(1)</option>
+</select>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-4" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+</div> </div>
+<div class="footer-widget-3 grid one-third last">
+<div id="pages-5" class="widget widget_pages"><h3 class="widget-title">Who we are</h3> <ul>
+<li class="page_item page-item-676"><a href="https://www.ostechnix.com/about/">About</a></li>
+<li class="page_item page-item-660"><a href="https://www.ostechnix.com/contact-us/">Contact Us</a></li>
+<li class="page_item page-item-7410"><a href="https://www.ostechnix.com/donate/">Donate</a></li>
+<li class="page_item page-item-1103"><a href="https://www.ostechnix.com/privacy-policy/">Privacy Policy</a></li>
+<li class="page_item page-item-1096"><a href="https://www.ostechnix.com/terms-and-conditions/">Terms and Conditions</a></li>
+</ul>
+</div> </div>
+</div>
+</div>
+</section>
+<section class="container" id="footer-bottom">
+<div class="container-inner">
+<a id="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
+<div class="pad group">
+<div class="grid one-half">
+<img id="footer-logo" src="https://www.ostechnix.com/wp-content/uploads/2016/10/cropped-OSTechNix_280915-01-1.png" alt="">
+<div id="copyright">
+<p>OSTechNix &copy; 2019. All Rights Reserved.</p>
+</div>
+<div id="credit">
+<p>This site is licensed under <a href="http://creativecommons.org/licenses/by-nc/4.0/" rel="nofollow">CC BY-NC 4.0</a>. </div>
+</div>
+<div class="grid one-half last">
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Reddit-square" aria-label="Follow us on Reddit-square" href="https://www.reddit.com/r/OSTechNix/" target="_blank"><i class="fab fa-reddit-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook-square" aria-label="Follow us on Facebook-square" href="https://www.facebook.com/ostechnix/" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter-square" aria-label="Follow us on Twitter-square" href="https://twitter.com/ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter-square"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Linkedin-square" aria-label="Follow us on Linkedin-square" href="https://in.linkedin.com/in/ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-linkedin"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="http://feeds.feedburner.com/Ostechnix" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+</div>
+</div>
+</section>
+</footer>
+</div>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/www.ostechnix.com\/use-google-translate-commandline-linux\/":6438};
+	</script>
+<div id="sharing_email" style="display: none;">
+<form action="/use-google-translate-commandline-linux/" method="post">
+<label for="target_email">Send to Email Address</label>
+<input type="email" name="target_email" id="target_email" value="" />
+<label for="source_name">Your Name</label>
+<input type="text" name="source_name" id="source_name" value="" />
+<label for="source_email">Your Email Address</label>
+<input type="email" name="source_email" id="source_email" value="" />
+<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+<img style="float: right; display: none" class="loading" src="https://www.ostechnix.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+<input type="submit" value="Send Email" class="sharing_send" />
+<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+<div class="errors errors-1" style="display: none;">
+Post was not sent - check your email addresses! </div>
+<div class="errors errors-2" style="display: none;">
+Email check failed, please try again </div>
+<div class="errors errors-3" style="display: none;">
+Sorry, your blog cannot share posts by email. </div>
+</form>
+</div>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+/* <![CDATA[ */
+var WfcFrontParams = {"effectsAndIconsSelectorCandidates":[],"wfcOptions":null};
+/* ]]> */
+</script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/themes/hueman-pro/addons/pro/wfc/front/assets/js/font-customizer-front.min.js?ver=3.0.8'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201928'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/themes/hueman-pro/addons/assets/front/js/jQuerySharrre.min.js?ver=5.2.2'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/themes/hueman-pro/addons/pro/header/assets/front/vendors/flickity.min.js?ver=1.1.24'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":false,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"1","extLinksTargetExt":"1","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"1","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":false,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_up","mobile":"stick_up"},"mobileSubmenuExpandOnClick":"","submenuTogglerIcon":"<i class=\"fas fa-angle-down\"><\/i>","isDevMode":"","ajaxUrl":"https:\/\/www.ostechnix.com\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"7a22ce4bcc"},"isWelcomeNoteOn":"","welcomeContent":"","i18n":{"collapsibleExpand":"Expand","collapsibleCollapse":"Collapse"},"fitTextMap":{"single_post_title":{"selectors":".single h1.entry-title","minEm":1.375,"maxEm":2.62000000000000010658141036401502788066864013671875},"page_title":{"selectors":".page-title h1","minEm":1,"maxEm":1.3000000000000000444089209850062616169452667236328125},"home_page_title":{"selectors":".home .page-title","minEm":1,"maxEm":1.1999999999999999555910790149937383830547332763671875,"compression":2.5},"post_titles":{"selectors":".blog .post-title, .archive .post-title","minEm":1.375,"maxEm":1.475000000000000088817841970012523233890533447265625},"featured_post_titles":{"selectors":".featured .post-title","minEm":1.375,"maxEm":2.125},"comments":{"selectors":".commentlist li","minEm":0.8125,"maxEm":0.93000000000000004884981308350688777863979339599609375,"compression":2.5},"entry":{"selectors":".entry","minEm":0.9375,"maxEm":1.125,"compression":2.5},"content_h1":{"selectors":".entry h1, .woocommerce div.product h1.product_title","minEm":1.7578125,"maxEm":2.671875},"content_h2":{"selectors":".entry h2","minEm":1.5234375,"maxEm":2.390625},"content_h3":{"selectors":".entry h3","minEm":1.40625,"maxEm":1.96875},"content_h4":{"selectors":".entry h4","minEm":1.2890625,"maxEm":1.6875},"content_h5":{"selectors":".entry h5","minEm":1.0546875,"maxEm":1.40625},"content_h6":{"selectors":".entry h6","minEm":0.9375,"maxEm":1.265625,"compression":2.5}},"userFontSize":"16","fitTextCompression":"1.5"};
+/* ]]> */
+</script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/js/scripts.min.js?ver=1.1.24'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-includes/js/comment-reply.min.js?ver=5.2.2'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-includes/js/wp-embed.min.js?ver=5.2.2'></script>
+<script async="async" type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.2'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://www.ostechnix.com/wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=7.5.2'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-telegram', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<!--[if lt IE 9]>
+<script src="https://www.ostechnix.com/wp-content/themes/hueman-pro/assets/front/js/ie/respond.js"></script>
+<![endif]-->
+<script type="c1072f042ca12200de738cd1-text/javascript" src='https://stats.wp.com/e-201928.js' async='async' defer='defer'></script>
+<script type="c1072f042ca12200de738cd1-text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:7.5.2',blog:'84551477',post:'6438',tz:'5.5',srv:'www.ostechnix.com'} ]);
+	_stq.push([ 'clickTrackerInit', '84551477', '6438' ]);
+</script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="c1072f042ca12200de738cd1-|49" defer=""></script></body>
+</html>

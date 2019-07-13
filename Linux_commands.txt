@@ -359,3 +359,4 @@ copy from vim to another application .............. Position the cursor where yo
 # connect to Linux_server using ssh ................ ssh server_user_name@ip .......... eg: ssh lfd-server@192.168.8.104
 # copy file from local to host ........................ scp b.txt lfd-server@192.168.8.114: ................................ this command will copy file from my computer to lfd-server on sepecified ip address at home dirctory  .................... scp pdf lfd-server@192.168.8.114:Desktop/pdff ................... this last command will copy at Destkop by name <pdff>
 # last modifided/created .ipynb file in whole system ....................... ls -lt $(find . -name "*.ipynb") | head
+# extract specifice range of pages from pdf file ................. pdftk input_file.pdf cat 12-15 output outfile_p12-15.pdf
