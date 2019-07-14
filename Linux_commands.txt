@@ -361,3 +361,4 @@ copy from vim to another application .............. Position the cursor where yo
 # last modifided/created .ipynb file in whole system ....................... ls -lt $(find . -name "*.ipynb") | head
 # extract specifice range of pages from pdf file ................. pdftk input_file.pdf cat 12-15 output outfile_p12-15.pdf
 # pdf OCR .................... ocr file.pdf ................. ocr is bash file: https://github.com/amirsaleem1990/Linux/blob/master/ocr
+# replace dosts <.> in filename with <_>.................. a=a.b.c.d.pdf ; mv a.b.c.d.pdf "${a//\./_}"
