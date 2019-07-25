@@ -1,0 +1,12 @@
+sudo dd if=/dev/zero of=/media/lfd-server/swapfile.img bs=1024 count=50M
+
+sudo chmod 0600 /media/lfd-server/swapfile.img
+
+sudo mkswap /media/lfd-server/swapfile.img
+
+# Add this line to /etc/fstab
+/media/lfd-server/swapfile.img swap swap sw 0 0
+
+swapon /media/lfd-server/swapfile.img
+
+
