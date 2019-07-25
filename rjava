@@ -1,0 +1,6 @@
+sudo apt-get update
+sudo apt-get install default-jre
+sudo apt-get install default-jdk
+sudo apt-get install r-cran-rjava
+# if here is you get error, fix it:
+	sudo R CMD javareconf
