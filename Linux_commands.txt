@@ -363,3 +363,29 @@ copy from vim to another application .............. Position the cursor where yo
 # pdf OCR .................... ocr file.pdf ................. ocr is bash file: https://github.com/amirsaleem1990/Linux/blob/master/ocr
 # replace dosts <.> in filename with <_>.................. a=a.b.c.d.pdf ; mv a.b.c.d.pdf "${a//\./_}"
 # git commit large file ...................... git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch large_file_name_with_path'
+
+Ctrl+U: This clears the entire line so you can type in a completely new command.
+Ctrl+K: This deletes the line from the position of the cursor to the end of the line.
+Ctrl+W: This deletes the word before the cursor only.
+
+# If you just want to see what the last cat command was, you can instead run: 
+!cat:p
+
+Another common problem is mistyping the command you want to run. Say you wanted to run nano, but accidentally typed nanp:
+nanp /path/to/a/document/buried/deep/in/the/filesystem
+Instead of retyping the whole thing, you could just run:
+^nanp^nano
+
+Expansions
+When you're working with variations of a file—like backups or different file types—it can get tedious typing out the same commands with small tweaks. Using the brace symbols ({}), you can easily perform batch operations on multiple versions of a file.
+Say you want to rename just part of a filename. Instead of typing out mv /path/to/file.txt /path/to/file.xml, you could just run:
+mv /path/to/file.{txt,xml}
+This runs the command with the same arguments, only with the parts inside the brace changed—the first part corresponding to the first argument, the second part corresponding to the second argument.
+
+
+The braces can also work when moving or creating multiple files at once. For example, if you wanted to create three numbered directories, you could just run:
+mkdir myfolder{1,2,3}
+This will create three folders: myfolder1, myfolder2, and myfolder3.4
+
+
+
