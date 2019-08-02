@@ -1,3 +1,4 @@
+NOTE: <xdotool mousemove 50 100 mousedown 2 mousemove 500 800 mouseup 2> me 2 points batay hen, start karna h x=50 and y=100, and end karna h x = 500 and y = 800
 
 sleep 5 &&;
 for i in {1..10} :
@@ -25,7 +26,7 @@ done
 
 # khud hi jaga par ja kar picture ly kar save kar dy ga, 2 seconds wait kary ga
 # sleep 5 &&
-for i in {1..10}:
+for i in {1..2}:
 do 
 	sleep 1
 	(gnome-screenshot -a  -f $i.png &)
