@@ -388,4 +388,4 @@ mkdir myfolder{1,2,3}
 This will create three folders: myfolder1, myfolder2, and myfolder3.4
 
 
-
+# .ts to .mp4 ................. ffmpeg -i file.ts -c:v libx264 file.mp4
