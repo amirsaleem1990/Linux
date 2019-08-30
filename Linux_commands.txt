@@ -391,3 +391,4 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # .ts to .mp4 ................. ffmpeg -i file.ts -c:v libx264 file.mp4
 
 # open pdf file in linux default pdf viwer which is called (document viewer) ............... evince file.pdf
+# str slicing ................ a=$(ls *.part); echo "${a:52:1}" # print 1 element from variable a from index 52.
