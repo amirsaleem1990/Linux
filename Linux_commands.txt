@@ -223,7 +223,7 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 # zip -r output.zip input_folder/ ; zip --encrypt secure.zip output.zip
 # find all files except those have end with .py  .................. find . -not -name "*.py"
 # calculator using python and alias ........................................ alias p="python3 -c 't=input(); print(eval(t))'"
-# find all files except files with .txt or .pdf .......................... ls -I "*.txt" -I "*.pdf"
+# list all files except files with .txt or .pdf .......................... ls -I "*.txt" -I "*.pdf"
 # eject usb ............. first: sudo fdisk -l ,this will be return devices, select your device name eg: /dev/sdb1 (NOTE: this is require sudo, alternavily we use lsblk, this do the same but withoud need to sudo)......... second: sudo eject your_device_name
 # convert .mkv file to .mp4 .................. sudo ffmpeg -i *.mkv -codec copy output.mp4 
 # search in pdf ......................... pdfgrep -i -H -n data learning/ISLR/ISLR.pdf.......... <-i> ignore case, <-H> with file name, <-n> with page number .................... 
