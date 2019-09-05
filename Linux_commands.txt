@@ -254,7 +254,8 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 # create nested directories ...................... mkdir -p some/other/directories
 # to know pdf file pages qty ............................... pdfinfo file.pdf| grep 'Pages:'
 # battery status: upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"
-# current date only: date '+%d-%m-%y' ........... date +%I:%M%p
+# current date only: date '+%d-%m-%y' ........... 
+# current time only: date +%I:%M%p
 # yesterday date: date -d "1 day ago" '+%Y-%m-%d'
 # last command in history starts with <emg> ............... !emg
 
@@ -393,4 +394,3 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # open pdf file in linux default pdf viwer which is called (document viewer) ............... evince file.pdf
 # str slicing ................ a=$(ls *.part); echo "${a:52:1}" # print 1 element from variable a from index 52.
 # du output sorted by size (in MB) .............. du -sh -B M * | sort -nr
-# current time .................... date +%I:%M%p
