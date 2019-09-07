@@ -397,3 +397,4 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # ignore case in ls ................. first type: shopt -s nocaseglob.............. within your current session of terminal you are ignoring CASE
 
 # chromium current open tabls urls ............... cat -e /home/amir/snap/chromium/849/.config/chromium/Default/'Current Session' | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u ............... https://askubuntu.com/questions/970546/location-of-the-urls-of-the-open-tabs-of-chromium-browser-in-ubuntu
+# a=$(ls /home/amir/.g| sort -rn| head -1); b=$(expr $a + 1); xsel -b > /home/amir/.g/$b
