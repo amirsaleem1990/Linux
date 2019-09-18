@@ -1,0 +1,1 @@
+mkfs.ext4 -F -o ^64bit -L "'/dev/sdc"
