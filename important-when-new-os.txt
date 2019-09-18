@@ -1,0 +1,6 @@
+web browser bookmarks
+ubuntu startup application 
+github local data push
+dropbox sync
+data copy
+data partition copy (if presence)
