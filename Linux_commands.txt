@@ -232,7 +232,7 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 # create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
 # kill process .................... pkill application_name
 # find file ................. locate "*.pdf" ............ if regex not specified then assume "*keyword*" 
-# locate file ......... is command sy sari files jin k name me <file> ho ga kahin bhi or ksi bhi case me wo sab aa jaen gi.
+# locate file ......... is command sy sari files jin k name me <file> ho ga kahin bhi or ksi bhi case me wo sab aa jaen gi. .......................... it is equal to : find . -iname "*file*", but the latter is very very slow.
 # last modified file or folder in particuler directory ............................ ls -t github/Linux/ | head -1
 # only files not folder ........................... ls -p | grep -v /
 # mute video without voice .......................... ffmpeg -i input.mp4 -vcodec copy -an output.mp4
