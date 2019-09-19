@@ -232,7 +232,7 @@ go to bottom window ................. CTRL+B BOTTOM+ARROW
 # create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
 # kill process .................... pkill application_name
 # find file ................. locate "*.pdf" ............ if regex not specified then assume "*keyword*" 
-# locate file ......... is command sy sari files jin k name me <file> ho ga kahin bhi or ksi bhi case me wo sab aa jaen gi. .......................... it is equal to : find . -iname "*file*", but the latter is very very slow.
+# locate file ......... is command sy sari files jin k name me <file> ho ga kahin bhi or ksi bhi case me wo sab aa jaen gi. .......................... it is equal to : find . -iname "*file*", but the latter is very very slow................ NOTE: The locate command is not perfect, however. Sometimes the results of locate can be overwhelming, giving you too much information. Also, locate uses a database that is usually only updated once a day, so if you just created a file a few minutes or a few hours ago, it might not appear in this list until the next day. It’s worth knowing the disadvantages of these basic commands so you can better decide when best to use each one.
 # last modified file or folder in particuler directory ............................ ls -t github/Linux/ | head -1
 # only files not folder ........................... ls -p | grep -v /
 # mute video without voice .......................... ffmpeg -i input.mp4 -vcodec copy -an output.mp4
