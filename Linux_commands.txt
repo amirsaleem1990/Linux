@@ -403,3 +403,4 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # dissable wifi. NOTE: aftter this you can\t use wifi until you restart ..................... sudo airmon-ng check kill
 # cron job for shutdown computer at 18:30 each day ............. open (as root) /etc/crontab, then add this line in the end <30 18   * * *   root    poweroff>
 # whereis ......... If you’re looking for a binary file, you can use the whereis command to locate it. This command returns not only the location of the binary but also its source and man page if they are available......... NOTE: the <which> command only returns the location of the binaries in the PATH variable.
+# apt package dependencies ................... apt-cache showpkg your_package_name
