@@ -408,4 +408,5 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # print text file(without empty lines) with line number ............... nl file_name ........... cat -b file_name 
 # print text file(with empty lines) with line number ............... cat -n file_name
 # starting from particuler line to the end ......................... tail -n+80 file_name ....... this will return all file except first 78 lines
-sed s/mysql/MySQL/g /etc/snort/snort.conf > snort2.conf
+# replace every occurrence of mysql with MySQL and then save the new file to file_2.txt.  sed s/mysql/MySQL/g file_1.txt > file_2.txt
+
