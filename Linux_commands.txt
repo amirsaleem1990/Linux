@@ -407,3 +407,5 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # ls -R provides subdirectory names and the names of files within subdirectories
 # print text file(without empty lines) with line number ............... nl file_name ........... cat -b file_name 
 # print text file(with empty lines) with line number ............... cat -n file_name
+# starting from particuler line to the end ......................... tail -n+80 file_name ....... this will return all file except first 78 lines
+
