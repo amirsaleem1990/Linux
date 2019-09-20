@@ -405,3 +405,5 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # whereis ......... If you’re looking for a binary file, you can use the whereis command to locate it. This command returns not only the location of the binary but also its source and man page if they are available......... NOTE: the <which> command only returns the location of the binaries in the PATH variable.
 # apt package dependencies ................... apt-cache showpkg your_package_name
 # ls -R provides subdirectory names and the names of files within subdirectories
+# print text file(without empty lines) with line number ............... nl file_name ........... cat -b file_name 
+# print text file(with empty lines) with line number ............... cat -n file_name
