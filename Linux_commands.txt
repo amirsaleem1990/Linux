@@ -412,3 +412,4 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # If you wanted to replace only the first occurrence of the term mysql, you would leave out the trailing <g> command ......... sed s/mysql/MySQL/ file_1.txt > file_2.txt
 # If you wanted to replace only say third occurrence of the term mysql ......... sed s/mysql/MySQL/3 file_1.txt > file_2.txt
 # change IP ............. ifconfig interface new_ip_address ................ eg: ifconfig eth0 192.168.181.115
+# moniter which application using internet ............. sudo nethogs
