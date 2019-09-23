@@ -1,0 +1,42 @@
+Package: youtube-dl
+Versions: 
+2018.03.14-1ubuntu18.04.1 (/var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic-updates_universe_binary-amd64_Packages) (/var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic-updates_universe_binary-i386_Packages)
+ Description Language: 
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_binary-amd64_Packages
+                  MD5: c6de50a7ee8979e219af8437464e392b
+ Description Language: en
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_i18n_Translation-en
+                  MD5: c6de50a7ee8979e219af8437464e392b
+ Description Language: 
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic-updates_universe_binary-amd64_Packages
+                  MD5: c6de50a7ee8979e219af8437464e392b
+
+2018.03.14-1 (/var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_binary-amd64_Packages) (/var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_binary-i386_Packages)
+ Description Language: 
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_binary-amd64_Packages
+                  MD5: c6de50a7ee8979e219af8437464e392b
+ Description Language: en
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic_universe_i18n_Translation-en
+                  MD5: c6de50a7ee8979e219af8437464e392b
+ Description Language: 
+                 File: /var/lib/apt/lists/pk.archive.ubuntu.com_ubuntu_dists_bionic-updates_universe_binary-amd64_Packages
+                  MD5: c6de50a7ee8979e219af8437464e392b
+
+
+Reverse Depends: 
+  youtube-viewer,youtube-dl 2015.02.23
+  libmpv1,youtube-dl 2014.11.26
+  mpv,youtube-dl 2014.11.26
+  mkchromecast,youtube-dl
+  lives,youtube-dl
+  acetoneiso,youtube-dl
+  gnome-mpv,youtube-dl
+  git-annex,youtube-dl
+  encuentro,youtube-dl
+Dependencies: 
+2018.03.14-1ubuntu18.04.1 - python3-pkg-resources (0 (null)) python3:any (2 3.3.2-2~) aria2 (16 (null)) wget (16 (null)) curl (0 (null)) ca-certificates (0 (null)) ffmpeg (16 (null)) libav-tools (0 (null)) mpv (16 (null)) mplayer (0 (null)) phantomjs (0 (null)) python3-pyxattr (0 (null)) rtmpdump (0 (null)) 
+2018.03.14-1 - python3-pkg-resources (0 (null)) python3:any (2 3.3.2-2~) aria2 (16 (null)) wget (16 (null)) curl (0 (null)) ca-certificates (0 (null)) ffmpeg (16 (null)) libav-tools (0 (null)) mpv (16 (null)) mplayer (0 (null)) phantomjs (0 (null)) python3-pyxattr (0 (null)) rtmpdump (0 (null)) 
+Provides: 
+2018.03.14-1ubuntu18.04.1 - 
+2018.03.14-1 - 
+Reverse Provides: 
