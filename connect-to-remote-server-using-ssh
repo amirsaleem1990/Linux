@@ -12,3 +12,9 @@ sudo service ssh status
 
 # If the SSH service is not running you can run it manually
 sudo service ssh start
+
+# You can also stop SSH service
+sudo service ssh stop
+
+
+# on local machine
