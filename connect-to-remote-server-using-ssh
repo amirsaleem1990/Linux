@@ -21,3 +21,5 @@ sudo service ssh stop
 hostname -I
 
 # on server
+ss <here peste the ip address returned by last command>, eg: ssh 192.168.1.114
+
