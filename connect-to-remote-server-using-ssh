@@ -3,3 +3,7 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install openssh-server
 sudo subl /etc/ssh/ssh_config
+# here the file is open, yo do:
+Uncomment the <Port 22> line in ssh_config file
+Under port number, add the line <MaxAuthTries 4>
+
