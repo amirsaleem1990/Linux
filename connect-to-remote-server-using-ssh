@@ -7,3 +7,8 @@ sudo subl /etc/ssh/ssh_config
 Uncomment the <Port 22> line in ssh_config file
 Under port number, add the line <MaxAuthTries 4>
 
+# To check the status of the SSH server
+sudo service ssh status
+
+# If the SSH service is not running you can run it manually
+sudo service ssh start
