@@ -1,3 +1,4 @@
+
 # multitasking in one shell.
 # eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of <jpyter-lab>  type  <jupyter-lab &> ............ now you can use that terminal for other command too.
 #  list all files, size mesure = MB ................... ls -l --block-size=M
