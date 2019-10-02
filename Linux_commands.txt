@@ -416,3 +416,4 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 # moniter which application using internet ............. sudo nethogs ............. sudo netstat -lantp | grep -i stab | awk -F/ '{print $2 $3}' | sort | uniq
 # baaz dafa esa hota h k aap ko <apt> sy package install karna hota h, jab aap <apt-get install package_name> run karty hen to koi result nahi aata, or system us package_name ko nahi pehchanta, to is ko hal karny ka pehla step ye h k ye run karen <apt-cache seach package_name>, agar is command k output me aap ka matooba package_name h, t wohi command chalaen <apt-get install package_name>, ab install ho jay ga.
 
+
