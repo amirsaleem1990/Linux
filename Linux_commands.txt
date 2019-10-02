@@ -419,3 +419,6 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 
 # string indexing ........... a=amirsaleem; echo ${a:1:9}
 
+
+# remove all history .................. HISTSIZE=0
+
