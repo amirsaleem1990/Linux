@@ -428,3 +428,20 @@ This will create three folders: myfolder1, myfolder2, and myfolder3.4
 
 disk mount when system is start ................ me ny optical Drive ki jaga second HDD lagai hwi h, jb me system on karta hun to masla ye hota h k wo HDD automatic mount nahi hoti, pehly me usy mount karta hun phir usy use kar sakta hun , .......... SOLVED: go to <disk>, select your second HDD <in my case>, click on <additional partition options>, select <Mount options>, enable <User Session Defaults>, and check <Mount at system startup>.........
 
+
+#----------------------------------------
+# rotate video
+# Rotate 90 clockwise:
+ffmpeg -i in.mov -vf "transpose=1" out.mov
+
+# For the transpose parameter you can pass:
+# 0 = 90CounterCLockwise and Vertical Flip (default) 
+# 1 = 90Clockwise 
+# 2 = 90CounterClockwise 
+# 3 = 90Clockwise and Vertical Flip
+
+# Flip the input video horizontally.
+# For example to horizontally flip the video in input with `ffmpeg':
+ffmpeg -i in.avi -vf "hflip" out.avi
+#----------------------------------------
+
