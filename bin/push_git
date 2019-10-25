@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+import os
+os.chdir("/home/amir/github/")
+# os.system("bash git_files.sh")
+os.system('find . -name "*" > git_files.txt')
+with open("git_files.txt", "r") as file:
+	all_files = file.read().splitlines()
+for i in all_files:
+    if not "/.git/" in i:
+    	# if i.count("/") > 1:
+        if os.stat(i).st_size > 1048576*99:
+            print(f"\n\n\n\n******* {i} is larger then 49MB *******\n\n\n\n")
+            import sys
+            # if int(input("Proceed or STOP\n1-Proceed\t\t2-STOP: \t")) == 2:
+	           #  os.remove("git_files.txt")
+            sys.exit()
+os.remove("git_files.txt")
+repos = os.listdir() # list of all local repositories
+for repo in repos:   
+    if (not repo.startswith(".")) and (not "." in repo): # if that repo is not a hidden file <in linux hiddin files names starts with . dot
+        os.chdir(repo) # go to that local repo
+        git_status = os.popen("git status").read() # read current status
+        if '(use "git push" to publish your local commits)' in git_status:
+        	os.system("git push origin master")
+        elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
+            aa = [i.strip() for i in git_status.splitlines()]
+            print(f"**********{repo}**********")
+            for i in aa:
+	            if i and i.startswith("Untracked files") or i.startswith("Changes not staged for commit"):
+	            	os.system("git add . ; git commit -m 'updated'; git push origin master")
+            print("\n\n")
+        os.chdir("..")

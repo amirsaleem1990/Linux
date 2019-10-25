@@ -1,0 +1,4 @@
+#!/bin/bash
+a=$(date '+%d-%m-%y')
+a=$(echo  $a | sed 's/^0//')
+grep ,$a $HOME/github/Amir-personal/todo.csv

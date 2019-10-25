@@ -1,0 +1,16 @@
+#!/usr/bin/env ipython3
+
+import time
+import os
+import random
+
+os.chdir("/home/amir/github/Amir-personal/")
+with open("boost_comments_text_file.txt", "r") as file:
+	file = file.read().splitlines()
+script_commits_qty = int(file[-1].strip())
+for i in range(400): #range(int(input("How many comment you need:     \n"))):
+	with open("boost_comments_text_file.txt", "a") as file:
+		file.write(f'{script_commits_qty}\n')
+	script_commits_qty += 1
+	os.system("git add boost_comments_text_file.txt; git commit -m 'boost' ; git push origin master")
+	time.sleep(random.choice([1] + list(range(8))))

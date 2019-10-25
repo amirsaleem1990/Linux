@@ -1,0 +1,20 @@
+#!/usr/bin/env ipython3
+import os
+os.chdir("/home/amir/github")
+lst = False
+for i in os.listdir():
+	if not i.startswith("."):
+		os.chdir(i)
+		a = os.popen("git status")
+		if list(a) != ['On branch master\n', "Your branch is up to date with 'origin/master'.\n", '\n', 'nothing to commit, working tree clean\n']:		
+			print("*"*10, i, "*"*10)
+			a = os.popen("git status")
+			for z in list(a)[1:]:
+				if not z == "\n":
+					print(z.replace("\n", ""))
+			print("\n")
+		else:
+			lst = True
+		os.chdir("../")
+if lst:
+	print("\nUPDATED\n\n")
