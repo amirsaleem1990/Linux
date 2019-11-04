@@ -4,8 +4,9 @@
 
 
 read -p "Enter Directory name (default is Current directory): " directory
-if [[ -z "$directory"]]
+if [[ -z "$directory" ]]
 	then
+		echo amir
 		directory=$pwd
 fi
 echo $directory
