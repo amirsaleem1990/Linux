@@ -6,9 +6,11 @@
 
 function file_count(){
 	dirctory=$1
-	echo $dirctory
-	# files_count=$(ls $dirctory | wc -l)
-	# echo "Count of files/folders in <$1>: $files_count"
+	files_count=$(ls $dirctory | wc -l)
+	echo -e "$dirctory: $files_count"
+	echo "Count of files/folders in <$1>: $files_count"
 }
 
-file_count
+file_count /etc
+file_count /home/amir
+
