@@ -13,8 +13,7 @@ else
 	current_date=$(date '+%y-%m-%d')
 	for jpg in $JPG
 		do
-			new_name="$current_date-$JPG"
-			# mv $jpg $new_name
-			echo $new_name
+			new_name="$current_date-$jpg"
+			mv $jpg $new_name
 		done
 fi
