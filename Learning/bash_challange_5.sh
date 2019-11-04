@@ -7,7 +7,7 @@ while read X ; do
 	fi
 
 	SUM+=$X;
-done < bash_challange_5.sh 
+done < sample.data 
 
 
 
