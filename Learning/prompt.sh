@@ -8,11 +8,11 @@ echo ""
 b=$(ls -l $name)
 if [[ ${b:0:1} == "-" ]]
 	then
-		echo "$name is regular file"
+		echo "<$name> is regular file"
 elif [[ ${b:0:1} == "d" ]]
 	then
-		echo "$name is regular directory"
+		echo "<$name> is regular directory"
 
 else
-	echo "$name is another type of file"
+	echo "<$name> is another type of file"
 fi
