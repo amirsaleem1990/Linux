@@ -12,3 +12,5 @@ strings="man bear pig dog cat sheep"
 for string in $strings; do
 	echo $string
 done
+
+# not same as <for string in "man bear pig dog cat sheep">
