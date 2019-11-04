@@ -4,6 +4,9 @@
 
 
 read -p "Enter Directory name (default is Current directory): " directory
+if [[ $directory != "" ]]
+	then
+		directory=$pwd
 cd $directory
 
 echo "You have these extensions in this directory"
@@ -13,6 +16,7 @@ read -p "Enter file extension (eg: png) : " extension
 
 read -p "Enter prefix (default is current date) : " prefix 
 if [[ prefix == "" ]]
+then
 	prefix=$(date +%F)
 fi
 
