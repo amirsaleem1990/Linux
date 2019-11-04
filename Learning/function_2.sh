@@ -5,7 +5,8 @@
 
 
 function file_count(){
-	files_count=$(ls $@ | wc -l)
+	local dirctory=$1
+	files_count=$(ls $dirctory | wc -l)
 	echo "Count of files/folders in Working Directory: $files_count"
 	exit 0
 }
