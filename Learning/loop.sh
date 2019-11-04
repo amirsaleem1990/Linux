@@ -9,6 +9,6 @@
 
 
 strings="man bear pig dog cat sheep"
-for string in strings; do
+for string in $strings; do
 	echo $string
 done
