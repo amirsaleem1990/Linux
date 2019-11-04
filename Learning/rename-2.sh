@@ -14,8 +14,8 @@ cd $directory
 echo -e "\nYou have these extensions in this directory"
 for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
 
-read -p "Enter file extension (eg: png) : " extension
-
+# read -p "Enter file extension (eg: png) : " extension
+s
 read -p "Enter prefix (default is current date) : " prefix 
 if [[ prefix == "" ]]
 then
@@ -24,16 +24,16 @@ then
 fi
 
 
-files=$(ls -1 *.$extension)
+# files=$(ls -1 *.$extension)
 
-if [[ $? != 0 ]]
-	then
-		echo -e "\nSorry, No file with .$extension extension"
-		exit 0
-else
-	for file in $files; do
-		new_name=$file-$prefix
-		echo "Renaming $file to $new_name"
-		mv $file $new_name
-	done
-fi
+# if [[ $? != 0 ]]
+# 	then
+# 		echo -e "\nSorry, No file with .$extension extension"
+# 		exit 0
+# else
+# 	for file in $files; do
+# 		new_name=$file-$prefix
+# 		echo "Renaming $file to $new_name"
+# 		mv $file $new_name
+# 	done
+# fi
