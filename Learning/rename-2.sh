@@ -24,7 +24,7 @@ then
 fi
 
 
-files=$(ls -1 *.$extension)
+files=$(ls | grep  $extension)
 
 if [[ $? != 0 ]]
 	then
