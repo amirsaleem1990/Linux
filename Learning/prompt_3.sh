@@ -19,7 +19,7 @@ for file in $files
 					echo "regular file"
 			elif [[ $first_char == "d" ]]
 				then
-					echis regular directory"
+					echo "regular directory"
 
 			else
 				echo "another type of file"
