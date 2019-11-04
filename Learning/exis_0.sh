@@ -9,6 +9,8 @@ retrn=$(cat /etc/shadow) # assinged to variable, so even if command is succeeded
 if [[ $? == 0 ]]
 	then
 		echo "command succeeded"
+		exit 0
 else
 	echo "command failed"
+	exit 1
 fi
