@@ -31,8 +31,8 @@ if [[ $? != 0 ]]
 		echo -e "\nSorry, No file with .$extension extension"
 		exit 0
 else
-	for file in $files; do
-		new_name=$file-$prefix
+	for file in *$extensions; do
+		new_name=$prefix-$file
 		echo "Renaming $file to $new_name"
 		# mv $file $new_name
 	done
