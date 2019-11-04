@@ -20,4 +20,4 @@ else
 fi
 
 echo ""
-echo $(ls -l | grep $@)
+echo ls -l | grep "$@"
