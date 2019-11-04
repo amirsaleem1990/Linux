@@ -25,7 +25,7 @@ fi
 
 
 files=$(ls | grep  $extension)
-
+echo $files
 if [[ $? != 0 ]]
 	then
 		echo -e "\nSorry, No file with .$extension extension"
