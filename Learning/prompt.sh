@@ -22,4 +22,5 @@ else
 	echo "<$name> is another type of file"
 fi
 
-echo ls -l $name
+echo ""
+ls -l $name
