@@ -7,10 +7,9 @@
 function file_count(){
 	dirctory=$1
 	files_count=$(ls $dirctory | wc -l)
-	echo -e "\n$dirctory: $files_count"
+	echo -e "\n$dirctory: \n$files_count"
 }
 
 file_count /etc
 file_count /var
-file_count /home/amir
-
+file_count /usr/bin
