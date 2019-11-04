@@ -13,6 +13,9 @@ elif [[ ${b:0:1} == "d" ]]
 	then
 		echo "<$name> is regular directory"
 
+elif [[ $b == "total 0" ]]
+	then
+		echo "<$name> is empty folder"
 else
 	echo "<$name> is another type of file"
 fi
