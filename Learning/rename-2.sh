@@ -9,5 +9,6 @@ cd $directory
 files=$(ls -1 *.$extension)
 if [[ $? != 0 ]]
 then
-	echo "Sorry, No file with .$extension extension"
+	echo -e "\nSorry, No file with .$extension extension"
+	exit 0
 fi
