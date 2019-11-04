@@ -4,37 +4,35 @@
 
 
 read -p "Enter Directory name (default is Current directory): " directory
-if [[ -z "$directory" ]]
+if [[ $directory == "" ]]
 	then
-		echo amir
-		directory=$pwd
+		directory=$(pwd)
 fi
-echo $directory
 
-# cd $directory
+cd $directory
 
-# echo "You have these extensions in this directory"
-# for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
+echo -e "\nYou have these extensions in this directory"
+for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
 
-# read -p "Enter file extension (eg: png) : " extension
+read -p "Enter file extension (eg: png) : " extension
 
-# read -p "Enter prefix (default is current date) : " prefix 
-# if [[ prefix == "" ]]
-# then
-# 	prefix=$(date +%F)
-# fi
+read -p "Enter prefix (default is current date) : " prefix 
+if [[ prefix == "" ]]
+then
+	prefix=$(date +%F)
+fi
 
 
-# files=$(ls -1 *.$extension)
+files=$(ls -1 *.$extension)
 
-# if [[ $? != 0 ]]
-# 	then
-# 		echo -e "\nSorry, No file with .$extension extension"
-# 		exit 0
-# else
-# 	for file in $files; do
-# 		new_name=$file-$prefix
-# 		echo "Renaming $file to $new_name"
-# 		mv $file $new_name
-# 	done
-# fi
+if [[ $? != 0 ]]
+	then
+		echo -e "\nSorry, No file with .$extension extension"
+		exit 0
+else
+	for file in $files; do
+		new_name=$file-$prefix
+		echo "Renaming $file to $new_name"
+		mv $file $new_name
+	done
+fi
