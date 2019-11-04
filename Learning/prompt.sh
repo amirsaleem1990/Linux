@@ -21,3 +21,5 @@ elif [[ $first_char == "d" ]]
 else
 	echo "<$name> is another type of file"
 fi
+
+echo ls -l $name
