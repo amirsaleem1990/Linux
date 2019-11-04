@@ -5,7 +5,7 @@
 
 
 function file_count(){
-	local dirctory=$1
+	dirctory=$@
 	echo $dirctory
 	# files_count=$(ls $dirctory | wc -l)
 	# echo "Count of files/folders in <$1>: $files_count"
