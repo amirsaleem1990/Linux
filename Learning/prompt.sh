@@ -6,10 +6,11 @@
 read -p "Enter file/directory name: " name
 echo ""
 b=$(ls -l $name)
-if [[ ${b:0:1} == "-" ]]
+first_char= ${b:0:1}
+if [[ $first_char  == "-" ]]
 	then
 		echo "<$name> is regular file"
-elif [[ ${b:0:1} == "d" ]]
+elif [[ $first_char == "d" ]]
 	then
 		echo "<$name> is regular directory"
 
