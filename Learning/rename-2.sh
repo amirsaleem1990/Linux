@@ -19,6 +19,7 @@ read -p "Enter file extension (eg: png) : " extension
 read -p "Enter prefix (default is current date) : " prefix 
 if [[ prefix == "" ]]
 then
+	echo "amir"
 	prefix=$(date +%F)
 fi
 
