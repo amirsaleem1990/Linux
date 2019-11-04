@@ -451,3 +451,4 @@ ffmpeg -i in.avi -vf "hflip" out.avi
 # get only unique files extentions .................. for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
 
 
+# extract files from .ISO file ............... mkdir ISO ; sudo mount your_iso_file.iso ISO/; cd ISO ..........
