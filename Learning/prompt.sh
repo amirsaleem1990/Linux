@@ -8,3 +8,4 @@ b=$(ls -l $name)
 if [[ ${b:0:1} == "-" ]]
 	then
 		echo "$name is regular file"
+fi
