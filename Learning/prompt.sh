@@ -5,4 +5,6 @@
 
 read -p "Enter file/directory name: " name
 b=$(ls -l $name)
-echo $b
+if [[ ${b:0:1} == "-" ]]
+	then
+		echo "$name is regular file"
