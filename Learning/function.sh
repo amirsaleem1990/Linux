@@ -8,3 +8,4 @@ function file_count(){
 	echo "Count of files in Working Directory: $files_count"
 	exit 0
 }
+file_count
