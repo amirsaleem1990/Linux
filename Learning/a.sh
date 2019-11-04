@@ -5,6 +5,7 @@ while read X ; do
 	then
 		X="${X:1}"
 	fi
+
 	SUM+=$X;
 done < bash_challange_5.sh 
 
