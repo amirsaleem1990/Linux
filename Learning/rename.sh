@@ -9,8 +9,9 @@ if [[ JPG == "" ]]
 	echo Sorry, There is no .jpg file
 	exit 0
 else
+	current_date=$(date '+%y-%m-%d')
 	for jpg in $JPG
 		do
-			current_date=$(date '+%y-%m-%d')
 			new_name="$current_date-$JPG"
+			mv jpg new_name
 fi
