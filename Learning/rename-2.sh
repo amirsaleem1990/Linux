@@ -34,6 +34,6 @@ else
 	for file in $files; do
 		new_name=$file-$prefix
 		echo "Renaming $file to $new_name"
-		mv $file $new_name
+		# mv $file $new_name
 	done
 fi
