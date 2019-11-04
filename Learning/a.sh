@@ -1,7 +1,11 @@
 declare	-i SUM=0
 
 while read X ; do 
-	SUM+=$X; 
+	if [[ ${X:0:1} == "0" ]]
+		X="${X:1}"
+	else
+		SUM+=$X;
+	fi 
 done < bash_challange_5.sh 
 
 
