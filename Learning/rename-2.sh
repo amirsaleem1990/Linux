@@ -18,11 +18,10 @@
 
 
 read -p "Enter prefix (default is current date) : " prefix 
-echo $prefix
-if [[ prefix == "" ]]
+if [[ $prefix == "" ]]
 then
 	echo "amir"
-	prefix=$(date +%F)
+	# prefix=$(date +%F)
 fi
 
 
