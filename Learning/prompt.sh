@@ -6,7 +6,9 @@
 read -p "Enter file/directory name: " name
 echo ""
 b=$(ls -l $name)
-first_char= ${b:0:1}
+
+first_char=${b:0:1}
+
 if [[ $first_char  == "-" ]]
 	then
 		echo "<$name> is regular file"
