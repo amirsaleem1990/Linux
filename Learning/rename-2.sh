@@ -4,7 +4,7 @@
 
 
 read -p "Enter Directory name (default is Current directory): " directory
-if [[ $directory == "" ]]
+if [[ -z "$directory"]]
 	then
 		directory=$pwd
 fi
