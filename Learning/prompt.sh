@@ -7,8 +7,12 @@ read -p "Enter file/directory name: " name
 
 if [ -f “$name ]
   then
-    echo “$name is a reguler file”elif [ -d “$name ]
+    echo “$name is a reguler file”
+
+elif [ -d “$name ]
   then
-    echo “$name is a directory”else
+    echo “$name is a directory”
+
+else
     echo “$name is another type of file”
 fi
