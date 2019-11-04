@@ -5,7 +5,7 @@
 
 read -p "Enter file/directory name: " name
 echo ""
-b=$(ls -l $name)
+b=$(ls -l | grep -w $name)
 
 first_char=${b:0:1}
 
