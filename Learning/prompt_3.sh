@@ -16,13 +16,13 @@ for file in $files
 		else
 			if [[ $first_char  == "-" ]]
 				then
-					echo "<$file> is regular file"
+					echo "regular file"
 			elif [[ $first_char == "d" ]]
 				then
-					echo "<$file> is regular directory"
+					echis regular directory"
 
 			else
-				echo "<$file> is another type of file"
+				echo "another type of file"
 			fi
 		fi
 			
