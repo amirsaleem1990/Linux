@@ -4,13 +4,23 @@
 # Exercise_13 - Modify the script from the previous exercise. Make the “file_count” function accept a directory as an argument. Next, have the function display the name of the directory followed by a colon. Finally display the number of files to the screen on the next line. Call the function three times. First on the “/etc” directory, next on the “/var” directory and finally on the “/usr/bin” directory.
 
 
-function file_count(){
-	local dirctory=$1
-	echo $dirctory
+# function file_count(){
+	# local dirctory=$1
+	# echo $dirctory
 	# files_count=$(ls $dirctory | wc -l)
 	# echo files_count
 	# echo "Count of files/folders in Working Directory: $files_count"
 	# exit 0
-}
+# }
 
-file_count
+# file_count
+
+function file_count()
+ {
+   local Directory=$1
+   echo $Directory
+   COUNT_FILE=$(ls $Directory|wc -l)
+   echo "$Directory"
+   echo "$COUNT_FILE"
+ }
+ file_count
