@@ -6,7 +6,7 @@
 
 retrn=$(cat /etc/shadow)
 
-if [[ $? == 1 ]]
+if [[ $? == 0 ]]
 	then
 		echo "command succeeded"
 else
