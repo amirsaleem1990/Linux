@@ -7,7 +7,10 @@ read -p "Enter Directory name (default is Current directory): " directory
 if [[ $directory == "" ]]
 	then
 		directory=$pwd
-cd $directory
+fi
+echo $directory
+
+# cd $directory
 
 # echo "You have these extensions in this directory"
 # for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
