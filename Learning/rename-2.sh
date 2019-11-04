@@ -31,7 +31,7 @@ if [[ $? != 0 ]]
 		echo -e "\nSorry, No file with .$extension extension"
 		exit 0
 else
-	for file in *.$extensions; do
+	for file in $(ls | grep $extensions); do
 		new_name=$prefix-$file
 		echo "Renaming $file to $new_name"
 		# mv $file $new_name
