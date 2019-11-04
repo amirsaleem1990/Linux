@@ -7,7 +7,10 @@
 b=$(ls -l | grep -w $1)
 
 first_char=${b:0:1} # get first character of long listing for our file/folder
-echo $first_char
+if [ $first_char == "" ]]
+	then 
+		echo "amir"
+fi
 # if [[ $first_char  == "-" ]]
 # 	then
 # 		echo "<$1> is regular file"
