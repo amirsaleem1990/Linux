@@ -7,7 +7,7 @@ files=$@
 for file in $files
 	do 
 		b=$(ls -l | grep -w $file)
-
+		echo -e "$file:\t\t"
 		first_char=${b:0:1} # get first character of long listing for our file/folder
 		if [[ $first_char == "" ]]
 			then 
