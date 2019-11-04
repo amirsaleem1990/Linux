@@ -7,13 +7,13 @@
 JPG=$(ls *.jpg)
 if [[ JPG == "" ]]
 	then
-		echo Sorry, There is no .jpg file
+		echo "Sorry, There is no .jpg file"
 		exit 0
 else
 	current_date=$(date '+%y-%m-%d')
 	for jpg in $JPG
 		do
 			new_name="$current_date-$JPG"
-			mv jpg new_name
+			mv $jpg $new_name
 		done
 fi
