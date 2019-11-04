@@ -448,3 +448,5 @@ ffmpeg -i in.avi -vf "hflip" out.avi
 
 # exit with 0 status <in bash script> ............. exit 0
 
+# get only unique files extentions .................. for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
+
