@@ -460,3 +460,4 @@ if ! [[ "$(ps -p $(ps -p $(echo $$) -o ppid=) -o comm=)" =~ 'bicon'* ]]; then
   bicon.bin
 fi
 
+
