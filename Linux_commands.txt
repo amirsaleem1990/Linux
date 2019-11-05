@@ -455,3 +455,8 @@ ffmpeg -i in.avi -vf "hflip" out.avi
 
 # solved (bash terminal display arabic in reverse order)
 
+# add these lines to ~/.bashrc file and source it 
+if ! [[ "$(ps -p $(ps -p $(echo $$) -o ppid=) -o comm=)" =~ 'bicon'* ]]; then
+  bicon.bin
+fi
+
