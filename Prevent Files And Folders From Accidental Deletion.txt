@@ -1,0 +1,74 @@
+Prevent Files And Folders From Accidental Deletion Or Modification In Linux
+
+https://www.ostechnix.com/prevent-files-folders-accidental-deletion-modification-linux/
+
+    The operator ‘+’ causes the selected attributes to be added to the existing attributes of the files;
+    The operator ‘-‘ causes them to be removed;
+    The operator ‘=’ causes them to be the only attributes that the files have.
+
+Chattr has different attributes namely – aAcCdDeijsStTu. Each letter applies a particular attributes to a file.
+
+    a – append only,
+    A – no atime updates,
+    c – compressed,
+    C – no copy on write,
+    d – no dump,
+    D – synchronous directory updates,
+    e – extent format,
+    i – immutable,
+    j – data journalling,
+    P – project hierarchy,
+    s – secure deletion,
+    S – synchronous updates,
+    t – no tail-merging,
+    T – top of directory hierarchy,
+    u – undeletable.
+
+
+> touch file.txt
+# apply “i” attribute which makes the file immutable. It means you can’t delete, modify the file, > even if you’re the file owner and the root user.
+> sudo chattr +i file.txt
+> sudo rm file.txt
+## rm: cannot remove 'file.txt': Operation not permitted
+> echo 'Hello World!' >> file.txt
+## bash: file.txt: Operation not permitted
+
+# To revoke attributes, just use “-i” switch as shown below.
+> sudo chattr -i file.txt
+> rm file.txt
+
+
+Prevent folders from accidental deletion and modification
+
+> mkdir dir1 && touch dir1/file.txt
+
+# Now, make this directory and its contents (file.txt) immutable using command:
+> sudo chattr -R +i dir1
+    -R – will make the dir1 and its contents immutable recursively.
+    +i – makes the directory immutable.
+
+# Now, try to delete the directory.
+> sudo rm -fr dir1
+## rm: cannot remove 'dir1/file.txt': Operation not permitted
+
+# To revoke the attributes back, run:
+> sudo chattr -R -i dir1
+
+
+Prevent files and folders from accidental deletion, but allow append operation
+
+For files:
+> sudo chattr +a file.txt
+
+For directories: 
+> sudo chattr -R +a dir1
+
+
+# To remove the attributes, run the following commands:
+For files:
+$ sudo chattr -R -a file.txt
+
+For directories: 
+$ sudo chattr -R -a dir1/
+
+Now, you can delete or modify the files and folders as usual.
