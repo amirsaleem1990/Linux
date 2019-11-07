@@ -1,0 +1,14 @@
+#! /bin/bash
+echo "Count,Repo" > ~/git_counts.csv
+cd /home/amir/github
+for git_folder in $(ls -d */);
+	do  
+	cd $git_folder
+	count=$(git rev-list HEAD --count --first-parent --since=$(date --date="1 day ago" +%F))
+	echo $count,$git_folder >> ~/git_counts.csv
+	cd ../
+	done
+
+python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); import matplotlib.pyplot as plt; plt.bar(df.Repo, df.Count); plt.show()'
+
+rm ~/git_counts.csv
