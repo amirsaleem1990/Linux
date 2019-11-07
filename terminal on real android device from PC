@@ -1,0 +1,19 @@
+# terminal on real android device from PC
+# https://android.stackexchange.com/questions/60906/terminal-on-real-android-device-from-pc
+
+
+
+You can use Android Debug Bridge (ADB) shell to issue basic Linux commands on your phone, just like you would in a terminal emulator app. To install you'll need to do the following:
+
+    On the phone go to Settings -> About phone, and tap on "Build number" seven times. This enabled Developer tools.
+    Go back to the main Settings screen and you should now see Developer options under the "System" section.
+    Go to Developer options, enable "Android debugging" option, and then tap OK on the verification prompt.
+    On your PC download the Android SDK Tools from here. You can either download the whole SDK, or just the stuff necessary to connect to your phone, which is on the same page, under "Download for other platforms -> SDK Tools Only" section.
+    Install the tools you just downloaded.
+    Download and install the USB drivers for your phone (usually provided by the manufacturer.)
+    Re-connect your phone to the PC with a USB cable.
+    Open Command prompt (assuming Windows,) navigate to where you installed the SDK tools (e.g. "C:\android-sdk\platform-tools\") and type in the following: adb devices
+    If all of the above was done successfully, a prompt should pop up asking you to allow connections from this computer. Accept the pairing request, and the prompt should show your phone's ID. If this doesn't happen - it usually means that the drivers aren't installed correctly.
+    Back at Command prompt, type in adb shell and press Enter, and you should be connected to the phone's terminal.
+
+This should get you started. ADB commands are listed on Google's site here. The shell provides some basic Linux commands like ls, cp, etc. Be aware that most file and device management commands will require root (i.e. elevated privileges,) which is a separate topic.
