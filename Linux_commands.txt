@@ -464,3 +464,4 @@ fi
 # git push count since yesterday ........... git rev-list HEAD --count --first-parent --since=$(date --date="1 day ago" +%F)
 
 # output of lsblk have a loot of unnecessary loog devices (Snap packages), to avoid them, use: lsblk -e 7
+
