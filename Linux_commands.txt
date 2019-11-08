@@ -465,3 +465,4 @@ fi
 
 # output of lsblk have a loot of unnecessary loog devices (Snap packages), to avoid them, use: lsblk -e 7
 
+# mount partition in <read only> mode ............... sudo mount -r /dev/sdb5 /media/500GB
