@@ -1,7 +1,6 @@
 #!/usr/bin/env ipython3
 import os
 os.chdir("/home/amir/github")
-lst = False
 for i in os.listdir():
 	if not i.startswith("."):
 		os.chdir(i)
@@ -16,5 +15,6 @@ for i in os.listdir():
 		else:
 			lst = True
 		os.chdir("../")
-if lst:
-	print("\nUPDATED\n\n")
+
+else:
+	print("Nothing to Add or Push")
