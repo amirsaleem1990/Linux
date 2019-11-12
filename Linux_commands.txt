@@ -467,3 +467,4 @@ fi
 
 # mount partition in <read only> mode ............... sudo mount -r /dev/sdb5 /media/500GB
 
+# format usb to ext4 type .................. sudo mkfs.ext4 /dev/sdc
