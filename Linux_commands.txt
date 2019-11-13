@@ -468,3 +468,6 @@ fi
 # mount partition in <read only> mode ............... sudo mount -r /dev/sdb5 /media/500GB
 
 # format usb to ext4 type .................. sudo mkfs.ext4 /dev/sdc
+
+# nmcli d w c ZONG\ MBB-E5573-D164 password $(sudo cat /etc/NetworkManager/system-connections/ZONG\ MBB-E5573-D164 |  grep psk= | sed 's/psk=//g')
+
