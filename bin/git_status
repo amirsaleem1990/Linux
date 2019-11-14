@@ -1,6 +1,7 @@
 #!/usr/bin/env ipython3
 import os
 os.chdir("/home/amir/github")
+aa = True
 for i in os.listdir():
 	if not i.startswith("."):
 		os.chdir(i)
@@ -8,6 +9,7 @@ for i in os.listdir():
 		if list(a) != ['On branch master\n', "Your branch is up to date with 'origin/master'.\n", '\n', 'nothing to commit, working tree clean\n']:		
 			print("*"*10, i, "*"*10)
 			a = os.popen("git status")
+			aa = False
 			for z in list(a)[1:]:
 				if not z == "\n":
 					print(z.replace("\n", ""))
@@ -16,5 +18,5 @@ for i in os.listdir():
 			lst = True
 		os.chdir("../")
 
-else:
+if aa:
 	print("Nothing to Add or Push")
