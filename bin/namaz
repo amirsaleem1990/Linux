@@ -1,0 +1,33 @@
+#!/usr/bin/env ipython3
+from datetime import datetime
+import numpy as np
+from pprint import pprint
+import pandas as pd
+
+df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+d = str(datetime.now()).split()[0][5:].split("-")
+today = df[(df.Month == d[0]) & (df.Date == d[1])].T
+pprint(today.T)
+
+tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
+current_prayer_time = today.iloc[np.where(today > tm)[0][0]]
+
+
+def remaining_time(current_time, last_time):
+    c1 = current_time.split(":")
+    l1 = last_time.split(":")
+    ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
+    cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
+    lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
+    lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
+    remainting_minutes = ((lh - ch) * 60) + (lm - cm)
+    rh = remainting_minutes // 60
+    remainting_minutes -= rh * 60
+    if len(str(rh)) == 1:
+        rh = "0" + str(rh)
+    if len(str(remainting_minutes)) == 1:
+        remainting_minutes = "0" + str(remainting_minutes)
+    print(f"Remainting Time\n\nHours  : {rh}\nMinutes: {remainting_minutes}")
+print("\n#######################")
+remaining_time(tm, current_prayer_time.values[0])
+print("#######################")
