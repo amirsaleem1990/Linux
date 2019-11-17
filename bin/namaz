@@ -40,3 +40,13 @@ def remaining_time(current_time, last_time):
 print("\n#######################")
 remaining_time(tm, current_prayer_time.values[0])
 print("#######################")
+
+
+
+# minimum and maximux prayter times
+# def f(x):
+#     return pd.to_datetime(x, format='%H:%M').dt.time
+# df = pd.concat([df[["Month", "Date"]], 
+#            df[['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']].apply(f)], 
+#            axis=1)
+# print(tabulate(df.apply([min, max]), headers='keys', tablefmt='psql'))
