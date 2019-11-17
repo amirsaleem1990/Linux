@@ -1,10 +1,14 @@
 #!/usr/bin/env ipython3
+from tabulate import tabulate
 from datetime import datetime
 import numpy as np
 from pprint import pprint
 import pandas as pd
 
 df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+df.drop("Asr_1", axis=1, inplace=True)
+df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
+
 d = str(datetime.now()).split()[0][5:].split("-")
 today = df[(df.Month == d[0]) & (df.Date == d[1])].T
 
@@ -16,7 +20,7 @@ except:
 	import sys
 	sys.exit(0)
 
-pprint(today.T)
+print(tabulate(today.T.reset_index().drop("index", axis=1), headers='keys', tablefmt='psql'))
 
 def remaining_time(current_time, last_time):
     c1 = current_time.split(":")
@@ -32,7 +36,7 @@ def remaining_time(current_time, last_time):
         rh = "0" + str(rh)
     if len(str(remainting_minutes)) == 1:
         remainting_minutes = "0" + str(remainting_minutes)
-    print(f"Remainting Time\n\nHours  : {rh}\nMinutes: {remainting_minutes}")
+    print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
 print("\n#######################")
 remaining_time(tm, current_prayer_time.values[0])
 print("#######################")
