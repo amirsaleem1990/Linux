@@ -10,7 +10,7 @@ today = df[(df.Month == d[0]) & (df.Date == d[1])].T
 
 tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
 try:
-	current_prayer_time = today.iloc[np.where(today > tm)[0][0]]
+	current_prayer_time = today[2:].iloc[np.where(today[2:] > tm)[0][0]]
 except:
 	print("No Another Namaz today, Sleep! :p")
 	import sys
