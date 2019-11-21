@@ -470,3 +470,4 @@ fi
 
 # nmcli d w c ZONG\ MBB-E5573-D164 password $(sudo cat /etc/NetworkManager/system-connections/ZONG\ MBB-E5573-D164 |  grep psk= | sed 's/psk=//g')
 
+# release swap memory .................... sudo swapoff -a ; sudo swapon -a
