@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/amir/.local/SingleFile/SingleFile/cli/single-file $1 $2 --back-end=webdriver-gecko
