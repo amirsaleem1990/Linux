@@ -473,3 +473,5 @@ fi
 # release swap memory .................... sudo swapoff -a ; sudo swapon -a
 # update only one package .................. apt-get install --only-upgrade <packagename>
 
+# top list process than consume some CPU for user <amir> ............. top -i -u amir
+
