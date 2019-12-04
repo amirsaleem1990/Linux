@@ -1,0 +1,12 @@
+#!/usr/bin/ipython3
+name = input("Enter Link Name: ")
+link = f"""[Desktop Entry]
+Encoding=UTF-8
+Name={name} 
+Type=Link
+URL={input("Enter URL:        ")}
+Icon=text-html"""
+
+with open(name + "_link.desktop", "w") as file:
+	file.write(link)
+print("\nYour file saved succesfully\n")
