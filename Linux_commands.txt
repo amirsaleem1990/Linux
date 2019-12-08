@@ -475,4 +475,6 @@ fi
 
 # top list process than consume some CPU for user <amir> ............. top -i -u amir
 
-# check your public ip address ............. curl ifconfig.me
+# check your public ip address ............. curl ifconfig.me OR curl icanhazip.com OR curl ipecho.net/plain OR curl ident.me OR curl bot.whatismyipaddress.com OR curl https://diagnostic.opendns.com/myip OR curl http://checkip.amazonaws.com
+
+
