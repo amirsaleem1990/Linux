@@ -475,3 +475,4 @@ fi
 
 # top list process than consume some CPU for user <amir> ............. top -i -u amir
 
+# check your public ip address ............. curl ifconfig.me
