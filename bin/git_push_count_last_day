@@ -1,6 +1,6 @@
 #! /bin/bash
 read -p "Enter Days (eg: 1): " day
-
+read -p "Are you need Plot? [y\n]: " plot
 echo "Count,Repo" > ~/git_counts.csv
 cd /home/amir/github
 for git_folder in $(ls -d */);
@@ -11,6 +11,13 @@ for git_folder in $(ls -d */);
 	cd ../
 	done
 
-python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
-#import matplotlib.pyplot as plt; plt.bar(df.Repo, df.Count); plt.show()
+
+if [ $plot == 'n' ]
+	then
+		python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
+	else
+		python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); import matplotlib.pyplot as plt; plt.bar(df.Repo, df.Count); plt.show()'
+fi
+
+
 rm ~/git_counts.csv
