@@ -480,3 +480,4 @@ fi
 
 
 # stop service .............. sudo systemctl stop service_name
+zip files and remove orignals .................. zip -rm aa.zip *
