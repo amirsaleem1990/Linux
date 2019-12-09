@@ -479,3 +479,4 @@ fi
 
 
 
+# stop service .............. sudo systemctl stop service_name
