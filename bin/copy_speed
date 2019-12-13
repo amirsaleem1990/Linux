@@ -1,0 +1,18 @@
+#!/bin/bash
+
+read -p "Enter your File /Folder absolute path: " all_data_in_MB
+m=$(du -s $all_data_in_MB -BM)
+m1=${m%[[:space:]]*}
+all_data_in_MB=$(echo $m1 | tr -dc '0-9')
+
+last=$(echo $(du -s -BM) | tr -dc '0-9')
+while :
+	do 
+	current=$(echo $(du -s -BM) | tr -dc '0-9')
+	echo -n "TOTAL: $(du -sh), in last 10 Sec:"
+	echo -n `expr $current - $last ` MB `   date +%H:%M:%S`
+	last=$current
+	completed=$(echo "scale=2; $current/$all_data_in_MB" | bc)
+	echo "       " Completed $(echo $completed | tr -dc '0-9') %
+	sleep 10
+done

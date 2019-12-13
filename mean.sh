@@ -1,0 +1,17 @@
+#!/bin/bash
+### This program will take input/s from user and return the mean
+array=()
+while IFS= read -r -p "Next item (end with an empty line): " line; do
+    [[ $line ]] || break  # break if line is empty
+    array+=("$line")
+done
+SUM=0
+for i in ${array[@]}
+do
+  SUM=$(echo `expr $SUM + $i`)
+done
+
+LEN_OF_ARRAY=$(echo "${#array[@]}")
+
+mean=$(echo "scale=3; $SUM/$LEN_OF_ARRAY" | bc)
+echo $mean
