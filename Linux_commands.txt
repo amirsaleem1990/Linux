@@ -485,3 +485,9 @@ zip files and remove orignals .................. zip -rm aa.zip *
 # only folders size .............. du -sh ./*/
 
 ############################
+start and end time 
+start=`date +%s` 
+end=`date +%s`
+runtime=$((end-start))
+echo $runtime
+############################
