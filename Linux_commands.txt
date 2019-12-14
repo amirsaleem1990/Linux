@@ -496,6 +496,7 @@ get only numbers .............. echo "I am 999 years old." | tr -dc '0-9'
 unrar .rar file in linux ............ unrar  e  file.rar .
 
 ------------------------------
+# http://blog.chapagain.com.np/ubuntu-linux-increase-decrease-volume-from-command-line-keyboard-shortcut/
 CONTROLE VOLUME
 amixer is a command-line mixer for ALSA soundcard driver.
 Increase volume by 10% ------------     amixer set 'Master' 10%+
