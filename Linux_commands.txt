@@ -493,3 +493,4 @@ echo $runtime
 ############################
 get only numbers .............. echo "I am 999 years old." | tr -dc '0-9'
 +
+unrar .rar file in linux ............ unrar  e  file.rar .
