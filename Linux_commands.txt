@@ -492,5 +492,14 @@ runtime=$((end-start))
 echo $runtime
 ############################
 get only numbers .............. echo "I am 999 years old." | tr -dc '0-9'
-+
+
 unrar .rar file in linux ............ unrar  e  file.rar .
+
+------------------------------
+CONTROLE VOLUME
+amixer is a command-line mixer for ALSA soundcard driver.
+Increase volume by 10% ------------     amixer set 'Master' 10%+
+Decrease volume by 10% ------------     amixer set 'Master' 10%-
+Set volume to 10%      ------------     amixer set 'Master' 10%
+Set volume to 80%      ------------     amixer set 'Master' 80%
+------------------------------
