@@ -504,3 +504,5 @@ Decrease volume by 10% ------------     amixer set 'Master' 10%-
 Set volume to 10%      ------------     amixer set 'Master' 10%
 Set volume to 80%      ------------     amixer set 'Master' 80%
 ------------------------------
+
+# convert .txt file to .docx ............. libreoffice --convert-to docx file.txt
