@@ -1,0 +1,2 @@
+install jupyter-notebook .............. sudo python3 -m pip --isolated install jupyter
+install jupyter-lab      ...............sudo python3 -m pip --isolated install jupyterlab
