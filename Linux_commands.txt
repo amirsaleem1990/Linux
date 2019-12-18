@@ -508,3 +508,4 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 # convert .txt file to .docx ............. libreoffice --convert-to docx file.txt
 
 # convert .txt file to .pdf .......................... lowriter --convert-to pdf file.txt
+
