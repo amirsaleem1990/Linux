@@ -513,3 +513,4 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 
 
 # create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png
+
