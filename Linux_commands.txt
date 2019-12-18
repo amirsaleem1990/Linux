@@ -511,3 +511,5 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 
 # list only particuler extention files ...................... ls *.{png,txt}
 
+
+# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png
