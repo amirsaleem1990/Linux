@@ -16,12 +16,12 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # attention picture display
 25 13 * * *  amir sh /bin/laptop_suspend
 # 13:30 par suspend kar do
-30 13 * * * amir sh /bin/systemctl suspend
+48 13 * * * root /usr/sbin/pm-suspend
  
 # attention picture display
 25 18 * * *  amir sh /bin/laptop_shutdown
 # 18:30 par shutdown kar do
-36 18 * * * amir sh shutdown -h now
+30 18 * * * root /sbin/shutdown -h now
  
 
 # OK
