@@ -1,7 +1,12 @@
 #! /bin/bash
-read -p "Enter Days (eg: 1): " day
-if [[ $day > 1 ]] ; then read -p "Are you need Plot? [0\1]: " plot; else plot=0; fi
-
+# read -p "Enter Days (eg: 1): " day
+day=$@
+# if [[ $day > 1 ]] ; then read -p "Are you need Plot? [0\1]: " plot; else plot=0; fi
+if [[ $day > 1 ]] ; then 
+	plot=1
+else 
+	plot=0
+fi
 echo "Count,Repo" > ~/git_counts.csv
 cd /home/amir/github
 for git_folder in $(ls -d */);
