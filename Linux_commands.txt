@@ -517,3 +517,4 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 # remove selected files .................... rm {17,18,19,20,21}*.mp4
 
 mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
+
