@@ -518,3 +518,4 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 
 mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
 
+# history with date and time ...................... echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile ; source ~/.bash_profile
