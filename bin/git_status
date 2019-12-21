@@ -1,6 +1,8 @@
 #!/usr/bin/env ipython3
 import os
 os.chdir("/home/amir/github")
+if "git_files.txt" in os.listdir():
+	os.system("rm git_files.txt")
 aa = True
 for i in os.listdir():
 	if not i.startswith("."):
