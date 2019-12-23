@@ -524,3 +524,4 @@ mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
 
 
 # remove tailing commas .................. echo  $entry | sed 's/,*$//g'
+# download mp3 from youtube video ................. youtube-dl -x --audio-format mp3 https://youtu.be/H8YeFZXRnyg
