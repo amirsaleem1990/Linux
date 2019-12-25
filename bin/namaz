@@ -20,7 +20,7 @@ except:
 	import sys
 	sys.exit(0)
 
-print(tabulate(today.T.reset_index().drop("index", axis=1), headers='keys', tablefmt='psql'))
+print(tabulate(today.T.reset_index().drop("index", axis=1).T, headers='keys', tablefmt='psql'))
 
 def remaining_time(current_time, last_time):
     c1 = current_time.split(":")
