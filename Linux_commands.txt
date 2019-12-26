@@ -526,4 +526,4 @@ mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
 # remove tailing commas .................. echo  $entry | sed 's/,*$//g'
 # download mp3 from youtube video ................. youtube-dl -x --audio-format mp3 https://youtu.be/H8YeFZXRnyg
 
-# me ny 1 file download ki, jo .gzip format me thi, me ny kafi kosh kari k us ko unzip kar lon, magar nahi hwi, phir me ny us file ki info dekhi (file file_name.gzip) to pata chala k wo (Apache Parquet) thi, or me ny usy python me ja kar pandas me read kar lya.
+# me ny 1 file download ki, jo .gzip format me thi, me ny kafi kosh kari k us ko unzip kar lon, magar nahi hwi, phir me ny us file ki info dekhi (file file_name.gzip) to pata chala k wo (Apache Parquet) thi, or me ny usy python me ja kar pandas me read kar lya.cp file_1_very_large_name.rda to file_1_ver_large_name.zip ................. cp file_1_very_large_name.{rda,zip}
