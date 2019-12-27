@@ -530,3 +530,5 @@ mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
 
 cp file_1_very_large_name.rda to file_1_ver_large_name.zip ................. cp file_1_very_large_name.{rda,zip}
 
+# say you want to remove terminal history where you use command <rm> .................... history | grep -v -w rm > .bash_history ........ and then exit from current terminal, next open terminal, now all entries were <rm> present deleted.
+
