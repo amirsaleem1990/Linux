@@ -535,3 +535,4 @@ cp file_1_very_large_name.rda to file_1_ver_large_name.zip ................. cp 
 
 mv linear-regression-business-statlinear-regression-business-statistics/ .............. equal to : mv linear-regression-business-statistics{-syllabus-parsed.json,}
 
+# read file line by line in while loop .................. while IFS= read -r line; do   youtube-dl "$line"; done < "$input"
