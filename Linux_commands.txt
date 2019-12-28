@@ -540,6 +540,7 @@ mv linear-regression-business-statlinear-regression-business-statistics/ .......
 --------------------------------------------------------
 replace all spaces in mp3 files names to <_>:
 OIFS="$IFS"
+# To tell it to only split the input on newlines, you need to do
 IFS=$'\n'
 for file in `find . -type f -name "*.mp3"`  
 do
