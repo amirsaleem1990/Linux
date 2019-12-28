@@ -538,3 +538,10 @@ mv linear-regression-business-statlinear-regression-business-statistics/ .......
 # read file line by line in while loop .................. input="to_download.txt";  while IFS= read -r line; do   youtube-dl "$line"; done < "$input"
 
 --------------------------------------------------------
+replace all spaces in mp3 files names to <_>:
+OIFS="$IFS"
+IFS=$'\n'
+for file in `find . -type f -name "*.mp3"`  
+do
+     mv $file `echo $file | sed 's/\ /_/g'`
+done
