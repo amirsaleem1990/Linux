@@ -546,3 +546,4 @@ for file in `find . -type f -name "*.mp3"`
 do
      mv $file `echo $file | sed 's/\ /_/g'`
 done
+IFS="$OIFS"
