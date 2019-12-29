@@ -548,3 +548,4 @@ do
 done
 IFS="$OIFS"# merger multiple mp3 in single mp3 file ................. cat *.mp3 > final.mp3
 # cut specific range from mp3 .................. sudo aptitude install poc-streamer; mp3cut -o output.mp3 -t 00:00:20+000-00:00:58+000 input.mp3 
+mv CID-575-GumnaamLaash-KpPK6dLJKMA.mp4 CID-575.mp4 same as :   mv CID-575{-GumnaamLaash-KpPK6dLJKMA,}.mp4
