@@ -546,4 +546,4 @@ for file in `find . -type f -name "*.mp3"`
 do
      mv $file `echo $file | sed 's/\ /_/g'`
 done
-IFS="$OIFS"
+IFS="$OIFS"# merger multiple mp3 in single mp3 file ................. cat *.mp3 > final.mp3
