@@ -1,0 +1,18 @@
+#!/bin/bash
+counter=`cat /home/amir/.play_nex_vedio_counter`
+if [[ -z $counter ]] ; then
+	counter=1
+else 
+	counter=$(($counter + 1))
+fi
+echo $counter
+echo $counter > /home/amir/.play_nex_vedio_counter
+
+if test -f "$counter"*.mp4 ; then 
+	vlc $counter*.mp4
+else 
+	echo -e "Sorry, There is no file\n\n`ls *.mp4 -1`"
+	rm -f  /home/amir/.play_nex_vedio_counter
+fi
+
+# read a; if test -f "$a"*.mp4 ; then vlc $a*.mp4 ; else echo -e "Sorry, There is no file in `ab=$(echo $(pwd) | tr -cd '/' | wc -c); echo $(pwd) | cut -d '/' -f $ab`\n`ls ../ -1`\n\n`ls *.mp4 -1`\n"; fi
