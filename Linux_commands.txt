@@ -558,3 +558,4 @@ replace every space in file name with <_> ................... mv Meri\ Qismat\ J
 
 # unique file sizes ....................... du -sh * | cut -d "K" -f 1 | uniq
 # current wifi name ....................... nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\' -f2 | sed 's/yes\://g'
+# string comparison .................... if [ "$wifi_name"  =   "H1-Zong" ] ;  then   echo amir; fi
