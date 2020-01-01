@@ -6,10 +6,11 @@ read -p "Enter your prefreed wifi name: " desired_wifi
 while :; do
 	wifi_name=`nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\' -f2 | sed 's/yes\://g'`
 	if [ "$wifi_name" != "$desired_wifi" ] ;  then
-	   nmcli d w r
-	   sleep 10
-	   nmcli d w c $desired_wifi password `sudo cat /etc/NetworkManager/system-connections/$desired_wifi | grep psk= | sed 's/psk=//g'`
-	   echo "Connected to $desired_wifi successfully"
+		sleep 10
+		nmcli d w r
+		nmcli d w c $desired_wifi password `sudo cat /etc/NetworkManager/system-connections/$desired_wifi | grep psk= | sed 's/psk=//g'`
+		echo "Connected to $desired_wifi successfully"
+	else
+		exit
 	fi
-	sleep 60
 done
