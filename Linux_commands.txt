@@ -557,3 +557,4 @@ replace every space in file name with <_> ................... mv Meri\ Qismat\ J
 # zip all directories invidualy in current directory ............................ for i in `ls`; do zip -r `echo $i | sed 's/\///g'`.zip $i ; done
 
 # unique file sizes ....................... du -sh * | cut -d "K" -f 1 | uniq
+# current wifi name ....................... nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\' -f2 | sed 's/yes\://g'
