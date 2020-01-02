@@ -563,3 +563,4 @@ replace every space in file name with <_> ................... mv Meri\ Qismat\ J
 
 # save ok output to <ok file> and errors to <out file> ..................... ./script.sh 1> ok 2> out
 # save both normal and errors outputs to <out file> ...................... ./script.sh >out 2>&1
+# get your entire push history ..................... git log --pretty=format:"%ad - %an: %s" | tail
