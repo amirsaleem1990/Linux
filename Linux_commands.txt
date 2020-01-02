@@ -561,3 +561,4 @@ replace every space in file name with <_> ................... mv Meri\ Qismat\ J
 # string comparison .................... if [ "$wifi_name"  =   "H1-Zong" ] ;  then   echo amir; fi
 # move mobile\ nackup mobile\ backup ..................... equal to: mv mobile\ {n,b}ackup/
 
+# save ok output to <ok file> and errors to <out file> ..................... ./script.sh 1> ok 2> out
