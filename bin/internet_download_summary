@@ -1,0 +1,8 @@
+SUM=`du -sh -BM | sed 's/M..//g'`
+while :; do
+	sleep 10
+	current=`du -sh -BM | sed 's/M..//g'`
+	incremental=$(( $current - $SUM ))
+	SUM=$current
+	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.mp4" | wc -l `"
+done
