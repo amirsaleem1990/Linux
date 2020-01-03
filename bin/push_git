@@ -8,6 +8,8 @@ with open("git_files.txt", "r") as file:
 for i in all_files:
     if not "/.git/" in i:
     	# if i.count("/") > 1:
+        # os.stat(i).st_size return the size in Bytes
+        # https://www.tutorialspoint.com/python/os_stat.htm
         if os.stat(i).st_size > 1048576*99:
             print(f"\n\n\n\n******* {i} is larger then 49MB *******\n\n\n\n")
             import sys
