@@ -6,6 +6,10 @@ plot=$2
 
 if [[ $day = "" ]]; then
 	current_date=`date +%F`
+else
+	if [[ $day = "1" ]]; then
+		current_date=`date +%F`	
+	fi
 fi
 
 if [[ $plot = "y" ]]; then
@@ -20,7 +24,7 @@ cd /home/amir/github
 for git_folder in $(ls -d */);
 	do  
 	cd $git_folder
-	if [[ $day -ge 1 ]]; then
+	if [[ $day -ge 2 ]]; then
 		count=$(git rev-list HEAD --count --first-parent --since=$(date --date=$day" day ago" +%F))
 	else
 		count=`git log --pretty='format:%H %an %ae %ai' | grep $current_date | wc -l`
