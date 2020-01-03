@@ -567,3 +567,5 @@ replace every space in file name with <_> ................... mv Meri\ Qismat\ J
 # get your entire push history (within range of dates) ..................... git log --pretty=format:"%ad - %an: %s" --after="2016-01-31" --until="2017-03-10" --author="John Doe"
 copy EPUB/1-file-name.pdf EPUB/2-file-namee.pdf EPUB/3-anotherfileName.pdf Newfolder ..... equal to : cp EPUB/{1*.pdf,2*.pdf,3*.pdf} Newfolder
 mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ The-three-body-problem/
+# compare same file sizes in two diffrent directories .............................. IFS=$'\n'; for i in `ls -d */` ; do echo "`du -sh $i;  du -sh  /media/500GB/learning/COURSES/$i`" ; done
+
