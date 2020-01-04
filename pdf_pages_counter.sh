@@ -1,4 +1,6 @@
 #!/bin/bash
+# go to each folder in currect directory(not all sub folders) and count pdf files pages in each folders as well as pdf qty
+
 IFS=$'\n'
 for folder in $(ls -d */) ;  do 
 	cd `echo $folder`
