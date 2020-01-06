@@ -569,3 +569,4 @@ copy EPUB/1-file-name.pdf EPUB/2-file-namee.pdf EPUB/3-anotherfileName.pdf Newfo
 mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ The-three-body-problem/
 # compare same file sizes in two diffrent directories .............................. IFS=$'\n'; for i in `ls -d */` ; do echo "`du -sh $i;  du -sh  /media/500GB/learning/COURSES/$i`" ; done
 
+# slecect column using awk ............... awk '{ print $1 }' foo
