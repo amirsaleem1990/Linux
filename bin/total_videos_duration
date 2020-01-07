@@ -1,0 +1,28 @@
+# !/bin/bash
+hours=0
+mins=0
+secs=0
+IFS=$'\n'
+for mp4 in `find . -iname "*.mp4"`; do
+	duration=`ffmpeg -i "$mp4" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//`
+	h=`echo $duration | cut -d ":" -f 1 | sed 's/^0//g'`
+	m=`echo $duration | cut -d ":" -f 2 | sed 's/^0//g'`
+	s=`echo $duration | cut -d ":" -f 3 | sed 's/^0//g' | awk '{print int($0)}'`
+	hours=$(( $hours + $h ))
+	mins=$(( $mins + $m ))
+	secs=$(( $secs + s))
+done
+
+convertsecs() {
+ ((h=${1}/3600))
+ ((m=(${1}%3600)/60))
+ ((s=${1}%60))
+ printf "%02d:%02d:%02d\n" $h $m $s
+}
+
+SEC=$secs
+SEC=$(( $SEC + $mins * 60 ))
+SEC=$(( $SEC + $hours * 3600 ))
+
+echo "HH:MM:SS"
+convertsecs $SEC
