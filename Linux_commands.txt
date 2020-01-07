@@ -576,3 +576,4 @@ mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ 
 # sync ........................... rsync -av github/Books/ backup/
 # find all .txt files .................. ls **/*.txt ------------ equal to : find . -name "*.txt"
 # fine all .txt and .pdf files ..................... ls **/*.txt **/*.pdf
+pass .......... while :; do : ; pass # here <:> is == pass in python
