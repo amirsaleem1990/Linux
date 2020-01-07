@@ -574,3 +574,4 @@ mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ 
 # split the fiead by specifieng it , then select column/s ................... awk -F "|" '{ print $4 }' Notes.data
 # i have lot of csv files, each file have a specific year data, i need to rename file by its 3 value on second row ......................... for i in `ls *.csv` ; do mv $i `head $i  | tail -1 | cut -d "," -f 3`; done
 # sync ........................... rsync -av github/Books/ backup/
+# find all .txt files .................. ls **/*.txt ------------ equal to : find . -name "*.txt"
