@@ -22,7 +22,7 @@ echo $counter
 echo $counter > /home/amir/.play_nex_vedio_counter
 
 if test -f "$counter"*.mp4 ; then 
-	vlc $counter*.mp4
+	vlc $counter-*.mp4
 else 
 	echo -e "Sorry, There is no file\n\n`ls *.mp4 -1`"
 	rm -f  /home/amir/.play_nex_vedio_counter
