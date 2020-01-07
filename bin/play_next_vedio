@@ -1,4 +1,17 @@
 #!/bin/bash
+echo    "*********************************************************************"
+echo    "* This fuctions will play videios in current directory in sequance. *"
+echo    "* Assumptions: videos names starts with number                      *"
+echo    "* eg:                                                               *"
+echo -e "* \t1-video_xvbmlkm                                             *"
+echo -e "* \t2-video_bbmalkm                                             *"
+echo -e "* \t3-video_mdfalkm                                             *"
+echo -e "* \t4-video_erwemlkm                                            *"
+echo -e "* \t5-video_ml12km                                              *"
+echo -e "* \t6-video_wemlkm                                              *"
+echo -e "* \t7-video_mfdlkm                                              *"
+echo    "*********************************************************************"
+
 counter=`cat /home/amir/.play_nex_vedio_counter`
 if [[ -z $counter ]] ; then
 	counter=1
