@@ -1,4 +1,11 @@
 # !/bin/bash
+echo "*****************************************************************************"
+echo "* The package file located at /bin/total_videos_duration                    *"
+echo "* This package will find all .mp4 (case ignoring in <mp4>) files in current *"
+echo "* directory (all subfloders/childrens)                                      *"
+echo "* and give you a total HOURS:MINUTES:SECONDS to View all those videos.      *"
+echo "*****************************************************************************"
+
 hours=0
 mins=0
 secs=0
