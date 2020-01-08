@@ -578,3 +578,4 @@ mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ 
 # fine all .txt and .pdf files ..................... ls **/*.txt **/*.pdf
 pass .......... while :; do : ; pass # here <:> is == pass in python
 
+mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv working/kali-linux-installation-guide.txt Linux/kali-linux-installation-guide.txt
