@@ -1,0 +1,24 @@
+#!/bin/bash
+echo "
+***************************************************************************
+* This script will print all computer IPS and their MAC addresses in LAN  *
+***************************************************************************
+"
+IFS=$'\n'
+for i in $(sudo nmap -sn `ip a | grep wlp | grep 192.168 | sed 's/    inet //g' | cut -d " " -f 1` | grep "192.168\|MAC"); do
+	if [[ `echo "$i" | grep 192.168` = "" ]]; then 
+		echo -n "         MAC: "
+		echo $i | cut -d: -f2,3,4,5,6,7 | cut -d " " -f2
+	else
+		echo -n "IP: "
+		for ii in {1..10}; do 
+			cur=`echo "$i" | cut -d " " -f $ii`
+			if [[ `echo $cur | grep 192.168`  = "" ]] ; then
+				:
+			else
+				echo -n `echo $i | cut -d " " -f $ii`
+			fi
+		done
+	fi
+done
+echo ""
