@@ -587,3 +587,4 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 # count single character in string ............... echo "referee" | tr -cd 'e' | wc -c (here we get 4, since 4 accours 4 times, but if we type <echo "referee" | tr -cd 'er' | wc -c>, we get 6, since r occurred twice and e occurred 4 times; 4=2=6)
 
 # count substring in long string ........................ grep -o "amir" <<< "amirsaleemarifmoosa" | wc -l
+# download youtube-dl specific quality video/s .................... youtube-dl -f 'bestvideo[height<=480]+bestaudio/best[height<=480]' -a LInk.txt ....................... https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl
