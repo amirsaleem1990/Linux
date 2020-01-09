@@ -581,3 +581,4 @@ pass .......... while :; do : ; pass # here <:> is == pass in python
 mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv working/kali-linux-installation-guide.txt Linux/kali-linux-installation-guide.txt
 # sort numbers .................. sort -n (eg: du -s -BK * | cut -d "K" -f1 | uniq | sort -n)
 # change wifi-hotspot password ....................... nmcli connection modify Hotspot 802-11-wireless-security.key-mgmt wpa-psk 802-11-wireless-security.psk mypassword
+# create hotspot and connect to it ........................... nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123
