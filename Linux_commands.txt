@@ -579,3 +579,4 @@ mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ 
 pass .......... while :; do : ; pass # here <:> is == pass in python
 
 mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv working/kali-linux-installation-guide.txt Linux/kali-linux-installation-guide.txt
+# sort numbers .................. sort -n (eg: du -s -BK * | cut -d "K" -f1 | uniq | sort -n)
