@@ -582,3 +582,4 @@ mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv 
 # sort numbers .................. sort -n (eg: du -s -BK * | cut -d "K" -f1 | uniq | sort -n)
 # change wifi-hotspot password ....................... nmcli connection modify Hotspot 802-11-wireless-security.key-mgmt wpa-psk 802-11-wireless-security.psk mypassword
 # create hotspot and connect to it ........................... nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123
+hotspot on and off .................... sudo ap-hotspot start ................ sudo ap-hotspot stop .................... sudo ap-hotspot configure
