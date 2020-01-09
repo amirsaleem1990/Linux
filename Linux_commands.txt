@@ -585,3 +585,4 @@ mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv 
 hotspot on and off .................... sudo ap-hotspot start ................ sudo ap-hotspot stop .................... sudo ap-hotspot configure
 
 # count single character in string ............... echo "referee" | tr -cd 'e' | wc -c (here we get 4, since 4 accours 4 times, but if we type <echo "referee" | tr -cd 'er' | wc -c>, we get 6, since r occurred twice and e occurred 4 times; 4=2=6)
+
