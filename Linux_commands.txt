@@ -590,4 +590,4 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 # download youtube-dl specific quality video/s .................... youtube-dl -f 'bestvideo[height<=480]+bestaudio/best[height<=480]' -a LInk.txt ....................... https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl
 
 # float to integer ............... float=1.23; int=${float%.*}
-# multiple commas to one comma ................ sed 's/,\{2,\}/,/g'
+# replace multiple commas with one comma ................ sed 's/,\{2,\}/,/g'
