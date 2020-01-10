@@ -591,3 +591,4 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 
 # float to integer ............... float=1.23; int=${float%.*}
 # replace multiple commas with one comma ................ sed 's/,\{2,\}/,/g'
+# zip folder .................... zip -r folder{.zip,/}
