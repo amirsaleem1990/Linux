@@ -588,3 +588,4 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 
 # count substring in long string ........................ grep -o "amir" <<< "amirsaleemarifmoosa" | wc -l
 # download youtube-dl specific quality video/s .................... youtube-dl -f 'bestvideo[height<=480]+bestaudio/best[height<=480]' -a LInk.txt ....................... https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl
+
