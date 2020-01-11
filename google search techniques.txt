@@ -1,0 +1,13 @@
+Google search usually takes no notice of punctuation that isn’t part of a search operator, so it’s better to omit the punctuation at the beginning. 
+you must not include spaces between the symbols or words and your search terms. For example, you’ll want to use site:xyz.com and not site: xyz.com. 
+
+@sanjibsinha : search social media about a person or organization.
+TV $100      : search for the price. In that case
+#word        : trending currently in social media.
+tiger speed –car : Suppose you want to know the speed of a tiger; there might be a brand of car that is also called tiger. In such cases, Google returns all the relevant measurements such as the speed of the animal and the speed of the car. If you don’t want the speed of car, then you can place a hyphen (-) before the word car.
+“word”       : exect matching
+Sanjib Sinha * hacking books :  wildcards
+mobile $50..$100 : within a range of numbers is necessary
+computer OR hard drive : Combining searches
+
+By now you probably know that extensions are generally used for domain specifications; for example, .gov usually stands for government sites. In such cases, simply put site: before a site or domain like this: site:xyz.com or site:.gov. There are other sites that are related to one specific site, and you may need to get results about them also. In such cases, you can use the term related. Write related:xyz.com. Other sites associated with xyz.com will automatically fall prey to your hunting spree. Want more information and to go deep into the details of any site? Just put info: in front of the site address like this: info:xyz.com. Usually, Google keeps the cached version of many sites that do not exist anymore. You may want to check whether such cached versions exist. Put cache: before the site address, as in cache:xyz.com. You can also try these: inurl:admin.php, filetype:inc, and intext:mysql_ connect.
