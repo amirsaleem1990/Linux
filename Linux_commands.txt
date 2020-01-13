@@ -594,3 +594,12 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 # zip folder .................... zip -r folder{.zip,/}
 # mv  {0*,1*,2*}.png folder ..................... equal to: mv 0*.png folder ; mv 1*.png folder ; mv 2*.png folder
 # to lower ................... echo "$a" | tr '[:upper:]' '[:lower:]'
+mv ../URDU/{clerical*,Tasawuf*,tashkeek*} ../URDU/folder  .................. equal to: mv ../URDU/clerical* ../URDU/folder ; mv ../URDU/Tasawuf* ../URDU/folder ; mv ../URDU/tashkeek* ../URDU/folder
+# change file owner
+chown new_user file
+
+# change file group
+chown new_user:new_group file
+# hidden files/folders to regular files/folders ................. for i in `ls -d .*?` ; do mv $i `echo $i | sed 's/.//'` ; done
+
+# exclude from ls ....................... ls --hide "*.rar" ..................... this will list all files exclude files that ends with .rar
