@@ -1,0 +1,3 @@
+#!/usr/bin/ipython3
+import clipboard
+clipboard.copy(clipboard.paste().replace("\n", " "))
