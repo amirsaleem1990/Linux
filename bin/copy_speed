@@ -6,8 +6,8 @@ convertsecs() {
  ((s=${1}%60))
  printf "%02d:%02d:%02d\n" $h $m $s
 }
-
-read -p "Enter your File /Folder absolute path: " all_data_in_MB
+IFS=$'\n'
+read -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
 # all_data_in_MB=/media/500GB/320GB
 m=$(du -s $all_data_in_MB -BM)
 m1=${m%[[:space:]]*}
