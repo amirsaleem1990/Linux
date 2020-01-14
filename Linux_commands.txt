@@ -590,7 +590,8 @@ hotspot on and off .................... sudo ap-hotspot start ................ s
 # download youtube-dl specific quality video/s .................... youtube-dl -f 'bestvideo[height<=480]+bestaudio/best[height<=480]' -a LInk.txt ....................... https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl
 
 # float to integer ............... float=1.23; int=${float%.*}
-# replace multiple commas with one comma ................ sed 's/,\{2,\}/,/g'
+# replace two or more commas with one comma ................ sed 's/,\{2,\}/,/g'
+# replace 1 or more space with one comma ................ sed 's/\ \{1,\}/,/g'
 # zip folder .................... zip -r folder{.zip,/}
 # mv  {0*,1*,2*}.png folder ..................... equal to: mv 0*.png folder ; mv 1*.png folder ; mv 2*.png folder
 # to lower ................... echo "$a" | tr '[:upper:]' '[:lower:]'
