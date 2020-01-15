@@ -604,3 +604,4 @@ chown new_user:new_group file
 # hidden files/folders to regular files/folders ................. for i in `ls -d .*?` ; do mv $i `echo $i | sed 's/.//'` ; done
 
 # exclude from ls ....................... ls --hide "*.rar" ..................... this will list all files exclude files that ends with .rar
+# unlimited history ..................... open ~/.bashrc ; assign -1 to HISTSIZE and assing -1 to HISTFILESIZE (both variables are exist, you have to change values.
