@@ -38,11 +38,15 @@ for i in range(len(files)):
 		except:
 			unique.append([files[i], b[i]])
 
+if not unique:
+	print("\n\nNo duplicates\n\n")
+	import sys
+	sys.exit()
 import pandas as pd
-
 df = pd.DataFrame(unique)
 df.columns = ["File", "Path"]
 duplicated = df
+duplicated.File = duplicated.File.str.lower()
 duplicated = duplicated.sort_values("File")
 duplicated = duplicated.reset_index().drop("index", axis=1)
 
