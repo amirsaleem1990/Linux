@@ -604,4 +604,9 @@ chown new_user:new_group file
 # hidden files/folders to regular files/folders ................. for i in `ls -d .*?` ; do mv $i `echo $i | sed 's/.//'` ; done
 
 # exclude from ls ....................... ls --hide "*.rar" ..................... this will list all files exclude files that ends with .rar
-# unlimited history ..................... open ~/.bashrc ; assign -1 to HISTSIZE and assing -1 to HISTFILESIZE (both variables are exist, you have to change values.
+# unlimited history ..................... open ~/.bashrc ; assign -1 to HISTSIZE and assing -1 to HISTFILESIZE (both variables are exist, you have to change values.# add user .............. adduser new_user_name
+#  ls -R is equal to `find . -name "*"` ............ NOTE: in find we get all absolute link for each file, but is hard to understand the hirarcy, on the other hand in `ls -R` you get a result like `tree`, so no absolute paths, but easy to understand the structer of the directory.
+# ls -S ................... sort by size
+# see in what step you copy ................ cp -v some_source_file some_other_location
+# know what particuler command do ...................... whatis ........... eg: whatis cp
+# change owner and group in one line ...................... chown specific_user:group2 myfile
