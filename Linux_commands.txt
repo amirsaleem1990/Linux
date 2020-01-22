@@ -611,3 +611,4 @@ chown new_user:new_group file
 # know what particuler command do ...................... whatis ........... eg: whatis cp
 # change owner and group in one line ...................... chown specific_user:group2 myfile
 #mplayer is a video player in linux
+# totem is ubuntu default video player
