@@ -612,3 +612,4 @@ chown new_user:new_group file
 # change owner and group in one line ...................... chown specific_user:group2 myfile
 #mplayer is a video player in linux
 # totem is ubuntu default video player
+# split screen horisontaly .......... gTile(install it) ; and then SUPPER+ENTER(numberpad)
