@@ -613,3 +613,4 @@ chown new_user:new_group file
 #mplayer is a video player in linux
 # totem is ubuntu default video player
 # split screen horisontaly .......... gTile(install it) ; and then SUPPER+ENTER(numberpad)
+# find empty folders ..................... find . -type d -empty
