@@ -1,26 +1,47 @@
-# export HISTTIMEFORMAT="%d/%m/%y %T "
-# function open () { for i in  "$@"; do xdg-open $i ; done & }
-
-# hack to launch bicon if not launched
-sudo apt update
-sudo apt install libfribidi0 libfribidi-dev
-download from here : https://launchpad.net/~behnam/+archive/ubuntu/ppa/+build/574787/+files/bicon_0.2.0-1ubuntu0~ppa4_amd64.deb
-sudo dpkg -i bicon_0.2.0-1ubuntu0~ppa4_amd64.deb
-
-# if ! [[ "$(ps -p $(ps -p $(echo $$) -o ppid=) -o comm=)" =~ 'bicon'* ]]; then
-#   bicon.bin
-# fi
-
-
-
-if youe need only your name in prompt, not computer name.
-
-commit these lines:
-	if [ "$color_prompt" = yes ]; then
-		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	else
-		PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-	fi
-
-and add this line:
-	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u:\[\033[01;34m\]\w\[\033[00m\]\$ '
+alias NL_down='blugon --setcurrent="-500"'
+alias NL_up='blugon --setcurrent="+500"'
+alias Open_FB_links='ipython3 /home/amir/github/working/Facebook_posts_links/Open_FB_links.py'
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias c='rm c_program; gcc -o c_program c_program.c ; ./c_program'
+alias c_p='cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c_program.c ; (gopen *.pdf &); gnome-terminal ; (jl *.ipynb &) ; sleep 3; exit'
+alias c_server='read -p '\''Enter last 3 digits from server IP address: '\'' ip;  sudo ssh lfd-server@192.168.8.'
+alias c_subl='subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660'
+alias check_connected_devices='sudo nmap -sn  | grep \(192.168.'
+alias copyfrom='xclip -sel cli <'
+alias copyto='xsel -b >'
+alias current_wifi_name='echo yes:Amir-hotspot | sed '\''s/yes://g'\'''
+alias d='du -sh -B M * | sort -nr'
+alias dropbox_sync='~/.dropbox-dist/dropboxd'
+alias egrep='egrep --color=auto'
+alias facebook-links='ipython3 /home/amir/github/working/Facebook_posts_links/facebook-links.py'
+alias fgrep='fgrep --color=auto'
+alias freemem='cat /proc/meminfo | grep -i '\''inactive:\|memfree:'\'''
+alias g='read a; firefox google.com/search?q="$a"; sleep 2; exit'
+alias grep='grep --color=auto'
+alias h1-zong='nmcli d w c H1-Zong password wifi@lfd'
+alias hotspot='nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123; echo -e '\''\n\nSSID    : Amir-hotspot\nPassword: password123'\'' '
+alias i='ipython3'
+alias jazz='nmcli d w c Jazz-LTE-438A password 34969900'
+alias jazz_3='nmcli d w c Jazz-LTE-33ED password 78384606'
+alias jl='jupyter-lab'
+alias jn='jupyter-notebook'
+alias la='ls -A'
+alias lfd_jazz='nmcli d w c lfd_jazz password lfd@12345'
+alias ll='ls -alF'
+alias ls='ls --color=auto -F'
+alias mv='mv -i'
+alias p='python3 -c '\''t=input(); print(eval(t))'\'''
+alias pin='i /home/amir/github/Amir-personal/PIN/pin2.py'
+alias ping='ping 8.8.8.8'
+alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
+alias rm='mv -t ~/.local/share/Trash/files'
+alias sharjeel='bash ~/awesome-sharjeel-wifi-connect.wifi'
+alias si='xclip -selection clipboard -t image/png -o >'
+alias t='trans :ar'
+alias telenor='nmcli d w c Telenor\ 4G-D9BF password 91423958'
+alias tor='cd /etc/tor-browser_en-US; ./start-tor-browser.desktop'
+alias u='del -rf /home/amir/db/*; del -rf /home/amir/Script/logs.csv; del -rf /home/amir/Script/logs.pkl'
+alias wl='nmcli d w r; sleep 10; nmcli d w l'
+alias z='ls *.mp4 -1'
+alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
+alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
