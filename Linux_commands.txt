@@ -621,3 +621,4 @@ chown new_user:new_group file
 # get only files created after a date with ls .................. find . -maxdepth 1 -mtime -1 .............. Note that to find files modified before 24 hours ago, you have to use -mtime +1 instead of -mtime -1
 # see files names in zip file ............................ unzip -l phoneRawDataFile-28801180200957-1579799301447.zip
 # remove spaces ............. echo " amir saleem " | sed 's/ //g'
+# last modifieded file / folder date ............... ls -l  --time-style=long-iso | grep  raw_synced_data | sed 's/\ \{1,\}/,/g' | cut -d "," -f6,7
