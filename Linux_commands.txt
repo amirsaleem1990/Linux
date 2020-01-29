@@ -622,3 +622,4 @@ chown new_user:new_group file
 # see files names in zip file ............................ unzip -l phoneRawDataFile-28801180200957-1579799301447.zip
 # remove spaces ............. echo " amir saleem " | sed 's/ //g'
 # last modifieded file / folder date ............... ls -l  --time-style=long-iso | grep  raw_synced_data | sed 's/\ \{1,\}/,/g' | cut -d "," -f6,7
+# long time ................ ls -l --time-style=long-iso
