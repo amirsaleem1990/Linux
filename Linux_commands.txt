@@ -623,3 +623,4 @@ chown new_user:new_group file
 # remove spaces ............. echo " amir saleem " | sed 's/ //g'
 # last modifieded file / folder date ............... ls -l  --time-style=long-iso | grep  raw_synced_data | sed 's/\ \{1,\}/,/g' | cut -d "," -f6,7
 # long time ................ ls -l --time-style=long-iso
+# rsync ....................... rsync -au 128.199.226.202:/home/amir/raw_synced_data/ raw_synced_data/
