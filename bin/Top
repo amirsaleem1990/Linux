@@ -10,10 +10,19 @@ for i in range(10):
 		last = ok.split()[-1]
 		if "/" in last:
 			last = last.split("/")[0]
-		unique.append(last.strip())
+		unique.append((key, last.strip()))
 	# print(i, end = " | ")
 	time.sleep(1)
 print()
 
-for i in sorted(list(set(unique))):
-	print(i)
+unique = set(unique)
+
+print("****************** amir ******************")
+for i in unique:
+	if i[0] == "amir":
+		print(i[1])
+
+print("\n\n****************** root ******************")
+for i in unique:
+	if i[0] == "root":
+		print(i[1])
