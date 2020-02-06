@@ -1,0 +1,19 @@
+#!/usr/bin/ipython3
+import os
+import time
+unique = []
+for i in range(10):
+	a = list(os.popen('top -n 1 | grep "amir\\|root"'))
+	for f  in a:
+		key = "amir" if "amir" in f else "root"
+		ok = f[f.index(key) : f.index("          ")]
+		last = ok.split()[-1]
+		if "/" in last:
+			last = last.split("/")[0]
+		unique.append(last.strip())
+	# print(i, end = " | ")
+	time.sleep(1)
+print()
+
+for i in sorted(list(set(unique))):
+	print(i)
