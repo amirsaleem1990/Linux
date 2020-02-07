@@ -1,7 +1,10 @@
 #!/bin/bash
+del -rf .abmno 
 for i in `find . -maxdepth 1 -type d  -exec du -sh -BK * {} + | sort -n | cut -d "K" -f2 | sed 's/ //g'`; do 
-	du -sh  $i 2>/dev/null
+	du -sh  $i 2>/dev/null >> .abmno
 done
+cat .abmno | sed 1d
+del -rf .abmno
 
 # #!/usr/bin/env ipython3
 # import os
