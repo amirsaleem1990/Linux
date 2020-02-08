@@ -1,28 +1,84 @@
 #!/usr/bin/ipython3
+
 import os
-import time
-unique = []
-for i in range(10):
-	a = list(os.popen('top -n 1 | grep "amir\\|root"'))
-	for f  in a:
-		key = "amir" if "amir" in f else "root"
-		ok = f[f.index(key) : f.index("          ")]
-		last = ok.split()[-1]
-		if "/" in last:
-			last = last.split("/")[0]
-		unique.append((key, last.strip()))
-	# print(i, end = " | ")
-	time.sleep(1)
-print()
+from pprint import pprint
+import pandas as pd
 
-unique = set(unique)
+d = {'amir' : [], 'root' : []}
+b = list(os.popen('top -n15 -d1 | grep "amir\\|root"'))
+for f  in b:
+	key = "amir" if "amir" in f else "root"
+	ok = f[f.index(key) : f.index("          ")]
+	last = ok.split()[-1]
+	if "/" in last:
+		last = last.split("/")[0]
+	d[key].append(last.strip())
 
-print("****************** amir ******************")
-for i in unique:
-	if i[0] == "amir":
-		print(i[1])
+for i in d:
+	d[i] = sorted(list(set(d[i])))
 
-print("\n\n****************** root ******************")
-for i in unique:
-	if i[0] == "root":
-		print(i[1])
+if (set([len(d[i]) for i in d])) == 1:
+	pprint(pd.DataFrame(d))
+elif len(d['amir']) > len(d['root']):
+	df = pd.DataFrame({"amir" : d['amir']})
+	d['root'].append([''] * (len(d['amir']) - len(d['root'])))
+	df['root'] = d['root']
+	pprint(df)
+else:
+	df = pd.DataFrame({"root" : d['root']})
+	d['amir'] += [''] * (len(d['root']) - len(d['amir']))
+	df['amir'] = d['amir']
+	pprint(df)
+
+# if len(d['amir']) >= len(d['root']):
+# 	for i in range(len(d['amir'])):
+# 		if i <= len(d['root']):
+# 			print(d['amir'][i], "\t", d['root'][i])
+# 		else:
+# 			print(d['amir'][i])
+# print("\n****************** amir ******************")
+# for i in unique:
+# 	if i[0] == "amir":
+# 		print(i[1])
+# 
+# print("\n\n****************** root ******************")
+# for i in unique:
+# 	if i[0] == "root":
+# 		print(i[1])
+
+
+
+
+
+
+
+
+
+# import os
+# import time
+# unique = []
+# 
+# for i in range(10):
+# 	a = list(os.popen('top -n 1 | grep "amir\\|root"'))
+# 	for f  in a:
+# 		key = "amir" if "amir" in f else "root"
+# 		ok = f[f.index(key) : f.index("          ")]
+# 		last = ok.split()[-1]
+# 		if "/" in last:
+# 			last = last.split("/")[0]
+# 		unique.append((key, last.strip()))
+# 	# print(i, end = " | ")
+# 	time.sleep(1)
+# print()
+# 
+# unique = set(unique)
+# 
+# print("****************** amir ******************")
+# for i in unique:
+# 	if i[0] == "amir":
+# 		print(i[1])
+# 
+# print("\n\n****************** root ******************")
+# for i in unique:
+# 	if i[0] == "root":
+# 		print(i[1])
