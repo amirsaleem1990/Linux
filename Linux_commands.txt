@@ -628,3 +628,4 @@ chown new_user:new_group file
 
 # remove all before first <#> ................ ls | grep -o '#.*'
 # remove all after first <#>  ................ echo $i | grep -o '.*#'
+# replace multiple characters with sed ..................... sed 's/%20/-/g; s/[][#-]//g'
