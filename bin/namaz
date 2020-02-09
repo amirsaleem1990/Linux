@@ -3,9 +3,9 @@ from tabulate import tabulate
 from datetime import datetime
 import numpy as np
 from pprint import pprint
-#import pandas as pd
-from pandas import read_csv
-df = read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+import pandas as pd
+
+df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
 df.drop("Asr_1", axis=1, inplace=True)
 df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
 
