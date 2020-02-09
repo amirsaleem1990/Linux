@@ -629,3 +629,4 @@ chown new_user:new_group file
 # remove all before first <#> ................ ls | grep -o '#.*'
 # remove all after first <#>  ................ echo $i | grep -o '.*#'
 # replace multiple characters with sed ..................... sed 's/%20/-/g; s/[][#-]//g'
+# integer comparison: -eq: is equal to ........ -ne: not equal to ............ -gt: greater than ........ -ge: greater than or equal to .......... -lt: less than .......... -le: les than or equal to .......... <: less than (whithin double parentheses, eg: (("$a" < "$b"))) .............. <=: less than or equal to (whithin double parentheses, eg: (("$a" <= "$b"))) .............. >: greater than (whithin double parentheses, eg: (("$a" > "$b"))) .............. >=: greater than (whithin double parentheses, eg: (("$a" >= "$b"))) 
