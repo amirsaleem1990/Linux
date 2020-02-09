@@ -626,3 +626,4 @@ chown new_user:new_group file
 # rsync ....................... rsync -au 128.199.226.202:/home/amir/raw_synced_data/ raw_synced_data/
 # find file/s by name, and performt particuler operation on each of them ................. eg: find Movies/ -name '*.mp4' -exec mv {} ANOTHER_FOLDER/ \; .................. NOTE: the trailink <\;> is mandatory, it is indicates the end of <-exec>
 
+# remove all before first <#> ................ ls | grep -o '#.*'
