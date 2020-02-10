@@ -1,0 +1,13 @@
+mery pas 2 HDD hen, 1 me linux h, dusry me windows h, or 1 data ka partition h (NTFS), me data partition ko both linux and ubuntu sy use karta hn.
+
+masla: windows me kuch kaam kya, or us ko poweroff kar dya, phir linux (ubuntu 18.04) on ki, phir data partition ko mount karny ki koshish ki, magar ye error aa raha tha:
+
+The disk contains an unclean file system (0, 0).Metadata kept in Windows cache, refused to mount.Falling back to read-only mount because the NTFS partition is in anunsafe state. Please resume and shutdown Windows fully (no hibernationor fast restarting.)
+
+me ny kafi dafa windows ko on kya, or phir off kya, C drive ka cache bhi delete kya, magar masla hal nahi hwa.
+
+solution:
+	https://askubuntu.com/questions/462381/cant-mount-ntfs-drive-the-disk-contains-an-unclean-file-system
+	sudo ntfsfix /dev/sd1
+	sudo mount /dev/sd1 /media/500GB
+
