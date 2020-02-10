@@ -3,16 +3,19 @@
 import os
 from pprint import pprint
 import pandas as pd
+import time
 
-d = {'amir' : [], 'root' : []}
-b = list(os.popen('top -n15 -d1 | grep "amir\\|root"'))
-for f  in b:
-	key = "amir" if "amir" in f else "root"
-	ok = f[f.index(key) : f.index("          ")]
-	last = ok.split()[-1]
-	if "/" in last:
-		last = last.split("/")[0]
-	d[key].append(last.strip())
+d = {'root' : [], 'amir' : []}
+for i in range(15):
+	b = list(os.popen('top -n1 | grep "amir\\|root"'))
+	for f  in b:
+		key = "amir" if "amir" in f else "root"
+		ok = f[f.index(key) : f.index("          ")]
+		last = ok.split()[-1]
+		if "/" in last:
+			last = last.split("/")[0]
+		d[key].append(last.strip())
+	time.sleep(1)
 
 for i in d:
 	d[i] = sorted(list(set(d[i])))
@@ -20,14 +23,12 @@ for i in d:
 if (set([len(d[i]) for i in d])) == 1:
 	pprint(pd.DataFrame(d))
 elif len(d['amir']) > len(d['root']):
-	df = pd.DataFrame({"amir" : d['amir']})
 	d['root'].append([''] * (len(d['amir']) - len(d['root'])))
-	df['root'] = d['root']
+	df = pd.DataFrame(d)
 	pprint(df)
 else:
-	df = pd.DataFrame({"root" : d['root']})
 	d['amir'] += [''] * (len(d['root']) - len(d['amir']))
-	df['amir'] = d['amir']
+	df = pd.DataFrame(d)
 	pprint(df)
 
 # if len(d['amir']) >= len(d['root']):
