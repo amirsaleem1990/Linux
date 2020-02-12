@@ -632,3 +632,4 @@ chown new_user:new_group file
 # integer comparison: -eq: is equal to ........ -ne: not equal to ............ -gt: greater than ........ -ge: greater than or equal to .......... -lt: less than .......... -le: les than or equal to .......... <: less than (whithin double parentheses, eg: (("$a" < "$b"))) .............. <=: less than or equal to (whithin double parentheses, eg: (("$a" <= "$b"))) .............. >: greater than (whithin double parentheses, eg: (("$a" > "$b"))) .............. >=: greater than (whithin double parentheses, eg: (("$a" >= "$b"))) 
 # sudo with password in one line (so you can write command with sudo in a script) .............. echo `cat p` | sudo -S -k nethogs
 # download pip package with its dependencies ............... pip3 download package_name
+# check / know you MAC (wifi) address ............. cat /sys/class/net/wlp3s0/address
