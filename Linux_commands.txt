@@ -633,3 +633,5 @@ chown new_user:new_group file
 # sudo with password in one line (so you can write command with sudo in a script) .............. echo `cat p` | sudo -S -k nethogs
 # download pip package with its dependencies ............... pip3 download package_name
 # check / know you MAC (wifi) address ............. cat /sys/class/net/wlp3s0/address
+
+# NTFS error ............... sudo umount /dev/sdb1 ; sudo ntfsfix /dev/sdb1 ; sudo mount /dev/sdb1 /media/500GB/
