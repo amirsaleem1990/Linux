@@ -635,3 +635,4 @@ chown new_user:new_group file
 # check / know you MAC (wifi) address ............. cat /sys/class/net/wlp3s0/address
 
 # NTFS error ............... sudo umount /dev/sdb1 ; sudo ntfsfix /dev/sdb1 ; sudo mount /dev/sdb1 /media/500GB/
+if you want to download only specific file from github, go to file in browser (github), press <Raw> button, and then copy the url of <Raw> file, now you can download it by wget <the url in the clipboard>
