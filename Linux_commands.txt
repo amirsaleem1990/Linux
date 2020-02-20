@@ -639,3 +639,4 @@ if you want to download only specific file from github, go to file in browser (g
 # add ssh public key to another computer to automatic authentication ............ 1- ganarate public key on your local muchine (ssh-keygen) ; 2- copy new genareted key to server: ssh-copy-id -i ~/.ssh/new_ganared_key.pub user@host# find only ascii files ............ find . -type f -exec grep -Iq . {} \; -print
 
 # open settings ............... gnome-control-center
+# replace/cahange something in file ................. sed -i 's/saleem/SALEEM/g' file.txt
