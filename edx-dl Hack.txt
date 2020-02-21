@@ -1,1 +1,2 @@
-https://github.com/coursera-dl/edx-dl/issues/587
+https://github.com/coursera-dl/edx-dl/issues/587#issuecomment-585047011
+(from bi1yeu)
