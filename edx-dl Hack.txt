@@ -1,2 +1,3 @@
+open /home/amir/.local/lib/python3.6/site-packages/edx_dl/parsing.py
 https://github.com/coursera-dl/edx-dl/issues/587#issuecomment-585047011
 (from bi1yeu)
