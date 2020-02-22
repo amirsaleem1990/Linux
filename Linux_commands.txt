@@ -640,3 +640,4 @@ if you want to download only specific file from github, go to file in browser (g
 
 # open settings ............... gnome-control-center
 # replace/cahange something in file ................. sed -i 's/saleem/SALEEM/g' file.txt
+# remove new line chrachters from file name .............. echo $file_name | sed ':a;N;$!ba;s/\n//g'
