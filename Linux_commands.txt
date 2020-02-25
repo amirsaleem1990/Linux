@@ -642,3 +642,4 @@ if you want to download only specific file from github, go to file in browser (g
 # replace/cahange something in file ................. sed -i 's/saleem/SALEEM/g' file.txt
 # remove new line chrachters from file name .............. echo $file_name | sed ':a;N;$!ba;s/\n//g'
 # check running process .............. ps aux | grep sshd 
+# add file to existing zip ............... zip -u existing_zip.zip New-file
