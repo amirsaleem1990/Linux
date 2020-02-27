@@ -21,17 +21,19 @@ fi
 
 echo "Count,Repo" > ~/git_counts.csv
 cd /home/amir/github
-for git_folder in $(ls -d */);
-	do  
-	cd $git_folder
-	if [[ $day -ge 2 ]]; then
-		count=$(git rev-list HEAD --count --first-parent --since=$(date --date=$day" day ago" +%F))
-	else
-		count=`git log --pretty='format:%H %an %ae %ai' | grep $current_date | wc -l`
+
+for git_folder in $(ls -d */); do  
+	if [[ $git_folder != "LFD-projects/" ]] ; then 
+		cd $git_folder
+		if [[ $day -ge 2 ]]; then
+			count=$(git rev-list HEAD --count --first-parent --since=$(date --date=$day" day ago" +%F))
+		else
+			count=`git log --pretty='format:%H %an %ae %ai' | grep $current_date | wc -l`
+		fi
+		echo $count,$git_folder >> ~/git_counts.csv
+		cd ../
 	fi
-	echo $count,$git_folder >> ~/git_counts.csv
-	cd ../
-	done
+done
 
 
 if [[ `cat ~/git_counts.csv | cut -d "," -f 1 | uniq | grep -v Count` = 0 ]]; then
