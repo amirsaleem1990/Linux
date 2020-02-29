@@ -1,23 +1,26 @@
 # !/bin/bash
-echo "*****************************************************************************"
-echo "* The package file located at /bin/total_videos_duration                    *"
-echo "* This package will find all .mp4 (case ignoring in <mp4>) files in current *"
-echo "* directory (all subfloders/childrens)                                      *"
-echo "* and give you a total HOURS:MINUTES:SECONDS to View all those videos.      *"
-echo "*****************************************************************************"
+echo "***********************************************************************************"
+echo "* The package file located at /bin/total_videos_duration                          *"
+echo "* This package will find mkv, mp4 and webm (case ignoring) files in current       *"
+echo "* directory (all subfloders/childrens) and give you a total HOURS:MINUTES:SECONDS *"
+echo "* to View all those videos.                                                       *"
+echo "***********************************************************************************"
+
 
 hours=0
 mins=0
 secs=0
 IFS=$'\n'
-for mp4 in `find . -iname "*.mp4"`; do
-	duration=`ffmpeg -i "$mp4" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//`
-	h=`echo $duration | cut -d ":" -f 1 | sed 's/^0//g'`
-	m=`echo $duration | cut -d ":" -f 2 | sed 's/^0//g'`
-	s=`echo $duration | cut -d ":" -f 3 | sed 's/^0//g' | awk '{print int($0)}'`
-	hours=$(( $hours + $h ))
-	mins=$(( $mins + $m ))
-	secs=$(( $secs + s))
+for i in {mp4,mkv,webm}; do
+	for video in `find . -iname "*$i"`; do
+		duration=`ffmpeg -i "$video" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//`
+		h=`echo $duration | cut -d ":" -f 1 | sed 's/^0//g'`
+		m=`echo $duration | cut -d ":" -f 2 | sed 's/^0//g'`
+		s=`echo $duration | cut -d ":" -f 3 | sed 's/^0//g' | awk '{print int($0)}'`
+		hours=$(( $hours + $h ))
+		mins=$(( $mins + $m ))
+		secs=$(( $secs + s))
+	done
 done
 
 convertsecs() {
