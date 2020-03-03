@@ -644,3 +644,4 @@ if you want to download only specific file from github, go to file in browser (g
 # check running process .............. ps aux | grep sshd 
 # add file to existing zip ............... zip -u existing_zip.zip New-file
 # copy clipboard to variable ........... a=`xsel -ob`
+# copy variable/text to clipboard ........................ echo "copy this text to clipboard" | xclip -sel clip
