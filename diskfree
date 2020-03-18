@@ -1,0 +1,32 @@
+#!/bin/bash
+echo -e "
+-----------------------------------------------------
+Filesystem          Size  Used     Avail Use% Mounted
+-----------------------------------------------------"
+df -BG | grep /dev/sd | grep -v "1G    1G" 
+
+#######################################################################
+# #!/usr/bin/env ipython3
+# import os
+# os.system("df -h > temppp.txt")
+# with open("temppp.txt", "r") as file:
+# 	a = file.readlines()
+# import pandas as pd
+# #pd.set_option('display.max_columns', 10)
+# columns = ["Filesystem","Size","Used","Avail","Use%", "Mounted", "on"]
+# df = pd.DataFrame([i.split() for i in a], columns=columns).drop(0)
+# avail = []
+# for i in df.Avail:
+#     if i.endswith("G"):
+#         avail.append(float(i.replace("G", "")))
+#     elif i.endswith("M"):
+#         avail.append(float(i.replace("M", ""))/1024)
+#     else:
+#         avail.append(int(i))
+# df.Avail = avail
+# import pprint
+# adf = df.query("Avail > 0").sort_values("Avail", ascending = False)
+# adf.Avail = adf.Avail.astype(int).astype(str) + " GB"
+# pprint.pprint(adf[adf.Filesystem.str.contains("/dev")].drop("on", axis=1))
+# #pprint.pprint(df.query("Avail > 0").sort_values("Avail", ascending = False))
+# os.remove("temppp.txt")

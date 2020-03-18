@@ -1,0 +1,85 @@
+#!/usr/bin/ipython3
+import os
+os.system('find . -type f -name "*" > files-with-complete-path.txt')
+with open("files-with-complete-path.txt", "r") as file:
+	b = file.read().splitlines()
+
+
+#with open("files-with-complete-path.txt", "w") as file:
+#	file.write("\n".join([i for i in a if not "thumbnails" in i]))
+
+#with open("files-with-complete-path.txt", "r") as file:
+#	a = file.read().splitlines()
+
+os.remove("files-with-complete-path.txt")
+
+a = [i.strip().replace("_", "").replace("-", "").replace(" ", "").replace("۔", "").strip() for i in b]
+files = []
+for i in a:
+	if i.startswith("./"):	   
+		i = i[2:]				   
+	files.append(i[i.rfind("/")+1:])
+# print(len(a) == len(files))
+
+#unique = []
+#for aa, file in zip(a, files):
+#	if a.count(aa) > 1:
+#		try:
+#			if not aa in list(zip(*unique))[0]:
+#				unique.append([file, aa])	
+#		except:
+#			unique.append([file, aa])
+unique = []
+for i in range(len(files)):
+	if a.count(a[i]) > 1:
+		try:
+			if not a[i] in list(zip(*unique))[0]:
+				unique.append([files[i], b[i]])	
+		except:
+			unique.append([files[i], b[i]])
+
+if not unique:
+	print("\n\nNo duplicates\n\n")
+	import sys
+	sys.exit()
+import pandas as pd
+df = pd.DataFrame(unique)
+df.columns = ["File", "Path"]
+duplicated = df
+duplicated.File = duplicated.File.str.lower()
+duplicated = duplicated.sort_values("File")
+duplicated = duplicated.reset_index().drop("index", axis=1)
+
+# os.stat(i).st_size return the size in Bytes
+# https://www.tutorialspoint.com/python/os_stat.htm
+duplicated["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicated.Path]
+
+from termcolor import colored
+for i in duplicated.File.unique():
+	same = duplicated[duplicated.File == i]
+	if same.Size_MB.nunique() > 1:			  
+		print("**************************************************")
+		print(colored("NOTE: different file size\n", 'red'))
+		print(1, list(same.iloc[0][["Size_MB", "Path"]]))
+		print(2, list(same.iloc[1][["Size_MB", "Path"]]))
+		num = int(input("Delete file by number (or 0 to no remove): "))
+		if num != 0:
+			os.remove(same.iloc[num-1].Path) # num-1 because python staring from 0, and here user give starting from 0
+	else:
+		print("**************************************************")
+		print(1, same.iloc[0].Path)
+		print(2, same.iloc[1].Path)
+		num = int(input("Delete file by number (or 0 to no remove): "))
+		if num != 0:
+			os.remove(same.iloc[num-1].Path) # num-1 because python staring from 0, and here user give starting from 0
+ 
+if len(duplicated) > 0:
+	if input(f"There are {len(duplicated)} duplicated files,  Are you need to save them as csv file?\n[y\\n]: ") == "y":
+		duplicated.to_csv("duplecated_files.csv")
+		print("\n\n1 file Ganerated:\nduplecated_files.csv\n\n")
+		if input("Are you need to open the Ganerated file?\n[y\\n]: ") == "y":
+			os.system("gopen duplecated_files.csv")
+	
+else:
+	print("NO DUPLICATES")
+

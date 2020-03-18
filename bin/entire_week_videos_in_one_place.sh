@@ -1,1 +1,0 @@
-counter=1; mkdir Videos; for i in `ls -I "Videos"`;do  cd  $i; for mp4 in `ls *.mp4`; do cp $mp4  ../Videos/$counter--$mp4 ; counter=$(($counter + 1)); done ; cd ../ ; done; du -sh Videos; ls Videos | wc -l; cd ../

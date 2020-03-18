@@ -1,0 +1,46 @@
+#!/usr/bin/env ipython3
+import os
+
+print("if PID.txt exists at /home/amir then the script will read PIDs from this file\n")
+try:
+	with open("/home/amir/PID.txt", "r") as file:
+		lst = file.read().splitlines()
+		lst = [int(i) for i in lst]
+	if lst:
+		print("This is /home/amir/PID.txt file")
+		for i in lst:
+			print(i)
+except:
+	PID_file_name = input("Enter absolute path for PIDs file <should be .txt file>\n**Enter <q> for enter PIDs manually**\n")
+	if PID_file_name != "q":
+		with open(PID_file_name, "r") as file:
+			lst = file.read().splitlines()
+		lst = [int(i) for i in lst]
+try:
+	lst
+except:
+	lst = []
+	while True:
+		i = input("Enter PID <number> [or <q> for quit]:  ")
+		if i == "q":
+			break
+		else:
+			try:
+				lst.append(int(i))
+			except:
+				print("Enter a PID <in number> or press <q> for quit")
+				pass
+
+s = 0
+for i in lst:
+	a = list(os.popen("sudo pmap {} | grep total".format(i)))
+	s += int(''.join([ii for ii in a[0] if ii.isnumeric()]))
+# if s < 1024:
+# 	print(f"{s} KB")
+# elif s < 1024*1024:
+# 	print(f"{s/1024} MB")
+# elif s < 1024*1024*1024:
+# 	print(f"{s/1024/1024} GB")
+print("KB: ", s)
+print("MB: ", round(s/1024, 2))
+print("GB: ", round(s/1024/1024, 4))

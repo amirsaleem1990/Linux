@@ -16,7 +16,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # attention picture display
 25 13 * * *  amir sh /bin/laptop_suspend
 # 13:30 par suspend kar do
-48 13 * * * root /usr/sbin/pm-suspend
+30 13 * * * root /usr/sbin/pm-suspend
  
 # attention picture display
 25 18 * * *  amir sh /bin/laptop_shutdown

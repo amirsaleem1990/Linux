@@ -1,0 +1,15 @@
+#!/bin/bash
+del -rf ~/temp.txt
+
+top -n 10 -d 1 | grep "amir\|root" >> ~/temp.txt
+
+
+echo "************** USER: root **************"
+cat ~/temp.txt | grep "root" | sed 's/\ \{1,\}/,/g' | cut -d "," -f13 | sort | uniq
+
+echo -e "\n\n"
+ 
+echo "************** USER: amir **************"
+cat ~/temp.txt | grep "amir" | sed 's/\ \{1,\}/,/g' | cut -d "," -f13 | sort | uniq
+
+del -rf ~/temp.txt

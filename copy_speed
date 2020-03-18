@@ -1,0 +1,45 @@
+#!/bin/bash
+
+convertsecs() {
+ ((h=${1}/3600))
+ ((m=(${1}%3600)/60))
+ ((s=${1}%60))
+ printf "%02d:%02d:%02d\n" $h $m $s
+}
+IFS=$'\n'
+read -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
+# all_data_in_MB=/media/500GB/320GB
+m=$(du -s $all_data_in_MB -BM)
+m1=${m%[[:space:]]*}
+all_data_in_MB=$(echo $m1 | tr -dc '0-9')
+
+last=$(echo $(du -s -BM) | tr -dc '0-9')
+Average_array=()
+while :
+	do 
+	current=$(echo $(du -s -BM) | tr -dc '0-9')
+	echo -n "TOTAL: $(du -sh), in last 10 Sec:"
+	echo -n `expr $current - $last ` MB `   date +%H:%M:%S`
+	completed=$(echo "scale=2; $current/$all_data_in_MB" | bc)
+	completed=$(echo $completed | tr -dc '0-9')
+	echo -n "       " Completed $completed %
+	curent_time=`date +%s`
+	average_speed=$(echo `expr $current - $last `)
+	Average_array+=("$average_speed")
+	SUM=0
+	for i in ${Average_array[@]}
+	do
+	  SUM=$(echo `expr $SUM + $i`)
+	done
+
+	LEN_OF_Average_array=$(echo "${#Average_array[@]}")
+	mean=$(echo "scale=3; $SUM/$LEN_OF_Average_array" | bc)
+	
+	last=$current
+	ab=$(echo "scale=2; 100/$completed" | bc)
+	sleep_time=10
+	Estimated_time=$(echo "$ab*$mean*$sleep_time" | bc)
+	Estimated_time=${Estimated_time%.*}
+	echo "    Estimated time: `convertsecs $Estimated_time`"
+	sleep $sleep_time
+done
