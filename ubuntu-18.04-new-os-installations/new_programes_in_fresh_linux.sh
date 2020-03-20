@@ -73,11 +73,11 @@ rm -f alias.txt
 
 
 
-sudo apt install nethogs
-sudo apt install tree
-sudo apt install gdebi-core
-sudo apt install ffmpeg
-
+sudo apt install -y nethogs
+sudo apt install -y tree
+sudo apt install -y gdebi-core
+sudo apt install -y ffmpeg
+sudo apt install -y xsel
 pip3 install youtube-dl
 pip3 install bs4
 pip3 install lxml
@@ -85,3 +85,6 @@ pip3 install selenium
 pip3 install tabulate
 pip3 install pandas
 pip3 install sklearn pandas_profiling clipboard tqdm
+
+
+
