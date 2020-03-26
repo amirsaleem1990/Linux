@@ -89,3 +89,5 @@ pip3 install sklearn pandas_profiling clipboard tqdm
 
 
 sudo apt install -y translate-shell
+sudo apt install -y htop
+
