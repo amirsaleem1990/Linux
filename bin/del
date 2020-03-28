@@ -1,22 +1,22 @@
 #!/bin/bash
 
+IFS=$'\n'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 
 arg=$@
 Arg=`echo $arg | sed 's/-rf//'`
-Arg=`echo $Arg | sed 's/ /\\ /g'`
-
+Arg=`echo $Arg | sed 's/ /\\ /g' | sed 's/^\ //g'`
 if test -f "$Arg" ; then 
 	type=file
 elif test -d "$Arg" ; then
 	type=folder
 fi
 
-
+IFS= 
 for i in {1..3}; do 
-	echo -en "Are you really want to ${RED}DELETE${NC} this file/folder? \n${RED}NOTE: ${NC}this ${RED}$type${NC} have `du -sh $Arg | sed 's/\t/-/g' | cut -d- -f1` of data\n[y|n]: "
+	echo -en "Are you really want to ${RED}DELETE${NC} this $type? \n${RED}NOTE: ${NC}this ${RED}$type${NC} have `du -sh $Arg | sed 's/\t/-/g' | cut -d- -f1` of data\n[y|n]: "
 	read m
 	echo 
 	if [[ $m == "y" ]] ; then 
@@ -26,4 +26,4 @@ for i in {1..3}; do
 	fi
 done
 
-DEL $arg
+DEL -rf `echo $arg | sed 's/\ /\\ /g' | sed 's/^-rf\\ //g'`
