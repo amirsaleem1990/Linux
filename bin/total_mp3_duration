@@ -1,0 +1,22 @@
+#!/bin/bash
+echo "
+######################################################################
+# All mp3 files length.                                              # 
+# NOTE: only in this directory (no children directory included)      #
+# NOTE: only files ends with <.mp3> extention not else               #
+######################################################################"
+
+H=0
+M=0
+S=0
+for f in *.mp3; do 
+	a=`ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n"`
+	
+	float=`echo $a | cut -d: -f3`
+	s=${float%.*}
+	
+	H=$(( `echo $a | cut -d: -f1` + $H ))
+	M=$(( `echo $a | cut -d: -f2` + $M ))
+	S=$(( $s + $S ))
+done
+echo "$H:$M:$S"
