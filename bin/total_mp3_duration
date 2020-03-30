@@ -4,6 +4,9 @@ echo "
 # All mp3 files length.                                              # 
 # NOTE: only in this directory (no children directory included)      #
 # NOTE: only files ends with <.mp3> extention not else               #
+#                                                                    #
+# Error (should debug):                                              #
+#         line 20: 09: value too great for base (error token is '09')#
 ######################################################################"
 
 H=0
@@ -20,3 +23,18 @@ for f in *.mp3; do
 	S=$(( $s + $S ))
 done
 echo "$H:$M:$S"
+
+
+convertsecs() {
+ ((h=${1}/3600))
+ ((m=(${1}%3600)/60))
+ ((s=${1}%60))
+ printf "%02d:%02d:%02d\n" $h $m $s
+}
+
+SEC=$S
+SEC=$(( $SEC + $M * 60 ))
+SEC=$(( $SEC + $H * 3600 ))
+
+echo "HH:MM:SS"
+convertsecs $SEC
