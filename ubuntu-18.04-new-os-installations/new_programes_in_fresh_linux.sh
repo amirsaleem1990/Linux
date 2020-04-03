@@ -4,6 +4,7 @@ sudo apt-get upgrade
 
 sudo apt install -y ipython3
 sudo apt install -y python3-pip
+sudo apt install -y feh
 
 sudo apt update
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
