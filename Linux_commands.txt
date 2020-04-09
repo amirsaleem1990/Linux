@@ -647,3 +647,5 @@ if you want to download only specific file from github, go to file in browser (g
 # copy variable/text to clipboard ........................ echo "copy this text to clipboard" | xclip -sel clip
 # locate: locate database me search kar k matching result deta h, or wo automatic once a day update hota h, tagar aap ny 1 file abhi thori dair pehly banai h to wo aap k locate search me apear nahi ho gi, to is k lye locate sy phely ye run kar len <sudo updatedb>, 1 or masla ye hota h k mery pas 2 HDD hen, to data wali HDD ki files db nahi bani hoti, to agarcha me database ko update kar bhi dun tab bhi data HDD ki files result me show nahi ho gi, is ko solve karny k lye data HDD ko mount kar k us me chaly jaen, phir wahan ye run karen <sudo updatedb -U `pwd`>, or phir database ko update kar den, ab locate me data HDD k result bhi show hon gy.
 
+# Run Bash script in background and exit terminal .............. nohup cmd & ............... https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
+
