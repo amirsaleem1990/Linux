@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/amir/github/Amir-personal/LINUX_BACKUP.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=linux backup
+Name=linux backup
+Comment[en_US]=linux backup
+Comment=linux backup
