@@ -1,33 +1,29 @@
-for (package in c(
-	"DBI",
-	"plyr",
-	"ggplot2",
-	"h2o",
-	"IRkernel",
-	"knitr",
-	"lubridate",
-	"MASS",
-	"mice", 
-	"polynom",
-	"purrr",
-	"ranger",
-	"rpart",
-	"RSQLite",
-	"shiny",
-	"rpart.plot",
-	"xlsx", 
-	"XML", 
-	"funModeling",  
-	"tidyverse",  
-	"Hmisc", 
-	"dplyr", 
-	"tidyverse", 
-	"caret",
-	"swirl"
-	)){
-	install.packages(package)
-	readline("Enter any key to install next package")
-}
+repo = "http://cran.us.r-project.org"
+install.packages("DBI", repos=repo)
+install.packages("plyr", repos=repo)
+install.packages("ggplot2", repos=repo)
+install.packages("h2o", repos=repo)
+install.packages("IRkernel", repos=repo)
+install.packages("knitr", repos=repo)
+install.packages("lubridate", repos=repo)
+install.packages("MASS", repos=repo)
+install.packages("mice", repos=repo) 
+install.packages("polynom", repos=repo)
+install.packages("purrr", repos=repo)
+install.packages("ranger", repos=repo)
+install.packages("rpart", repos=repo)
+install.packages("RSQLite", repos=repo)
+install.packages("shiny", repos=repo)
+install.packages("rpart.plot", repos=repo)
+install.packages("xlsx", repos=repo) 
+install.packages("XML", repos=repo) 
+install.packages("funModeling", repos=repo)  
+install.packages("tidyverse", repos=repo)  
+install.packages("Hmisc", repos=repo) 
+install.packages("dplyr", repos=repo) 
+install.packages("tidyverse", repos=repo) 
+install.packages("caret", repos=repo)
+install.packages("swirl", repos=repo)
 
 #library(swirl)
 # install_from_swirl("R_Programming")
