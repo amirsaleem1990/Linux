@@ -5,7 +5,7 @@ if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
 
-not_to_commit_repos = ["LFD-projects"]
+not_to_commit_repos = ["lfd-projects"]
 if not_to_commit_repos:
 	print("************************************")
 for i in not_to_commit_repos:
