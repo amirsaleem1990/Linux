@@ -1,4 +1,4 @@
-install.packages(c(
+for (package in c(
 	"DBI",
 	"plyr",
 	"ggplot2",
@@ -24,7 +24,10 @@ install.packages(c(
 	"tidyverse", 
 	"caret",
 	"swirl"
-	))
+	)){
+	install.packages(package)
+	readline("Enter any key to install next package")
+}
 
 #library(swirl)
 # install_from_swirl("R_Programming")
