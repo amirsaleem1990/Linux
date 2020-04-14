@@ -649,3 +649,4 @@ if you want to download only specific file from github, go to file in browser (g
 
 # Run Bash script in background and exit terminal .............. nohup cmd & ............... https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
 
+# print pretty nice csv in terminal ............... cat FILE.csv | column -t -s,
