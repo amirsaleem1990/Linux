@@ -1,6 +1,11 @@
 #!/bin/bash
 
-sudo systemctl stop naclient
+naclient status >/dev/null
+
+if [[ $? = 0 ]]; then
+	sudo systemctl stop naclient
+fi
+
 sudo systemctl start naclient
 
 # m=`sudo systemctl status naclient | grep Active\:\ | cut -d: -f2 | cut -d " " -f2`
