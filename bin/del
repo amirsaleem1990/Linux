@@ -30,3 +30,5 @@ DEL -rf `echo $arg | sed 's/\ /\\ /g' | sed 's/^-rf\\ //g'`
 
 if [[ $? = 0 ]]; then
 	echo "Deletion Completed Successfully"
+fi
+
