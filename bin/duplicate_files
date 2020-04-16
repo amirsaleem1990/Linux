@@ -38,9 +38,17 @@ for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted
 	else:
 		print("****************", colored('Diffrent SIZE', 'red'), "****************")
 	pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
-	index = input("Enter index number to remve a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step:\n").strip()
+	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <_> to the end of index:\n").strip()
 	if not index:
 		continue
+	if index.endswith("-"):
+		index = index.strip("-")
+		command = "gopen " + duplicates.iloc[int(index)-1]["Actual_path"][2:].replace(" ", "\ ").\
+			replace("&", "\&").replace(":", "\:")
+		os.popen(command)
+		
+		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <_> to the end of index:\n").strip()
+
 	if not "," in index:
 		index = int(index)
 		if index != 0:
