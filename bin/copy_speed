@@ -15,10 +15,16 @@ all_data_in_MB=$(echo $m1 | tr -dc '0-9')
 
 last=$(echo $(du -s -BM) | tr -dc '0-9')
 Average_array=()
+
+read -p "Enter sleep time (in seconds) [default is 60 seconds]: " sleep_time
+if [[ $sleep_time = "" ]] ; then
+	sleep_time=60
+fi
+
 while :
 	do 
 	current=$(echo $(du -s -BM) | tr -dc '0-9')
-	echo -n "TOTAL: $(du -sh), in last 10 Sec:"
+	echo -n "TOTAL: $(du -sh), in last $sleep_time Sec:"
 	echo -n `expr $current - $last ` MB `   date +%H:%M:%S`
 	completed=$(echo "scale=2; $current/$all_data_in_MB" | bc)
 	completed=$(echo $completed | tr -dc '0-9')
@@ -37,7 +43,7 @@ while :
 	
 	last=$current
 	ab=$(echo "scale=2; 100/$completed" | bc)
-	sleep_time=10
+	
 	Estimated_time=$(echo "$ab*$mean*$sleep_time" | bc)
 	Estimated_time=${Estimated_time%.*}
 	echo "    Estimated time: `convertsecs $Estimated_time`"
