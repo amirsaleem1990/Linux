@@ -1,25 +1,16 @@
 #!/bin/bash
 
-naclient status >/dev/null
-
-if [[ $? = 0 ]]; then
-	sudo systemctl stop naclient
+if [[ `naclient status | wc -l` = 1 ]] ; then
+	echo -e "\n****** Connecting to VPN *******\n\n"
+	
+	/opt/sslvpn-plus/naclient/gui/naclient.sh >/dev/null
+	if [[ $? = 0 ]] ; then
+		echo "Connected to VPN Successfully"
+	else
+		echo "Sorry, Not Connected to VPN Successfully"
+	fi
 fi
 
-sudo systemctl start naclient
-
-# m=`sudo systemctl status naclient | grep Active\:\ | cut -d: -f2 | cut -d " " -f2`
-# if [[ $m == "active" ]] ; then 
-# 	:
-# else
-# 	echo "Starting naclient"
-# 	sudo systemctl start naclient
-# fi
-
-/opt/sslvpn-plus/naclient/gui/naclient.sh 2>/dev/null
-sleep 4
-# ssh server_admin@192.168.62.12
-#echo -n "ENTER your P@ssw0rd: "
-#ssh root@192.168.62.12
-ssh  192.168.62.12
+echo -e "\n****** Connecting to Kashat-server *******\n\n"
+ssh 192.168.62.12
 
