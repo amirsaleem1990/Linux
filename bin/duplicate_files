@@ -32,6 +32,7 @@ for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted
 	duplicates["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicates.Actual_path]
 	duplicates.reset_index(inplace=True)
 	duplicates.drop("index", axis=1, inplace=True)
+	duplicates = duplicates.sort_values("Size_MB")
 	duplicates.index += 1
 	if duplicates["Size_MB"].nunique() == 1:
 		print("*****************", colored('SAME SIZE', 'red'), "******************")
