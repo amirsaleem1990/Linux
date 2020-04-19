@@ -11,3 +11,6 @@ solution:
 	sudo ntfsfix /dev/sd1
 	sudo mount /dev/sd1 /media/500GB
 
+solution2:
+	computer ko restart kar k windows start karen, phir windows ko <restart> karen, or jab boot option aay to linux me boot karen.
+
