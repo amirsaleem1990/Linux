@@ -25,12 +25,15 @@ if (set([len(d[i]) for i in d])) == 1:
 elif len(d['amir']) > len(d['root']):
 	d['root'].append([''] * (len(d['amir']) - len(d['root'])))
 	df = pd.DataFrame(d)
-	pprint(df)
+	#pprint(df)
+	df.to_csv("/home/amir/.a.", index=False)
 else:
 	d['amir'] += [''] * (len(d['root']) - len(d['amir']))
 	df = pd.DataFrame(d)
-	pprint(df)
+	#pprint(df)
+	df.to_csv("/home/amir/.a.", index=False)
 
+os.system("cat /home/amir/.a. | column -t -s,")
 # if len(d['amir']) >= len(d['root']):
 # 	for i in range(len(d['amir'])):
 # 		if i <= len(d['root']):
