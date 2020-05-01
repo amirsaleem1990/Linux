@@ -16,3 +16,9 @@ current window screenshot and copy to clipboard
 gnome-screenshot -w -c
 ALT + S
 
+
+touchpad on off
+/bin/touch_on_off
+shitft + ctrl + f9
+
+
