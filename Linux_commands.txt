@@ -653,3 +653,4 @@ if you want to download only specific file from github, go to file in browser (g
 # if you want to login in remote server, execute one command and then exit, you can do it in one line ......... ssh 192.168.62.12 ./exemple_script.sh
 # remove_root_authentication_request_from_package .................. sudo setcap "cap_net_admin,cap_net_raw=ep" `which nethogs`
 
+Keep processes running after SSH session disconnects .......................... $$ nohup long-running-process &
