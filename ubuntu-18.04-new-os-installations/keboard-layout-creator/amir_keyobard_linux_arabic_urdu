@@ -4,7 +4,7 @@
 // For more about the software, see http://code.google.com/p/keyboardlayouteditor
 //
 
-xkb_symbols "amir_key"
+xkb_symbols "amir"
 {
 	name[Group1] = "amir_key";
 	key <AB01> { [   Arabic_hamza                                                 ] }; // ء 
