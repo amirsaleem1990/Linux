@@ -1,0 +1,39 @@
+ا,أ,إ,ب,پ‎,ت,ٹ,ث,ج,چ,ح,خ,د,ڈ,ذ,ر‎,ڑ,ز,س,ش,ص,ض,ط,‎ظ,ع,غ,ف,ق,ك,گ,ل,م,ن,‎ں,و,ه,ھ,ء‎,ي,ى‎,ے
+
+copy /usr/share/X11/xkb/symbols/ara as /usr/share/X11/xkb/symbols/Amir
+# Make changings you want
+# open /usr/share/X11/xkb/rules/evdev.xml
+
+Go to the end of the <layoutList> section (search for </layoutList>). Add the following after the last </layout> tag, where X is the file name of your keyboard layout in /usr/share/X11/xkb/symbols (in my case oe); Y a suitable short name; and Z an appropriate long name in one or more languages and aaa a legal three letter (ISO 639-2) language code (e.g. eng for English):
+
+<layout>
+ <configItem>
+   <name> X </name>
+   <shortDescription> Y </shortDescription>
+   <description> Z </description>
+   <languageList>
+      <iso639Id> aaa </iso639Id>
+   </languageList>
+ </configItem>
+ <variantList/>
+</layout>
+
+
+
+<layout>
+ <configItem>
+   <name>Amir</name>
+   <shortDescription>Amir_personal_keyboard</shortDescription>
+   <description>Amir_keyboard</description>
+   <languageList>
+      <iso639Id>ara</iso639Id>
+      <iso639Id>urd</iso639Id>
+   </languageList>
+ </configItem>
+ <variantList/>
+</layout>
+
+
+sudo dpkg-reconfigure xkb-data
+
+cange input language 
