@@ -6,15 +6,11 @@
 
 xkb_symbols "amir"
 {
-	name[Group1] = "amir_key";
-	key <AB01> { [   Arabic_hamza                                                 ] }; // ء 
-	key <AB02> { [    bracketleft,   bracketright                                 ] }; // [ ] 
-	key <AB03> { [      Arabic_ra,    Arabic_rreh                                 ] }; // ر ڑ 
-	key <AB04> { [      braceleft,     braceright                                 ] }; // { } 
-	key <AB05> { [       quotedbl                                                 ] }; // " 
-	key <AB06> { [       question,      KP_Divide                                 ] }; // ? / 
-	key <AB07> { [      semicolon,          colon                                 ] }; // ; : 
-	key <AB08> { [     Arabic_waw,          U066C                                 ] }; // و ٬ 
+	name[Group1] = "amir";
+	key <AB01> { [ Arabic_hamzaonyeh                                                 ] }; // ئ 
+	key <AB02> { [   Arabic_hamza                                                 ] }; // ء 
+	key <AB04> { [      Arabic_ra,    Arabic_rreh                                 ] }; // ر ڑ 
+	key <AB08> { [     Arabic_waw                                                 ] }; // و 
 	key <AB09> { [    Arabic_zain                                                 ] }; // ز 
 	key <AB10> { [     Arabic_zah                                                 ] }; // ظ 
 	key <AC01> { [   Arabic_sheen                                                 ] }; // ش 
@@ -40,19 +36,7 @@ xkb_symbols "amir"
 	key <AD10> { [     Arabic_hah                                                 ] }; // ح 
 	key <AD11> { [    Arabic_jeem,   Arabic_tcheh                                 ] }; // ج چ 
 	key <AD12> { [     Arabic_dal,    Arabic_ddal                                 ] }; // د ڈ 
-	key <AE01> { [           KP_1,         exclam                                 ] }; // 1 ! 
-	key <AE02> { [           KP_2,             at                                 ] }; // 2 @ 
-	key <AE03> { [           KP_3,     numbersign                                 ] }; // 3 # 
-	key <AE04> { [           KP_4,         dollar                                 ] }; // 4 $ 
-	key <AE05> { [           KP_5,        percent                                 ] }; // 5 % 
-	key <AE06> { [           KP_6                                                 ] }; // 6 
-	key <AE07> { [           KP_7,      ampersand                                 ] }; // 7 & 
-	key <AE08> { [           KP_8,    KP_Multiply                                 ] }; // 8 * 
-	key <AE09> { [           KP_9, Armenian_parenleft                                 ] }; // 9 ( 
-	key <AE10> { [           KP_0, Armenian_parenright                                 ] }; // 0 ) 
-	key <AE11> { [    KP_Subtract,       underbar                                 ] }; // - _ 
-	key <AE12> { [       KP_Equal,         KP_Add                                 ] }; // = + 
-	key <LSGT> { [ Arabic_hamzaonyeh                                                 ] }; // ئ 
-	key <TLDE> { [    Arabic_thal                                                 ] }; // ذ 
+	key <AE01> { [       NoSymbol,           KP_1                                 ] }; //  1 
+	key <AE02> { [       NoSymbol,           KP_2                                 ] }; //  2 
 };
 
