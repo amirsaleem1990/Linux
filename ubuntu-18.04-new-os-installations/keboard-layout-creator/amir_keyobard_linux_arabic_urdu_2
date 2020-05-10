@@ -1,0 +1,58 @@
+/////////////////////////////////////////////////////////////////////////////////
+//
+// Generated keyboard layout file with the Keyboard Layout Editor.
+// For more about the software, see http://code.google.com/p/keyboardlayouteditor
+//
+
+xkb_symbols "amir_key"
+{
+	name[Group1] = "amir_key";
+	key <AB01> { [   Arabic_hamza                                                 ] }; // ء 
+	key <AB02> { [    bracketleft,   bracketright                                 ] }; // [ ] 
+	key <AB03> { [      Arabic_ra,    Arabic_rreh                                 ] }; // ر ڑ 
+	key <AB04> { [      braceleft,     braceright                                 ] }; // { } 
+	key <AB05> { [       quotedbl                                                 ] }; // " 
+	key <AB06> { [       question,      KP_Divide                                 ] }; // ? / 
+	key <AB07> { [      semicolon,          colon                                 ] }; // ; : 
+	key <AB08> { [     Arabic_waw,          U066C                                 ] }; // و ٬ 
+	key <AB09> { [    Arabic_zain                                                 ] }; // ز 
+	key <AB10> { [     Arabic_zah                                                 ] }; // ظ 
+	key <AC01> { [   Arabic_sheen                                                 ] }; // ش 
+	key <AC02> { [    Arabic_seen                                                 ] }; // س 
+	key <AC03> { [     Arabic_yeh, Arabic_alefmaksura                                 ] }; // ي ى 
+	key <AC04> { [     Arabic_beh,     Arabic_peh                                 ] }; // ب پ 
+	key <AC05> { [     Arabic_lam                                                 ] }; // ل 
+	key <AC06> { [    Arabic_alef, Arabic_maddaonalef                                 ] }; // ا آ 
+	key <AC07> { [     Arabic_teh,    Arabic_tteh                                 ] }; // ت ٹ 
+	key <AC08> { [    Arabic_noon, Arabic_noon_ghunna                                 ] }; // ن ں 
+	key <AC09> { [    Arabic_meem, Armenian_comma                                 ] }; // م , 
+	key <AC10> { [     Arabic_kaf,     Arabic_gaf                                 ] }; // ك گ 
+	key <AC11> { [     Arabic_tah                                                 ] }; // ط 
+	key <AD01> { [     Arabic_dad                                                 ] }; // ض 
+	key <AD02> { [     Arabic_sad                                                 ] }; // ص 
+	key <AD03> { [    Arabic_theh                                                 ] }; // ث 
+	key <AD04> { [     Arabic_qaf                                                 ] }; // ق 
+	key <AD05> { [     Arabic_feh                                                 ] }; // ف 
+	key <AD06> { [   Arabic_ghain                                                 ] }; // غ 
+	key <AD07> { [     Arabic_ain                                                 ] }; // ع 
+	key <AD08> { [      Arabic_ha, Arabic_heh_doachashmee                                 ] }; // ه ھ 
+	key <AD09> { [    Arabic_khah                                                 ] }; // خ 
+	key <AD10> { [     Arabic_hah                                                 ] }; // ح 
+	key <AD11> { [    Arabic_jeem,   Arabic_tcheh                                 ] }; // ج چ 
+	key <AD12> { [     Arabic_dal,    Arabic_ddal                                 ] }; // د ڈ 
+	key <AE01> { [           KP_1,         exclam                                 ] }; // 1 ! 
+	key <AE02> { [           KP_2,             at                                 ] }; // 2 @ 
+	key <AE03> { [           KP_3,     numbersign                                 ] }; // 3 # 
+	key <AE04> { [           KP_4,         dollar                                 ] }; // 4 $ 
+	key <AE05> { [           KP_5,        percent                                 ] }; // 5 % 
+	key <AE06> { [           KP_6                                                 ] }; // 6 
+	key <AE07> { [           KP_7,      ampersand                                 ] }; // 7 & 
+	key <AE08> { [           KP_8,    KP_Multiply                                 ] }; // 8 * 
+	key <AE09> { [           KP_9, Armenian_parenleft                                 ] }; // 9 ( 
+	key <AE10> { [           KP_0, Armenian_parenright                                 ] }; // 0 ) 
+	key <AE11> { [    KP_Subtract,       underbar                                 ] }; // - _ 
+	key <AE12> { [       KP_Equal,         KP_Add                                 ] }; // = + 
+	key <LSGT> { [ Arabic_hamzaonyeh                                                 ] }; // ئ 
+	key <TLDE> { [    Arabic_thal                                                 ] }; // ذ 
+};
+
