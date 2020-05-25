@@ -1,0 +1,3 @@
+#!/bin/bash
+trans :ar $1
+say $1
