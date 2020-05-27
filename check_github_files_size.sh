@@ -15,9 +15,9 @@ for i in `find . -size  +51199k | grep -v  '^.\/\.'` ; do
 	if [[ `echo $i | grep .pack$` ]] ; then 
 		continue
 	fi
-	# if [[ `echo $i | grep .git` ]]; then
-	# 	continue
-	# fi
+	if [[ `echo $i | grep .git` ]]; then
+		continue
+	fi
 	if [[ `echo $i | grep lfd-projects` ]]; then
 		continue
 	fi
