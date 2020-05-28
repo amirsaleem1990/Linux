@@ -1,0 +1,16 @@
+#!/bin/bash
+
+####################################################################################
+# copy this file to /bin/Sudo and then run this command in your ubuntu terminal   #
+# echo 'alias sudo="Sudo"' >> ~/.bashrc ; source ~/.bashrc                         #
+####################################################################################
+
+echo -n "[sudo] password for `whoami`: "
+
+stty -echo
+read password
+stty echo
+
+echo 
+# echo $@
+echo $password | sudo -S $@
