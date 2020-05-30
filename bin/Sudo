@@ -10,7 +10,6 @@ echo -n "[sudo] password for `whoami`: "
 stty -echo
 read password
 stty echo
-
 echo 
 # echo $@
-echo $password | sudo -S $@
+echo $password | sudo -S $@ | tail -n+1
