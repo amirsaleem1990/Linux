@@ -4,15 +4,18 @@ import os
 from bs4 import BeautifulSoup
 import sys
 
-ans = input("1-Copy urls into /home/amir/.GMP\nor \n2-paste urls on cammand line\n(press 1 or 2)\n")
+ans = input("1-Copy new urls into /home/amir/.GMP\n2-Use existing /home/amir/.GMP\n3-paste urls on cammand line\n(press 1,2 or 3)\n")
 print("\n\n")
 if ans == "1":
 	try:
-		urls = open("/home/amir/.GMP", 'r').read().splitlines()
+		os.system("rm -f /home/amir/.GMP")
 	except:
-		os.popen("subl /home/amir/.GMP")
-		input("Enter any key when you saved you file   ")
-		urls = open("/home/amir/.GMP", "r").read().splitlines()
+		pass
+	os.popen("subl /home/amir/.GMP")
+	input("save /home/amir/.GMP and then press any key to proceed: ")
+	urls = open("/home/amir/.GMP", 'r').read().splitlines()
+elif ans == "2":
+	urls = open("/home/amir/.GMP", 'r').read().splitlines()
 else:
 	urls = []
 	while True:
@@ -43,10 +46,5 @@ for i in links:
 
 links = list(set(L))
 for L in links:
-	print(L)
-	# os.popen(L)
-
-# try:
-# 	os.system("rm -f /home/amir/.GMP")
-# except:
-# 	pass
+	# print(L)
+	os.popen(L)

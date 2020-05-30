@@ -1,1 +1,4 @@
-firefox google.com/search?q="$@"
+#!/bin/bash
+query=$( echo $@ | sed 's/\ /+/g')
+echo $query
+firefox google.com/search?q="$query"
