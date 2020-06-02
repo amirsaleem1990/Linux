@@ -10,7 +10,7 @@ df.drop("Asr_1", axis=1, inplace=True)
 df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
 
 d = str(datetime.now()).split()[0][5:].split("-")
-today = df[(df.Month == d[0]) & (df.Date == d[1])].T
+today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
 
 tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
 try:
