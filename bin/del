@@ -19,9 +19,7 @@ for i in {1..3}; do
 	echo -en "Are you really want to ${RED}DELETE${NC} this $type? \n${RED}NOTE: ${NC}this ${RED}$type${NC} have `du -sh $Arg | sed 's/\t/-/g' | cut -d- -f1` of data\n[y|n]: "
 	read m
 	echo 
-	if [[ $m == "y" ]] ; then 
-		:
-	else
+	if [[ $m != "y" ]] ; then 
 		exit
 	fi
 done
@@ -32,3 +30,26 @@ if [[ $? = 0 ]]; then
 	echo "Deletion Completed Successfully"
 fi
 
+
+
+# myArray=( "$@" )
+# array_len="${#myArray[@]}"
+# if [[ $array_len > 1 ]] ; then
+# 	IFS= 
+# 	for i in {1..3}; do 
+# 		echo -en "Are you really want to ${RED}DELETE${NC} this $type? \n${RED}NOTE: ${NC}this ${RED}$type${NC} have `du -sh $Arg | sed 's/\t/-/g' | cut -d- -f1` of data\n[y|n]: "
+# 		read m
+# 		echo 
+# 		if [[ $m != "y" ]] ; then 
+# 			exit
+# 		fi
+# 	done	
+
+	
+# for Arg in "${myArray[@]}"; do
+# 	if test -f "$Arg" ; then
+# 		type=file	
+# 	elif test -d "$Arg" ; then
+# 		type=folder
+# 	fi
+# done
