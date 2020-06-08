@@ -39,7 +39,7 @@ for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted
 	else:
 		print("****************", colored('Diffrent SIZE', 'red'), "****************")
 	pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
-	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <_> to the end of index:\n").strip()
+	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nto open a particuler indexed file add <-> to the end of index:\n").strip()
 	if not index:
 		continue
 	if index.endswith("-"):
@@ -48,20 +48,20 @@ for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted
 			replace("&", "\&").replace(":", "\:")
 		os.popen(command)
 		
-		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <_> to the end of index:\n").strip()
+		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <-> to the end of index:\n").strip()
 
 	if  ":" in index:
 		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
 			os.remove(i)
 	
-	elif not "," in index:
+	elif not "." in index:
 		index = int(index)
 		if index != 0:
 			os.remove(duplicates.iloc[index-1]["Actual_path"])
 
 	else:
-		indexes = [int(i.strip())-1 for i in index.split(",")]
+		indexes = [int(i.strip())-1 for i in index.split(".")]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
 			os.remove(i)	
 	print("\n\n")
