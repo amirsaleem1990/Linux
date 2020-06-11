@@ -1,4 +1,9 @@
 #!/bin/bash
-query=$( echo $@ | sed 's/\ /+/g')
-echo $query
-firefox google.com/search?q="$query"
+echo -e "\nYou don't need this script\npleas type: firefox --search YOUR_SEARCH_QUERY\nThanks!"
+exit
+
+
+
+# query=$( echo $@ | sed 's/\ /+/g')
+# echo $query
+# firefox google.com/search?q="$query"
