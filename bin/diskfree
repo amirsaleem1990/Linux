@@ -1,34 +1,38 @@
 #!/usr/bin/python3
 import os
-print("\n\nFilesystem          Size  Used     Avail Use% Mounted")
+print("\n\nFilesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
 os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
+# os.system('df -BM | grep /dev/sd')
 
 print("\n\n#############################################################\n\n")
-
+def MB_to_GB(x):
+  return int(x/1024)
 from termcolor import colored
 def m(x):
     return " " * (x - 2)
 import os
 print(colored("===", "red") + ": Total")
-print(colored("!!!", "green") + ": Used")
-a = list(os.popen('df -BG | grep /dev/sd | grep -v "1G    1G" '))
-print(" " * (33 + 12), "Total | Used | Avail | Mounted")
+print(colored("!!!", "green") + ": Unused")
+# a = list(os.popen('df -BG | grep /dev/sd | grep -v "1G    1G" '))
+a = list(os.popen('df -BM | grep /dev/sd'))
+print(" " * (66 + 12), "Total | Used | Avail | Mounted")
 for b in a:
-    total = int(b.split()[1].replace("G", ""))
-    used = int(b.split()[2].replace("G", ""))
-    avail = int(b.split()[3].replace("G", ""))
-    
-    used_size = int(used / total * 100) // 4
-    total_size = 100 // 3
+    total = int(b.split()[1].replace("M", ""))
+    if total < 1000:
+      continue
+    used = int(b.split()[2].replace("M", ""))
+    avail = int(b.split()[3].replace("M", ""))
+    devided_by = 1.5
+    used_size = int(used / total * 100) // devided_by
+    total_size = 100 // devided_by
     LEN = len(b.split()[0])
     print(b.split()[0], m(12 - len(b.split()[0])),
           colored(int(used_size) * "=", "red") + 
           colored(int(total_size - used_size) * "!", "green"),
-          total,  m(8- len(str(total))), 
-          used, m(7- len(str(used))),
-          avail, m(8- len(str(avail))),
+          MB_to_GB(total),  m(11- len(str(total))), 
+          MB_to_GB(used), m(10- len(str(used))),
+          MB_to_GB(avail), m(11- len(str(avail))),
           b.split()[-1])
-
 
 #######################################################################
 # #!/bin/bash
