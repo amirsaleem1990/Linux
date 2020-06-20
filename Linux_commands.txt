@@ -661,3 +661,5 @@ uniq -c | count each unique line how many times accured
 # print completed file in terminal and color specific words ................ grep --color "^\|return" myfile.txt ............. https://unix.stackexchange.com/questions/57715/display-words-in-color
 # create multiple files/folders at once .......... touch touch file-{a..e}.txt ....... touch file-{1..4}.txt ......... touch {a..c}-{1..4}.txt
 # list files/directories only that have execution permition ......... ls -l | grep [d,-]..x
+
+# restart mysql server ........... /etc/init.d/mysql  restart
