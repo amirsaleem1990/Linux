@@ -666,3 +666,9 @@ uniq -c | count each unique line how many times accured
 
 # mysql databases location in system .......... /var/lib/mysql
 
+#-------------------------
+# redirect stderr and stdout to different files
+stderr = errors outpul
+stdout = normal outpul
+./script.sh >normal.txt  2>errors.log
+#-------------------------
