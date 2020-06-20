@@ -672,3 +672,4 @@ stderr = errors outpul
 stdout = normal outpul
 ./script.sh >normal.txt  2>errors.log
 #-------------------------
+# sort by second column ............ sort -k2 -n your_file
