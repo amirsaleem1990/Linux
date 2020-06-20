@@ -664,3 +664,4 @@ uniq -c | count each unique line how many times accured
 
 # restart mysql server ........... /etc/init.d/mysql  restart
 
+# mysql databases location in system .......... /var/lib/mysql
