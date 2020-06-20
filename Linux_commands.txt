@@ -675,3 +675,4 @@ stdout = normal outpul
 # sort by second column ............ sort -k2 -n your_file
 RED="\033[0;31m"
 normal="\033[0m"
+# sum float and int .......... sum=`echo "scale=3; $i + $sum" | bc`
