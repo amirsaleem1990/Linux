@@ -663,3 +663,4 @@ uniq -c | count each unique line how many times accured
 # list files/directories only that have execution permition ......... ls -l | grep [d,-]..x
 
 # restart mysql server ........... /etc/init.d/mysql  restart
+
