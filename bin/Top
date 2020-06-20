@@ -1,39 +1,86 @@
-#!/usr/bin/ipython3
+#!/bin/bash
+RED="\033[0;31m"
+normal="\033[0m"
+echo "--------------"
+echo -e "Sort by CPU or MEM?\n1-MEM\n2-CPU"
+echo "--------------"
+read  sort_by
+echo -e "\n${RED}  PID  CPU  MEM COMMAND${normal}"
+echo "-----------------------"
+if [[ $sort_by = 1 ]]; then
+	a='-rss'
+else
+	if [[ $sort_by = 2 ]]; then
+	a='-pcpu'
+	else
+		echo "Wrong Choice"
+		exit 
+	fi
+fi
 
-import os
-from pprint import pprint
-import pandas as pd
-import time
+ps -eo user,pid,%cpu,%mem,comm --sort $a | grep amir | sed 's/amir     //g' | grep -v '0.0  0.0' | tee /home/amir/.a.
 
-d = {'root' : [], 'amir' : []}
-for i in range(15):
-	b = list(os.popen('top -n1 | grep "amir\\|root"'))
-	for f  in b:
-		key = "amir" if "amir" in f else "root"
-		ok = f[f.index(key) : f.index("          ")]
-		last = ok.split()[-1]
-		if "/" in last:
-			last = last.split("/")[0]
-		d[key].append(last.strip())
-	time.sleep(1)
+function sum_() {
+	sum=0
+	IFS=$'\n'
+	for i in `cat /home/amir/.a. | sed 's/^ //g' | sed 's/\ \{1,\}/\ /g' | cut -d " " -f $1`; do
+		sum=`echo "$i + $sum" | bc`
+	done
+	echo $sum
+}
+cpu_total=`sum_ 2`
+ram_total=`sum_ 3`
+total_length=`cat /home/amir/.a. | wc -l`
 
-for i in d:
-	d[i] = sorted(list(set(d[i])))
+echo -e "\n\n${RED}******************************************${normal}"
+echo "cpu total: $cpu_total % <out of 800%>"
+echo "ram total: $ram_total %"
+echo -e "${RED}******************************************${normal}\n\n"
 
-if (set([len(d[i]) for i in d])) == 1:
-	pprint(pd.DataFrame(d))
-elif len(d['amir']) > len(d['root']):
-	d['root'].append([''] * (len(d['amir']) - len(d['root'])))
-	df = pd.DataFrame(d)
-	#pprint(df)
-	df.to_csv("/home/amir/.a.", index=False)
-else:
-	d['amir'] += [''] * (len(d['root']) - len(d['amir']))
-	df = pd.DataFrame(d)
-	#pprint(df)
-	df.to_csv("/home/amir/.a.", index=False)
-
-os.system("cat /home/amir/.a. | column -t -s,")
+# cpu_average=`echo "scale=3; $cpu_total / $total_length" | bc -l`
+# ram_average=`echo "scale=3; $ram_total / $total_length" | bc -l`
+# echo "cpu_average: $cpu_average %"
+# echo "ram_average: $ram_average %"
+#-------------------------------------------------------------------------------------------------------
+##!/usr/bin/ipython3
+#
+#import os
+#from pprint import pprint
+#import pandas as pd
+#import time
+#
+#d = {'root' : [], 'amir' : []}
+#for i in range(15):
+#	b = list(os.popen('top -n1 | grep "amir\\|root"'))
+#	for f  in b:
+#		key = "amir" if "amir" in f else "root"
+#		ok = f[f.index(key) : f.index("          ")]
+#		last = ok.split()[-1]
+#		if "/" in last:
+#			last = last.split("/")[0]
+#		d[key].append(last.strip())
+#	time.sleep(1)
+#
+#for i in d:
+#	d[i] = sorted(list(set(d[i])))
+#
+#if (set([len(d[i]) for i in d])) == 1:
+#	pprint(pd.DataFrame(d))
+#elif len(d['amir']) > len(d['root']):
+#	d['root'].append([''] * (len(d['amir']) - len(d['root'])))
+#	df = pd.DataFrame(d)
+#	#pprint(df)
+#	df.to_csv("/home/amir/.a.", index=False)
+#else:
+#	d['amir'] += [''] * (len(d['root']) - len(d['amir']))
+#	df = pd.DataFrame(d)
+#	#pprint(df)
+#	df.to_csv("/home/amir/.a.", index=False)
+##os.system("cat /home/amir/.a. | column -t -s,")
+##print(tabulate(df))
+#from pprint import pprint
+#pprint(df)
+#----------------------------------------------------------------------------------------
 # if len(d['amir']) >= len(d['root']):
 # 	for i in range(len(d['amir'])):
 # 		if i <= len(d['root']):
