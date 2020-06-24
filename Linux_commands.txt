@@ -683,3 +683,4 @@ normal="\033[0m"
 3- type these line in the end:
 [client]
 password=type_you_password_here
+
