@@ -678,3 +678,6 @@ normal="\033[0m"
 # sum float and int .......... sum=`echo "scale=3; $i + $sum" | bc`
 #-------------------------------------------
 # save sql password, so you have to type your password each time, if you need to skip this ; do:
+1- sudo cp /etc/mysql/my.cnf ./.my.cnf
+2- open ./.my.cnf
+3- type these line in the end:
