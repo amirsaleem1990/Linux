@@ -19,6 +19,7 @@ else
 fi
 
 ps -eo user,pid,%cpu,%mem,comm --sort $a | grep amir | sed 's/amir     //g' | grep -v '0.0  0.0' | tee /home/amir/.a. | tac
+echo -e "\n${RED}  PID  CPU  MEM COMMAND${normal}\n****************************"
 
 function sum_() {
 	sum=0
