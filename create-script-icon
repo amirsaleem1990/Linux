@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Sqlectron
+Exec=/usr/Sqlectron-1.30.0/sqlectron
+Comment=sqlectron sql
+Icon=/home/amir/Pictures/logo-sqlectron.png
+Terminal=false
+Type=Application
+StartupNotify=true
+
+
+fill above lines as you need, and paste it into file, name of file should ends with .desktop, then move that file to /usr/share/applications, now your file will appear in search box, and run as an application 
