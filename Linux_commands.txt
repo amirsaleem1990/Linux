@@ -684,3 +684,4 @@ normal="\033[0m"
 [client]
 password=type_you_password_here
 
+#swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
