@@ -677,3 +677,4 @@ RED="\033[0;31m"
 normal="\033[0m"
 # sum float and int .......... sum=`echo "scale=3; $i + $sum" | bc`
 #-------------------------------------------
+# save sql password, so you have to type your password each time, if you need to skip this ; do:
