@@ -18,7 +18,7 @@ else
 	fi
 fi
 
-ps -eo user,pid,%cpu,%mem,comm --sort $a | grep amir | sed 's/amir     //g' | grep -v '0.0  0.0' | tee /home/amir/.a.
+ps -eo user,pid,%cpu,%mem,comm --sort $a | grep amir | sed 's/amir     //g' | grep -v '0.0  0.0' | tee /home/amir/.a. | tac
 
 function sum_() {
 	sum=0
