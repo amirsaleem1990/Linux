@@ -681,3 +681,5 @@ normal="\033[0m"
 1- sudo cp /etc/mysql/my.cnf ./.my.cnf
 2- open ./.my.cnf
 3- type these line in the end:
+[client]
+password=type_you_password_here
