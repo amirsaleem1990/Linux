@@ -1,16 +1,26 @@
 #!/bin/bash
 
-if [[ `naclient status | wc -l` = 1 ]] ; then
-	echo -e "\n****** Connecting to VPN *******\n\n"
-	
-	/opt/sslvpn-plus/naclient/gui/naclient.sh >/dev/null
-	if [[ $? = 0 ]] ; then
-		echo "Connected to VPN Successfully"
+vpn_status=`naclient status | wc -l`
+if [[ $vpn_status > 1 ]] ; then
+	naclient logout >/dev/null
+
+	echo -e "\n****** Connecting to VPN *******"
+	/opt/sslvpn-plus/naclient/gui/naclient.sh &>/dev/null
+
+	if [[ $? == 0 || $? == 1 ]]; then
+		echo -e "Connected to VPN successfully\n\n"
 	else
-		echo "Sorry, Not Connected to VPN Successfully"
+		echo -e "Failed to Connect to VPN\n\n"
+		exit
 	fi
 fi
+echo -e "\n****** Connecting to Kashat-server *******"
 
-echo -e "\n****** Connecting to Kashat-server *******\n\n"
 ssh 192.168.62.12
 
+if [[ $? == 0 ]]; then
+	echo -e "Connected to Kashat-server successfully\n\n"
+else
+	echo -e "Failed to Connect to Kashat-server\n\n"
+	exit
+fi
