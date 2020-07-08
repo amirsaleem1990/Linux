@@ -686,3 +686,5 @@ password=type_you_password_here
 
 #swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
 # to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
+# variable increment ........ count=5; let "count+=1" ............ another way: let "count++"
+
