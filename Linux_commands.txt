@@ -699,3 +699,4 @@ Following are 5 commonly used options – c, z, f, v, x
     z = use gzip to zip it
     x = extract file
 
+tar -cvz My_csv.csv -f My_csv.tar
