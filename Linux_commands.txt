@@ -688,3 +688,4 @@ password=type_you_password_here
 # to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
 # variable increment ........ count=5; let "count+=1" ............ another way: let "count++"
 
+check if two files are identical .......... cmp --silent $old $new || echo "files are different"
