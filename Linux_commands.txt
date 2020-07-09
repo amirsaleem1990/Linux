@@ -690,3 +690,12 @@ password=type_you_password_here
 
 check if two files are identical .......... cmp --silent $old $new || echo "files are different"
 #-----------------------
+zip file in tar:
+Following are 5 commonly used options – c, z, f, v, x
+
+    c = create a new tar file
+    v = verbose , display file to compress or uncompress
+    f = create the tar file with filename provided as the argument
+    z = use gzip to zip it
+    x = extract file
+
