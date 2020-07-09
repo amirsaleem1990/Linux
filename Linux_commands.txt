@@ -689,3 +689,4 @@ password=type_you_password_here
 # variable increment ........ count=5; let "count+=1" ............ another way: let "count++"
 
 check if two files are identical .......... cmp --silent $old $new || echo "files are different"
+#-----------------------
