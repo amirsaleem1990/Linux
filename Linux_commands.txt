@@ -700,3 +700,4 @@ Following are 5 commonly used options – c, z, f, v, x
     x = extract file
 
 tar -cvz My_csv.csv -f My_csv.tar
+# find .py files and copy each file to ~/abc ............ find . -name *.py | xargs -I{} cp -v {} ~/abc/
