@@ -701,3 +701,4 @@ Following are 5 commonly used options – c, z, f, v, x
 
 tar -cvz My_csv.csv -f My_csv.tar
 # find .py files and copy each file to ~/abc ............ find . -name *.py | xargs -I{} cp -v {} ~/abc/
+# ganerate range using variable ............. for i in $(seq 1 $END); do echo $i; 
