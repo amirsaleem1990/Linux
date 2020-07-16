@@ -703,3 +703,4 @@ tar -cvz My_csv.csv -f My_csv.tar
 # find .py files and copy each file to ~/abc ............ find . -name *.py | xargs -I{} cp -v {} ~/abc/
 # ganerate range using variable ............. for i in $(seq 1 $END); do echo $i; 
 # email to your address ........... echo "BODY" | mail -s "Subject"  amirsaleem1990@hotmail.com
+# logout ............... pkill -KILL -u `hostname`
