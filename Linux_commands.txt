@@ -705,3 +705,4 @@ tar -cvz My_csv.csv -f My_csv.tar
 # email to your address ........... echo "BODY" | mail -s "Subject"  amirsaleem1990@hotmail.com
 # logout ............... pkill -KILL -u `hostname`
 # How to change default crontab editor .................... export EDITOR=/bin/nano; export VISUAL=nano
+# list all *txt files except *3txt ls ./*[!3]txt
