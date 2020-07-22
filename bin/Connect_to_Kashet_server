@@ -19,7 +19,7 @@ fi
 
 echo -e "\n****** Connecting to Kashat-server *******"
 
-ssh 192.168.62.12 >/dev/null
+ssh 192.168.62.12
 
 if [[ $? != 0 ]]; then
 	echo -e "Failed to Connect to Kashat-server\n\n"
