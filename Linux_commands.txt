@@ -707,3 +707,5 @@ tar -cvz My_csv.csv -f My_csv.tar
 # How to change default crontab editor .................... export EDITOR=/bin/nano; export VISUAL=nano
 # list all *txt files except *3txt ............. ls ./*[!3]txt ........... ls *[^3]txt
 # remove all numbers ............ sed 's/[0-9]//g'
+
+# <unzip -l> return file size in bytes
