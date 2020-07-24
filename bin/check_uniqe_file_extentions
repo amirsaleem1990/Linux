@@ -1,7 +1,15 @@
 #!/bin/bash
 IFS=$'\n'
 echo -e "\n\n"
-ls | rev | cut -d. -f1 | rev | sort | uniq -c | sed 's/\ \{2,\}//g'
+ls -p |\
+	 grep -v /  |\
+	 grep '\.' |\
+	 rev |\
+	 cut -d. -f1 |\
+	 rev |\
+	 sort |\
+	 uniq -c |\
+	 sed 's/\ \{2,\}//g'
 
 
 
