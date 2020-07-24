@@ -710,3 +710,4 @@ tar -cvz My_csv.csv -f My_csv.tar
 
 # <unzip -l> return file size in bytes
 @
+# ubuntu terminal me ls karny sy urdu/arabic names reverce me display hoty hen jin ko parrhan bohot hi mushkil hota h, is lye jahan arabic names hon wahan ye use karen ............ ls | fribidi
