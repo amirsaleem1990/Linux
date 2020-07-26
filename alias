@@ -1,3 +1,4 @@
+
 alias NL_down='blugon --setcurrent="-500"'
 alias NL_up='blugon --setcurrent="+500"'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -28,7 +29,7 @@ alias l='ls -CF'
 alias la='ls -A'
 alias lfd_jazz='nmcli d w c lfd_jazz password lfd@12345'
 alias ll='ls -alF'
-alias ls='ls | fribidi'
+alias ls='ls --color=auto -F'
 alias mv='mv -i'
 alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
 alias p='python3 -c '\''t=input(); print(eval(t))'\'''
