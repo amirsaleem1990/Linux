@@ -1,10 +1,23 @@
 #!/bin/bash
 RED="\033[0;31m"
 normal="\033[0m"
-echo "--------------"
-echo -e "Sort by CPU or MEM?\n1-MEM\n2-CPU"
-echo "--------------"
-read  sort_by
+sort_by=$1
+
+if [[ $sort_by != "" ]]; then
+	if [[ $sort_by == "ram" ]]; then
+		sort_by=1
+	else
+		if [[ $sort_by == "cpu" ]]; then
+			sort_by=2
+		fi
+	fi
+else
+	echo "--------------"
+	echo -e "Sort by CPU or MEM?\n1-MEM\n2-CPU"
+	echo "--------------"
+	read  sort_by
+fi
+
 echo -e "\n${RED}  PID  CPU  MEM COMMAND${normal}"
 echo "-----------------------"
 if [[ $sort_by = 1 ]]; then
@@ -35,8 +48,8 @@ total_length=`cat /home/amir/.a. | wc -l`
 total_average=`echo "scale=3; $cpu_total / 800" | bc`
 total_average=`echo "$total_average * 100" | bc | sed 's/0*$//g'`
 echo -e "\n\n${RED}******************************************${normal}"
-echo "cpu total: $cpu_total % <out of 800%>"
-echo "           $cpu_total / 800 = $total_average %"
+# echo "cpu total: $cpu_total % <out of 800%>"
+echo "cpu total: $total_average %"     
 echo "ram total: $ram_total %"
 echo -e "${RED}******************************************${normal}\n\n"
 
