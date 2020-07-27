@@ -711,3 +711,5 @@ tar -cvz My_csv.csv -f My_csv.tar
 # <unzip -l> return file size in bytes
 # ubuntu terminal me ls karny sy urdu/arabic names reverce me display hoty hen jin ko parrhan bohot hi mushkil hota h, is lye jahan arabic names hon wahan ye use karen ............ ls | fribidi
 # poora folder (recursively) copy karna hy magar srif .jpg files nothing else..... cp --parents `find -name \*.jpg*` ~/target_directory/
+# sum of column ......... <cmd> | paste -sd+ | bc .......... eg: cat All_FB_links_names_corrected.csv | cut -d, -f1 | sort | uniq -c | sed 's/^      //g' | grep -v ^1  | cut -d " "  -f1 | paste -sd+ | bc
+
