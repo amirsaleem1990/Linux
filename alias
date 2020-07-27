@@ -1,4 +1,3 @@
-
 alias NL_down='blugon --setcurrent="-500"'
 alias NL_up='blugon --setcurrent="+500"'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -13,7 +12,7 @@ alias d='du -sh -B M * | sort -nr'
 alias dropbox_sync='~/.dropbox-dist/dropboxd'
 alias eclipse='/home/amir/eclipse/java-2020-03/eclipse/eclipse'
 alias egrep='egrep --color=auto'
-alias facebook-links='ipython3 /home/amir/github/Daily_facebook/facebook-links.py'
+alias facebook-links='/home/amir/github/Daily_facebook/facebook-links.py'
 alias fgrep='fgrep --color=auto'
 alias freemem='cat /proc/meminfo | grep -i '\''inactive:\|memfree:'\'''
 alias g='read a; firefox google.com/search?q="$a"; sleep 2; exit'
