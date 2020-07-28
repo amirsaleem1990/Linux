@@ -47,11 +47,21 @@ ram_total=`sum_ 3`
 total_length=`cat /home/amir/.a. | wc -l`
 total_average=`echo "scale=3; $cpu_total / 800" | bc`
 total_average=`echo "$total_average * 100" | bc | sed 's/0*$//g'`
-echo -e "\n\n${RED}******************************************${normal}"
+
+n=""
+if [[ `echo $total_average'<'10 | bc -l` == 1 ]] ; then 
+	n=" "
+fi
+
+echo -e "\n\n${RED}****************************************************************${normal}"
 # echo "cpu total: $cpu_total % <out of 800%>"
-echo "cpu total: $total_average %"     
-echo "ram total: $ram_total %"
-echo -e "${RED}******************************************${normal}\n\n"
+echo -n  "cpu: $total_average $n%   "
+for i in $(seq 1 `echo "$total_average / 2" | bc`); do echo -n "-" ; done
+echo 
+echo -n  "ram: $ram_total %   "
+for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
+echo
+echo -e "${RED}****************************************************************${normal}\n\n"
 
 # cpu_average=`echo "scale=3; $cpu_total / $total_length" | bc -l`
 # ram_average=`echo "scale=3; $ram_total / $total_length" | bc -l`

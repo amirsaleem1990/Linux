@@ -26,7 +26,7 @@ cat .amFINAL.hide
 echo "QTY: `wc -l .amFINAL.hide`" | sed 's/.amFINAL.hide//g'
 
 
-yes | del -rf .am.hide .amFINAL.hide
+yes | DEL -rf .am.hide .amFINAL.hide
 #####################################################################################
 # OLD
 # IFS=$'\n'

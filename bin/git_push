@@ -21,7 +21,7 @@ exit_code = os.system("/home/amir/github/Linux/check_github_files_size.sh")
 if exit_code != 0:
 	import sys
 	sys.exit(2)
-not_to_commit_repos = ["lfd-projects"]
+not_to_commit_repos = ["lfd-projects", "Time-Left-for-Namaz-time-Android-app"]
 if not_to_commit_repos:
 	print("************************************")
 for i in not_to_commit_repos:

@@ -1,3 +1,3 @@
-upower -i /org/freedesktop/UPower/devices/battery_BAT0
+upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|voltage:\|capacity:" | sed 's/^    //g'
 echo -e "\n\n--------------------------\n\n"
-upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"
+upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
