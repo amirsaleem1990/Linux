@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-#Export DISPLAY
-export DISPLAY=:0.0
-
-#Call Gnome EOG
-/usr/bin/eog -f /home/amir/github/working/after-5-minutes-your-laptop-suspends.png &
