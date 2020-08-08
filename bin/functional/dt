@@ -1,0 +1,71 @@
+#!/bin/bash
+du -sh * | sort -h
+##########################################################################
+# IFS=$'\n'
+# for i in `ls -Sr`; do 
+# 	if [[ $i != "." ]]; then
+# 		du -sh  $i 2>/dev/null
+# 	fi
+# done
+##########################################################################
+# for i in `find . -maxdepth 1 -type d  -exec du -sh -BK * {} + | sort -n | cut -d "K" -f2 | sed 's/ //g'`; do 
+# 	if [[ $i != "." ]]; then
+# 		du -sh  $i 2>/dev/null >> .abmno
+# 	fi
+# done
+
+# cat .abmno
+# del -rf .abmno
+##########################################################################
+# #!/usr/bin/env ipython3
+# import os
+# import re
+# from pprint import pprint
+# a = list(os.popen("du -sh -B K * | sort -nr"))
+# import pandas as pd
+# pd.set_option('max_colwidth', 150)
+# df = pd.DataFrame(columns=["Name", "Size_in_KB"])
+# for i in a:
+#     df.loc[len(df)+1] = i.strip().split("\t")[::-1]
+# df.Size_in_KB = df.Size_in_KB.str.replace("K", "")
+# def mgkb(x):
+#     if x > 1024*1024:
+#         return (x/1024/1024, "GB")
+#     elif x > 1024:
+#         return (x/1024, "MB")
+#     else:
+#         return (x, "KB")
+# df.Size_in_KB = df.Size_in_KB.astype("int64")
+# a = list(zip(*df.Size_in_KB.map(mgkb)))
+# df["Size"] = a[0]
+# df["Size"] = df.Size.round(1)
+# df["UNIT"] = a[1]
+# sum_of_size = df.Size_in_KB.sum()
+# df = df.drop("Size_in_KB", axis= 1)
+# df = df[["Size", "UNIT", "Name"]]
+# for i in range(len(df)):
+#     size = df.iloc[i][0]
+#     unit = df.iloc[i][1]
+#     name = df.iloc[i][2]
+#     if unit in ["KB", "MB"]:
+#         size = int(size)
+#     print('{:_<5}_{}'.format(size, unit), name)
+# print("\n")
+# print("******************************\n* ", end="")
+# unit = "KB" if sum_of_size < 1024 else "MB" if sum_of_size < 1024*1024 else "GB"
+# if unit == "KB":
+# 	print(sum_of_size, " KB   TOTAL " , "{:>9}".format("*"))
+# elif unit == "MB":
+# 		print(round(sum_of_size/1024, 2), " MB   TOTAL " , "{:>9}".format("*"))
+# elif unit == "GB":
+# 		print(round(sum_of_size/1024/1024, 2), " GB   TOTAL " , "{:>9}".format("*"))
+# print("******************************")
+# 
+# 
+# hiddend_files_size = list(os.popen("find -mindepth 1 -prune -name '.*'"))
+# if hiddend_files_size:
+#     print("\n\n", "*"*10, "NOTE", "*"*10)
+#     HIDDEN = list(os.popen("du -csh  $(find -mindepth 1 -prune -name '.*')"))[-1]
+#     H = HIDDEN[:HIDDEN.index("\ttotal")]
+#     print(f"There is hidden files of size *****{H}*****")
+# 

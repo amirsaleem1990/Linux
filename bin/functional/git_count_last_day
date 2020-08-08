@@ -1,0 +1,49 @@
+#! /bin/bash
+# read -p "Enter Days (eg: 1): " day
+day=$1
+plot=$2
+# if [[ $day > 1 ]] ; then read -p "Are you need Plot? [0\1]: " plot; else plot=0; fi
+
+if [[ $day = "" ]]; then
+	current_date=`date +%F`
+else
+	if [[ $day = "1" ]]; then
+		current_date=`date +%F`	
+	fi
+fi
+
+if [[ $plot = "y" ]]; then
+	plot=1
+else
+	plot=0
+fi
+
+
+echo "Count,Repo" > ~/git_counts.csv
+cd /home/amir/github
+
+for git_folder in $(ls -d */); do  
+	if [[ $git_folder != "LFD-projects/" ]] ; then 
+		cd $git_folder
+		if [[ $day -ge 2 ]]; then
+			count=$(git rev-list HEAD --count --first-parent --since=$(date --date=$day" day ago" +%F))
+		else
+			count=`git log --pretty='format:%H %an %ae %ai' | grep $current_date | wc -l`
+		fi
+		echo $count,$git_folder >> ~/git_counts.csv
+		cd ../
+	fi
+done
+
+
+if [[ `cat ~/git_counts.csv | cut -d "," -f 1 | uniq | grep -v Count` = 0 ]]; then
+	echo -e "\nNo comment Today.\n"
+else
+	if [ $plot == '0' ]
+		then
+			python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); df["Repo"] = df["Repo"].str.strip("/"); df = df[["Repo", "Count"]]; pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
+		else
+			ipython3 /home/amir/github/working/git_push_plot_script.py
+	fi
+fi
+rm ~/git_counts.csv

@@ -1,0 +1,75 @@
+#!/usr/bin/python3
+import os
+# print("\n\nFilesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
+# os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
+# os.system('df -BM | grep /dev/sd')
+
+# print("\n\n#############################################################\n\n")
+def MB_to_GB(x):
+  return int(x/1024)
+from termcolor import colored
+def m(x, add_pipe_in_last=True):
+	last_ = ""
+	if add_pipe_in_last:
+		last_ = "|"
+	return " " * (x - 2) + last_
+import os
+print(colored(">>>", "red") + ": Used")
+print(colored("!!!", "green") + ": Unused")
+a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>
+print(" " * (45), colored("Total  | Used  | Used  | Avail  | Mounted     ", "red", attrs=['reverse', 'bold']))
+for b in a:
+	total = int(b.split()[1].replace("M", ""))
+	if total < 1000:
+	  continue
+	used = int(b.split()[2].replace("M", ""))
+	avail = int(b.split()[3].replace("M", ""))
+	devided_by = 3
+	used_size = int(used / total * 100) // devided_by
+	total_size = 100 // devided_by
+	LEN = len(b.split()[0])
+	print(b.split()[0], 
+		  m(12 - len(b.split()[0]), False),
+		  colored(int(used_size) * ">", "red") + 
+		  colored(int(total_size - used_size) * "!", "green"),
+		  MB_to_GB(total),  m(11- len(str(total))), 
+		  MB_to_GB(used), m(10- len(str(used))),
+		  str(round(used_size/total_size*100)) + " %", m(3),
+		  MB_to_GB(avail), m(11- len(str(avail))),
+		  b.split()[-1])
+
+#######################################################################
+# #!/bin/bash
+# echo -e "
+# -----------------------------------------------------
+# Filesystem          Size  Used     Avail Use% Mounted
+# -----------------------------------------------------"
+# df -BG | grep /dev/sd | grep -v "1G    1G" 
+#######################################################################
+
+
+#######################################################################
+# #!/usr/bin/env ipython3
+# import os
+# os.system("df -h > temppp.txt")
+# with open("temppp.txt", "r") as file:
+#   a = file.readlines()
+# import pandas as pd
+# #pd.set_option('display.max_columns', 10)
+# columns = ["Filesystem","Size","Used","Avail","Use%", "Mounted", "on"]
+# df = pd.DataFrame([i.split() for i in a], columns=columns).drop(0)
+# avail = []
+# for i in df.Avail:
+#     if i.endswith("G"):
+#         avail.append(float(i.replace("G", "")))
+#     elif i.endswith("M"):
+#         avail.append(float(i.replace("M", ""))/1024)
+#     else:
+#         avail.append(int(i))
+# df.Avail = avail
+# import pprint
+# adf = df.query("Avail > 0").sort_values("Avail", ascending = False)
+# adf.Avail = adf.Avail.astype(int).astype(str) + " GB"
+# pprint.pprint(adf[adf.Filesystem.str.contains("/dev")].drop("on", axis=1))
+# #pprint.pprint(df.query("Avail > 0").sort_values("Avail", ascending = False))
+# os.remove("temppp.txt")
