@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Facebook
+Exec=facebook-links
+Type=Application
+X-GNOME-Autostart-enabled=true
