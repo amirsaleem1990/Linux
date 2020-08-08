@@ -718,3 +718,4 @@ tar -cvz My_csv.csv -f My_csv.tar
 # Change string char at index X .................... echo $theStr | sed s/./A/5 ............... First you pipe the output of $theStr to sed, which replaces the fifth character with A. ............... another style: theStr="${theStr:0:4}A${theStr:5}"
 
 # merge two files line by line ............... paste file1.txt file2.txt > fileresults.txt
+
