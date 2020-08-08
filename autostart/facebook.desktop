@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=Facebook
-Exec=facebook-links
+Exec=while :; do facebook-links; sleep 2h; done
 Type=Application
 X-GNOME-Autostart-enabled=true
