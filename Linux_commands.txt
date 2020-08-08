@@ -719,3 +719,4 @@ tar -cvz My_csv.csv -f My_csv.tar
 
 # merge two files line by line ............... paste file1.txt file2.txt > fileresults.txt
 
+# round a number ........... printf "%.0f\n" 123.456 ............ echo 123.456 | awk '{print int($1)}' ................. for floar: echo 1.23 | awk '{print int($0)}' ............ for ciel: echo 1.23 | awk '{print ($0-int($0)>0)?int($0)+1:int($0)}' ................ 
