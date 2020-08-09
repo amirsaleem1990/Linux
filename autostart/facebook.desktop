@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=Facebook
-Exec=while :; do facebook-links; sleep 2h; done
+Exec=/home/amir/github/Daily_facebook/Automate-job.sh
 Type=Application
 X-GNOME-Autostart-enabled=true
