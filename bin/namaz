@@ -1,0 +1,68 @@
+#!/usr/bin/env ipython3
+from tabulate import tabulate
+from datetime import datetime
+import numpy as np
+from pprint import pprint
+import pandas as pd
+
+df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+df.drop("Asr_1", axis=1, inplace=True)
+df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
+
+d = str(datetime.now()).split()[0][5:].split("-")
+today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
+
+
+def fun_(x):
+    try:
+        y = x.split(":")[1]
+    except:
+        pass
+    x = x.split(":")[0]
+    x = x if not x.startswith("0") else x[1:]
+    x = x if int(x) < 13 else str(int(x)-12)
+    x = x if len(x) == 2 else "0"+x
+    try:
+        return x + ":" + y
+    except:
+        return x 
+
+tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
+try:
+	current_prayer_time = today[2:].iloc[np.where(today[2:] > tm)[0][0]]
+except:
+	print("No Another Namaz today, Sleep! :p")
+	import sys
+	sys.exit(0)
+
+X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
+print(tabulate(X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"}), headers='keys', tablefmt='psql'))
+
+def remaining_time(current_time, last_time):
+    c1 = current_time.split(":")
+    l1 = last_time.split(":")
+    ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
+    cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
+    lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
+    lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
+    remainting_minutes = ((lh - ch) * 60) + (lm - cm)
+    rh = remainting_minutes // 60
+    remainting_minutes -= rh * 60
+    if len(str(rh)) == 1:
+        rh = "0" + str(rh)
+    if len(str(remainting_minutes)) == 1:
+        remainting_minutes = "0" + str(remainting_minutes)
+    print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
+print("\n"+"#"*30)
+remaining_time(tm, current_prayer_time.values[0])
+print("#"*30)
+
+
+
+# minimum and maximux prayter times
+# def f(x):
+#     return pd.to_datetime(x, format='%H:%M').dt.time
+# df = pd.concat([df[["Month", "Date"]], 
+#            df[['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']].apply(f)], 
+#            axis=1)
+# print(tabulate(df.apply([min, max]), headers='keys', tablefmt='psql'))
