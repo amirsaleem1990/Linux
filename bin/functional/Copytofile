@@ -1,5 +1,0 @@
-#!/usr/bin/ipython3
-import clipboard
-current_ = clipboard.paste()
-with open("/home/amir/LINKS.txt", "a+") as file:
-    file.write(current_ + "\n")

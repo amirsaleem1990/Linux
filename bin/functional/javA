@@ -1,7 +1,0 @@
-#!/bin/bash
-p=$(pwd)
-cd /home/amir/github/Learning-java/1-Fast-App-Development-YOUTUBE/project/src
-DEL -rf Test.class
-javac Test.java
-java Test
-cd $p
