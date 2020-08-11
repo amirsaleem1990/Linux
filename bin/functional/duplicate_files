@@ -1,0 +1,67 @@
+#!/usr/bin/ipython3
+from termcolor import colored
+import os
+import pprint
+import pandas as pd
+pd.set_option('max_colwidth', 100)
+import sys
+import warnings
+warnings.filterwarnings("ignore")
+os.system('find . -type f -name "*" > files-with-complete-path.txt')
+with open("files-with-complete-path.txt", "r") as file:
+	b = file.read().splitlines()
+
+
+
+os.remove("files-with-complete-path.txt")
+
+a = [i.strip().replace("_", "").replace("-", "").replace(" ", "").replace("۔", "").strip() for i in b]
+files = []
+for i in a:
+	if i.startswith("./"):	   
+		i = i[2:]				   
+	files.append(i[i.rfind("/")+1:])
+
+
+adf = pd.DataFrame({"Actual_File" : [i.split("/")[-1] for i in b], 
+	"Formatted_File" : files, 
+	"Actual_path" : b, 
+	"Formatted_path" : a})
+for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted_File"))["Formatted_File"].unique():
+	duplicates = adf[adf.Formatted_File == unique_value]
+	duplicates["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicates.Actual_path]
+	duplicates = duplicates.sort_values("Size_MB")
+	duplicates.reset_index(inplace=True)
+	duplicates.drop("index", axis=1, inplace=True)
+	duplicates.index += 1
+	if duplicates["Size_MB"].nunique() == 1:
+		print("*****************", colored('SAME SIZE', 'red'), "******************")
+	else:
+		print("****************", colored('Diffrent SIZE', 'red'), "****************")
+	pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
+	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nto open a particuler indexed file add <-> to the end of index:\n").strip()
+	if not index:
+		continue
+	if index.endswith("-"):
+		index = index.strip("-")
+		command = "gopen " + duplicates.iloc[int(index)-1]["Actual_path"][2:].replace(" ", "\ ").\
+			replace("&", "\&").replace(":", "\:")
+		os.popen(command)
+		
+		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <-> to the end of index:\n").strip()
+
+	if  ":" in index:
+		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
+		for i in list(duplicates.iloc[indexes]["Actual_path"]):
+			os.remove(i)
+	
+	elif not "." in index:
+		index = int(index)
+		if index != 0:
+			os.remove(duplicates.iloc[index-1]["Actual_path"])
+
+	else:
+		indexes = [int(i.strip())-1 for i in index.split(".")]
+		for i in list(duplicates.iloc[indexes]["Actual_path"]):
+			os.remove(i)	
+	print("\n\n")
