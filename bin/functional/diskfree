@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 import os
-# print("\n\nFilesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
-# os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
-# os.system('df -BM | grep /dev/sd')
+print("\n\nFilesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
+os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
+os.system('df -BM | grep /dev/sd')
 
-# print("\n\n#############################################################\n\n")
+print("\n\n#############################################################\n\n")
 def MB_to_GB(x):
   return int(x/1024)
 from termcolor import colored
@@ -20,8 +20,8 @@ a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr"
 print(" " * (45), colored("Total  | Used  | Used  | Avail  | Mounted     ", "red", attrs=['reverse', 'bold']))
 for b in a:
 	total = int(b.split()[1].replace("M", ""))
-	# if total < 1000:
-	  # continue
+	if total < 1000:
+	  continue
 	used = int(b.split()[2].replace("M", ""))
 	avail = int(b.split()[3].replace("M", ""))
 	devided_by = 3
