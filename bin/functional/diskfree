@@ -5,9 +5,8 @@ print("\n\n#############################################################")
 os.system("echo Filesystem,Size,Used,Avail,Use%,Mounted > /home/amir/.dC")
 # print(colored("", "red") + "\n-----------------------------------------------------")
 os.system("df -h | grep /dev/sd | sed 's/ \{1,\}/,/g' >> /home/amir/.dC")
-os.system("cat /home/amir/.dC | column -t -s,")
+os.system("grep --color '\|Filesystem\|Size\|Used\|Avail\|Use%\|Mounted' /home/amir/.dC | column -t -s,")
 print("#############################################################\n\n")
-# \|Filesystem\|Size\|Used\|Avail\|Use%\|Mounted
 
 def MB_to_GB(x):
   return int(x/1024)
