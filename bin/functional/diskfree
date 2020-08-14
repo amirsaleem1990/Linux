@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import os
 print("\n\n#############################################################")
-print("Filesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
+print(colored("Filesystem          Size  Used     Avail Use% Mounted", "red") + "\n-----------------------------------------------------")
 os.system('df -BM | grep /dev/sd')
 print("#############################################################\n\n")
 
