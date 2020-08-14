@@ -2,7 +2,6 @@
 import os
 print("\n\n#############################################################")
 print("Filesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
-os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
 os.system('df -BM | grep /dev/sd')
 print("#############################################################\n\n")
 
