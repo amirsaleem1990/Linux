@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+from termcolor import colored
 print("\n\n#############################################################")
 print(colored("Filesystem          Size  Used     Avail Use% Mounted", "red") + "\n-----------------------------------------------------")
 os.system('df -BM | grep /dev/sd')
@@ -7,7 +8,6 @@ print("#############################################################\n\n")
 
 def MB_to_GB(x):
   return int(x/1024)
-from termcolor import colored
 def m(x, add_pipe_in_last=True):
 	last_ = ""
 	if add_pipe_in_last:
