@@ -4,8 +4,8 @@ from termcolor import colored
 print("\n\n#############################################################")
 os.system("echo Filesystem,Size,Used,Avail,Use%,Mounted > /home/amir/.dC")
 # print(colored("", "red") + "\n-----------------------------------------------------")
-os.system("df -BM | grep /dev/sd | sed 's/ \{2,\}/,/g' >> /home/amir/.dC")
-os.system("cat /home/amir/.dC")
+os.system("df -sh | grep /dev/sd | sed 's/ \{1,\}/,/g' >> /home/amir/.dC")
+os.system("cat /home/amir/.dC | column -t -s,")
 print("#############################################################\n\n")
 
 def MB_to_GB(x):
