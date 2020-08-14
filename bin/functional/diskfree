@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 import os
-print("\n\nFilesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
+print("\n\n#############################################################")
+print("Filesystem          Size  Used     Avail Use% Mounted\n-----------------------------------------------------")
 os.system('df -BG | grep /dev/sd | grep -v "1G    1G"')
 os.system('df -BM | grep /dev/sd')
+print("#############################################################\n\n")
 
-print("\n\n#############################################################\n\n")
 def MB_to_GB(x):
   return int(x/1024)
 from termcolor import colored
