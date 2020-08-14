@@ -2,8 +2,10 @@
 import os
 from termcolor import colored
 print("\n\n#############################################################")
-print(colored("Filesystem          Size  Used     Avail Use% Mounted", "red") + "\n-----------------------------------------------------")
-os.system("df -BM | grep /dev/sd | sed 's/ \{2,\}/,/g'")
+os.system("echo Filesystem,Size,Used,Avail,Use%,Mounted > /home/amir/.dC")
+# print(colored("", "red") + "\n-----------------------------------------------------")
+os.system("df -BM | grep /dev/sd | sed 's/ \{2,\}/,/g' >> /home/amir/.dC")
+os.system("cat /home/amir/.dC")
 print("#############################################################\n\n")
 
 def MB_to_GB(x):
