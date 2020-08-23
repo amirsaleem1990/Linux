@@ -53,10 +53,10 @@ cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
 ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-if [[ $ram_total -eq 0 ]]; then
-	sleep 1
-	Top_cumulative $1
-fi
+# if [[ $ram_total -eq 0 ]]; then
+	# sleep 1
+	# Top_cumulative $1
+# fi
 echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
 sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
@@ -82,17 +82,17 @@ echo -e "${RED}****************************************************************$
 
 
 
-ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
+# ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
+# swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 
-ram_total=`echo $ram | cut -d, -f1`
-ram_used=`echo $ram | cut -d, -f2`
-ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
-ram_used_perc=`echo "$ram_used_perc * 100" | bc`
-ram_used_perc=${ram_used_perc%.*}
+# ram_total=`echo $ram | cut -d, -f1`
+# ram_used=`echo $ram | cut -d, -f2`
+# ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
+# ram_used_perc=`echo "$ram_used_perc * 100" | bc`
+# ram_used_perc=${ram_used_perc%.*}
 
-swap_total=`echo $swap | cut -d, -f1`
-swap_used=`echo $swap | cut -d, -f2`
-swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
-swap_used_perc=`echo "$swap_used_perc * 100" | bc`
-swap_used_perc=${swap_used_perc%.*}
+# swap_total=`echo $swap | cut -d, -f1`
+# swap_used=`echo $swap | cut -d, -f2`
+# swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
+# swap_used_perc=`echo "$swap_used_perc * 100" | bc`
+# swap_used_perc=${swap_used_perc%.*}
