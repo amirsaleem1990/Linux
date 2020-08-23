@@ -15,6 +15,8 @@ fi
 echo ''
 IFS=$'\n'
 echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
+	|tee /home/amir/.a. \
+	| tac \
 	| sed 's/^ //g' \
 	| cut -c 6- \
 	| sed 's/^\ \{1,\}//g' \
@@ -22,8 +24,7 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 	| sed 's/ /,/1'\
 	| sort -t ',' -k3
 	`" > ~/ab.txt
-	# |tee /home/amir/.a. \
-	# | tac \
+
 
 echo "" > ~/.amb.txt
 
@@ -75,19 +76,12 @@ echo -n  "cpu: $cpu_total $n%   "
 for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
 echo 
 echo -n  "ram: $ram_total %   "
-
-ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-
-ram_total=`echo $ram | cut -d, -f1`
-ram_used=`echo $ram | cut -d, -f2`
-ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
-ram_used_perc=`echo "$ram_used_perc * 100" | bc`
-ram_used_perc=${ram_used_perc%.*}
-echo $ram_used_perc
-for i in $(seq 1 $ram_used_perc); do echo -n "!" ; done
+for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
 echo
 echo -e "${RED}****************************************************************${normal}\n\n"
+
+
+
 
 # ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 # swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
