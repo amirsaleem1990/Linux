@@ -49,19 +49,14 @@ done
 mv  ~/ab.txt ~/.AB.txt
 cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
 
-cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+   bc`
+cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
 ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-
-if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
-	n=" "
-fi
-if [[ $cpu_total == 0 ]] || [[ $ram_total == 0 ]]; then
-	sleep 1
-	Top_cumulative $1
-fi
-
+# if [[ $ram_total == 0 ]]; then
+	# Top_cumulative cpu
+# fi
+echo $ram_total
 echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
 sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
@@ -72,9 +67,13 @@ rm -f ~/.{amb,AB}.txt ~/ab.txt
 
 
 n=""
+if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
+	n=" "
+fi
 echo -e "\n\n${RED}****************************************************************${normal}"
 echo -n  "cpu: $cpu_total $n%   "
 for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
+echo 
 echo -n  "ram: $ram_total %   "
 for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
 echo
