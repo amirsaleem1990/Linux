@@ -55,7 +55,9 @@ cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 ram_total=`echo $ram_total					   | awk '{print int($1)}'`
 echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
-sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
+sort -t, -k $sort_by -n ~/ab.txt \
+	#| sed 's/0\.0/---/g' 
+	>> ~/.AB.txt
 echo "CPU,MEM,COMMAND" >> ~/.AB.txt
 cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
 rm -f ~/.{amb,AB}.txt ~/ab.txt 
