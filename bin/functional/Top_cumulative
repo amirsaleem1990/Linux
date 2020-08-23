@@ -22,8 +22,8 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 	# |tee /home/amir/.a. \
 	# | tac \
 
-# cat ab.txt | cut -d, -f3-5 | sed 's/ /-/g' > .last_col.txt
-# cat ab.txt | cut -d, -f1,2 | sed 's/ /-/g' > .first_two_cols.txt
+cat ab.txt | cut -d, -f3-5 | sed 's/ /-/g' > .last_col.txt
+cat ab.txt | cut -d, -f1,2 | sed 's/ /-/g' > .first_two_cols.txt
 
 # paste .first_two_cols.txt  .last_col.txt > ab.txt
 # cat ab.txt
