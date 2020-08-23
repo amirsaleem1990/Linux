@@ -71,6 +71,10 @@ rm -f ~/.{amb,AB}.txt ~/ab.txt
 n=""
 if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
 	n=" "
+else
+	if [[ `echo $cpu_total == 0 | bc -l` == 1 ]] ; then 
+		n="  "
+	fi
 fi
 echo -e "\n\n${RED}****************************************************************${normal}"
 echo -n  "Cpu : $cpu_total $n%   "
