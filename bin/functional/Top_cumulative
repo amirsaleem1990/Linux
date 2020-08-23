@@ -106,3 +106,4 @@ echo
 for i in $(seq 1 $swap_used_perc); do
 	echo -n "-"
 done
+echo 
