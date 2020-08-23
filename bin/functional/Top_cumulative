@@ -77,7 +77,7 @@ echo -n  "Cpu : $cpu_total $n%   "
 for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
 echo 
 echo -n  "ram : $ram_total %   "
-for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
+for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "-" ; done
 echo
 
 ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
