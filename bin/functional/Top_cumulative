@@ -15,8 +15,6 @@ fi
 echo ''
 IFS=$'\n'
 echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
-	# |tee /home/amir/.a. \
-	# | tac \
 	| sed 's/^ //g' \
 	| cut -c 6- \
 	| sed 's/^\ \{1,\}//g' \
@@ -24,6 +22,8 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 	| sed 's/ /,/1'\
 	| sort -t ',' -k3
 	`" > ~/ab.txt
+	# |tee /home/amir/.a. \
+	# | tac \
 
 cat ab.txt | cut -d, -f3 | sed 's/ /-/g' > .last_col.txt
 cat ab.txt | cut -d, -f1,2 | sed 's/ /-/g' > .first_two_cols.txt
