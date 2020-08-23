@@ -64,13 +64,12 @@ ram_total=`echo $ram_total					   | awk '{print int($1)}'`
 	# sleep 1
 	# Top_cumulative $1
 # fi
-# echo "CPU,MEM,COMMAND" > ~/.AB.txt
+echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
-sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
+# sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
 echo "CPU,MEM,COMMAND" >> ~/.AB.txt
 cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
-# rm -f ~/.{amb,AB}.txt ~/ab.txt 
-
+rm -f ~/.{amb,AB}.txt ~/ab.txt 
 
 # n=""
 # if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
