@@ -66,10 +66,11 @@ n=""
 if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
 	n=" "
 fi
+if [[ $cpu_total == 0 || $ram_total == 0 ]]; then
+	Top_cumulative $1
 echo -e "\n\n${RED}****************************************************************${normal}"
 echo -n  "cpu: $cpu_total $n%   "
 for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
-echo "--------- $ram_total"
 echo -n  "ram: $ram_total %   "
 for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
 echo
