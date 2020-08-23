@@ -28,7 +28,7 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 cat ab.txt | cut -d, -f3 | sed 's/ /-/g' > .last_col.txt
 cat ab.txt | cut -d, -f1,2 | sed 's/ /-/g' > .first_two_cols.txt
 
-paste .last_col.txt .first_two_cols.txt > ab.txt
+paste .first_two_cols.txt  .last_col.txt > ab.txt
 cat ab.txt
 
 # echo "" > ~/.amb.txt
