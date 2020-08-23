@@ -82,6 +82,7 @@ echo
 
 ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
+
 ram_total=`echo $ram | cut -d, -f1`
 ram_used=`echo $ram | cut -d, -f2`
 ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
