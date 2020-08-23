@@ -99,12 +99,12 @@ swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
 swap_used_perc=`echo "$swap_used_perc * 100" | bc`
 swap_used_perc=${swap_used_perc%.*}
 
-echo -n RAM\:
+echo -n RAM\ \:\ 
 for i in $(seq 1 $ram_used_perc); do
 	echo -n "-"
 done
 echo 
-echo -n Swap\:
+echo -n Swap\:\ 
 for i in $(seq 1 $swap_used_perc); do
 	echo -n "!"
 done
