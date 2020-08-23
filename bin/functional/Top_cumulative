@@ -101,8 +101,9 @@ for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
 	echo -n "-"
 done
 echo 
-echo -n Swap\:\ 
 
+echo -n Swap\:\ 
+echo -n  "$swap_used_perc %   "
 for i in $(seq 1 `echo "$swap_used_perc / 2"     | bc`); do
 	echo -n "!"
 done
