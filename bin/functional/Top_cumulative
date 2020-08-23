@@ -30,6 +30,7 @@ echo "" > ~/.amb.txt
 
 for i in `cat ~/ab.txt | cut -d, -f3 | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4`; do
 	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
+	echo $a
 	if [[ "${a:0:1}" == "." ]] ; then
 		a="0"$a
 	fi 
@@ -50,35 +51,35 @@ done
 mv  ~/ab.txt ~/.AB.txt
 cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
 
-cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
-ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
-cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
-ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-# if [[ $ram_total -eq 0 ]]; then
-	# sleep 1
-	# Top_cumulative $1
+# cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
+# ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
+# cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
+# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
+# # if [[ $ram_total -eq 0 ]]; then
+# 	# sleep 1
+# 	# Top_cumulative $1
+# # fi
+# echo "CPU,MEM,COMMAND" > ~/.AB.txt
+# echo '' >> ~/.AB.txt
+# sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
+# echo "CPU,MEM,COMMAND" >> ~/.AB.txt
+# cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
+# rm -f ~/.{amb,AB}.txt ~/ab.txt 
+
+
+
+# n=""
+# if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
+# 	n=" "
 # fi
-echo "CPU,MEM,COMMAND" > ~/.AB.txt
-echo '' >> ~/.AB.txt
-sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
-echo "CPU,MEM,COMMAND" >> ~/.AB.txt
-cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
-rm -f ~/.{amb,AB}.txt ~/ab.txt 
-
-
-
-n=""
-if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
-	n=" "
-fi
-echo -e "\n\n${RED}****************************************************************${normal}"
-echo -n  "cpu: $cpu_total $n%   "
-for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
-echo 
-echo -n  "ram: $ram_total %   "
-for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
-echo
-echo -e "${RED}****************************************************************${normal}\n\n"
+# echo -e "\n\n${RED}****************************************************************${normal}"
+# echo -n  "cpu: $cpu_total $n%   "
+# for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
+# echo 
+# echo -n  "ram: $ram_total %   "
+# for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "!" ; done
+# echo
+# echo -e "${RED}****************************************************************${normal}\n\n"
 
 
 
