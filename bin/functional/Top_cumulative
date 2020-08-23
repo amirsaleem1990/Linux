@@ -73,7 +73,7 @@ if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then
 	n=" "
 fi
 echo -e "\n\n${RED}****************************************************************${normal}"
-echo -n  "cpu : $cpu_total $n%   "
+echo -n  "Cpu : $cpu_total $n%   "
 for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
 echo 
 # echo -n  "ram : $ram_total %   "
