@@ -31,25 +31,25 @@ echo "" > ~/.amb.txt
 for i in `cat ~/ab.txt | cut -d, -f3 | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4`; do
 	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
 	echo $a
-	if [[ "${a:0:1}" == "." ]] ; then
-		a="0"$a
-	fi 
-	if [[ $a == 0 ]]; then
-		a="0.0"
-	fi
-	b=`cat ~/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
-	if [[ "${b:0:1}" == "." ]] ; then
-		b="0"$b
-	fi 
-	if [[ $b == 0 ]]; then
-		b="0.0"
-	fi
-	echo "$a,$b,$i" >> ~/.amb.txt
-	cat ~/ab.txt | grep -v $i > ~/.AB.txt
-	mv ~/.AB.txt ~/ab.txt
+	# if [[ "${a:0:1}" == "." ]] ; then
+	# 	a="0"$a
+	# fi 
+	# if [[ $a == 0 ]]; then
+	# 	a="0.0"
+	# fi
+	# b=`cat ~/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
+	# if [[ "${b:0:1}" == "." ]] ; then
+	# 	b="0"$b
+	# fi 
+	# if [[ $b == 0 ]]; then
+	# 	b="0.0"
+	# fi
+	# echo "$a,$b,$i" >> ~/.amb.txt
+	# cat ~/ab.txt | grep -v $i > ~/.AB.txt
+	# mv ~/.AB.txt ~/ab.txt
 done
-mv  ~/ab.txt ~/.AB.txt
-cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
+# mv  ~/ab.txt ~/.AB.txt
+# cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
 
 # cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
 # ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
