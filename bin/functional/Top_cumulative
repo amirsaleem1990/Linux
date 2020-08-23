@@ -15,8 +15,8 @@ fi
 echo ''
 IFS=$'\n'
 echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
-	|tee /home/amir/.a. \
-	| tac \
+	# |tee /home/amir/.a. \
+	# | tac \
 	| sed 's/^ //g' \
 	| cut -c 6- \
 	| sed 's/^\ \{1,\}//g' \
