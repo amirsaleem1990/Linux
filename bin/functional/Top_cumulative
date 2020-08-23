@@ -53,10 +53,9 @@ cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
 ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-# if [[ $ram_total == 0 ]]; then
-	# Top_cumulative cpu
-# fi
-echo $ram_total
+if [[ $ram_total -eq 0 ]]; then
+	Top_cumulative cpu
+fi
 echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
 sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
