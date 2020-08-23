@@ -30,6 +30,7 @@ echo "" > ~/.amb.txt
 
 for i in `cat ~/ab.txt | cut -d, -f3 | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4`; do
 	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
+	echo $a
 	# if [[ "${a:0:1}" == "." ]] ; then
 	# 	a="0"$a
 	# fi 
