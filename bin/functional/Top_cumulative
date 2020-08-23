@@ -25,29 +25,34 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 	| sort -t ',' -k3
 	`" > ~/ab.txt
 
+cat ab.txt | cut -d, -f3 | sed 's/ /-/g' > .last_col.txt
+cat ab.txt | cut -d, -f1,2 | sed 's/ /-/g' > .first_two_cols.txt
 
-echo "" > ~/.amb.txt
+paste .last_col.txt .first_two_cols.txt > ab.txt
+cat ab.txt
 
-for i in `cat ~/ab.txt | cut -d, -f3 | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4`; do
-	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
-	if [[ "${a:0:1}" == "." ]] ; then
-		a="0"$a
-	fi 
-	if [[ $a == 0 ]]; then
-		a="0.0"
-	fi
-	b=`cat ~/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
-	echo $b
-	if [[ "${b:0:1}" == "." ]] ; then
-		b="0"$b
-	fi 
-	if [[ $b == 0 ]]; then
-		b="0.0"
-	fi
-	echo "$a,$b,$i" >> ~/.amb.txt
-	cat ~/ab.txt | grep -v $i > ~/.AB.txt
-	mv ~/.AB.txt ~/ab.txt
-done
+# echo "" > ~/.amb.txt
+
+# for i in `cat ~/ab.txt | cut -d, -f3 | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4`; do
+# 	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
+# 	if [[ "${a:0:1}" == "." ]] ; then
+# 		a="0"$a
+# 	fi 
+# 	if [[ $a == 0 ]]; then
+# 		a="0.0"
+# 	fi
+# 	b=`cat ~/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
+# 	echo $b
+# 	if [[ "${b:0:1}" == "." ]] ; then
+# 		b="0"$b
+# 	fi 
+# 	if [[ $b == 0 ]]; then
+# 		b="0.0"
+# 	fi
+# 	echo "$a,$b,$i" >> ~/.amb.txt
+# 	cat ~/ab.txt | grep -v $i > ~/.AB.txt
+# 	mv ~/.AB.txt ~/ab.txt
+# done
 # mv  ~/ab.txt ~/.AB.txt
 # cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
 
