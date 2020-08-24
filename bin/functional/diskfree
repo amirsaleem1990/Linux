@@ -40,7 +40,7 @@ for b in a:
 		  MB_to_GB(avail), m(11- len(str(avail))),
 		  b.split()[-1])
 
-DEL -rf /home/amir/.dC
+os.remove("/home/amir/.dC")
 #######################################################################
 # #!/bin/bash
 # echo -e "
