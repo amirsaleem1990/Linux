@@ -54,13 +54,8 @@ mv  ~/ab.txt ~/.AB.txt
 cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
 
 cpu_total=`sed '/^$/d' ab.txt | cut -d, -f1 | paste -sd+ | bc`
-ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
-ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-# if [[ $ram_total -eq 0 ]]; then
-# 	sleep 1
-# 	Top_cumulative $1
-# fi
+
 echo "CPU,MEM,COMMAND" > ~/.AB.txt
 echo '' >> ~/.AB.txt
 sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
@@ -78,6 +73,12 @@ for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
 echo 
 
 #--------------------------------------------------------
+# ram_total=`sed '/^$/d' ab.txt | cut -d, -f2 | paste -sd+ | bc`
+# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
+# if [[ $ram_total -eq 0 ]]; then
+# 	sleep 1
+# 	Top_cumulative $1
+# fi
 # echo -n  "ram : $ram_total %   "
 # for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "-" ; done
 # echo
@@ -97,11 +98,6 @@ swap_used=`echo $swap | cut -d, -f2`
 swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
 swap_used_perc=`echo "$swap_used_perc * 100" | bc`
 swap_used_perc=${swap_used_perc%.*}
-
-# cpu_perc=`cat <(grep 'cpu ' /proc/stat) <(sleep 1 && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f%\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}' | sed 's/%$//g'`
-# echo $cpu_perc
-# cpu_perc=${cpu_perc%.*}
-# echo $cpu_perc
 
 echo -n Ram\ \:\ 
 echo -n  "$ram_used_perc %   "
