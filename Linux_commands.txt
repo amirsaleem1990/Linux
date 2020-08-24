@@ -720,3 +720,12 @@ tar -cvz My_csv.csv -f My_csv.tar
 # merge two files line by line ............... paste file1.txt file2.txt > fileresults.txt
 
 # round a number ........... printf "%.0f\n" 123.456 ............ echo 123.456 | awk '{print int($1)}' ................. for floar: echo 1.23 | awk '{print int($0)}' ............ for ciel: echo 1.23 | awk '{print ($0-int($0)>0)?int($0)+1:int($0)}' ................ 
+
+#--------------------------
+# diffrence between two dates
+last_done_date=`ls -tr /home/amir/Summary/ | tail -1 | sed 's/summary_atteched_files_//g' | cut -d_ -f1 | sed 's/-//g'`
+current_date=`date +%F | sed 's/-//g'`
+
+let DIFF=(`date +%s -d $current_date`-`date +%s -d $last_done_date`)/86400
+echo $DIFF
+#--------------------------
