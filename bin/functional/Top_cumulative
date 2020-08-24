@@ -68,14 +68,14 @@ echo "CPU,MEM,COMMAND" >> ~/.AB.txt
 cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
 rm -f ~/.{amb,AB}.txt ~/ab.txt 
 
-# n=""
-# if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
-# 	n=" "
-# fi
+n=""
+if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
+	n=" "
+fi
 echo -e "\n\n${RED}****************************************************************${normal}"
-# echo -n  "Cpu : $cpu_total $n%   "
-# for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
-# echo 
+echo -n  "Cpu : $cpu_total $n%   "
+for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do echo -n "-" ; done
+echo 
 
 #--------------------------------------------------------
 # echo -n  "ram : $ram_total %   "
@@ -98,7 +98,11 @@ swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
 swap_used_perc=`echo "$swap_used_perc * 100" | bc`
 swap_used_perc=${swap_used_perc%.*}
 
-cpu_perc=`cat <(grep 'cpu ' /proc/stat) <(sleep 1 && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f%\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}' | sed 's/%$//g'`
+# cpu_perc=`cat <(grep 'cpu ' /proc/stat) <(sleep 1 && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f%\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}' | sed 's/%$//g'`
+# echo $cpu_perc
+# cpu_perc=${cpu_perc%.*}
+# echo $cpu_perc
+
 echo -n Ram\ \:\ 
 echo -n  "$ram_used_perc %   "
 for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
