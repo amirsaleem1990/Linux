@@ -730,3 +730,4 @@ let DIFF=(`date +%s -d $current_date`-`date +%s -d $last_done_date`)/86400
 echo $DIFF
 #--------------------------
 # groupby and then count (same as pd.Series.value_counts() in pandas) .............. sort ip_addresses | uniq -c
+# replace multiple characters at once ............ echo "hamza&amir@saleem*arif(moosa)" | sed 's/[@&*()]/ /g' ................ hamza amir saleem arif moosa
