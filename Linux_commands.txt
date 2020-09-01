@@ -732,3 +732,4 @@ echo $DIFF
 # groupby and then count (same as pd.Series.value_counts() in pandas) .............. sort ip_addresses | uniq -c
 # replace multiple characters at once ............ echo "hamza&amir@saleem*arif(moosa)" | sed 's/[@&*()]/ /g' ................ hamza amir saleem arif moosa
 # trycatch ................ command1 || command2 <if command1 fails then command2 runs as follows> ................. command1 && command2 <command2 will run if command1 is successful>
+# simulate keyboard input ............... https://unix.stackexchange.com/questions/267704/command-to-simulate-keyboard-input ................. xdotool key <key> (eg: xdotool key ctrl+c) ............... To simulate pressing ctrl + c and then a Backspace: xdotool key ctrl+c BackSpace 
