@@ -103,7 +103,7 @@ for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
 done
 echo 
 
-if [[ $swap_used_perc -eq 0 ]] ; then
+if [[ $swap_used_perc -eq "" ]] ; then
 	:
 else
 	echo -n Swap\:\ 
