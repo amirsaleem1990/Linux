@@ -85,7 +85,6 @@ echo
 
 ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-echo $swap
 ram_total=`echo $ram | cut -d, -f1`
 ram_used=`echo $ram | cut -d, -f2`
 ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
@@ -97,7 +96,7 @@ swap_used=`echo $swap | cut -d, -f2`
 swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
 swap_used_perc=`echo "$swap_used_perc * 100" | bc`
 swap_used_perc=${swap_used_perc%.*}
-
+echo $swap_used_perc
 echo -n Ram\ \:\ 
 echo -n  "$ram_used_perc %   "
 for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
