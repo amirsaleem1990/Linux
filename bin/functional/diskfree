@@ -18,7 +18,8 @@ def m(x, add_pipe_in_last=True):
 import os
 print(colored(">>>", "red") + ": Used")
 print(colored("!!!", "green") + ": Unused")
-a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>
+# a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>
+a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g'"))
 print(" " * (45), colored("Total  | Used  | Used  | Avail  | Mounted     ", "red", attrs=['reverse', 'bold']))
 for b in a:
 	total = int(b.split()[1].replace("M", ""))
