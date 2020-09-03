@@ -9,7 +9,8 @@ convertsecs() {
 IFS=$'\n'
 read -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
 # all_data_in_MB=/media/500GB/320GB
-m=$(du -s $all_data_in_MB -BM)
+# m=$(du -s $all_data_in_MB -BM)
+m='42384M	/home/amir/g'
 m1=${m%[[:space:]]*}
 all_data_in_MB=$(echo $m1 | tr -dc '0-9')
 
