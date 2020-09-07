@@ -738,3 +738,8 @@ echo $DIFF
 
 # virtualbox ki linux sy host linux ssh sy connect ho sakti h.
 # ssh k lye user name `whoami` sy find karty hen
+
+#------------------------
+# cron
+# add cron job: crontab -e ; now add jobs, then exit
+
