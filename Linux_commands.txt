@@ -736,3 +736,4 @@ echo $DIFF
 # switch to next/previous application : https://askubuntu.com/questions/961082/command-to-switch-to-next-previous-application ............. list the windows being managed by the window manager: wmctrl -l ............. switch to the desktop containing Firefox, raise the window and give it focus: wmctrl -a firefox ............. 
 # check linux os installation date .............. dumpe2fs /dev/sda1 | grep 'Filesystem created:'
 
+# virtualbox ki linux sy host linux ssh sy connect ho sakti h.
