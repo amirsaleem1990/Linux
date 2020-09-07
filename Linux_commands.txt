@@ -742,4 +742,5 @@ echo $DIFF
 #------------------------
 # cron
 # add cron job: crontab -e ; now add jobs, then exit
+# to list cron jobs : crontab -l
 
