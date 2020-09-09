@@ -39,9 +39,8 @@ while :; do
 	else
 		cat /home/amir/._amb | column -t -s, | tail -1
 	fi
-	if [[ $c == 15 ]]; then
+	if [[ $c == 25 ]]; then
 		c=0
 	fi
-	# sleep 1m
-	sleep 1s
+	sleep 1m
 done
