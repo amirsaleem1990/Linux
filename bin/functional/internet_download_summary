@@ -12,12 +12,17 @@ while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
 	SUM=$current
+	# m=0
+	# for i in `ls`; do
+	# 	[[ ${before_files[*]} =~ $i ]] && m=yes || m=no
+	# 	if [[ $m == "no" ]]; then
+	# 		let "m++"
+	# 	fi
+	# done
 	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
-	for i in `ls`; do
-		[[ ${before_files[*]} =~ $i ]] && m=yes || m=no
-		if [[ $m == "yes" ]]; then
-			echo "`du -sh $i`    $i"
-		fi
-	done
+	new_filesQty=$(for i in `ls`; do 
+		[[ ${before_files[*]} =~ $i ]] && echo yes || echo no
+	done | grep yes | wc -l)
+	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: new_filesQty"
 	sleep 60
 done
