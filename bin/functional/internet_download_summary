@@ -11,7 +11,7 @@ IFS=$'\n'
 before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 
 c=0
-echo "Time  | IncremenalSize   | FullSize   | IncremenalFilesQty  | AllFilesQty"
+echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty"
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
@@ -28,7 +28,7 @@ while :; do
 		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
 	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
 	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
-	echo "`date +%H:%M` | $incremental                 |  $SUM | $(( $after_files - $before_files )) |  $after_files"
+	echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" | column -t -s,
 	# sleep 1m
 	sleep 1s
 done
