@@ -14,7 +14,10 @@ while :; do
 	SUM=$current
 	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
 	for i in `ls`; do
-		[[ ${before_files[*]} =~ $i ]] && echo 'yes' || echo 'no'
+		[[ ${before_files[*]} =~ $i ]] && m=yes || m=no
+		if [[ $m == "yes" ]]; then
+			echo "`du -sh $i`    $i"
+		fi
 	done
 	sleep 60
 done
