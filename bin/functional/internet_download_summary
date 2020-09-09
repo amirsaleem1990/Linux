@@ -26,6 +26,6 @@ while :; do
 		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
 	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
 	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
-	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: $(( $after_files - $before_files ))"
+	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | IncremenalFilesQty.: $(( $after_files - $before_files )) | AllFilesQty: $after_files"
 	sleep 1m
 done
