@@ -27,13 +27,13 @@ while :; do
 		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
 	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
 	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
-	let "c++"
 	if [[ $c == 0 ]] ; then
 		echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty" > /home/amir/._amb
 		echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" >> /home/amir/._amb
 	else
 		echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > /home/amir/._amb
 	fi
+	let "c++"
 	if [[ $c == 15 ]]; then
 		c=0
 	fi
