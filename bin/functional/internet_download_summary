@@ -6,8 +6,10 @@ if [[ $extention = "" ]]; then
 fi
 
 SUM=`du -sh -BM | sed 's/M..//g'`
-before_files=($(ls))
+
 IFS=$'\n'
+before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
+
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
@@ -20,9 +22,10 @@ while :; do
 	# 	fi
 	# done
 	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
-	new_filesQty=$(for i in `ls`; do 
-		[[ ${before_files[*]} =~ $i ]] && echo yes || echo no
-	done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
-	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: $new_filesQty"
+	# new_filesQty=$(for i in `ls`; do 
+		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
+	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
+	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
+	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: $(( $after_files - $before_files ))"
 	sleep 10
 done
