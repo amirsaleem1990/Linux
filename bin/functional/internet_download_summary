@@ -27,5 +27,5 @@ while :; do
 	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
 	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: $(( $after_files - $before_files ))"
-	sleep 10
+	sleep 1m
 done
