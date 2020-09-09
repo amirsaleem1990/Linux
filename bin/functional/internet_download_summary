@@ -11,7 +11,7 @@ IFS=$'\n'
 before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 
 c=0
-echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty"
+# echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty"
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
