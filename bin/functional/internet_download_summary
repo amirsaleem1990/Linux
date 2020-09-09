@@ -34,11 +34,13 @@ while :; do
 		# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > /home/amir/._amb
 	# fi
 	let "c++"
-	if [[ $c == 15 ]]; then
-		c=0
+	if [[ $c == 1 ]]; then
 		cat /home/amir/._amb | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty"
 	else
 		cat /home/amir/._amb | column -t -s, | tail -1
+	fi
+	if [[ $c == 15 ]]; then
+		c=0
 	fi
 	# sleep 1m
 	sleep 1s
