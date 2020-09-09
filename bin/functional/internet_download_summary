@@ -6,10 +6,15 @@ if [[ $extention = "" ]]; then
 fi
 
 SUM=`du -sh -BM | sed 's/M..//g'`
+before_files=($(ls))
+IFS=$'\n'
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
 	SUM=$current
-	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
+	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
+	for i in `ls`; do
+		[[ ${before_files[*]} =~ $i ]] && echo 'yes' || echo 'no'
+	done
 	sleep 60
 done
