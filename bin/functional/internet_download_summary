@@ -10,7 +10,7 @@ SUM=`du -sh -BM | sed 's/M..//g'`
 IFS=$'\n'
 before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 
-# c=0
+c=0
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
 	incremental=$(( $current - $SUM ))
@@ -33,11 +33,13 @@ while :; do
 	# else
 		# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > /home/amir/._amb
 	# fi
-	# let "c++"
-	# if [[ $c == 15 ]]; then
-		# c=0
-	# fi
-	cat /home/amir/._amb | column -t -s, | tail -1
+	let "c++"
+	if [[ $c == 15 ]]; then
+		c=0
+		cat /home/amir/._amb | column -t -s
+	else
+		cat /home/amir/._amb | column -t -s, | tail -1
+	fi
 	# sleep 1m
 	sleep 1s
 done
