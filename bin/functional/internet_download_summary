@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
+# read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
 if [[ $extention = "" ]]; then
 	extention=mp4 
 fi
@@ -24,5 +24,5 @@ while :; do
 		[[ ${before_files[*]} =~ $i ]] && echo yes || echo no
 	done | grep no | wc -l)
 	echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: $new_filesQty"
-	sleep 60
+	sleep 10
 done
