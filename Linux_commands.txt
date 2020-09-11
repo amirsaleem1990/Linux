@@ -734,7 +734,8 @@ echo $DIFF
 # trycatch ................ command1 || command2 <if command1 fails then command2 runs as follows> ................. command1 && command2 <command2 will run if command1 is successful>
 # simulate keyboard input ............... https://unix.stackexchange.com/questions/267704/command-to-simulate-keyboard-input ................. xdotool key <key> (eg: xdotool key ctrl+c) ............... To simulate pressing ctrl + c and then a Backspace: xdotool key ctrl+c BackSpace 
 # switch to next/previous application : https://askubuntu.com/questions/961082/command-to-switch-to-next-previous-application ............. list the windows being managed by the window manager: wmctrl -l ............. switch to the desktop containing Firefox, raise the window and give it focus: wmctrl -a firefox ............. 
-# check linux os installation date .............. dumpe2fs /dev/sda1 | grep 'Filesystem created:'
+# check linux os installation date .............. dumpe2fs /dev/sda1 | grep 'Filesystem created:' .............. sudo tune2fs -l /dev/sda1 | grep -i Created
+
 
 # virtualbox ki linux sy host linux ssh sy connect ho sakti h.
 # ssh k lye user name `whoami` sy find karty hen
