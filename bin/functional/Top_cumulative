@@ -25,10 +25,9 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 cat ~/ab.txt | cut -d ' ' -f1,2  > ~/.first_two_cols.txt
 cat ~/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > ~/.last_col.txt
 
-paste ~/.first_two_cols.txt  ~/.last_col.txt > ~/ab.txt
-cat ~/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > ~/ab.txT
-mv ~/ab.txT ~/ab.txt
-cat ~/ab.txt
+# paste ~/.first_two_cols.txt  ~/.last_col.txt > ~/ab.txt
+# cat ~/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > ~/ab.txT
+# mv ~/ab.txT ~/ab.txt
 # echo "" > ~/.amb.txt
 
 # for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u`; do
