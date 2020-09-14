@@ -28,9 +28,9 @@ cat ~/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > ~/.last_col.txt
 paste ~/.first_two_cols.txt  ~/.last_col.txt > ~/ab.txt
 cat ~/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > ~/ab.txT
 mv ~/ab.txT ~/ab.txt
+cat ~/ab.txt
+# echo "" > ~/.amb.txt
 
-echo "" > ~/.amb.txt
-cat ~/ab.txt #| cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u
 # for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u`; do
 # 	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
 # 	if [[ "${a:0:1}" == "." ]] ; then
