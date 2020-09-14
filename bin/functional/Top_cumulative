@@ -23,7 +23,7 @@ echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  
 	# | tac \
 
 cat ~/ab.txt | cut -d ' ' -f2-10 > ~/.amb.txt
-# mv ~/.{amb,ab}.txt 
+mv ~/.{amb,ab}.txt 
 # cat ~/ab.txt | cut -d ' ' -f1,2  > ~/.first_two_cols.txt
 # cat ~/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > ~/.last_col.txt
 
