@@ -43,6 +43,7 @@ else
 		then
 			python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); df["Repo"] = df["Repo"].str.strip("/"); df = df[["Repo", "Count"]]; pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
 		else
+			echo "-------")
 			ipython3 /home/amir/github/working/git_push_plot_script.py
 	fi
 fi
