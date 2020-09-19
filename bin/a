@@ -1,0 +1,2 @@
+
+cat -e `locate Current\ Session | grep chrom | sed 's/\ /\\ /g'` | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u
