@@ -746,3 +746,4 @@ echo $DIFF
 # to list cron jobs : crontab -l
 
 # add directory to path ............... write this line into ~/.bashrc: PATH="/amir_bin/:$PATH" , and then run <source ~/.bashrc> ......... 
+# check os version ......... cat /etc/os-release
