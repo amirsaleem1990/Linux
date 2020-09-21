@@ -83,5 +83,6 @@ pip3 install tabulate
 pip3 install pandas
 pip3 install sklearn pandas_profiling clipboard tqdm
 
-sudo apt install -y docker.io
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
 
