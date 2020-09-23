@@ -8,17 +8,17 @@ pinta
 Supter + ]
 
 selected area screenshot and copy to clipboard
-gnome-screenshot -a -c
+gnome-screenshot -ac
 ALT + A
 
 
 current window screenshot and copy to clipboard
-gnome-screenshot -w -c
+gnome-screenshot -wc
 ALT + S
 
 
 touchpad on off
-/bin/touch_on_off
+/amir_bin/touch_on_off
 shitft + ctrl + f9
 
 
