@@ -1,0 +1,67 @@
+commit line 74 from <gui/auth>
+#exec wish mesg Successfully connected to SSL VPN-Plus gateway
+
+
+commint lines 88-107 from <gui/auth>
+# label .user -text "Enter User Name"
+# entry .usertext   -width 32  -relief sunken -textvariable  username 
+# pack .user .usertext  -padx 2m  -pady 1m  
+# 
+# focus -force .usertext
+# 
+# label .passwd -text "Enter Password"
+# entry .passwdtext -width 32  -relief sunken -textvariable passwd -show * 
+# pack  .passwd .passwdtext -padx 2m -pady 1m
+# 
+# button .ok -text "Ok"  -width 5  
+# pack .ok -side left -padx 4m  -pady 2m 
+# 
+# button .cancel  -text "Cancel" -command exit -width 5
+# pack .cancel -side right -padx 4m  -pady 2m 
+# bind .ok <Button-1> { authentication  $username $passwd  }
+# bind .ok <Return> { authentication  $username $passwd  }
+# 
+# bind .cancel <Button-1> { out  }
+# bind .cancel <Return> { out }
+
+paste this line in the end of <gui/auth>
+authentication kash-admin2 K@sh@t#2020#
+
+
+
+
+commint lines 141-155 from <gui/warning>
+# label .g.blank -width 1
+# button .g.ok -text "Proceed Unsafe" -command "login" -width 15
+# button .g.cancel -text "Cancel" -command out -width 15
+# button .g.toggle -text "More Info" -command "toggle" -width 9
+# pack .g.cancel .g.toggle .g.ok -side left -padx 25 -pady 2
+# 
+# label .h.blank -width 1
+# button .h.ok -text "Proceed Unsafe" -command "login" -width 15
+# button .h.cancel -text "Cancel" -command out -width 15
+# button .h.toggle -text "Less Info" -command "toggle" -width 9
+# pack .h.cancel .h.toggle .h.ok -side left -padx 25 -pady 2
+# 
+# 
+# 
+# focus .g.cancel
+
+
+add this line to the end of <gui/warning>
+login
+
+
+
+
+comit lines 270-276 from <gui/gui>
+# label .blank -width 1
+# button .login -text "Connect" -command "login" -width 9
+# button .delete -text "Delete Network" -command "delete"  -width 15
+# button .cancel -text "Cancel" -command out -width 9
+# button .add -text "Add Network" -command "add_network"  -width 15
+# pack .blank  .login  .add .delete .cancel  -side left   -padx 5 -pady 2
+# focus .login
+
+add this line to the end of <gui/gui>
+login
