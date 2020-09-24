@@ -131,8 +131,10 @@ pip3 install pandas_profiling
 if [[ $? != 0 ]]; then echo "pip3 install pandas_profiling " ; fi
 pip3 install clipboard 
 if [[ $? != 0 ]]; then echo "pip3 install clipboard " ; fi
+pip3 install termcolor
+if [[ $? != 0 ]]; then echo "pip3 install termcolor" ; fi
 pip3 install tqdm
-if [[ $? != 0 ]]; then echo "pip3 install sklearn pandas_profiling clipboard tqdm"; exit ; fi
+if [[ $? != 0 ]]; then echo "pip3 install tqdm"; exit ; fi
 curl -fsSL https://get.docker.com -o get-docker.sh
 if [[ $? != 0 ]]; then echo "curl -fsSL https://get.docker.com -o get-docker.sh"; exit ; fi
 sudo sh get-docker.sh
