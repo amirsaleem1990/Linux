@@ -747,3 +747,4 @@ echo $DIFF
 
 # add directory to path ............... write this line into ~/.bashrc: PATH="/amir_bin/:$PATH" , and then run <source ~/.bashrc> ......... 
 # check os version ......... cat /etc/os-release
+# print two files side by side ................ diff -y   File_1.txt File_2.txt
