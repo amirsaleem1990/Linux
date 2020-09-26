@@ -1,26 +1,26 @@
 #!/bin/bash
 RED="\033[0;31m"
 normal="\033[0m"
-if [[ $1 == 'cpu' ]]; then
-	sort_by=1
-else
-	if [[ $1 == 'ram' ]]; then
-		sort_by=2
-	else
-		echo "The argument of this script is either <cpu> or <ram>."
-		exit 
-	fi
-fi
+# if [[ $1 == 'cpu' ]]; then
+# 	sort_by=1
+# else
+# 	if [[ $1 == 'ram' ]]; then
+# 		sort_by=2
+# 	else
+# 		echo "The argument of this script is either <cpu> or <ram>."
+# 		exit 
+# 	fi
+# fi
 
-echo ''
-IFS=$'\n'
+# echo ''
+# IFS=$'\n'
 
-echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
-	| sed 's/^ //g' \
-	| sed 's/ \{1,\}/ /g' | cut -d ' ' -f2-10
-	`" > ~/ab.txt
-	# |tee /home/amir/.a. \
-	# | tac \
+# echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
+# 	| sed 's/^ //g' \
+# 	| sed 's/ \{1,\}/ /g' | cut -d ' ' -f2-10
+# 	`" > ~/ab.txt
+# 	# |tee /home/amir/.a. \
+# 	# | tac \
 
 # cat ~/ab.txt | cut -d ' ' -f2-10 > ~/.amb.txt
 # mv ~/.amb.txt  ~/ab.txt
