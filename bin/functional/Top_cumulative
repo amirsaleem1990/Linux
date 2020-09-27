@@ -17,7 +17,7 @@ IFS=$'\n'
 
 echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
 	| sed 's/^ //g' \
-	| sed 's/ \{1,\}/ /g' | cut -d ' ' -f2-10
+	| sed 's/ \{1,\}/ /g' | sed 's/^ //g' | cut -d ' ' -f2-10
 	`" > ~/ab.txt
 	# |tee /home/amir/.a. \
 	# | tac \
