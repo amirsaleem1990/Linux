@@ -21,6 +21,11 @@ for i in `find . -size  +51199k | grep -v  '^.\/\.'` ; do
 	if [[ `echo $i | grep lfd-projects` ]]; then
 		continue
 	fi
+	file_name=`echo $i | rev | cut -d'/' -f1 | rev`
+	git_lfs_files=$(cat `find /home/amir/github -name ".gitattributes"` | grep $file_name | wc -l)
+	if [[ $git_lfs_files > 0 ]]; then
+		continue
+	fi
 	file_greater_than_one=$(( $file_greater_than_one + 1 )) 
 	du -sh $i >> /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 	du -sh $i
