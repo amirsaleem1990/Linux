@@ -10,6 +10,7 @@ diff=$(( $current_local_time - $last_local_backup_time ))
 if [[ $diff > 1296000 ]]; then
 # if [[ $diff > 0 ]]; then
 	echo -e "The directory </media/450GB/LINUX_BACKUP/> have `du -sh /media/450GB/LINUX_BACKUP/ | sed 's/\t/,/g' | cut -d, -f1` of data\n\nThe directory </home/amir/> have `du -sh /home/amir/ 2>/dev/null | sed 's/\t/,/g' | cut -d, -f1` of data\n\nWe need to delete the backup directory </media/450GB/LINUX_BACKUP/>, and then create new one, if you agree please type <OK> in /home/amir/.renew_permision.txt (we opened it for you in sublime editor) in less then 1 minute, and save that file." > /home/amir/.renew_backup.txt
+	DEL -rf /home/amir/.renew_permision.txt
 	subl /home/amir/.renew_permision.txt
 	subl /home/amir/.renew_backup.txt
 	sleep 1m
