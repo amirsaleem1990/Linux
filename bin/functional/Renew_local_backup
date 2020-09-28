@@ -21,8 +21,6 @@ if [[ $diff > 1296000 ]]; then
 		if [[ $? == 0 ]]; then
 			echo "/media/450GB/LINUX_BACKUP/ deleted Successfully" > /home/amir/.renew_backup_progress.txt 
 		fi
-		mkdir /media/450GB/LINUX_BACKUP/ 
-		echo "/media/450GB/LINUX_BACKUP/ empty directory created" >> /home/amir/.renew_backup_progress.txt
 		cp -rv /home/amir/ /media/450GB/LINUX_BACKUP/ >> /home/amir/.renew_backup_progress.txt
 		if [[ $? == 0 ]]; then
 			echo "Successfully completed backup" >> /home/amir/.renew_backup_progress.txt
