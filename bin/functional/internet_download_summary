@@ -29,7 +29,8 @@ while :; do
 	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 	# if [[ $c == 0 ]] ; then
 	echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty" > /home/amir/._amb
-	echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ls *.part | wc -l`" >> /home/amir/._amb
+	# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ls *.part | wc -l`" >> /home/amir/._amb
+	echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ps aux | grep youtube-dl | grep python3 | wc -l`" >> /home/amir/._amb
 	# else
 		# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > /home/amir/._amb
 	# fi
