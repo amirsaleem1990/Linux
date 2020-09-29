@@ -35,7 +35,7 @@ while :; do
 	# fi
 	let "c++"
 	if [[ $c == 1 ]]; then
-		cat /home/amir/._amb | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty"
+		cat /home/amir/._amb | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty"
 	else
 		cat /home/amir/._amb | column -t -s, | tail -1
 	fi
