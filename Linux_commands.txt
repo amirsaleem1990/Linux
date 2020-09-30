@@ -755,4 +755,4 @@ echo $DIFF
 You will need to save the Docker image as a tar file:
 > docker save -o <path and file_name for generated tar file> <image name>
 Then copy your image to a new system with regular file transfer tools such as cp, scp or rsync(preferred for big files). After that you will have to load the image into Docker:
-> docker load -i <path to image tar file>
+> docker load -i <path to image tar file># open craontab in nano .............. EDITOR=nano crontab -e
