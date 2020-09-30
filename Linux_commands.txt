@@ -761,3 +761,4 @@ Then copy your image to a new system with regular file transfer tools such as cp
 # check PID using command executed ......... pgrep script_name
 # check PIDs using package ................. pgrep -l python3
 
+
