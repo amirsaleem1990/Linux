@@ -204,3 +204,5 @@ alias wl='nmcli d w r; sleep 10; nmcli d w l'
 alias z='ls *.mp4 -1'
 alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
 alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
+_alias_tempp
+alias poweroff='read -p "Are you punched out? [y|n]: " ans; if [[ $ans == "y" ]] ; then /sbin/poweroff ; else firefox "https://ohrm.lfdanalytics.com/symfony/web/index.php/attendance/punchOut"; fi'
