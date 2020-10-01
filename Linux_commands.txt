@@ -765,3 +765,4 @@ Then copy your image to a new system with regular file transfer tools such as cp
 # check script output using PID in /proc/ ................ tail -f /proc/$PID/fd/{0..3}*
 
 # jab alias and koi program 1 hi name k hoty hen, or ham wo command type karty hen to alias execute hota h
+
