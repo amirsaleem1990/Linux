@@ -771,3 +771,4 @@ Then copy your image to a new system with regular file transfer tools such as cp
 
 
 change tabl ........... CTRL+SHIFT+TAB   and CTRL+TAB
+
