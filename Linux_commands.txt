@@ -770,3 +770,4 @@ Then copy your image to a new system with regular file transfer tools such as cp
 # logout ........... gnome-session-quit --no-prompt
 
 
+change tabl ........... CTRL+SHIFT+TAB   and CTRL+TAB
