@@ -767,3 +767,5 @@ Then copy your image to a new system with regular file transfer tools such as cp
 # jab alias and koi program 1 hi name k hoty hen, or ham wo command type karty hen to alias execute hota h
 
 # <eog> is default image viwer in ubuntu
+# logout ........... gnome-session-quit --no-prompt
+
