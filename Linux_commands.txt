@@ -769,3 +769,4 @@ Then copy your image to a new system with regular file transfer tools such as cp
 # <eog> is default image viwer in ubuntu
 # logout ........... gnome-session-quit --no-prompt
 
+
