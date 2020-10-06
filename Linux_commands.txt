@@ -775,3 +775,4 @@ change tabl ........... CTRL+SHIFT+TAB   and CTRL+TAB
 # ksi packages ki help k lye ............ package_name --help  , help package_name  ,  man package_name   ,   info package_name
 
 ls -X ........ sort by extention
+
