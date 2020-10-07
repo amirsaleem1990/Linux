@@ -69,5 +69,5 @@ login
 
 commit line# 105 in <gui/naclient.sh>
 # /usr/local/bin/naclient guistatus
-and add this line:
+and add this line at line 106:
 /usr/local/bin/naclient logout
