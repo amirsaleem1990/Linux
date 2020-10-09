@@ -1,5 +1,14 @@
 #!/bin/bash
 IFS=$'\n'
-for i in `ps aux | grep facebook | grep amir | sed 's/ \{2,\}/,/g' | cut -d, -f2` ; do 
+c=0
+for i in `ps aux | grep facebook | grep amir | sed 's/ \{2,\}/,/g' | cut -d, -f2` ; do
+	let "c+=1"
 	kill $i
 done
+
+s=""
+if [[ $c > 1 ]]; then
+	s="s"
+done
+
+echo "killed $c job$s"
