@@ -1,0 +1,5 @@
+#!/bin/bash
+IFS=$'\n'
+for i in `ps aux | grep facebook | grep amir | sed 's/ \{2,\}/,/g' | cut -d, -f2` ; do 
+	kill $i
+done
