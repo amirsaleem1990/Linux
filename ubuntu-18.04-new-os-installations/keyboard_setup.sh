@@ -25,5 +25,6 @@ echo -e "Go to the end of the <layoutList> section (search for </layoutList>). A
 </layout>"
 
 sudo dpkg-reconfigure xkb-data
+systemctl restart keyboard-setup
 gnome-control-center region
 rm -f ~/.aa || DEL -rf ~/.aa
