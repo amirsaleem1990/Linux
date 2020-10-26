@@ -1,6 +1,5 @@
 # !/bin/bash
 echo "***********************************************************************************"
-echo "* The package file located at /bin/total_videos_duration                          *"
 echo "* This package will find mkv, mp4 and webm (case ignoring) files in current       *"
 echo "* directory (all subfloders/childrens) and give you a total HOURS:MINUTES:SECONDS *"
 echo "* to View all those videos.                                                       *"
