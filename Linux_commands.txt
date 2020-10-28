@@ -777,3 +777,4 @@ change tabl ........... CTRL+SHIFT+TAB   and CTRL+TAB
 ls -X ........ sort by extention
 
 
+# replace .html and all after it with .html ......... sed 's/html.*/html/'
