@@ -779,3 +779,4 @@ ls -X ........ sort by extention
 
 # replace .html and all after it with .html ......... sed 's/html.*/html/'
 # find and then ls (long) .......... find . -name "*.html" -ls
+# change command line prompt .......... change PS1 variable, eg: PS1="This is a new prompt: "
