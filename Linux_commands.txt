@@ -778,3 +778,4 @@ ls -X ........ sort by extention
 
 
 # replace .html and all after it with .html ......... sed 's/html.*/html/'
+# find and then ls (long) .......... find . -name "*.html" -ls
