@@ -14,8 +14,9 @@
 # read end_time
 
 url=https://ok.ru/video/1804780046977
+actual_url=`youtube-dl -g $url`
 start_time=01:28:00
 end_time=02:08:59
 
-# youtube-dl --postprocessor-args "-ss 01:28:00.00 -to 02:08:59" https://ok.ru/video/1804780046977 
-youtube-dl -g $url
+youtube-dl --postprocessor-args "-ss 01:28:00.00 -to 02:08:59" $actual_url 
+
