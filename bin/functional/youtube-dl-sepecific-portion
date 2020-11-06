@@ -18,5 +18,5 @@ actual_url=`youtube-dl -g $url`
 start_time=01:28:00
 end_time=02:08:59
 
-youtube-dl --postprocessor-args "-ss 01:28:00.00 -to 02:08:59" $actual_url 
+youtube-dl --postprocessor-args "-ss $start_time.00 -to $end_time" $actual_url 
 
