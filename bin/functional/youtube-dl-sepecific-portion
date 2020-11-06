@@ -1,5 +1,8 @@
 #!/bin/bash
-# read -p "Enter video URL: " url
+url=$@
+if [[ $url == "" ]]; then
+	read -p "Enter video URL: " url
+fi
 # read -p "Enter start time HH:MM:SS  " start_time
 echo -e "Enter start time HH:MM:SS"
 echo -n "-----------------"
