@@ -16,5 +16,5 @@
 url=https://ok.ru/video/1804780046977
 start_time=01:28:00
 end_time=02:08:59
-youtube-dl $url
-# youtube-dl --postprocessor-args "-ss $start_time.00 -to $end_time.00" '$url'
+
+youtube-dl --postprocessor-args "-ss $start_time.00 -to $end_time.00" $url
