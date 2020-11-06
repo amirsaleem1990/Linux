@@ -1,22 +1,20 @@
 #!/bin/bash
-# url=$@
-# if [[ $url == "" ]]; then
-# 	read -p "Enter video URL: " url
-# fi
-# # read -p "Enter start time HH:MM:SS  " start_time
-# echo -e "Enter start time HH:MM:SS"
-# echo -n "-----------------"
-# read start_time
+# https://unix.stackexchange.com/questions/230481/how-to-download-portion-of-video-with-youtube-dl-command
+url=$@
+if [[ $url == "" ]]; then
+	read -p "Enter video URL: " url
+fi
+# read -p "Enter start time HH:MM:SS  " start_time
+echo -e "Enter start time HH:MM:SS"
+echo -n "-----------------"
+read start_time
 
-# # read -p "Enter end   time HH:MM:SS  " end_time
-# echo -e "Enter end   time HH:MM:SS"
-# echo -n "-----------------"
-# read end_time
+# read -p "Enter end   time HH:MM:SS  " end_time
+echo -e "Enter end   time HH:MM:SS"
+echo -n "-----------------"
+read end_time
 
-url=https://ok.ru/video/1804780046977
 actual_url=`youtube-dl -g $url`
-start_time=01:28:00
-end_time=02:08:59
 
 youtube-dl --postprocessor-args "-ss $start_time.00 -to $end_time" $actual_url 
 
