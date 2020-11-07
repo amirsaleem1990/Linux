@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+from tabulate import tabulate
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+url = "https://next-episode.net/uyanis-buyuk-selcuklu"
+soup = BeautifulSoup(requests.get(url).text, "lxml")
+l = [i.strip() for i in soup.find("div", {"id": "next_episode"}).text.split("\n")[3:] if i][:-1]
+d = {}
+for i in l:
+    a = i.split(":")
+    d[a[0]] = a[1]
+df = pd.DataFrame(d, index=["info"]).T
+print(tabulate(df))
+print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
