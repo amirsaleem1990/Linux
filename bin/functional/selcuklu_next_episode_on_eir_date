@@ -12,4 +12,4 @@ for i in l:
     d[a[0]] = a[1]
 df = pd.DataFrame(d, index=["info"]).T
 print(tabulate(df))
-print("\n\nhttps://www.nuyanis-buyuk-selcuklu-episode-7-english-urdu-subtitles/\n")
+print("\n\nhttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
