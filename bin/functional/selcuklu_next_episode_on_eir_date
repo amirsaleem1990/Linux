@@ -6,6 +6,10 @@ from bs4 import BeautifulSoup
 url = "https://next-episode.net/uyanis-buyuk-selcuklu"
 soup = BeautifulSoup(requests.get(url).text, "lxml")
 l = [i.strip() for i in soup.find("div", {"id": "next_episode"}).text.split("\n")[3:] if i][:-1]
+if "Sorry, no info about the next episode" in "\n".join(l):
+	print('\n'.join(l))
+	import sys
+	sys.exit(1)
 d = {}
 for i in l:
     a = i.split(":")
