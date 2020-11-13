@@ -12,7 +12,8 @@ function x(){
 #from=/media/450GB/320GB/MultiMedia/audio/call\ recordings
 echo -en "Enter $from full/relative path\n(eg:/media/450GB/320GB/MultiMedia/audio/call\ recordings)\n\t"
 read from
-
+ls $from
+exit
 for i in `ls`; do 
 	here=`x $i`
 	test -e  $from/$i
