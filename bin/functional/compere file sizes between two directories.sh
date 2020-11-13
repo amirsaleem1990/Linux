@@ -12,16 +12,21 @@ function x(){
 #from=/media/450GB/320GB/MultiMedia/audio/call\ recordings
 echo -en "Enter $from full/relative path\n(eg:/media/450GB/320GB/MultiMedia/audio/call\ recordings)\n\t"
 read from
+m=0
 IFS=$'\n'
-for i in `ls`; do 
+for i in `ls`; do
+	let m++ 
 	here=`x $i`
 	test -e  $from/$i
 	if [[ $? != 0 ]]; then
 		echo "FILE NOT FOUND:   $i"
+		let m++
 		continue
 	fi
 	there=`x $from/$i`
 	if [[ $here != $there ]] ; then 
+		let m++
 		echo "DIFFRENT SIZE:   $i, Here:$here, There:$there"
 	fi
 done
+echo $m
