@@ -782,3 +782,22 @@ ls -X ........ sort by extention
 # change command line prompt .......... change PS1 variable, eg: PS1="This is a new prompt: "
 
 # ls hidden file for particuler direcotry/folder ...... ls -d github/.*
+#-----------------------
+Nested if else in one line, These two codes are does the same job:
+1- 
+			for re in 1 0 2 1; do 
+				if [[ $re == 0 ]]; then
+					echo -e "Disconnected VPN successfully"
+				else
+					if [[ $re == 1 ]] ; then
+						echo -e "Disconnected VPN successfully"
+					else
+						echo "d"
+					fi
+				fi
+			done
+2- 
+			for re in 1 0 2 1; do
+				[[ $re  == 0 || $re == 1 ]] && echo -e "Disconnected VPN successfully" || echo "d"
+			done
+#-----------------------
