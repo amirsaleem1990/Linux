@@ -40,17 +40,17 @@ def func_():
 	if  ":" in index:
 		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
-			os.remove(i)
+			pass# os.remove(i)
 
 	elif not "." in index:
 		index = int(index)
 		if index != 0:
-			os.remove(duplicates.iloc[index-1]["Actual_path"])
+			pass# os.remove(duplicates.iloc[index-1]["Actual_path"])
 
 	else:
 		indexes = [int(i.strip())-1 for i in index.split(".")]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
-			os.remove(i)	
+			pass# os.remove(i)	
 
 adf = pd.DataFrame({"Actual_File" : [i.split("/")[-1] for i in b], 
 	"Formatted_File" : files, 
