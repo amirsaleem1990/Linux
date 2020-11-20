@@ -801,3 +801,6 @@ Nested if else in one line, These two codes are does the same job:
 				[[ $re  == 0 || $re == 1 ]] && echo -e "Disconnected VPN successfully" || echo "d"
 			done
 #-----------------------
+redirect stderr and stdout to a file .......... command > file 2>&1
+
+redirect stderr and stdout to a file .......... command > file 2>&1
