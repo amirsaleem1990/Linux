@@ -41,19 +41,19 @@ def func_():
 		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
 			pass
-			#os.remove(i)
+			os.remove(i)
 
 	elif not "." in index:
 		index = int(index)
 		if index != 0:
 			pass
-			#os.remove(duplicates.iloc[index-1]["Actual_path"])
+			os.remove(duplicates.iloc[index-1]["Actual_path"])
 
 	else:
 		indexes = [int(i.strip())-1 for i in index.split(".")]
 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
 			pass
-			#os.remove(i)	
+			os.remove(i)	
 
 adf = pd.DataFrame({"Actual_File" : [i.split("/")[-1] for i in b], 
 	"Formatted_File" : files, 
