@@ -9,6 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 mode_ = int(input("Enter your mode:\n1-only SAME SIZE\n2-only Diffrent SIZE\n3-All\n\t:"))
+mode_2 = int(input("Are you interested in Hidden files?\n1-yes\n2-No"))
 os.system('find . -type f -name "*" > files-with-complete-path.txt')
 with open("files-with-complete-path.txt", "r") as file:
 	b = file.read().splitlines()
