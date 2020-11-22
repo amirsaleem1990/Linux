@@ -33,5 +33,16 @@ print("next episode number:", next_episode_number)
 print("next eipsode date:", next_eipsode_date)
 print("next eipsode day:", next_eipsode_day)
 
+import calendar
+{month: index for index, month in enumerate(calendar.month_abbr) if month}[next_eipsode_date.split()[0]]
+next_eipsode_date = next_eipsode_date.replace(next_eipsode_date.split()[0], str({month: index for index, month in enumerate(calendar.month_abbr) if month}[next_eipsode_date.split()[0]]))
+next_eipsode_date = next_eipsode_date.replace(",", "")
+
+from datetime import date
+f = [int(i) for i in next_eipsode_date.split()]
+print(f"Countdown:      {str(date.today() - date(year = f[-1], month = f[0], day = f[1]))} days")
+
+
+
 print(f"\n\nThis information is collected from:\t\t{url}\n\n")
 print("Download link:\t\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
