@@ -17,7 +17,6 @@
 #     d[a[0]] = a[1]
 # df = pd.DataFrame(d, index=["info"]).T
 # print(tabulate(df))
-# print("\n\nhttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
 
 from tabulate import tabulate
 import pandas as pd
@@ -29,8 +28,10 @@ soup = soup.find("section" , {"id" : "next-episode-widget"})
 next_episode_number = soup.find("div", {"class" : "header-wrap"}).text.strip().splitlines()[0].strip()
 next_eipsode_date = soup.find("div", {"class" : "header-wrap"}).find("h4").text.strip().split(";")[1].strip()
 next_eipsode_day = soup.find("time", {"class" : "calendar-time icon left"}).find("em").text
+print("\n\n")
 print("next episode number:", next_episode_number)
 print("next eipsode date:", next_eipsode_date)
 print("next eipsode day:", next_eipsode_day)
 
 print("f\n\nThis information is collected from {url}\n\n")
+print("Download link: https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
