@@ -34,4 +34,4 @@ print("next eipsode date:", next_eipsode_date)
 print("next eipsode day:", next_eipsode_day)
 
 print(f"\n\nThis information is collected from:\t\t{url}\n\n")
-print("Download link: https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
+print("Download link:\t\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
