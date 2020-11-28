@@ -40,7 +40,7 @@ next_eipsode_date = next_eipsode_date.replace(",", "")
 
 from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
-print(f"Countdown:      {str(date.today() - date(year = f[-1], month = f[0], day = f[1]))} days")
+print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], day = f[1]) ) } days")
 
 
 
