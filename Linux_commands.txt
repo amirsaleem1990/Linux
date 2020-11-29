@@ -804,8 +804,8 @@ Nested if else in one line, These two codes are does the same job:
 
 # redirect stderr and stdout to a file .......... command > file 2>&1
 
+#-----------------------
 # I have a file like this:
-
 NODE_1_length_4014_cov_1.97676  1   1
 NODE_1_length_4014_cov_1.97676  2   1
 NODE_1_length_4014_cov_1.97676  3   1
@@ -816,8 +816,8 @@ NODE_1_length_4014_cov_1.97676  7   1
 NODE_1_length_4014_cov_1.97676  8   1
 NODE_1_length_4014_cov_1.97676  9   1
 NODE_1_length_4014_cov_1.97676  10  1
-I want to split the first column into new columns based on the character '_', like this:
 
+I want to split the first column into new columns based on the character '_', like this:
 1 4014 1.97676  1   1
 1 4014 1.97676  2   1
 1 4014 1.97676  3   1
@@ -829,7 +829,8 @@ I want to split the first column into new columns based on the character '_', li
 1 4014 1.97676  9   1
 1 4014 1.97676  10  1
 
-ANS: awk -F'_' '{print , ,,,}' infile
+ANS: 
+> awk -F'_' '{print , ,,,}' infile
 1 4014 1.97676  1   1  
 1 4014 1.97676  2   1  
 1 4014 1.97676  3   1  
@@ -840,3 +841,4 @@ ANS: awk -F'_' '{print , ,,,}' infile
 1 4014 1.97676  8   1  
 1 4014 1.97676  9   1  
 1 4014 1.97676  10  1
+#-----------------------
