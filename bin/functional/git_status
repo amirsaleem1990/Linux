@@ -19,7 +19,7 @@ for i in repos:
 		os.chdir(i)
 		a = os.popen("git status")
 		if not ''.join(list(a)) in [
-				"On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n", "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"]:		
+				"On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n", "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"]:	
 			print("*"*10, i, "*"*10)
 			a = os.popen("git status")
 			aa = False
