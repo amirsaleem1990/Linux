@@ -40,7 +40,7 @@ next_eipsode_date = next_eipsode_date.replace(",", "")
 
 from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
-print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], day = f[1]) ) } days")
+print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], day = f[1]) ) } days\n")
 
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-2}-english"
 
@@ -54,7 +54,7 @@ for i in b.select("iframe"):
 		l = i['src']
 		if "autoplay" in l:
 			l = "https:" + l[:l.index("?")]
-			print("Last episode Video Download link:", l)
+			print("\n\nLast episode Video Download link:", l)
 	except:
 		pass
 # os.remove("ab__.txT")
