@@ -45,4 +45,4 @@ print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], da
 
 
 print(f"\nThis information is collected from:\t{url}")
-# print(f"\nDownload link:\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{next_episode_number.split('.')[0]}-english-urdu-subtitles/\n")
+print(f"Download link:\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{next_episode_number.split('.')[0]}-english-urdu-subtitles/")
