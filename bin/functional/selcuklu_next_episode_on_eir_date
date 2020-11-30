@@ -45,7 +45,7 @@ print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], da
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
 
 import os
-command = f"wget -nv {last_episode_link} > ab__.txT"
+command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
 
 b = BeautifulSoup(open("ab__.txT", "r"), "lxml")
