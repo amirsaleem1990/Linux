@@ -47,6 +47,7 @@ last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode
 import os
 command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
+print("\n\n")
 
 b = BeautifulSoup(open("ab__.txT", "r"), "lxml")
 for i in b.select("iframe"):
@@ -54,7 +55,7 @@ for i in b.select("iframe"):
 		l = i['src']
 		if "autoplay" in l:
 			l = "https:" + l[:l.index("?")]
-			print("\n\nLast episode Video Download link:", l)
+			print("Last episode Video Download link:", l)
 	except:
 		pass
 os.remove("ab__.txT")
