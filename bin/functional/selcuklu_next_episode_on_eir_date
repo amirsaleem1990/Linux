@@ -48,6 +48,7 @@ import os
 command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
 
+b = BeautifulSoup(open("ab", "r"), "lxml")
 for i in b.select("iframe"):
     try:
         l = i['src']
@@ -56,7 +57,7 @@ for i in b.select("iframe"):
             print("Last episode Video Download link:", l)
     except:
         pass
-
+os.remove("ab")
 
 print(f"\nThis information is collected from:  {url}")
 # print("Last episode Download link: ", last_episode_link)
