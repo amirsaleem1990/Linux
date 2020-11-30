@@ -44,5 +44,5 @@ print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], da
 
 
 
-print(f"\n\nThis information is collected from:\t\t{url}\n\n")
-print("Download link:\t\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-3-english-urdu-subtitles/\n")
+print(f"\nThis information is collected from:\t{url}")
+print(f"\nDownload link:\thttps://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{next_episode_number.split(".")[0]}-english-urdu-subtitles/\n")
