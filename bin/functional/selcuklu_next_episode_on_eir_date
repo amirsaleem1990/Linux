@@ -40,7 +40,7 @@ next_eipsode_date = next_eipsode_date.replace(",", "")
 
 from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
-print(f"Countdown          :      {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days\n")
+print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days\n")
 
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
 
