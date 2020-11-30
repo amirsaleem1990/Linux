@@ -30,8 +30,8 @@ next_eipsode_date = soup.find("div", {"class" : "header-wrap"}).find("h4").text.
 next_eipsode_day = soup.find("time", {"class" : "calendar-time icon left"}).find("em").text
 print("\n\n")
 print("next episode number:", next_episode_number)
-print("next eipsode date:", next_eipsode_date)
-print("next eipsode day:", next_eipsode_day)
+print("next eipsode date  :", next_eipsode_date)
+print("next eipsode day   :", next_eipsode_day)
 
 import calendar
 {month: index for index, month in enumerate(calendar.month_abbr) if month}[next_eipsode_date.split()[0]]
@@ -40,7 +40,7 @@ next_eipsode_date = next_eipsode_date.replace(",", "")
 
 from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
-print(f"Countdown:      { str(date.today() - date(year = f[-1], month = f[0], day = f[1]) ) } days\n")
+print(f"Countdown:      {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days\n")
 
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
 
