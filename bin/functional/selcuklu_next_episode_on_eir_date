@@ -50,13 +50,13 @@ os.system(command)
 
 b = BeautifulSoup(open("ab__.txT", "r"), "lxml")
 for i in b.select("iframe"):
-    try:
-        l = i['src']
-        if "autoplay" in l:
-            l = "https:" + l[:l.index("?")]
-            print("Last episode Video Download link:", l)
-    except:
-        pass
+	try:
+		l = i['src']
+		if "autoplay" in l:
+			l = "https:" + l[:l.index("?")]
+			print("Last episode Video Download link:", l)
+	except:
+		pass
 # os.remove("ab__.txT")
 
 print(f"\nThis information is collected from:  {url}")
