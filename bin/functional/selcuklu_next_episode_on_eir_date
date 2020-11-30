@@ -18,6 +18,7 @@
 # df = pd.DataFrame(d, index=["info"]).T
 # print(tabulate(df))
 
+print()
 from tabulate import tabulate
 import pandas as pd
 import requests
@@ -62,3 +63,4 @@ os.remove("ab__.txT")
 
 print(f"This information is collected from:  {url}")
 # print("Last episode Download link: ", last_episode_link)
+print()
