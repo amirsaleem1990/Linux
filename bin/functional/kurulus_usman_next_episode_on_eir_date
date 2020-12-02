@@ -23,7 +23,7 @@ for i in s.select("li"):
 		l = i['data-source']
 		if "videoembed" in l:
 			l = "https:" + l.strip()
-			print("Video link:", l)
+			print("Last video Download/watch link:", l)
 			break
 	except:
 		pass
