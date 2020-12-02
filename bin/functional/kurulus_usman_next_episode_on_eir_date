@@ -14,4 +14,14 @@ df = pd.DataFrame(d, index=["info"]).T
 print(tabulate(df))
 print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
 
-print("Last video page:", f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}")
+last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}"
+print("Last video page:", last_vid)
+
+s = BeautifulSoup(requests.get(last_vid).text, "lxml")
+for i in s.select("li"):
+    try:
+        l = i['data-source']
+        if "videoembed" in l:
+            print("Video link:", l)
+    except:
+        pass
