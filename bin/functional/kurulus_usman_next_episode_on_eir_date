@@ -13,3 +13,5 @@ for i in l:
 df = pd.DataFrame(d, index=["info"]).T
 print(tabulate(df))
 print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
+
+print("Last video page:", f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}")
