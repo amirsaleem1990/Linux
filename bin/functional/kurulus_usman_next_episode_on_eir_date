@@ -8,8 +8,8 @@ soup = BeautifulSoup(requests.get(url).text, "lxml")
 l = [i.strip() for i in soup.find("div", {"id": "next_episode"}).text.split("\n")[3:] if i][:-1]
 d = {}
 for i in l:
-    a = i.split(":")
-    d[a[0]] = a[1]
+	a = i.split(":")
+	d[a[0]] = a[1]
 df = pd.DataFrame(d, index=["info"]).T
 print(tabulate(df))
 print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
@@ -19,9 +19,11 @@ print("Last video page:", last_vid)
 
 s = BeautifulSoup(requests.get(last_vid).text, "lxml")
 for i in s.select("li"):
-    try:
-        l = i['data-source']
-        if "videoembed" in l:
-            print("Video link:", "https:" + l)
-    except:
-        pass
+	try:
+		l = i['data-source']
+		if "videoembed" in l:
+			l = "https:" + l.strip()
+			print("Video link:", l)
+			break
+	except:
+		pass
