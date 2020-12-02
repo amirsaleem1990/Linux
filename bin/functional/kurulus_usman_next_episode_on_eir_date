@@ -22,6 +22,6 @@ for i in s.select("li"):
     try:
         l = i['data-source']
         if "videoembed" in l:
-            print("Video link:", l)
+            print("Video link:", "https:" + l)
     except:
         pass
