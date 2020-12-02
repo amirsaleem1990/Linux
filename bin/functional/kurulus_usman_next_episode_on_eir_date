@@ -27,3 +27,5 @@ for i in s.select("li"):
 			break
 	except:
 		pass
+s = BeautifulSoup(requests.get(l).text, "lxml")
+print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).text)
