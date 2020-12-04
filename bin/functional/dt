@@ -1,5 +1,6 @@
 #!/bin/bash
-du -sch * |  sort -h | grep --color "\|total" 
+#du -sch * |  sort -h | grep --color "\|total" 
+du -sch .[!.]* * |sort -h | grep --color "\|total"
 ##########################################################################
 # IFS=$'\n'
 # for i in `ls -Sr`; do 
