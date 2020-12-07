@@ -53,7 +53,7 @@ if os.path.exists(file_name):
 		print("\n\nLast epised watched!!!, wail to next episode\n\n")
 		sys.exit()				
 else:
-	open(file_name, "w").write(n)
+	open(file_name, "w").write(ne)
 
 
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
