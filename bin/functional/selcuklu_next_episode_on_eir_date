@@ -19,7 +19,6 @@
 # print(tabulate(df))
 
 print()
-print(f"This information is collected from:  {url}")
 
 from tabulate import tabulate
 import os
@@ -28,6 +27,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 url = "https://www.tvmaze.com/shows/50131/uyanis-buyuk-selcuklu"
+print(f"\n\nThis information is collected from:  {url}\n\n")
 soup = BeautifulSoup(requests.get(url).text, "lxml")
 soup = soup.find("section" , {"id" : "next-episode-widget"})
 next_episode_number = soup.find("div", {"class" : "header-wrap"}).text.strip().splitlines()[0].strip()
