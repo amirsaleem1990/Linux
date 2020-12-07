@@ -51,7 +51,7 @@ file_name = "/home/amir/.selcul_next_episode_number.txt"
 ne = str(int(next_episode_number.split(".")[0]))
 
 if os.path.exists(file_name):
-	if  open("next_episode_number.txt", "r").read().strip() == ne:
+	if  open(file_name, "r").read().strip() == ne:
 		print("\n\nLast epised watched!!!, wail to next episode\n\n")
 		sys.exit()				
 else:
