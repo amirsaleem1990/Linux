@@ -49,32 +49,33 @@ print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - da
 
 file_name = "/home/amir/.selcul_next_episode_number.txt"
 ne = str(int(next_episode_number.split(".")[0]))
+print(ne)
 
-if os.path.exists(file_name):
-	if  open(file_name, "r").read().strip() == ne:
-		print("\n\nLast epised watched!!!, wail to next episode\n\n")
-		sys.exit()				
-else:
-	open(file_name, "w").write(ne)
+# if os.path.exists(file_name):
+# 	if  open(file_name, "r").read().strip() == ne:
+# 		print("\n\nLast epised watched!!!, wail to next episode\n\n")
+# 		sys.exit()				
+# else:
+# 	open(file_name, "w").write(ne)
 
 
-last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
-print("\n\n\n")
-command = f"curl {last_episode_link} > ab__.txT"
-os.system(command)
-print("\n\n\n")
+# last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
+# print("\n\n\n")
+# command = f"curl {last_episode_link} > ab__.txT"
+# os.system(command)
+# print("\n\n\n")
 
-b = BeautifulSoup(open("ab__.txT", "r"), "lxml")
-for i in b.select("iframe"):
-	try:
-		l = i['src']
-		if "autoplay" in l:
-			l = "https:" + l[:l.index("?")]
-			print("Last episode Video Download link:", l)
-	except:
-		pass
-os.remove("ab__.txT")
+# b = BeautifulSoup(open("ab__.txT", "r"), "lxml")
+# for i in b.select("iframe"):
+# 	try:
+# 		l = i['src']
+# 		if "autoplay" in l:
+# 			l = "https:" + l[:l.index("?")]
+# 			print("Last episode Video Download link:", l)
+# 	except:
+# 		pass
+# os.remove("ab__.txT")
 
-print()
+# print()
 
 
