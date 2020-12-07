@@ -19,6 +19,8 @@
 # print(tabulate(df))
 
 print()
+print(f"This information is collected from:  {url}")
+
 from tabulate import tabulate
 import os
 import sys
@@ -73,8 +75,6 @@ for i in b.select("iframe"):
 		pass
 os.remove("ab__.txT")
 
-print(f"This information is collected from:  {url}")
-# print("Last episode Download link: ", last_episode_link)
 print()
 
 
