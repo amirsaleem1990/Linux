@@ -45,7 +45,7 @@ f = [int(i) for i in next_eipsode_date.split()]
 print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days")
 
 
-file_name = "next_episode_number.txt"
+file_name = "/home/amir/.selcul_next_episode_number.txt"
 ne = str(int(next_episode_number.split(".")[0]))
 
 if os.path.exists(file_name):
