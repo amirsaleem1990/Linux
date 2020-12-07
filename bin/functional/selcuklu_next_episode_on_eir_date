@@ -20,6 +20,8 @@
 
 print()
 from tabulate import tabulate
+import os
+import sys
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -42,10 +44,20 @@ from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
 print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days")
 
-last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
 
+file_name = "next_episode_number.txt"
+ne = str(int(next_episode_number.split(".")[0]))
+
+if os.path.exists(file_name):
+	if  open("next_episode_number.txt", "r").read().strip() == ne:
+		print("\n\nLast epised watched!!!, wail to next episode\n\n")
+		sys.exit()				
+else:
+	open(file_name, "w").write(n)
+
+
+last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
 print("\n\n\n")
-import os
 command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
 print("\n\n\n")
@@ -64,3 +76,5 @@ os.remove("ab__.txT")
 print(f"This information is collected from:  {url}")
 # print("Last episode Download link: ", last_episode_link)
 print()
+
+
