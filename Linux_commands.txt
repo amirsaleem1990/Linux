@@ -843,3 +843,4 @@ ANS:
 1 4014 1.97676  10  1
 #-----------------------
 du with hidden files ............. du -sch .[!.]* * 
+# unzip .7z files ............. 7za e zip_file_name.7z
