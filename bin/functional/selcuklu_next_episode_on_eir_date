@@ -58,8 +58,8 @@ if os.path.exists(file_name):
 else:
 	open(file_name, "w").write(ne)
 
-
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
+print("last_episode_link: ", last_episode_link)
 print("\n\n\n")
 command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
