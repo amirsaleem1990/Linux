@@ -17,9 +17,12 @@ repos = [repo for repo in repos if not repo in not_to_commit_repos]
 for i in repos:
 	if not i.startswith("."):
 		os.chdir(i)
-		a = os.popen("git status")
-		if not ''.join(list(a)) in [
+		a = list(os.popen("git status"))
+		if not ''.join(a) in [
 				"On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n", "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"]:	
+			if 'git add <file>..." to update' in ''.join(a):
+				os.chdir("../")
+				continue
 			print("*"*10, i, "*"*10)
 			a = os.popen("git status")
 			aa = False
