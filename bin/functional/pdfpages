@@ -1,0 +1,8 @@
+#!/bin/bash
+rm -f /home/amir/.shba
+IFS=$'\n'
+for i in *.pdf ; do
+	echo "`pdfinfo $i | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`,|$i" >> /home/amir/.shba
+done
+cat ~/.shba  | column -t -s,\| 
+rm -f /home/amir/.shba
