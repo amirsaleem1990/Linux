@@ -844,3 +844,88 @@ ANS:
 #-----------------------
 du with hidden files ............. du -sch .[!.]* * 
 # unzip .7z files ............. 7za e zip_file_name.7z
+
+# update pip package ........... pip3 install -U youtube-dl
+# grep ........... search "cpu" or "ram" in all files in current directory .......... grep -i -e cpu -e ram -r .  ..................... which is equelent to: grep -i "cpu\|ram" -r . 
+# Find all files under the /tmp directory that are newer than an already existing file and give a detailed listing ................. find /tmp -newer /tmp/tstfile -ls ................ where it is assumed you will substitute the name of an existing file for /tmp/tstfile.
+# Find all subdirectories under the /etc directory: ..................... find /etc -type d
+# Find all files/folder that  ends with cfg ........... locate -r "cfg$" 
+# The tac command (cat spelled backwards) prints the lines of a file in reverse order. Each line remains the same, but the order of lines is inverted. The syntax of tac is exactly the same as for cat
+# Append a file to the end of an existing file .............. cat file >> existingfile 
+# write / append in file ............. wirte (cat > file_name) OR (cat >> file_name) ..... wirte lines you want and then press Ctrl-D
+# sed -e command <filename> ..................... Specify editing commands at the command line, operate on file and put the output on standard out (e.g. the terminal)
+# sed -f scriptfile <filename> .................. Specify a scriptfile containing sed commands, operate on file and put output on standard out
+# sed 1,3s/pattern/replace_string/g file ........ Substitute all string occurrences in a range of lines
+
+# awk 'command'  file	............ Specify a command directly at the command line
+# awk -f scriptfile file ........... Specify a file that contains the script to be executed
+# awk '{ print $0 }' /etc/passwd ... Print entire file
+# awk -F: '{ print $1 }' /etc/passwd ... Print first field (column) of every line, separated by a space
+# awk -F: '{ print $1 $7 }' /etc/passwd ..... Print first and seventh field of every line
+
+# sort -k 3 <filename> ..... Sort the lines by the 3rd field on each line instead of the beginning
+
+# remove duplicate entries from multiple files at once, use the following command: ............... sort file1 file2 | uniq > file3 ........... sort -u file1 file2 > file3
+# colbind all csv files delimetid with <,>................. paste -d, *.csv
+# <join> the enhanced version of <paste>. it first check weather the files share common feilds, such as nume or phone numbers, and then join the lines in two files based on common field.
+# split ................. split large file by size/lines. by default is split file by 1000 lines.
+# grep [0-9] <filename> ...........  Print the lines that contain the numbers 0 through 9
+# grep -C 3 [pattern] <filename> ... Print context of lines (specified number of lines above and below the pattern) for matching the pattern; here, the number of lines is specified as 3
+# tee ................ tee takes the output from any command, and, while sending it to standard output, it also saves it to a file. In other words, it "tees" the output stream from the command: one stream is displayed on the standard output and the other is saved to a file.
+# if in multiple (equivalent) ways .......... if [[ -f file.c ]] ; then ... ; fi ..........if [-f file.c] ;then...;fi ............ if test -f file.c ; then ... ; fi ............... The first form with double brackets is preferred over the second form with single brackets, which is now considered deprecated. ........... The test form is also deprecated for the same reason and it is more clumsy as well. However, it is common to see these older conditional forms in many legacy scripts.
+
+# if [ $VAR == "" ] ..... will produce a syntax error if VAR is empty, so you have to do: ....... if [ "$VAR" == "" ]
+
+
+# make && make modules_install && make install ................. The &&s (ANDs) say stop as soon as one of the commands fails
+# [[ -f /etc/foo.conf ]] || echo ’default config’ >/etc/foo.conf ........... he ||’ (ORs) says stop as soon as one of the commands succeeds.
+
+[[ $STRING == mystring ]] && echo mystring is "$STRING" ..... is equivalent to ............. if [[ $STRING == mystring ]] ; then echo mystring is "$STRING"; fi
+
+# Arithmetic Comparisons ................ -eq, -ne, -gt, -ge, -lt, -le
+# decrement/increment ............. variable=$(($variable - 1 )) ............. variable=$(expr $variable - 1)
+#--------------------
+# case 
+#!/bin/sh
+echo "Do you want to destroy your entire file system?"
+read response
+case "$response" in
+   "yes")              echo "I hope you know what you are doing!" ;;
+   "no" )              echo "You have some comon sense!" ;;
+   "y" | "Y" | "YES" ) echo "I hope you know what you are doing!" ;
+                       echo ’I am going to type: " rm -rf /"’;;
+   "n" | "N" | "NO" )  echo "You have some comon sense!" ;;
+   *   )               echo "You have to give an answer!" ;;
+esac
+exit 0
+#--------------------
+# find . -name "*.o" -exec rm {} ’;’ ............... equivalent to ............. find . -name "*.o" | xargs rm
+# There is <until> loop, which is same as while (in syntax and working (as my understanding))
+#-----------------------
+# function
+function fun_foobar(){
+   statements
+}
+
+OR
+function fun_foobar{
+   statements
+} # This syntax will work fine in bash scripts, but is not designed for the original Bourne shell, sh.
+  # In the case where a function name is used which collides with an alias, this method will still work.
+In most cases, use of the function keyword is not often used in new scripts.
+#-----------------------END
+
+# function me jo variable define hota h wo gloabl me chala jata h.
+# find with du ............. du -sh `find . -name "*.sh"` ............... find . -name "*sh" | xargs du -sh ................ find . -name "*sh" -exec du -sh {} \;
+#-----------------
+Network devices are somewhat different, but almost everything else works just as a file. Even network devices use a file paradigm when you work with what are known as sockets. One important point is that in most cases, Linux does not care about file extensions, whatever follows the dot sign. It doesn't assume that if it's .jpg, it's an image, for instance. It actually looks at the file and determines that. There are a few exceptions to this. Sometimes, compilers look at the extension and decide whether it's a C++ file, whether it's a Fortran file, or whatever, so it knows how to compile it. But that can always be overwritten, even though it's a default. So, that's just a little bit about how Linux deals with different file types. 
+-------------
+chmod uo+x,g-w a_file ................  to give the owner and world execute permission, and remove the group write permission ............ where u stands for user (owner), o stands for other (world), and g stands for group.......... This kind of syntax can be difficult to type and remember, so one often uses a shorthand which lets you set all the permissions in one step. This is done with a simple algorithm, and a single digit suffices to specify all three permission bits for each entity. This digit is the sum of: 4 if read permission is desired. 2 if write permission is desired. 1 if execute permission is desired. ..... Thus, 7 means read/write/execute, 6 means read/write, and 5 means read/execute.
+# You can change owner and groupd at the same time: ............ chown user.group a_file ............. chown user:group a_file
+# chwon can take an -R option, which stands for recursive.
+#------------ 
+# change default files permition  using umask
+# checek current umask ........ umask
+# umask u=r,g-w,o=rw ........ user will read only, group will write only, and others will read and write
+# see '/home/amir/github/Linux/What is Umask and How To Setup Default umask Under Linux_ - nixCraft.html'
+
