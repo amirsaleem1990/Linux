@@ -1,29 +1,51 @@
 #!/bin/bash
 IFS=$'\n'
+parameter=$1
 echo -e "\n"
+if [[ -z "$parameter" ]] ;	then  # if parameter not passed
+	echo "-----------------------------------------------------"
+	echo -e "Parameter not passed\n\t1- Only current direcotory\n\t2- Current and all subdirectories\nSo default (1) used"
+	echo -e "-----------------------------------------------------\n\n"
+	parameter=1
+fi
 
-echo "`ls -d */ | wc -l` ----Folders----"
+if [[ $parameter -eq 1 ]] ; then
+	echo "`ls -d */ | wc -l` ----Folders----"
+	echo -e "\n"
+	ls -p |\
+		grep -v /  |\
+		grep '\.' |\
+		rev |\
+		cut -d. -f1 |\
+		rev |\
+		sort |\
+		uniq -c |\
+		sed 's/\ \{2,\}//g'
 
-echo -e "\n"
+else
+	tree |\
+		rev |\
+		grep  '\.'|\
+		cut -d. -f1 |\
+		rev |\
+		sed /─/d |\
+		sed /^$/d |\
+		sed '$ d' |\
+		sort |\
+		uniq -c |\
+		sed 's/^ \{1,\}//g' |\
+		column -t 
+fi
 
-ls -p |\
-	grep -v /  |\
-	grep '\.' |\
-	rev |\
-	cut -d. -f1 |\
-	rev |\
-	sort |\
-	uniq -c |\
-	sed 's/\ \{2,\}//g'
 
 
-#---------------------------------------------------------------------
-# rm ~/ab.txt
-# a=`ls | cut -d "_" -f1 | wc -l`
-# for i in `ls | cut -d "_" -f1 | head -$(( $a -1))` ; do
-# 	cd $i*
-# 	for f in *.*; do printf "%s\n" "${f##*.}" | sort -u ; done | sort -u  >> ~/ab.txt
-# 	cd ../
-# done
-# cat ~/ab.txt | sort -u
-#---------------------------------------------------------------------
+# #---------------------------------------------------------------------
+# # rm ~/ab.txt
+# # a=`ls | cut -d "_" -f1 | wc -l`
+# # for i in `ls | cut -d "_" -f1 | head -$(( $a -1))` ; do
+# # 	cd $i*
+# # 	for f in *.*; do printf "%s\n" "${f##*.}" | sort -u ; done | sort -u  >> ~/ab.txt
+# # 	cd ../
+# # done
+# # cat ~/ab.txt | sort -u
+# #---------------------------------------------------------------------
