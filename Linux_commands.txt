@@ -929,3 +929,4 @@ chmod uo+x,g-w a_file ................  to give the owner and world execute perm
 # umask u=r,g-w,o=rw ........ user will read only, group will write only, and others will read and write
 # see '/home/amir/github/Linux/What is Umask and How To Setup Default umask Under Linux_ - nixCraft.html'
 
+# skip last line ............. sed '$ d'
