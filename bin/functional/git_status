@@ -21,8 +21,11 @@ for i in repos:
 		if not ''.join(a) in [
 				"On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n", "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"]:	
 			#if 'git add <file>..." to update' in ''.join(a):
-				#os.chdir("../")
-				#continue
+			if 'use "git push" to publish your local commits' in ''.join(a):
+				print("To be pushed: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", i)
+				aa = False
+				os.chdir("../")
+				continue
 			print("*"*10, i, "*"*10)
 			a = os.popen("git status")
 			aa = False
@@ -36,3 +39,4 @@ for i in repos:
 
 if aa:
 	print("Nothing to Add or Push")
+print()
