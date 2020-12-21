@@ -1,9 +1,27 @@
 #!/bin/bash
 
+answer=$1
+if [[ $answer == "" ]]; then
+	echo -e "\nEnter
+	\t1- Algo -------- 192.168.62.12
+	\t2- Production -- 192.168.253.2"
+	read answer
+fi
+
+if [[ $answer == 1 ]]; then
+	answer=192.168.62.12
+else
+	if [[ $answer == 2 ]]; then
+		answer=192.168.253.2
+	fi
+fi
+
+
 vpn_status=`naclient status | wc -l`
 if [[ $vpn_status > 1 ]] ; then
 	naclient logout >/dev/null
 fi
+
 
 echo -e "\n****** Connecting to VPN *******"
 /opt/sslvpn-plus/naclient/gui/naclient.sh &>/dev/null
@@ -15,11 +33,15 @@ else
 	exit
 fi
 
-
-
 echo -e "\n****** Connecting to Kashat-server *******"
 
-ssh 192.168.62.12
+if [[ $answer == "192.168.253.2" ]]; then
+	ssh 192.168.253.2
+else 
+	if [[ $answer == "192.168.62.12" ]]; then
+		ssh 192.168.62.12
+	fi
+fi
 
 if [[ $? != 0 ]]; then
 	echo -e "Failed to Connect to Kashat-server\n\n"

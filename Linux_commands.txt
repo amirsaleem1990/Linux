@@ -930,3 +930,12 @@ chmod uo+x,g-w a_file ................  to give the owner and world execute perm
 # see '/home/amir/github/Linux/What is Umask and How To Setup Default umask Under Linux_ - nixCraft.html'
 
 # skip last line ............. sed '$ d'
+#------------------------------------------------
+# https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/
+# check if variable is empty/defined
+[ ! -z "$var" ] || echo "Empty"
+[ ! -z "$var" ] && echo "Not empty" || echo "Empty"
+ 
+[[ ! -z "$var" ]] || echo "Empty"
+[[ ! -z "$var" ]] && echo "Not empty" || echo "Empty"
+#------------------------------------------------

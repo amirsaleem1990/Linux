@@ -46,20 +46,25 @@ from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
 print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days")
 
-
 file_name = "/home/amir/.selcul_next_episode_number.txt"
 ne = str(int(next_episode_number.split(".")[0]))
 
-
 if os.path.exists(file_name):
 	if  open(file_name, "r").read().strip() == ne:
-		print("\n\nLast epised watched!!!, wail to next episode\n\n")
+		print("\n\nLast episode watched!!!, wait for next episode\n\n")
 		sys.exit()				
 else:
 	open(file_name, "w").write(ne)
 
+
+download_ = "/home/amir/.selcul_last_downloaded.txt"
+if os.path.exists(download_):
+	f = open(download_, "r").read().strip()
+	if int(f) == (int(ne)-1):
+		print("Last downloaded    :", f)
+
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{int(next_episode_number.split('.')[0])-1}-english"
-print("last_episode_link: ", last_episode_link)
+print("last_episode_link  :", last_episode_link)
 print("\n\n\n")
 command = f"curl {last_episode_link} > ab__.txT"
 os.system(command)
@@ -75,6 +80,14 @@ for i in b.select("iframe"):
 	except:
 		pass
 os.remove("ab__.txT")
+
+print("""
+#############################################
+# agar video download kar len to            #
+# </home/amir/.selcul_last_downloaded.txt>  #
+# file ko update kar den                    #
+#############################################
+""")
 
 print()
 
