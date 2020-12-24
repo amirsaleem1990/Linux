@@ -1,20 +1,34 @@
 #!/bin/bash
 
-answer=$1
-if [[ $answer == "" ]]; then
+machine=$1
+if [[ $machine == "" ]]; then
 	echo -e "\nEnter
 	\t1- Algo -------- 192.168.62.12
-	\t2- Production -- 192.168.253.2"
-	read answer
+	\t2- Production -- 192.168.253.2
+	\t3- Data -------- 192.168.254.2"
+	read machine
 fi
 
-if [[ $answer == 1 ]]; then
-	answer=192.168.62.12
-else
-	if [[ $answer == 2 ]]; then
-		answer=192.168.253.2
-	fi
-fi
+case $machine in
+	1)
+	  machine=192.168.62.12
+	  machine_name=Algo
+  	;;
+	2)
+	  machine=192.168.253.2
+	  machine_name=Production
+  	;;
+	3)
+	  machine=192.168.254.2
+	  machine_name=Data
+  	;;
+	*)
+  	echo  "Unknow choice"
+  	exit
+  	;;
+esac
+
+
 
 
 vpn_status=`naclient status | wc -l`
@@ -33,17 +47,11 @@ else
 	exit
 fi
 
-echo -e "\n****** Connecting to Kashat-server *******"
+echo -e "\n****** Connecting to $machine_name *******"
 
-if [[ $answer == "192.168.253.2" ]]; then
-	ssh 192.168.253.2
-else 
-	if [[ $answer == "192.168.62.12" ]]; then
-		ssh 192.168.62.12
-	fi
-fi
+ssh $machine
 
 if [[ $? != 0 ]]; then
-	echo -e "Failed to Connect to Kashat-server\n\n"
+	echo -e "Failed to Connect to $machine_name\n\n"
 	exit
 fi
