@@ -13,7 +13,7 @@ for i in not_to_commit_repos:
 
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos]
-
+r = ["Your branch is up to date with 'origin/master'.\n", '\n', 'Changes not staged for commit:\n', '  (use "git add <file>..." to update what will be committed)\n', '  (use "git checkout -- <file>..." to discard changes in working directory)\n', 'no changes added to commit (use "git add" and/or "git commit -a")\n']
 for i in repos:
 	if not i.startswith("."):
 		os.chdir(i)
@@ -30,6 +30,8 @@ for i in repos:
 			a = os.popen("git status")
 			aa = False
 			for z in list(a)[1:]:
+				if z in r:
+					continue
 				if not z == "\n":
 					print(z.replace("\n", ""))
 			print("\n")
