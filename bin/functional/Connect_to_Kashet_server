@@ -39,7 +39,6 @@ fi
 
 echo -e "\n****** Connecting to VPN *******"
 /opt/sslvpn-plus/naclient/gui/naclient.sh &>/dev/null
-
 if [[ $? == 0 || $? == 1 ]]; then
 	echo -e "Connected to VPN successfully\n\n"
 else
