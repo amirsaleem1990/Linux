@@ -938,4 +938,4 @@ chmod uo+x,g-w a_file ................  to give the owner and world execute perm
  
 [[ ! -z "$var" ]] || echo "Empty"
 [[ ! -z "$var" ]] && echo "Not empty" || echo "Empty"
-#------------------------------------------------
+#------------------------------------------------# show OS related details ......... lsb_release -a
