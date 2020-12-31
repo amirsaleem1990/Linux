@@ -1,6 +1,27 @@
 #!/usr/bin/env ipython3
 import os
 os.chdir("/home/amir/github")
+
+command="""
+IFS=$'\n'
+find . -size +49M -exec du -sh {} \; | grep -v ".pack$\|ames_data_for_NER.zip\|files_for_downlode.zip" | sort -h > /home/amir/.amda_amir
+if [ `cat /home/amir/.amda_amir | wc -l` -gt 0 ] ; then 
+	cat /home/amir/.amda_amir
+fi
+""".strip()
+f = list(os.popen(command))
+os.remove("/home/amir/.amda_amir")
+if f:
+	print("\n\n")
+	from termcolor import colored
+	print(colored("""
+-------------- Filese Larger then 49 MB --------------
+NOTE: files > 49 are not allowd. either remove this/these file/s or move it/these to another directory
+	""".strip(), "red"))
+	f = [i.replace("\t.", "\tgithub" ).strip() for i in f]
+	for i in f:
+		print(colored(i, 'green'))
+	print("\n\n")
 if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
