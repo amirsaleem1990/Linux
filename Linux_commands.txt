@@ -939,3 +939,6 @@ chmod uo+x,g-w a_file ................  to give the owner and world execute perm
 [[ ! -z "$var" ]] || echo "Empty"
 [[ ! -z "$var" ]] && echo "Not empty" || echo "Empty"
 #------------------------------------------------# show OS related details ......... lsb_release -a
+
+# make all hidden files/directories to normal (non-hidden) files/directories ......... for i in `ls -a | sed 1d | sed 1d`; do mv $i `echo $i | sed s:^.::g` ;done
+
