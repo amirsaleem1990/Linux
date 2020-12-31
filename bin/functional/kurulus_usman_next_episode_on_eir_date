@@ -1,4 +1,5 @@
-#!/home/amir/.local/bin/ipython3
+#!/usr/bin/ipython3
+# #!/home/amir/.local/bin/ipython3
 from tabulate import tabulate
 import pandas as pd
 import requests
