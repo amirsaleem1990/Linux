@@ -1,3 +1,6 @@
+commit line 13 from <gui/errrr3>
+# exec wish message Error: SESSION IDLE TIMEOUT OCCURED
+
 commit line 74 from <gui/auth>
 #exec wish mesg Successfully connected to SSL VPN-Plus gateway
 

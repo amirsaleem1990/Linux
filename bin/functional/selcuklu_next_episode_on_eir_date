@@ -80,6 +80,8 @@ for i in b.select("iframe"):
 		pass
 os.remove("ab__.txT")
 
+print("Last Downloaded:", open("/home/amir/.selcul_last_downloaded.txt", "r").read().strip())
+
 print("""
 #############################################
 # agar video download kar len to            #
