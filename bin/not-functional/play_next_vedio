@@ -12,19 +12,27 @@ echo -e "* \t6-video_wemlkm                                              *"
 echo -e "* \t7-video_mfdlkm                                              *"
 echo    "*********************************************************************"
 
-counter=`cat /home/amir/.play_nex_vedio_counter`
+
+counter=`cat /home/amir/.play_nex_vedio_counter 2>/dev/null`
 if [[ -z $counter ]] ; then
 	counter=1
 else 
 	counter=$(($counter + 1))
 fi
-echo $counter
+
+echo -e "\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Count: $counter"
 echo $counter > /home/amir/.play_nex_vedio_counter
 
-if test -f "$counter-"*.mp4 ; then 
-	vlc $counter-*.mp4
-else 
-	echo -e "Sorry, There is no file\n\n`ls *.mp4 -1`"
+test -f "$counter-"*.mp4  || test -f "$counter-"*.mkv || test -f "$counter-"*.webm
+res=$?
+
+if [[ $res -eq 0 ]]; then
+	file_name=`ls $counter-*`
+	echo $file_name
+	echo -e "\n\n"
+	vlc "$file_name"
+else
+	echo -e "Sorry, There is no file\n\n`ls *.mp4 *.mkv *.webm -1`"
 	rm -f  /home/amir/.play_nex_vedio_counter
 fi
 
