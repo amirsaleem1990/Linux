@@ -8,12 +8,20 @@ pinta
 Supter + ]
 
 selected area screenshot and copy to clipboard
-gnome-screenshot -ac
+# for ubuntu 18
+#gnome-screenshot -ac
+# for ubuntu 20
+#gnome-screenshot -acf /tmp/test && cat /tmp/test | xclip -i -selection clipboard -target image/png
+/amir_bin/screen_shot_selected_area
 ALT + A
 
 
 current window screenshot and copy to clipboard
-gnome-screenshot -wc
+# for ubuntu 18
+#gnome-screenshot -wc
+# for ubuntu 20
+#gnome-screenshot -wcf /tmp/test && cat /tmp/test | xclip -i -selection clipboard -target image/png
+/amir_bin/screen_shot_full_window
 ALT + S
 
 
