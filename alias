@@ -108,3 +108,6 @@ alias wl='nmcli d w r; sleep 10; nmcli d w l'
 alias z='ls *.mp4 -1'
 alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
 alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
+alias night_light_off="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false"
+alias night_light_on="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true"
+
