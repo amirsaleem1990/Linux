@@ -28,5 +28,20 @@ for i in s.select("li"):
 			break
 	except:
 		pass
+
 s = BeautifulSoup(requests.get(l).text, "lxml")
 print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).text)
+
+
+
+print("\nLast video downloaded:", open("/home/amir/.kurulus_usman_last_downloaded.txt", "r").read().strip())
+
+print("""
+####################################################
+# agar video download kar len to                   #
+# </home/amir/.kurulus_usman_last_downloaded.txt>  #
+# file ko update kar den                           #
+####################################################
+\n""")
+
+
