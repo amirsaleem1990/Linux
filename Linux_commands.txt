@@ -944,3 +944,16 @@ chmod uo+x,g-w a_file ................  to give the owner and world execute perm
 
 # <nohup COMMAND &> is lye use hota k agar aap logout bhi kar len tab bhi aap ka program chalta rahy, isi kam k lye <screen> bhi use hota h. <scrren> type kar k enter karen, existing terminal clear ho jay ga, ab is terminal par apni script run karun eg: ./MYSCRIPT ... ab CTRL press karty hwy A press karen, or phir in dono ko chor kar k D press karen. aap dubara apni purany terminal par wapis aa jaen gy (jahan <screen> command run karny sy pehly thy). ab agar aap ny dupara usi terminal par jana h jahan aap ny apni script chalai h to <screen -r> karen. agar multiple screens hen to <screen -r> aap ko list dy dy ga k ye screens availible hen, aap un me sy koi 1 select kar ky us me enter ho jaen. screen ko khatam karny k lye ya to parent terminal par screen -d screen_id likhen, ya us screen me jar ka <exit> kar den. agar aap ny screen exit kar di to us ki command destroy ho jay gi. in conclusion: screen >> ./SCRIPT.py >> CTRL+A+D ..... ab me apni orignal terminal par hun, agar me is terminal sy exist kar deta hun, or server sy mera connetion khatam bhi ho jata tab bhi screen/s server par exist karen gi.
 
+# copy text selected area ........... agar hamar pas terminal khula hwa h or us me ye content h:
+-rwxrwxr-x 2 amir amir  1410 Dec 26 23:13  copy_speed*
+-rwxrwxr-x 2 amir amir   485 Dec 26 23:13  connect_to_wifi*
+-rwxrwxr-x 2 amir amir  1678 Dec 26 23:13  connected_devices_info*
+-rwxrwxr-x 2 amir amir   847 Dec 26 23:13 'compere file sizes between two directories.sh'*
+-rwxrwxr-x 2 amir amir  1169 Dec 26 23:13  check_uniqe_file_extentions*
+-rwxrwxr-x 2 amir amir   976 Dec 26 23:13  battery*
+-rwxrwxr-x 2 amir amir   923 Dec 28 11:31  Connect_to_Kashet_server*
+-rwxrwxr-x 2 amir amir  1031 Dec 30 18:59  kurulus_usman_next_episode_on_eir_date*
+-rwxrwxr-x 2 amir amir  2347 Dec 31 14:46  git_status*
+lrwxrwxrwx 1 root root    57 Jan  4 11:33  naclient_reconnect -> /home/amir/github/Linux/bin/functional/naclient_reconnect*
+
+or hamen srif user group tak ka sara data lena h, (yani k har line me group k bad ka koi data nahi chahye CTRL daba kar rakhen or particuler area select kar k copy kar den.
