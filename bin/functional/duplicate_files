@@ -8,11 +8,22 @@ import sys
 import warnings
 warnings.filterwarnings("ignore")
 
+
+size_limit = input("Enter file size limit (in MB), or leave it for default (0): ")
+if size_limit == "":
+	size_limit = 0
+else:
+	size_limit = int(size_limit.strip())
+# Size_MB
+
+
+
 mode_ = int(input("Enter your mode:\n1-only SAME SIZE\n2-only Diffrent SIZE\n3-All\n\t:"))
 mode_2 = int(input("Are you interested in Hidden files?\n1-yes\n2-No\n"))
 os.system('find . -type f -name "*" > files-with-complete-path.txt')
 with open("files-with-complete-path.txt", "r") as file:
 	b = file.read().splitlines()
+
 
 
 
@@ -67,6 +78,8 @@ for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted
 	duplicates = adf[adf.Formatted_File == unique_value]
 	duplicates["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicates.Actual_path]
 	duplicates = duplicates.sort_values("Size_MB")
+	if not (duplicates.Size_MB > size_limit).any():
+		continue
 	duplicates.reset_index(inplace=True)
 	duplicates.drop("index", axis=1, inplace=True)
 	duplicates.index += 1
