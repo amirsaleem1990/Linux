@@ -958,3 +958,5 @@ lrwxrwxrwx 1 root root    57 Jan  4 11:33  naclient_reconnect -> /home/amir/gith
 
 or hamen srif user group tak ka sara data lena h, (yani k har line me group k bad ka koi data nahi chahye CTRL daba kar rakhen or particuler area select kar k copy kar den.
 # Kill detached screen session ......................... screen -X -S [session # you want to kill] quit
+
+# find files by users vivek and wendy ............. find / -user vivek -o -user wendy
