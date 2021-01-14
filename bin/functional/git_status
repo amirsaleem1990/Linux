@@ -40,33 +40,19 @@ d_ = {"To be pushed" : [],
 for i in repos:
 	os.chdir(i)
 	a = list(os.popen("git status"))
-	if not ''.join(a) in [
-			"On branch master\nYour branch is up to date with 'origin/master'.\n\nnothing to commit, working tree clean\n", "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"]:	
-		if 'use "git push" to publish your local commits' in ''.join(a):
-			if not '(use "git add <file>..." to update what will be committed)' in ''.join(a):
-				# print("To be pushed: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", i)
-				d_['To be pushed'].append(i)
-				aa = False
-				os.chdir("../")
-				continue
-			else:
-				# print("To be commit: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", i)
-				d_['To be commit'].append(i)
-			#print("*"*10, i, "*"*10)
-			#a = os.popen("git status")
-			#aa = False
-			#for z in list(a)[2:]:
-			#	if z in r:
-			#		continue
-			#	if not z == "\n":
-			#		print(z.replace("\n", ""))
-			#print("\n")
+	a = [i.strip() for i in '||'.join(a).replace("\n", "").replace("\t", '').split('||') if i]
+	if '(use "git push" to publish your local commits)' in ''.join(a):
+		d_['To be pushed'].append(i)
+	if '(use "git add <file>..." to update what will be committed)' in ''.join(a):
+		d_['To be commit'].append(i)
+		if '(use "git add <file>..." to include in what will be committed)' in ''.join(a):
+			d_['To be pushed'].append(i)
 	else:
 		lst = True
 	os.chdir("../")
 
 for k,v in d_.items():
-	for val in v:
+	for val in set(v):
 		print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
 	print()
 
