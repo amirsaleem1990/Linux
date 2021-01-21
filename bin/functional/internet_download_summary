@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
+sleep_time=$1
+if [[ $sleep_time == "" ]]; then
+	sleep_time=60
+	echo "You didn't give sleep_time as an argument, the defulat is 60 seconds"
+fi
+
+read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
 if [[ $extention = "" ]]; then
 	extention=mp4 
 fi
@@ -13,6 +19,10 @@ before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
 c=0
 while :; do
 	current=`du -sh -BM | sed 's/M..//g'`
+	if [[ $? != 0 ]]; then
+		sleep 1s
+		continue
+	fi
 	incremental=$(( $current - $SUM ))
 	SUM=$current
 	# m=0
@@ -43,5 +53,5 @@ while :; do
 	if [[ $c == 25 ]]; then
 		c=0
 	fi
-	sleep 1m
+	sleep $sleep_time
 done
