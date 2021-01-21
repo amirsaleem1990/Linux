@@ -1,5 +1,6 @@
 #!/usr/bin/ipython3
 # #!/home/amir/.local/bin/ipython3
+from termcolor import colored
 from tabulate import tabulate
 import pandas as pd
 import requests
@@ -26,7 +27,9 @@ for i in s.select("li"):
 	try:
 		l = i['data-source']
 		if "videoembed" in l:
-			l = "https:" + l.strip()
+			if not l.startswith("https:"):
+				l = "https:" + l
+			l = l.strip()
 			print("Last video Download/watch link:", l)
 			break
 	except:
@@ -39,15 +42,25 @@ print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).tex
 last_video_downloaded = int(open("/home/amir/.kurulus_usman_last_downloaded.txt", "r").read().strip())
 
 
-f = """\n\n#############################################################
-####-----------------{} -------------------####
-#############################################################\n"""
+# f = """\n\n#############################################################
+# ####-----------------{} -------------------####
+# #############################################################\n"""
+# 
+# if comming_episode_number - last_video_downloaded == 1:
+# 	print(f.format("--- NO NEW VIDEO"))
+# elif comming_episode_number - last_video_downloaded > 1:
+# 	print(colored(f.format(" CONGRATULATIONS"))
+
+print("""\n\n#############################################################
+####-----------------""", end="")
 
 if comming_episode_number - last_video_downloaded == 1:
-	print(f.format("--- NO NEW VIDEO"))
+	print(colored("--- NO NEW VIDEO", 'red'), end="")
 elif comming_episode_number - last_video_downloaded > 1:
-	print(f.format(" CONGRATULATIONS"))
+	print(colored(" CONGRATULATIONS", 'red'), end="")
 
+print(""" -------------------####
+#############################################################\n""")
 
 
 print("\nLast video downloaded was:", last_video_downloaded)
