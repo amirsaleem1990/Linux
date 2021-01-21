@@ -59,12 +59,13 @@ next_episode = int(next_episode_number.split(".")[0])
 
 print("""\n\n#############################################################
 ####-----------------""", end="")
-
+g = False
 download_ = "/home/amir/.selcul_last_downloaded.txt"
 if os.path.exists(download_):
 	last_downloaded_episode = int(open(download_, "r").read().strip())
 	if next_episode - last_downloaded_episode > 1:
 		print(colored(" CONGRATULATIONS", 'red'), end="")
+		g = True
 	else:
 		print(colored("--- NO NEW VIDEO", 'red'), end="")
 
@@ -90,6 +91,14 @@ for i in b.select("iframe"):
 	except:
 		pass
 os.remove("/home/amir/ab__.txT")
+
+
+if g:
+	ans_ = input("\n\nAre you need to update /home/amir/.selcul_last_downloaded.txt file?\n[y|n]  ")
+	if ans_ == "y":
+		ans_ = input("Enter last episode you downloaded/watched to enter in /home/amir/.selcul_last_downloaded.txt: ")
+		open("/home/amir/.kurulus_usman_last_downloaded.txt", 'w').write(ans_)
+print()
 
 
 print("""
