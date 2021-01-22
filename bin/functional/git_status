@@ -1,7 +1,7 @@
 #!/usr/bin/env ipython3
 from termcolor import colored
 print(colored("\n\n\tFor actual status for each repo run:", 'red'),
-		colored("""\n\t\tfor i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; sleep 1s ; cd ../ ; done\n""", 'green')) 
+		colored("""\n\t\tcd /home/amir/github/; for i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; sleep 1s ; cd ../ ; done\n""", 'green')) 
 
 
 import os
