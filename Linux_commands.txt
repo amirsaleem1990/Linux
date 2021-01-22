@@ -960,3 +960,7 @@ or hamen srif user group tak ka sara data lena h, (yani k har line me group k ba
 # Kill detached screen session ......................... screen -X -S [session # you want to kill] quit
 
 # find files by users vivek and wendy ............. find / -user vivek -o -user wendy
+# convert seconds to day, hours, minutes, secons .................. eval "echo "
+# convert seconds to day, hours, minutes, secons .................. eval "echo "
+
+# convert seconds to day, hours, minutes, secons .................. eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
