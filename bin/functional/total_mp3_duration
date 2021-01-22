@@ -1,5 +1,51 @@
 #!/bin/bash
-echo "
+
+read -p "Are you need to include subdirectories in search? [y|n]: " ans
+if [[ $ans == "y" ]]; then
+	echo "
+######################################################################
+#                                                                    #
+#    All mp3|user_defined_audio files length in all subdirectories   #
+#                                                                    # 
+######################################################################
+"
+
+	IFS=$'\n'
+	h=0;m=0;s=0
+	file_count=0
+	read -p "The default is mp3, are you need new one (eg: wmv), if yes enter without dot (eg: wmv): " answer
+	if [[ $answer  != "" ]]; then
+		extra_pera=1
+	fi
+
+	func_() {
+		let "file_count+=1"
+		x=`ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//`
+		let "h+=`echo $x | cut -d: -f1 | sed 's:^0::g'`" 
+		let "m+=`echo $x | cut -d: -f2 | sed 's:^0::g'`" 
+		let "s+=`echo $x | cut -d: -f3 | cut -d '.' -f1 | sed 's:^0::g'`"	
+	}
+
+
+	l="*.mp3"
+	if [[ $extra_pera == 1 ]] ; then
+		for f in `find . \( -iname "*mp3" -o -iname "*$answer" \)` ; do 
+			func_
+		done
+	else
+		for f in `find . -iname "*.mp3"` ; do 
+			func_
+		done
+	fi
+	SEC=$s
+	SEC=$(( $SEC + $m * 60 ))
+	SEC=$(( $SEC + $h * 3600 ))
+
+	echo -e "\n\nThere are $file_count files.\n"
+	eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
+else
+
+	echo "
 ######################################################################
 # All mp3 files length.                                              # 
 # NOTE: only in this directory (no children directory included)      #
@@ -7,34 +53,33 @@ echo "
 #                                                                    #
 # Error (should debug):                                              #
 #         line 20: 09: value too great for base (error token is '09')#
-######################################################################"
+######################################################################
+"
 
-H=0
-M=0
-S=0
-for f in *.mp3; do 
-	a=`ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n"`
-	
-	float=`echo $a | cut -d: -f3`
-	s=${float%.*}
-	
-	H=$(( `echo $a | cut -d: -f1` + $H ))
-	M=$(( `echo $a | cut -d: -f2` + $M ))
-	S=$(( $s + $S ))
-done
-echo "$H:$M:$S"
+	H=0
+	M=0
+	S=0
+	file_count=0
+	for f in `ls *.mp3 2>/dev/null` ; do
+		let "file_count+=1"
+		a=`ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n"`
+		
+		float=`echo $a | cut -d: -f3`
+		s=${float%.*}
+		
+		H=$(( `echo $a | cut -d: -f1` + $H ))
+		M=$(( `echo $a | cut -d: -f2` + $M ))
+		S=$(( $s + $S ))
+	done
 
+	SEC=$S
+	SEC=$(( $SEC + $M * 60 ))
+	SEC=$(( $SEC + $H * 3600 ))
 
-convertsecs() {
- ((h=${1}/3600))
- ((m=(${1}%3600)/60))
- ((s=${1}%60))
- printf "%02d:%02d:%02d\n" $h $m $s
-}
-
-SEC=$S
-SEC=$(( $SEC + $M * 60 ))
-SEC=$(( $SEC + $H * 3600 ))
-
-echo "HH:MM:SS"
-convertsecs $SEC
+	if [[ $SEC == 0 ]] ; then
+		echo -e "\nThere is NO mp3 file\n"
+		exit
+	fi
+	echo -e "\n\nThere are $file_count files.\n"
+	eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
+fi
