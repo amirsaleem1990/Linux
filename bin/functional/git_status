@@ -1,4 +1,9 @@
 #!/usr/bin/env ipython3
+from termcolor import colored
+print(colored("\n\n\tFor actual status for each repo run:", 'red'),
+		colored("""\n\t\tfor i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; sleep 1s ; cd ../ ; done\n""", 'green')) 
+
+
 import os
 os.chdir("/home/amir/github")
 
@@ -43,13 +48,17 @@ for i in repos:
 	a = [i.strip() for i in '||'.join(a).replace("\n", "").replace("\t", '').split('||') if i]
 	if '(use "git push" to publish your local commits)' in ''.join(a):
 		d_['To be pushed'].append(i)
-	if '(use "git add <file>..." to update what will be committed)' in ''.join(a):
+	if '(use "git add <file>..." to update what will be committed)' in ''.join(a) or ('(use "git add <file>..." to include in what will be committed)' in ''.join(a)) :
 		d_['To be commit'].append(i)
 		if '(use "git add <file>..." to include in what will be committed)' in ''.join(a):
 			d_['To be pushed'].append(i)
 	else:
 		lst = True
 	os.chdir("../")
+
+for i in d_['To be pushed']:
+	if i in d_['To be commit']:
+		d_['To be pushed'].remove(i)
 
 for k,v in d_.items():
 	for val in set(v):
@@ -61,3 +70,5 @@ for k,v in d_.items():
 if aa:
 	print("Nothing to Add or Push")
 print()
+
+
