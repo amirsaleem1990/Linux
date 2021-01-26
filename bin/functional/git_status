@@ -59,16 +59,13 @@ for i in repos:
 for i in d_['To be pushed']:
 	if i in d_['To be commit']:
 		d_['To be pushed'].remove(i)
-
+break_ = True
 for k,v in d_.items():
 	for val in set(v):
 		print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
-	print()
-
-
-
-if aa:
-	print("Nothing to Add or Push")
+		break_ = False
+if break_:
+	print("\nNothing to Add or Push")
 print()
 
 
