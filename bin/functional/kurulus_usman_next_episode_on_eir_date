@@ -67,13 +67,13 @@ print(""" -------------------####
 print("\nLast video downloaded was:", last_video_downloaded)
 
 
-print("""
-####################################################
-# agar video download kar len to                   #
-# </home/amir/.kurulus_usman_last_downloaded.txt>  #
-# file ko update kar den                           #
-####################################################
-\n""")
+# print("""
+# ####################################################
+# # agar video download kar len to                   #
+# # </home/amir/.kurulus_usman_last_downloaded.txt>  #
+# # file ko update kar den                           #
+# ####################################################
+# \n""")
 
 
 if g:
