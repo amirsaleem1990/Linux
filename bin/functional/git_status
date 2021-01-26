@@ -64,6 +64,7 @@ for k,v in d_.items():
 	for val in set(v):
 		print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
 		break_ = False
+	print()
 if break_:
 	print("\nNothing to Add or Push")
 print()
