@@ -1,0 +1,12 @@
+#!/bin/bash
+IFS=$'\n'
+for i in `ls /home/amir/github/`; do 
+	if [[ $i == "lfd-projects" ]] ; then 
+		continue
+	fi
+
+	echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i"
+	cd /home/amir/github/$i
+	git status
+
+done
