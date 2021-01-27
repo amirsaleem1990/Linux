@@ -964,3 +964,5 @@ or hamen srif user group tak ka sara data lena h, (yani k har line me group k ba
 # convert seconds to day, hours, minutes, secons .................. eval "echo "
 
 # convert seconds to day, hours, minutes, secons .................. eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
+
+# check if library is installed ......... which ffmpeg > /dev/null || { echo "Install ffmpeg, with 'sudo apt-get install ffmpeg'" >&2; exit 1; }
