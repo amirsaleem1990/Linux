@@ -37,7 +37,9 @@ def Type_casting(df_id):
 	a = df.memory_usage(deep=True).sum()
 	a_ = df.memory_usage(deep=True)
 	print(f"\n\nTotal Reduction: {round((1-a/b)*100, 2)} %\n\n")
-
+	print(f"Before : {round(b    / 1024 ** 2, 2) } MB")
+	print(f"After  : {round(a    / 1024 ** 2, 2) } MB")
+	print(f"Reduced: {round((b-a)/ 1024 ** 2, 2) } MB")
 	((a_ / b_).sort_values().reset_index(drop=True) // .1 * 10).plot(kind='hist',
 																	 grid=True,
 																	 figsize=(14,7));
