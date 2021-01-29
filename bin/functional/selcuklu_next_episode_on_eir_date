@@ -20,7 +20,7 @@ from termcolor import colored
 # print(tabulate(df))
 
 print()
-_list_file_name_ = "/home/amir/cat .selcul_last_downloaded.txt"
+_list_file_name_ = "/home/amir/.selcul_last_downloaded.txt"
 from tabulate import tabulate
 import os
 import sys
