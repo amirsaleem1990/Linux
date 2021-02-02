@@ -30,7 +30,7 @@ else
 		rev |\
 		sed /─/d |\
 		sed /^$/d |\
-		sed '$ d' |\
+		# sed '$ d' |\
 		sort |\
 		uniq -c |\
 		sed 's/^ \{1,\}//g' |\

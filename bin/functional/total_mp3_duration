@@ -13,7 +13,12 @@ if [[ $ans == "y" ]]; then
 	IFS=$'\n'
 	h=0;m=0;s=0
 	file_count=0
-	read -p "The default is mp3, are you need new one (eg: wmv), if yes enter without dot (eg: wmv): " answer
+	echo -e "\n---------------------------------------------------------------------"
+	echo -n ">>>>>>>>>>> extentions in this directory and subdirectories <<<<<<<"
+	check_uniqe_file_extentions 2
+	echo -e "---------------------------------------------------------------------\n"
+	echo -e "The default is mp3, are you need new one (eg: wmv), if yes\n\t1-Enter without dot (eg: wmv)\n\t2-if you need multiple extentions saparate it by pipe <|>, eg: wmv|ogg\n"
+	read answer
 	if [[ $answer  != "" ]]; then
 		extra_pera=1
 	fi
@@ -29,7 +34,8 @@ if [[ $ans == "y" ]]; then
 
 	l="*.mp3"
 	if [[ $extra_pera == 1 ]] ; then
-		for f in `find . \( -iname "*mp3" -o -iname "*$answer" \)` ; do 
+		# for f in `find . \( -iname "*mp3" -o -iname "*$answer" \)` ; do 
+		for f in `find . -regextype posix-egrep -regex ".*\.($answer)$"`; do
 			func_
 		done
 	else
