@@ -969,4 +969,5 @@ or hamen srif user group tak ka sara data lena h, (yani k har line me group k ba
 
 # unique owners of files and directories .............. find  .  -printf "%u\n" | sort | uniq -c
 
-# find for multiple extentions ........... find . -regextype posix-egrep -regex ".*\.(aac|m4a)$" .............. find . -name "*.aac" -or -name "*.m4a" .......... BOTH ARE SAME
+# find for multiple extentions ........... find . -regextype posix-egrep -regex ".*\.(aac|m4a)$" .............. find . -name "*.aac" -or -name "*.m4a" ..........  find . \( -name \*.py -o -name  \*.ipynb \) ............... ALL return the same value
+# convert webm to mp4 ............... ffmpeg -i video.webm -crf 26 video.mp4
