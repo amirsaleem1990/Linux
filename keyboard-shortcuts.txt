@@ -1,13 +1,16 @@
 CTRL+A – Quickly move to the beginning of line.
 CTRL+B – To move backward one character.
+Alt+B  – Go left (back) one word.
 CTRL+C – Stop the currently running command
 CTRL+D – Delete one character backward.
 CTRL+E – Move to the end of line
 CTRL+F – Move forward one character
+Alt+F  – Go right (forward) one word.
 CTRL+G – Leave the history searching mode without running the command.
 CTRL+H – Delete the characters before the cursor, same as BASKSPACE.
 CTRL+J – Same as ENTER/RETURN key.
 CTRL+K – Delete all characters after the cursor.
+ALT+D  – Delete all characters after the cursor.
 CTRL+L – Clears the screen and redisplay the line.
 CTRL+M – Same as CTRL+J or RETURN.
 CTRL+N – Display next line in command history.
