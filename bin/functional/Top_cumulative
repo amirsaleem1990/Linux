@@ -1,16 +1,19 @@
 #!/bin/bash
+rm -f ~/AB_{cpu,ram}.txt
 RED="\033[0;31m"
 normal="\033[0m"
-if [[ $1 == 'cpu' ]]; then
-	sort_by=1
-else
-	if [[ $1 == 'ram' ]]; then
-		sort_by=2
-	else
-		echo "The argument of this script is either <cpu> or <ram>."
-		exit 
-	fi
-fi
+# if [[ $1 == 'cpu' ]]; then
+# 	sort_by=1
+# else
+# 	if [[ $1 == 'ram' ]]; then
+# 		sort_by=2
+# 	else
+# 		echo "The argument of this script is either <cpu> or <ram>."
+# 		exit 
+# 	fi
+# fi
+
+sort_by=1
 
 echo ''
 IFS=$'\n'
@@ -52,79 +55,147 @@ for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 
 	cat ~/ab.txt | grep -v $i > ~/.AB.txt
 	mv ~/.AB.txt ~/ab.txt
 done
-mv  ~/ab.txt ~/.AB.txt
-cat ~/.amb.txt ~/.AB.txt > ~/ab.txt
-cpu_total=`sed '/^$/d' ~/ab.txt | cut -d, -f1 | paste -sd+ | bc`
+sed -i '/^$/d' ~/.amb.txt
+python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('ab.txt', 'r').read().splitlines()]+['\n']))"
+paste  .MM ~/ab.txt  -d,  | grep -v ',$'  >  ~/.AB.txt
+# mv  ~/ab.txt ~/.AB.txt
+
+python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/.amb.txt', 'r').read().splitlines() if i]+['\n']))"
+paste  .MM2 ~/.amb.txt  -d,  | grep -v ',$'  >  ~/.AB_2.txt
+cat ~/.AB_2.txt ~/.AB.txt  >  ~/ab.txt
+# mv ~/.SS ~/.AB.txt
+
+
+# cat ~/.amb.txt ~/.AB.txt | grep -v ',$' > ~/ab.txt
+# exit
+
+cpu_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 
-echo "CPU,MEM,COMMAND" > ~/.AB.txt
-echo '' >> ~/.AB.txt
-sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
-echo "CPU,MEM,COMMAND" >> ~/.AB.txt
-cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
-rm -f ~/.{amb,AB}.txt ~/ab.txt 
+# echo "CPU,MEM,COMMAND" > ~/.AB.txt
+echo "MEM(MB),CPU,MEM,COMMAND" > ~/.AB_cpu.txt
+echo "MEM(MB),CPU,MEM,COMMAND" > ~/.AB_ram.txt
+paste_to_files() {
+	echo "$1" >> ~/.AB_cpu.txt
+	echo "$1" >> ~/.AB_ram.txt
+}
+func_2(){
+	n=""
+	if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
+		n=" "
+	fi
+	
+	# echo -e "\n\n${RED}****************************************************************${normal}"
+	f="\n\n****************************************************************\n"
+	
+	# echo -n  "Cpu : $cpu_total $n%   "
+	f=`echo "$f""Cpu : $cpu_total $n%   "`
 
-n=""
-if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
-	n=" "
-fi
-echo -e "\n\n${RED}****************************************************************${normal}"
-echo -n  "Cpu : $cpu_total $n%   "
-for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do 
-	echo -n "-"
-done
-echo 
 
-#--------------------------------------------------------
-# ram_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
-# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
-# if [[ $ram_total -eq 0 ]]; then
-# 	sleep 1
-# 	Top_cumulative $1
-# fi
-# echo -n  "ram : $ram_total %   "
-# for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "-" ; done
-# echo
-#--------------------------------------------------------
+	
+	for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do 
+		# echo -n "-"
+		f=`echo "$f""-"`
+	done
 
-ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-ram_total=`echo $ram | cut -d, -f1`
-ram_used=`echo $ram | cut -d, -f2`
-ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
-ram_used_perc=`echo "$ram_used_perc * 100" | bc`
-ram_used_perc=${ram_used_perc%.*}
+	f=`echo "$f""\n"`	
+	# echo
 
-swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-if [[ $swap != "0,0,0" ]] ; then
-	swap_total=`echo $swap | cut -d, -f1`
-	swap_used=`echo $swap | cut -d, -f2`
-	swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
-	swap_used_perc=`echo "$swap_used_perc * 100" | bc`
-	swap_used_perc=${swap_used_perc%.*}
-fi
-echo -n Ram\ \:\ 
-echo -n  "$ram_used_perc %   "
-for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
-	echo -n "-"
-done
-echo 
+	ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
+	ram_total=`echo $ram | cut -d, -f1`
+	ram_used=`echo $ram | cut -d, -f2`
+	ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
+	ram_used_perc=`echo "$ram_used_perc * 100" | bc`
+	ram_used_perc=${ram_used_perc%.*}
 
-if [[ $swap_used_perc -eq "" ]] ; then
-	:
-else
+	swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 	if [[ $swap != "0,0,0" ]] ; then
+		swap_total=`echo $swap | cut -d, -f1`
+		swap_used=`echo $swap | cut -d, -f2`
+		swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
+		swap_used_perc=`echo "$swap_used_perc * 100" | bc`
+		swap_used_perc=${swap_used_perc%.*}
+	fi
+	
+	# echo -n Ram\ \:\ 
+	f=`echo "$f""Ram : "`
+
+	# echo -n  "$ram_used_perc %   "
+	f=`echo "$f""$ram_used_perc %   "`
+
+	for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
+		# echo -n "-"
+		f=`echo "$f""-"`
+	done
+	f=`echo "$f""\n"`
+	# echo 
+
+	if [[ $swap_used_perc -eq "" ]] ; then
 		:
 	else
-		echo -n Swap\:\ 
-		echo -n  "$swap_used_perc %   "
-		for i in $(seq 1 `echo "$swap_used_perc / 2"     | bc`); do
-			echo -n "-"
-		done
-		echo 
+		if [[ $swap != "0,0,0" ]] ; then
+			:
+		else
+			# echo -n Swap\:\ 
+			f=`echo "$f""Swap:"`
+
+			# echo -n  "$swap_used_perc %   "
+			f=`echo "$f""$swap_used_perc %   "`
+
+			for i in $(seq 1 `echo "$swap_used_perc / 2"     | bc`); do
+				# echo -n "-"
+				f=`echo "$f""-"`
+			done
+			# echo 
+			f=`echo "$f""\n\n"`
+		fi
 	fi
-fi
 
-echo -e "${RED}****************************************************************${normal}\n\n"
+	# echo -e "${RED}****************************************************************${normal}\n\n"
+	f=`echo "$f""****************************************************************\n\n"`
+	
 
+	echo $f
+}
+fun() {
+	# echo '' >> ~/.AB.txt
+	paste_to_files ''
+	
+	# echo "<<<,CPU,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_cpu.txt
+	# echo "<<<,MEM,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_ram.txt
+	
+	echo "===,===,===,======= CPU ============================" >> ~/.AB_cpu.txt
+	echo "===,===,===,======= RAM ============================" >> ~/.AB_ram.txt
 
-rm -f ~/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
+	# sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
+	sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB_cpu.txt
+	sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB_ram.txt
+
+	# echo "CPU,MEM,COMMAND" >> ~/.AB.txt
+	# paste_to_files "MEM(MB),CPU,MEM,COMMAND"
+
+	# cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
+
+	# rm -f ~/.{amb,AB}.txt ~/ab.txt
+
+	f=`func_2`
+
+	#--------------------------------------------------------
+	# ram_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
+	# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
+	# if [[ $ram_total -eq 0 ]]; then
+	# 	sleep 1
+	# 	Top_cumulative $1
+	# fi
+	# echo -n  "ram : $ram_total %   "
+	# for i in $(seq 1 `echo "$ram_total / 2"     | bc`); do echo -n "-" ; done
+	# echo
+	#--------------------------------------------------------
+
+	rm -f ~/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
+	
+}
+fun
+paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > .AB.txt
+cat .AB.txt  | sed '/^$/d'
+echo -e "$f" | sed '/^$/d'
