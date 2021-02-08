@@ -14,5 +14,5 @@ for i in `ls *.pdf` ; do
 	pages=`pdfinfo $i 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
 	echo "$pages,|$i" >> /home/amir/.shba
 done
-cat ~/.shba  | column -t -s,\| 
-rm -f /home/amir/.shba 2>/dev/null
+cat ~/.shba  | sort -n | column -t -s,\| 
+
