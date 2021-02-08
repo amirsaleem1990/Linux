@@ -972,3 +972,14 @@ or hamen srif user group tak ka sara data lena h, (yani k har line me group k ba
 # find for multiple extentions ........... find . -regextype posix-egrep -regex ".*\.(aac|m4a)$" .............. find . -name "*.aac" -or -name "*.m4a" ..........  find . \( -name \*.py -o -name  \*.ipynb \) ............... ALL return the same value
 # convert webm to mp4 ............... ffmpeg -i video.webm -crf 26 video.mp4
 get only specific range of lines ................. sed -n '16224,16482p;16483q' filename > newfile ................. https://stackoverflow.com/questions/83329/how-can-i-extract-a-predetermined-range-of-lines-from-a-text-file-on-unix
+# another pdf reader .............. okular
+
+# convert epoch seconds to date time ............ date -d  @1612762179
+
+# install .deb file using:
+#### gdebi (gdebi application.deb)
+#### dpkg  (dpkg -i application.deb)
+
+
+
+
