@@ -56,12 +56,12 @@ for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 
 	mv ~/.AB.txt ~/ab.txt
 done
 sed -i '/^$/d' ~/.amb.txt
-python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('ab.txt', 'r').read().splitlines()]+['\n']))"
-paste  .MM ~/ab.txt  -d,  | grep -v ',$'  >  ~/.AB.txt
+python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/ab.txt', 'r').read().splitlines()]+['\n']))"
+paste  ~/.MM ~/ab.txt  -d,  | grep -v ',$'  >  ~/.AB.txt
 # mv  ~/ab.txt ~/.AB.txt
 
 python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/.amb.txt', 'r').read().splitlines() if i]+['\n']))"
-paste  .MM2 ~/.amb.txt  -d,  | grep -v ',$'  >  ~/.AB_2.txt
+paste  ~/.MM2 ~/.amb.txt  -d,  | grep -v ',$'  >  ~/.AB_2.txt
 cat ~/.AB_2.txt ~/.AB.txt  >  ~/ab.txt
 # mv ~/.SS ~/.AB.txt
 
@@ -180,6 +180,8 @@ fun() {
 
 	f=`func_2`
 
+	echo "===,===,===,======= CPU ============================" >> ~/.AB_cpu.txt
+	echo "===,===,===,======= RAM ============================" >> ~/.AB_ram.txt
 	#--------------------------------------------------------
 	# ram_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
 	# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
@@ -197,5 +199,8 @@ fun() {
 }
 fun
 paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > .AB.txt
-cat .AB.txt  | sed '/^$/d'
-echo -e "$f" | sed '/^$/d'
+
+# cat .AB.txt  | sed '/^$/d'
+# echo -e "$f" | sed '/^$/d'
+
+echo -e "$f" | sed '/^$/d' > ~/.LMSF
