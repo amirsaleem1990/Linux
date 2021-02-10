@@ -1,0 +1,9 @@
+#!/bin/bash
+IFS=$'\n'
+echo -e  "Total_SEC,DD,HH,MM,SS,File Name\n==,==,==,==,==,===============" >~/.sb1
+for file in `ls`; do 
+	SEC=$(( `date +%s` - `stat -c %Y $file` ))
+	x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)),%H,%M,%S')"`
+	echo "$SEC,$x,$file"
+done >> ~/.sb1
+cat ~/.sb1 | sort -n| column -t -s,
