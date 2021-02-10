@@ -23,18 +23,28 @@ if [[ $parameter -eq 1 ]] ; then
 		sed 's/\ \{2,\}//g'
 
 else
-	tree |\
-		rev |\
-		grep  '\.'|\
-		cut -d. -f1 |\
-		rev |\
-		sed /─/d |\
-		sed /^$/d |\
-		# sed '$ d' |\
-		sort |\
-		uniq -c |\
-		sed 's/^ \{1,\}//g' |\
-		column -t 
+	# tree |\
+	# 	rev |\
+	# 	grep  '\.'|\
+	# 	cut -d. -f1 |\
+	# 	rev |\
+	# 	sed /─/d |\
+	# 	sed /^$/d |\
+	# 	# sed '$ d' |\
+	# 	sort |\
+	# 	uniq -c |\
+	# 	sed 's/^ \{1,\}//g' |\
+	# 	column -t 
+	echo "Extention,Size(MB),Qty" > ~/.xm2
+	for extention in `tree |	rev | grep  '\.'| cut -d. -f1 |	rev | sed /─/d | sed /^$/d | sort |	uniq`; do
+		echo -n  "$extention," >> ~/.xm2
+		for file in `find . -name "*$extention"`; do
+			du -s -BK $file | cut -d 'K' -f1
+		done | paste -sd+ | bc > ~/.xm1
+		f=$( echo `cat ~/.xm1` / 1024 | bc )
+		echo "$f,`find . -name "*$extention" | wc -l`" >> ~/.xm2
+	done
+	cat ~/.xm2 | column -t -s,
 fi
 
 
