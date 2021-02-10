@@ -983,3 +983,4 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 
 
 
+calculator ......... echo 40/2+401 | bc ................ echo 40-40+401 | bc
