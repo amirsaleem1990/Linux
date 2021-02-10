@@ -60,17 +60,26 @@ for i in d_['To be pushed']:
 	if i in d_['To be commit']:
 		d_['To be pushed'].remove(i)
 break_ = True
-for k,v in d_.items():
-	if not v:
-		continue
-	print(colored(f">>>>>>> {k} <<<<<<<<<", 'red'))
-	for val in set(v):
-		#print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
-		print("   ", val)
-		break_ = False
+
+
+if d_['To be pushed'] and (not d_['To be commit']):
+	print("")
+	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+	if ans == "y":
+		os.system("git_push")
+
+else:
+	for k,v in d_.items():
+		if not v:
+			continue
+		print(colored(f">>>>>>> {k} <<<<<<<<<", 'red'))
+		for val in set(v):
+			#print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
+			print("   ", val)
+			break_ = False
+		print()
+	if break_:
+		print("\nNothing to Add or Push")
 	print()
-if break_:
-	print("\nNothing to Add or Push")
-print()
 
 
