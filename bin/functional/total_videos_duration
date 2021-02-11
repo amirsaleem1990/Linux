@@ -16,9 +16,15 @@ for i in {mp4,mkv,webm}; do
 		h=`echo $duration | cut -d ":" -f 1 | sed 's/^0//g'`
 		m=`echo $duration | cut -d ":" -f 2 | sed 's/^0//g'`
 		s=`echo $duration | cut -d ":" -f 3 | sed 's/^0//g' | awk '{print int($0)}'`
-		hours=$(( $hours + $h ))
-		mins=$(( $mins + $m ))
-		secs=$(( $secs + s))
+		if [[ $h > 0 ]] ; then
+			hours=$(( $hours + $h ))
+		fi
+		if [[ $m > 0 ]]; then
+			mins=$(( $mins + $m ))
+		fi
+		if [[ $s > 0 ]]; then
+			secs=$(( $secs + $s))
+		fi
 	done
 done
 
