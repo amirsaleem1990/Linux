@@ -984,3 +984,4 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 
 
 calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc
+find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
