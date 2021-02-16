@@ -12,7 +12,8 @@ adb kill server .................... adb kill-server
 			OR
 			adb shell ifconfig
 		computer sy cable detetch kar den.
-
+		
+		adb tcpip 5555; adb connect `adb shell ifconfig wlan0 | grep 192 | cut -d: -f2 | cut -d ' ' -f1`:5555
 auto connect to mobile ........... adb connect 192.168.100.24:5555
 
 3- adb push file_to_push_path /sdcard/
