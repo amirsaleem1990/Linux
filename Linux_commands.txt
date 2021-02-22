@@ -987,3 +987,4 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 # find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
 # get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
 
+# sort ps by cpu ........ ps --sort=-pcpu
