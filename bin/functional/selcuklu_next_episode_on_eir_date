@@ -77,6 +77,7 @@ print("Last downloaded    :", last_downloaded_episode)
 last_episode_link = f"https://www.multipointtv.net/uyanis-buyuk-selcuklu-episode-{last_downloaded_episode}-english"
 print("Last episode link  :", last_episode_link)
 print("\n")
+
 command = f"curl -s {last_episode_link} > /home/amir/ab__.txT"
 os.system(command)
 
@@ -92,20 +93,42 @@ for i in b.select("iframe"):
 os.remove("/home/amir/ab__.txT")
 
 
+if (next_episode - last_downloaded_episode) > 1:
+	next_episode_link = '-'.join(
+		last_episode_link.split('-')[:-2] + [str(next_episode-1)] + [last_episode_link.split('-')[-1]]
+		)
+	command = f"curl -s {next_episode_link} > /home/amir/ab__.txT"
+	# print(command)
+	os.system(command)
+	# print(next_episode_link)
+	b = BeautifulSoup(open("/home/amir/ab__.txT", "r"), "lxml")
+	for i in b.select("iframe"):
+		try:
+			l = i['src']
+			if "autoplay" in l:
+				l = "https:" + l[:l.index("?")]
+				print("Next episode Video Download link:", l)
+		except:
+			pass
+	os.remove("/home/amir/ab__.txT")
+
+
+
 if g:
 	ans_ = input("\n\nAre you need to update /home/amir/.selcul_last_downloaded.txt file?\n[y|n]  ")
 	if ans_ == "y":
-		ans_ = input("Enter last episode you downloaded/watched to enter in /home/amir/.selcul_last_downloaded.txt: ")
-		open(_list_file_name_, 'w').write(ans_)
+		# ans_ = input("Enter last episode you downloaded/watched to enter in /home/amir/.selcul_last_downloaded.txt: ")
+		# open(_list_file_name_, 'w').write(ans_)
+		open(_list_file_name_, 'w').write(str(next_episode-1))
 print()
 
 
-# print("""
-# #############################################
-# # agar video download kar len to            #
-# # </home/amir/.selcul_last_downloaded.txt>  #
-# # file ko update kar den                    #
-# #############################################
-# """)
+print("""
+#############################################
+# agar video download kar len to            #
+# </home/amir/.selcul_last_downloaded.txt>  #
+# file ko update kar den                    #
+#############################################
+""")
 
-# print()
+print()
