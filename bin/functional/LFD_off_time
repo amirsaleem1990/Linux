@@ -1,4 +1,7 @@
 #!/bin/bash
+RED="\033[0;31m"
+normal="\033[0m"
+
 file_name=/home/amir/.todays_first_login_time
 
 last=`cat $file_name`
@@ -16,8 +19,14 @@ time_left=`echo 32400 - $time_passed | bc`
 
 echo -e "\nArrival time `date -d @$last +%T\ \|\ %d-%b-%Y`"
 echo -e   "Current time `date -d @$now  +%T\ \|\ %d-%b-%Y`"
-echo -e   "Off time     `date -d @$( echo $now+$time_left | bc ) +%T\ \|\ %d-%b-%Y`"
 
 echo -e "\n             HH:MM:SS"
 echo -e "Time passed  `eval "echo $(date -ud "@$time_passed" +'%H:%M:%S')"`"
-echo -e "Time lef     `eval "echo $(date -ud "@$time_left"   +'%H:%M:%S')"`"
+
+echo -e "\n"
+
+s_=`eval "echo $(date -ud "@$time_left"   +'%H:%M:%S')"`
+echo -e "Time left    ${RED}\e[5m$s_${normal}"
+echo -e   "Off time     `date -d @$( echo $now+$time_left | bc ) +%T\ \|\ %d-%b-%Y`"
+
+echo -e "\n"
