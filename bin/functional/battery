@@ -10,9 +10,9 @@ upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|
 
 echo -e "
 
-${RED}Energy:${normal} Amount of energy (measured in Wh) currently available in the power source.
-${RED}EnergyFull:${normal} Amount of energy (measured in Wh) in the power source when it's considered full.
-${RED}EnergyRate:${normal} Amount of energy being drained from the source, measured in W. If positive, the source is being discharged, if negative it's being charged.
+${RED}Energy     :${normal} Amount of energy (measured in Wh) currently available in the power source.
+${RED}EnergyFull :${normal} Amount of energy (measured in Wh) in the power source when it's considered full.
+${RED}EnergyRate :${normal} Amount of energy being drained from the source, measured in W. If positive, the source is being discharged, if negative it's being charged.
 ${RED}TimeToEmpty:${normal} Number of seconds until the power source is considered empty.
-${RED}TimeToFull:${normal} Number of seconds until the power source is considered full.
+${RED}TimeToFull :${normal} Number of seconds until the power source is considered full.
 "

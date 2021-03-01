@@ -43,8 +43,8 @@ def Type_casting(df_id):
 	((a_ / b_).sort_values().reset_index(drop=True) // .1 * 10).plot(kind='hist',
 																	 grid=True,
 																	 figsize=(14,7));
-	plt.xlabel("Reduction % ", size=14) #, color='red');
-	plt.ylabel("Frequency"   , size=14) #, color='red');
-	plt.title ("Reduction % plot", size=16, color='red');
+	# plt.xlabel("Reduction % ", size=14) #, color='red');
+	# plt.ylabel("Frequency"   , size=14) #, color='red');
+	# plt.title ("Reduction % plot", size=16, color='red');
 
-	plt.show()
+	# plt.show()
