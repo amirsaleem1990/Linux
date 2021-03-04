@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -f ~/.xm2
 IFS=$'\n'
 parameter=$1
 echo -e "\n"
@@ -35,16 +36,16 @@ else
 	# 	uniq -c |\
 	# 	sed 's/^ \{1,\}//g' |\
 	# 	column -t 
-	echo "Extention,Size(MB),Qty" > ~/.xm2
-	for extention in `tree |	rev | grep  '\.'| cut -d. -f1 |	rev | sed /─/d | sed /^$/d | sort |	uniq`; do
+	for extention in `tree | rev | grep  '\.'| cut -d. -f1 | rev | sed /─/d | sed /^$/d | sort | uniq`; do
 		echo -n  "$extention," >> ~/.xm2
 		for file in `find . -name "*$extention"`; do
-			du -s -BK $file | cut -d 'K' -f1
+			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > ~/.xm1
 		f=$( echo `cat ~/.xm1` / 1024 | bc )
 		echo "$f,`find . -name "*$extention" | wc -l`" >> ~/.xm2
 	done
-	cat ~/.xm2 | column -t -s,
+	echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat ~/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
+	# cat ~/.xm2 | column -t -s,
 fi
 
 
