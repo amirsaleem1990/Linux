@@ -115,6 +115,10 @@ rm -f alias.txt
 if [[ $? != 0 ]]; then echo "rm -f alias.txt"; exit ; fi
 pip3 install youtube-dl
 if [[ $? != 0 ]]; then echo "pip3 install youtube-dl"; exit ; fi
+
+pip3 install xlrd==1.2.0
+if [[ $? != 0 ]]; then echo "pip3 install xlrd==1.2.0"; exit ; fi
+
 pip3 install bs4
 if [[ $? != 0 ]]; then echo "pip3 install bs4"; exit ; fi
 pip3 install lxml
