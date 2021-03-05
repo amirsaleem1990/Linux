@@ -1,0 +1,13 @@
+1614871331705	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.ZmK5lsdZbUa2"
+*** You are running in headless mode.
+
+(/usr/lib/firefox/firefox:19009): GLib-GObject-CRITICAL **: 20:22:13.229: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+
+(/usr/lib/firefox/firefox:19030): GLib-GObject-CRITICAL **: 20:22:13.315: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614871334410	Marionette	INFO	Listening on port 36743
+1614871334439	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:19104): GLib-GObject-CRITICAL **: 20:22:14.448: g_object_set: assertion 'G_IS_OBJECT (object)' failed
+1614871353719	Marionette	INFO	Stopped listening on port 36743
+JavaScript error: https://ohrm.lfdanalytics.com/symfony/web/webres_5fa517042fb5e3.16670395/js/jquery/jquery.ui.datepicker.js, line 1138: uncaught exception: Invalid arguments
