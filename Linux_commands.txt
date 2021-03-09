@@ -988,3 +988,5 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 # get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
 
 # sort ps by cpu ........ ps --sort=-pcpu
+
+# date -d '2021-03-09 08:10' +'%s' ......... Convert datetime to epoch seconds
