@@ -26,7 +26,11 @@ echo -e "Time passed  `eval "echo $(date -ud "@$time_passed" +'%H:%M:%S')"`"
 echo -e "\n"
 
 s_=`eval "echo $(date -ud "@$time_left"   +'%H:%M:%S')"`
-echo -e "Time left    ${RED}\e[5m$s_${normal}"
+
+
+# echo -e "Time left    ${RED}\e[5m$s_${normal}" # blink
+echo -e "Time left    ${RED}$s_${normal}"
+
 echo -e   "Off time     `date -d @$( echo $now+$time_left | bc ) +%T\ \|\ %d-%b-%Y`"
 
 echo -e "\n"
