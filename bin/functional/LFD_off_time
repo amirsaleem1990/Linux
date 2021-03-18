@@ -11,7 +11,8 @@ last_date=`date -d @$last +%D`
 now_date=`date -d @$now +%D`
 
 if [[ $last_date != $now_date ]]; then
-    echo $now > $file_name
+    # echo $now > $file_name
+	/home/amir/github/Amir-personal/get_actual_login_time_at_HRM_tool.py 
 fi
 
 time_passed=`echo $now-$last | bc`
