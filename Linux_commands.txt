@@ -990,3 +990,5 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 # sort ps by cpu ........ ps --sort=-pcpu
 
 # date -d '2021-03-09 08:10' +'%s' ......... Convert datetime to epoch seconds
+
+# google chrome bookmarks .......... /home/amir/.config/google-chrome/Default/Bookmarks
