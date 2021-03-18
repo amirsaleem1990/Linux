@@ -1,0 +1,4 @@
+#!/bin/bash
+adb tcpip 5555
+read -p "Enter any key after allow in mobile: "
+adb connect `adb shell ifconfig wlan0 | grep 192 | cut -d: -f2 | cut -d ' ' -f1`:5555
