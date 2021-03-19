@@ -13,6 +13,7 @@ PS1='\[\033[01;32m\]\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 PATH=$PATH:/amir_bin
+export PYTHONPATH="/amir_bin/"
 
 bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"' 
 
