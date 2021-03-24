@@ -30,3 +30,11 @@ touchpad on off
 shitft + ctrl + f9
 
 
+Paste
+/home/amir/Paste
+CTRL+1
+
+Mn
+/usr/bin/xdotool key space
+shift+ctrl+m
+
