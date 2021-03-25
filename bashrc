@@ -20,6 +20,3 @@ add:
 	export PYTHONPATH="/amir_bin/"
 	bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"' 
 
-
-
-unset color_prompt force_color_prompt
