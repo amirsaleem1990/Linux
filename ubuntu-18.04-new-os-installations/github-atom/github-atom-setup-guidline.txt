@@ -1,9 +1,9 @@
 # github atom setup guidline
 
-https://towardsdatascience.com/how-to-create-the-most-awesome-development-setup-for-data-science-using-atom-261113b46be8
+# https://towardsdatascience.com/how-to-create-the-most-awesome-development-setup-for-data-science-using-atom-261113b46be8
 
 wget  https://atom.io/download/deb -O atom.deb
 sudo dpkg -i atom.deb
 
-pip3 install ipykernel
+pip3 install ipykernel; 
 python3 -m ipykernel install --user
