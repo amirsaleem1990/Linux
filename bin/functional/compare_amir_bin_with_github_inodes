@@ -1,0 +1,16 @@
+#!/bin/bash
+IFS=$'\n'
+cd /amir_bin/
+for i in `ls`; do
+	here=`ls -i $i | cut -d' ' -f1`
+	in_github=`ls -i /home/amir/github/Linux/bin/functional/$i | cut -d' ' -f1`
+	if [[ $here -ne $in_github ]] ; then 
+		echo -e "\n<<< $i >>>"
+		echo -e "amir_bin : $here\ngithub   : $in_github"
+		diff $i /home/amir/github/Linux/bin/functional/$i
+		if [[ $? == 0 ]]; then
+			echo -e "\nNOTE: The inodes are different but both are identical"
+		fi
+	fi
+
+done
