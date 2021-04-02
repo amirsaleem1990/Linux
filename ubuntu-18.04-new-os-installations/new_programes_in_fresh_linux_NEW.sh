@@ -84,7 +84,10 @@ func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu
 func_ "ipython3 set_startupscript.py"
 rm -f set_startupscript.py  >> /home/amir/results.txT
 
-func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/alias.txt"
+#func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/alias.txt"
+
+func_ "wget https://github.com/amirsaleem1990/Linux/blob/master/alias"
+
 if [[ $? != 0 ]]; 
 	then echo "cat alias.txt >> ~/.bashrc"
 	exit
