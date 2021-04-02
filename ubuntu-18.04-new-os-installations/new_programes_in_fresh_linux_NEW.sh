@@ -85,7 +85,6 @@ func_ "ipython3 set_startupscript.py"
 rm -f set_startupscript.py  >> /home/amir/results.txT
 
 #func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/alias.txt"
-
 func_ "wget https://github.com/amirsaleem1990/Linux/blob/master/alias"
 
 if [[ $? != 0 ]]; 
@@ -96,8 +95,6 @@ rm -f alias.txt
 
 echo 'PATH="/amir_bin/:$PATH"' >> ~/.bashrc
 source  ~/.bashrc
-
-func_ "sudo mkdir /amir_bin/"
 
 func_ "pip3 install youtube-dl"
 func_ "pip3 install bs4"
@@ -116,6 +113,9 @@ func_ "sudo sh get-docker.sh"
 
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/git/master/github%20initial%20setup"
 func_ "bash 'github initial setup'"
+
+# func_ "sudo mkdir /amir_bin/"
+sudo ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
 
 # func_ "pip3 install statsmodels"
 # func_ "apm install ask-stack"
