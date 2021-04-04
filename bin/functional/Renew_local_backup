@@ -1,5 +1,5 @@
 #!/bin/bash
-kill `ps aux | grep LINUX_BACKUP | grep 'github' | sed 's/\ \{1,\}/,/g' | cut -d, -f2`
+kill `ps aux | grep LINUX_BACKUP_2 | grep 'github' | sed 's/\ \{1,\}/,/g' | cut -d, -f2`
 test -f /home/amir/.Last_renew_local_backup_time
 if [[ $? != 0 ]]; then
 	echo "12960000" > /home/amir/.Last_renew_local_backup_time
@@ -9,7 +9,7 @@ current_local_time=`date +%s`
 diff=$(( $current_local_time - $last_local_backup_time ))
 if [[ $diff > 1296000 ]]; then
 # if [[ $diff > 0 ]]; then
-	echo -e "The directory </media/500GB/LINUX_BACKUP/> have `du -sh /media/500GB/LINUX_BACKUP/ 2>/dev/null | sed 's/\t/,/g' | cut -d, -f1` of data\n\nThe directory </home/amir/> have `du -sh /home/amir/ 2>/dev/null | sed 's/\t/,/g' | cut -d, -f1` of data\n\nWe need to delete the backup directory </media/500GB/LINUX_BACKUP/>, and then create new one, if you agree please type <OK> in /home/amir/.renew_permision.txt (we opened it for you in sublime editor) in less then 1 minute, and save that file." > /home/amir/.renew_backup.txt
+	echo -e "The directory </media/500GB/LINUX_BACKUP_2/> have `du -sh /media/500GB/LINUX_BACKUP_2/ 2>/dev/null | sed 's/\t/,/g' | cut -d, -f1` of data\n\nThe directory </home/amir/> have `du -sh /home/amir/ 2>/dev/null | sed 's/\t/,/g' | cut -d, -f1` of data\n\nWe need to delete the backup directory </media/500GB/LINUX_BACKUP_2/>, and then create new one, if you agree please type <OK> in /home/amir/.renew_permision.txt (we opened it for you in sublime editor) in less then 1 minute, and save that file." > /home/amir/.renew_backup.txt
 	DEL -rf /home/amir/.renew_permision.txt
 	subl /home/amir/.renew_permision.txt
 	subl /home/amir/.renew_backup.txt
@@ -23,15 +23,15 @@ if [[ $diff > 1296000 ]]; then
 	permision=`cat /home/amir/.renew_permision.txt`
 	if [[ $permision == "OK" || permision == "ok" || permision == "Ok" ]]; then
 		echo -e "You can see the progress of renew backup at /home/amir/.renew_backup_progress.txt, either reload your sublime for seeing new progress, or type on your console\n> tail -f /home/amir/.renew_backup_progress.txt\n" > /home/amir/.renew_backup.txt
-		DEL -rf /media/500GB/LINUX_BACKUP/
+		DEL -rf /media/500GB/LINUX_BACKUP_2/
 		if [[ $? == 0 ]]; then
-			echo "/media/500GB/LINUX_BACKUP/ deleted Successfully" > /home/amir/.renew_backup_progress.txt 
+			echo "/media/500GB/LINUX_BACKUP_2/ deleted Successfully" > /home/amir/.renew_backup_progress.txt 
 		fi
-		cp -rv /home/amir/ /media/500GB/LINUX_BACKUP/ >> /home/amir/.renew_backup_progress.txt
+		cp -rv /home/amir/ /media/500GB/LINUX_BACKUP_2/ >> /home/amir/.renew_backup_progress.txt
 		if [[ $? == 0 ]]; then
 			echo "Successfully completed backup" >> /home/amir/.renew_backup_progress.txt
 		fi
 	fi
 fi
 echo "`date +%s`" > /home/amir/.Last_renew_local_backup_time
-/home/amir/github/Amir-personal/LINUX_BACKUP.sh &
+/home/amir/github/Amir-personal/LINUX_BACKUP_2.sh &
