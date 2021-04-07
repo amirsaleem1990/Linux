@@ -992,3 +992,7 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 # date -d '2021-03-09 08:10' +'%s' ......... Convert datetime to epoch seconds
 
 # google chrome bookmarks .......... /home/amir/.config/google-chrome/Default/Bookmarks
+
+# recover lost data ............ photorec
+# get pixels (width and height) of an image ............ identify -format '%w %h' img.png ; identify -format '%w %h' img.png ; identify img.png
+# Input/output error ................ 1 folder delete nahi ho raha tha (Input/output error), me ny as a root logoin ho kar bhi try kya magar wo delete nahi hwa, phir me ny <sudo nautilus .> kya, or phir us directory ko mouse sy click kar k delete ka button dabaya to wo delete ho gai
