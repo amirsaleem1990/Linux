@@ -1,5 +1,12 @@
 #!/usr/bin/ipython3
-
+print("""
+	=========== Example ===========
+	
+	import os
+	from save_locals_to_disK import save_locals_to_disk
+	zz = list(range(200000000))
+	save_locals_to_disk({i : (id(eval(i)), type(eval(i))) for i in dir()}, os.getcwd())
+""")
 def save_locals_to_disk(dict__, base_dir):
 	import pandas as pd
 	from IPython.display import display
