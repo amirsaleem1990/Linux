@@ -1,6 +1,7 @@
 #!/bin/bash
 IFS=$'\n'
 rm -f /home/amir/.shba 2>/dev/null
+echo -e "Pgaes|Size|Name" >  /home/amir/.shba
 ls *.pdf >/dev/null
 if [[ $? != 0 ]]; then
 	echo -e "\nNo pdf file in this directory\n"
@@ -12,7 +13,8 @@ for i in `ls *.pdf` ; do
 		continue
 	fi
 	pages=`pdfinfo $i 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
-	echo "$pages,|$i" >> /home/amir/.shba
+	# echo "$pages,|$i" >> /home/amir/.shba
+	echo "$pages,|`du -s $i | sed 's/\t/,/g' | cut -d, -f1`,|$i" >> /home/amir/.shba
 done
-cat ~/.shba  | sort -n | column -t -s,\| 
-
+# cat ~/.shba  | sort -n | column -t -s,\| 
+cat ~/.shba | sort -n | sed s:,\|:\|:g | column -t -s\|
