@@ -58,3 +58,4 @@ alias Youtube_480='youtube-dl -f '\''bestvideo[height<=480]+bestaudio/best[heigh
 alias z='ls *.mp4 -1'
 alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
 alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
+alias VPN="yes | naclient login -user  '$Kashat_user' -password '$kashat_password' -profile '$kashat_profile'"
