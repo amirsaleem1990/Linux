@@ -2,19 +2,36 @@
 IFS=$'\n'
 rm -f /home/amir/.shba 2>/dev/null
 echo -e "Pgaes|Size|Name" >  /home/amir/.shba
-ls *.pdf >/dev/null
-if [[ $? != 0 ]]; then
-	echo -e "\nNo pdf file in this directory\n"
-	exit
-fi
-for i in `ls *.pdf` ; do
-	check=`pdfinfo $i 2>/dev/null` #| grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
-	if [[ $? != 0 ]]; then 
-		continue
+
+# agar koi paramter given nahi ho ga to cuurent direcoty me all *.pdf ki info show hon gi, or agar paramter(s) given hen (absolute path(s) of *.pdf(s)) to un given files ki info show hon gi.
+
+if [[ $@ == "" ]]; then # agar koi peramter give na ho to
+	ls *.pdf >/dev/null
+	if [[ $? != 0 ]]; then
+		echo -e "\nNo pdf file in this directory\n"
+		exit
 	fi
-	pages=`pdfinfo $i 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
-	# echo "$pages,|$i" >> /home/amir/.shba
-	echo "$pages,|`du -s $i | sed 's/\t/,/g' | cut -d, -f1`,|$i" >> /home/amir/.shba
-done
-# cat ~/.shba  | sort -n | column -t -s,\| 
+	for i in `ls *.pdf` ; do
+		check=`pdfinfo $i 2>/dev/null` #| grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
+		if [[ $? != 0 ]]; then 
+			continue
+		fi
+		pages=`pdfinfo $i 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
+		# echo "$pages,|$i" >> /home/amir/.shba
+		echo "$pages,|`du -s $i | sed 's/\t/,/g' | cut -d, -f1`,|$i" >> /home/amir/.shba
+	done
+	# cat ~/.shba  | sort -n | column -t -s,\| 
+else
+	for i in $@; do
+		check=`pdfinfo $i 2>/dev/null` #| grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
+		if [[ $? != 0 ]]; then 
+			continue
+		fi
+		pages=`pdfinfo $i 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
+		# echo "$pages,|$i" >> /home/amir/.shba
+		echo "$pages,|`du -s $i | sed 's/\t/,/g' | cut -d, -f1`,|$i" >> /home/amir/.shba
+	done
+fi
+
+
 cat ~/.shba | sort -n | sed s:,\|:\|:g | column -t -s\|
