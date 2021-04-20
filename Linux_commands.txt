@@ -686,7 +686,7 @@ password=type_you_password_here
 
 #swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
 # to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
-# variable increment ........ count=5; let "count+=1" ............ another way: let "count++"
+# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
 
 check if two files are identical .......... cmp --silent $old $new || echo "files are different"
 #-----------------------
@@ -1002,3 +1002,12 @@ get ipv-4 address ......... ip -4 addr ......... # <inet> means ipv4 address
 get ipv-6 address ......... ip -6 addr ......... # <inet6> means ipv6 address
 
 
+
+#extract rar files to folder .............. rar x archive.rar path/to/extract/to
+
+# extract zip file ................. /home/amir/github/Linux/'command line - Having trouble uncompressing a few files.html'
+
+# Get autocompletion when invoking a “read” inside a Bash script .............. read -e -p "Your prompt:" var_name
+# bash read input autocomplete ................. read -e -p "Your prompt:" var_name
+
+save a frame as a jpeg file every 5 seconds  ............ mplayer -vo jpeg -sstep 5 file.avi
