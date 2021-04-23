@@ -1012,3 +1012,4 @@ get ipv-6 address ......... ip -6 addr ......... # <inet6> means ipv6 address
 
 save a frame as a jpeg file every 5 seconds  ............ mplayer -vo jpeg -sstep 5 file.avi
 get epoch time for give date and time .............. date --date '2017-08-17 04:00:01' +%s    # "1502938801" 
+# recersive grep .................... find in all subdirectories (maximum depth) ............. grep -r YOUR_PATTERN
