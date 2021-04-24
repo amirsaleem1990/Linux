@@ -11,7 +11,10 @@ if [[ -z "$parameter" ]] ;	then  # if parameter not passed
 fi
 
 if [[ $parameter -eq 1 ]] ; then
-	echo "`ls -d */ | wc -l` ----Folders----"
+	folders_count=`ls -d */ 2>/dev/null | wc -l`
+	files_count=`find . -maxdepth 1 -type f| wc -l`
+	symbolic_links_count=`ls -l | cut -c -1 | grep -o l | wc -l`
+	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count" | column -t -s ' '
 	echo -e "\n"
 	ls -p |\
 		grep -v /  |\
@@ -21,7 +24,9 @@ if [[ $parameter -eq 1 ]] ; then
 		rev |\
 		sort |\
 		uniq -c |\
-		sed 's/\ \{2,\}//g'
+		sed 's/\ \{2,\}//g' |\
+		sort -n |\
+		column -t -s ' '
 
 else
 	# tree |\
