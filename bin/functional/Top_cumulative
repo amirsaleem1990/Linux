@@ -13,6 +13,14 @@ normal="\033[0m"
 # 	fi
 # fi
 
+
+if [[ $1 == 1 ]] ; then
+	detailed=1
+else
+	detailed=0
+	echo -e "\n************ Short list ************\n\n"
+fi
+
 sort_by=1
 
 echo ''
@@ -33,7 +41,7 @@ cat ~/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > ~/.last_col.txt
 
 paste ~/.first_two_cols.txt  ~/.last_col.txt > ~/ab.txt
 cat ~/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > ~/ab.txT
-mv ~/ab.txT ~/ab.txt
+yes | mv ~/ab.txT ~/ab.txt
 echo "" > ~/.amb.txt
 
 for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u`; do
@@ -53,8 +61,8 @@ for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 
 	fi
 	echo "$a,$b,$i" >> ~/.amb.txt
 	cat ~/ab.txt | grep -v $i > ~/.AB.txt
-	mv ~/.AB.txt ~/ab.txt
-done
+	yes | mv ~/.AB.txt ~/ab.txt
+done 
 sed -i '/^$/d' ~/.amb.txt
 python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/ab.txt', 'r').read().splitlines()]+['\n']))"
 paste  ~/.MM ~/ab.txt  -d,  | grep -v ',$'  >  ~/.AB.txt
@@ -168,8 +176,13 @@ fun() {
 	echo "===,===,===,======= RAM ============================" >> ~/.AB_ram.txt
 
 	# sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
-	sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB_cpu.txt
-	sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB_ram.txt
+	if [[ $detailed == 1 ]]; then
+		sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g'              >> ~/.AB_cpu.txt
+		sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g'              >> ~/.AB_ram.txt
+	else
+		sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> ~/.AB_cpu.txt
+		sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> ~/.AB_ram.txt
+	fi
 
 	# echo "CPU,MEM,COMMAND" >> ~/.AB.txt
 	# paste_to_files "MEM(MB),CPU,MEM,COMMAND"
@@ -198,6 +211,8 @@ fun() {
 	
 }
 fun
+cat ~/.AB_cpu.txt | cut -d, -f2-4 > ~/.AB_cpu_temp.txt
+yes | mv ~/.AB_cpu_temp.txt ~/.AB_cpu.txt
 paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > .AB.txt
 
 # cat .AB.txt  | sed '/^$/d'
