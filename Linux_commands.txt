@@ -1013,3 +1013,56 @@ get ipv-6 address ......... ip -6 addr ......... # <inet6> means ipv6 address
 save a frame as a jpeg file every 5 seconds  ............ mplayer -vo jpeg -sstep 5 file.avi
 get epoch time for give date and time .............. date --date '2017-08-17 04:00:01' +%s    # "1502938801" 
 # recersive grep .................... find in all subdirectories (maximum depth) ............. grep -r YOUR_PATTERN
+# problem: mkdir: cannot create directory ‘blabla’: Read-only file system .................... solution: sudo mount -o remount,rw '/media/amir/320GB'
+
+#---------------------
+# merge multiple lines into one line 
+>>> cat input.txt 
+# I came
+# I saw
+# I conquered!
+
+Join Without a Delimiter and With a Single Character Delimiter:
+	>>> readarray -t ARRAY < input.txt; IFS=''; echo "${ARRAY[*]}")
+	# I cameI sawI conquered!
+Join With a Multiple Character Delimiter:
+	>>> readarray -t ARRAY < input.txt;  printf -v TXT  "%s; " "${ARRAY[@]}"; echo ${TXT%; }
+	# I came; I saw; I conquered!
+Join Without a Delimiter:
+	>>> tr -d '\n' < input.txt 
+	# I cameI sawI conquered!
+Join With a Single Character Delimiter:
+	>>> tr '\n' ',' < input.txt | sed 's/,$/\n/'
+	# I came,I saw,I conquered!
+Join Without a Delimiter and With a Single Character Delimiter:
+	>>> paste -sd '' input.txt 
+	# I cameI sawI conquered!
+
+	>>> paste -sd ',' input.txt
+	# I came,I saw,I conquered!
+Join With a Multiple Character Delimiter:
+	>>> paste -sd "@#" input.txt
+	# came@I saw#I conquered!
+The sed Command:
+	>>> sed ':a; N; $!ba; s/\n//g' input.txt 
+	# I cameI sawI conquered!
+	
+	>>> sed ':a; N; $!ba; s/\n/,/g' input.txt 
+	# I came,I saw,I conquered!
+	
+	>>> sed ':a; N; $!ba; s/\n/; /g' input.txt 
+	# I came; I saw; I conquered!
+
+The awk Command:
+	>>> awk -v d="" '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I cameI sawI conquered!
+
+	>>> awk -v d="," '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I came,I saw,I conquered!
+
+	>>> awk -v d="; " '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I came; I saw; I conquered!
+
+#------------ END
+
+# # Create array in loop from number of arguments ............ args=(); for i in "$@"; do args+=("$i"); done ............ alternative: args=("$@") ............. now access any value of the arry by its index (statrtin from 0, to -1 ..... echo "${args[0]}"; echo "${args[-1]}"; echo "${args[@]}"
