@@ -1,6 +1,10 @@
 #!/usr/bin/python3
+import requests
 import os
 import sys
+import pandas as pd
+import random
+
 try:
 	_, n, search_query = sys.argv
 	n = int(n)
@@ -17,16 +21,25 @@ com=f"""googler -n{n} --json  '{search_query}' | grep http | sed 's/    "url": /
 os.system(com)
 
 
-import pandas as pd
 f = open("/home/amir/_urlS__", 'r').read().splitlines()
 os.remove("/home/amir/_urlS__")
 f = [i.strip('"') for i in f]
+
+# F = []
+# for i in f:
+# 	try:
+# 		if requests.get(i).ok:
+# 			F.append(i)
+# 	except:
+# 		pass
+# f = F.copy()
+# del F
+
 df = pd.DataFrame({'orignal': f})
 df['removed_http(s)'] = df.orignal.str.split("//").str[1]
 df['base_url'] = df['removed_http(s)'].str.split("/").str[0]
 df['base_url_with_http(s)'] = df.orignal.str.split("//").str[0] + "//" + df.base_url
 
-import random
 name = "/home/amir/urls_" + str(random.randint(1,9999999999999)) + ".csv"
 df.to_csv(name)
 print("\n\ndf saved as <" + name + ">\n\n")
