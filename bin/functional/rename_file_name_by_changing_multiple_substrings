@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+if [[ $1 == "" ]]; then
+	echo -e "\nPlease give one and only one argument 
+	(eg. <{o,O}ld{_,\ }{f,F}ile{_,\ }{n,N}ame>)
+	# this will move <old_file_name> to <Old File Name>
+	\nexit ....\n\n"
+	exit
+fi
+
+
+# args=()
+# for i in "$@"; do 
+# 	args+=("$i")
+# done 
+
+args=("$@")
+
+echo -e "\nMoving <${args[0]}> to <${args[-1]}> ........."
+mv "${args[0]}" "${args[-1]}" 2>/dev/null
+if [[ $? == 0 ]]; then
+	echo -e "Successfully moved\n"
+else
+	echo -e ">>>> FAIL <<<<\nThere is no file/folder with name <${args[0]}>\n"
+fi
