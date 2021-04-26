@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+IFS=$'\n'
+func_(){
+	current=$1
+	x=`echo $current | sed 's/[,!@#$%^&*=-\;"]//g' | sed 's/_\{1,\}/-/g' |sed s:\ :-:g | sed 's/-\{1,\}/-/g' | sed s:-$::g | sed s:^-::g`
+	if [[ $x != $current ]]; then
+		echo $x
+	fi	
+}
+
+func_2() {
+	x=$1
+	if [[ $x != "" ]]; then
+		echo -e "\nORINNAL : $current"
+		echo      "MODIFIED: $x"
+		read -p "are you need to rename[y|n]? ....." ans
+		if [[ $ans == 'y' ]]; then
+			mv -v "$current" "$x"
+		fi
+	fi
+}
+
+if [[ $@ == "" ]]; then
+	for current in `ls`; do
+		x=`func_ $current`
+		func_2 $x
+	done
+else
+	for current in "$@"; do
+		x=`func_ $current`
+		func_2 $x
+	done
+fi
