@@ -1083,3 +1083,8 @@ python3 -m compileall .
 python3 -m compileall MY_script.py
 # ------------END
 
+# search of unique owners of files and directories .................. find <path> -printf "%u\n" | sort -u .................... find <path> -printf "%u\n" | gawk '1{u[$0]=1;} END{ for (x in u){print x;}}'
+
+# exclude/remove all non-numeric | keep only numeric ............ echo "Â10.41.89.50-._ " | tr -cd '[:alnum:]'  
+
+# Colors missing when calling grep through script .......... To preserve the colouring, add the --color=auto flag to the grep command inside the script (eg. cat file | grep --color=auto '\|RAM\|CPU')
