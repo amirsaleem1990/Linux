@@ -1066,3 +1066,20 @@ The awk Command:
 #------------ END
 
 # # Create array in loop from number of arguments ............ args=(); for i in "$@"; do args+=("$i"); done ............ alternative: args=("$@") ............. now access any value of the arry by its index (statrtin from 0, to -1 ..... echo "${args[0]}"; echo "${args[-1]}"; echo "${args[@]}"
+
+#----------------
+#How to convert Python code to executable file?
+pip3 install pyinstaller
+pyinstaller myscript.py
+# PyInstaller should create a dist folder where your executable file is and all other files that need to be included in your distribution.
+# for further details check /home/amir/github/Linux/Using-PyInstaller-PyInstaller-4.3-documentation.html
+# https://pyinstaller.readthedocs.io/en/stable/usage.html
+#-------------END
+
+# ---------------
+# convert .py to .pyc
+python3 -m compileall -b <pythonic-project-name>
+python3 -m compileall .  
+python3 -m compileall MY_script.py
+# ------------END
+
