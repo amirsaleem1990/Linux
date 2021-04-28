@@ -1088,3 +1088,16 @@ python3 -m compileall MY_script.py
 # exclude/remove all non-numeric | keep only numeric ............ echo "Â10.41.89.50-._ " | tr -cd '[:alnum:]'  
 
 # Colors missing when calling grep through script .......... To preserve the colouring, add the --color=auto flag to the grep command inside the script (eg. cat file | grep --color=auto '\|RAM\|CPU')
+
+#-----------------------
+# get firefox bookmarks ............... 
+sqlite3 /home/amir/.mozilla/firefox/65oyq9jg.default-release/places.sqlite "
+	select moz_places.url, moz_bookmarks.title
+	from moz_places, moz_bookmarks
+	where moz_bookmarks.fk = moz_places.id
+	and moz_bookmarks.type = 1
+	and length(moz_bookmarks.title) > 0
+	order by moz_bookmarks.dateAdded"
+#--------------------END
+
+

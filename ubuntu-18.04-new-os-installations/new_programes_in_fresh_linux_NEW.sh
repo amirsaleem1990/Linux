@@ -78,8 +78,7 @@ func_ "pip3 install xlrd==1.2.0"
 func_ "sudo apt-get install -y jupyter-client"
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
 func_ "sudo Rscript R_in_jupyter.R"
-func_ "curl https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.2.1335-amd64.deb > rstudio.deb"
-func_ "sudo gdebi -n rstudio*.deb"
+
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/set_startupscript.py"
 func_ "ipython3 set_startupscript.py"
 rm -f set_startupscript.py  >> /home/amir/results.txT
@@ -98,6 +97,7 @@ source  ~/.bashrc
 
 func_ "pip3 install youtube-dl"
 func_ "pip3 install bs4"
+func_ "pip3 install BeautifulSoup"
 func_ "pip3 install lxml"
 func_ "pip3 install selenium"
 func_ "pip3 install tabulate"
@@ -125,4 +125,8 @@ sudo ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
 # func_ "apm install stack-overflow-help"
 
 
-
+# rstudio
+latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
+latest_rstudio_download_link="https://download1.rstudio.org/desktop/bionic/amd64/rstudio-$latest_rstudio_version-amd64.deb"
+curl $latest_rstudio_download_link > rstudio-$latest_rstudio_version.deb
+func_ "sudo gdebi -n rstudio*.deb"

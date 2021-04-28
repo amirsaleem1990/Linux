@@ -1,4 +1,5 @@
 repo = "http://cran.us.r-project.org"
+install.packages('reticulate', repos=repo)
 install.packages("DBI", repos=repo)
 install.packages("plyr", repos=repo)
 install.packages("ggplot2", repos=repo)
