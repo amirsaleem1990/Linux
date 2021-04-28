@@ -1,0 +1,20 @@
+#!/bin/bash
+if [[ $@ == "" ]]; then
+	echo -e "\nNo video name provided.\nExiting ......\n"
+	exit
+fi
+
+get_size_(){
+	echo -n `du -sh $1  | sed 's/\t/ /g' | cut -d' ' -f1`
+}
+
+get_duration(){
+	echo -n `ffmpeg -i $1  2>&1 | grep Duration | cut -d " " -f 4 | sed s/,// `
+}
+
+for i in "$@"; do
+	get_size_ $i
+	echo -en "\t"
+	get_duration $i
+	echo -e "\t$i"
+done
