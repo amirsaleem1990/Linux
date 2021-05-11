@@ -26,3 +26,19 @@ def get_soup_object_using_selenium(url, visual=False, urls=True):
 				pass
 		print("\nA tuple is returned, 1st vlues is urls, 2nd value is BeautifulSoup object\n")
 	return (set(extrected_urls), s)
+
+
+
+def get_all_links(url, pattern=""):
+	from bs4 import BeautifulSoup
+	import requests
+	import re
+	
+	s = BeautifulSoup(requests.get(url).text, 'lxml')
+	x2= s.find_all('a', href=re.compile(pattern))
+	x2 = [i['href'] for i in x2]
+	se = []
+	for i in x2:
+		if not i in se:
+			se.append(i)
+	return se
