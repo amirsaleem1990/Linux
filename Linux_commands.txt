@@ -1101,3 +1101,6 @@ sqlite3 /home/amir/.mozilla/firefox/65oyq9jg.default-release/places.sqlite "
 #--------------------END
 
 
+echo $(cat file_name) ............ concatenate multiple lines of output to one line 
+turn on  bluetooth ................ rfkill unblock bluetooth
+turn off bluetooth ................ rfkill block bluetooth
