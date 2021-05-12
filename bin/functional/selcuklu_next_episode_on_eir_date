@@ -20,7 +20,7 @@ from termcolor import colored
 # print(tabulate(df))
 
 print()
-_list_file_name_ = "/home/amir/.selcul_last_downloaded.txt"
+_last_file_name_ = "/home/amir/github/Amir-personal/.selcul_last_downloaded.txt"
 from tabulate import tabulate
 import os
 import sys
@@ -60,8 +60,8 @@ next_episode = int(next_episode_number.split(".")[0])
 print("""\n\n#############################################################
 ####-----------------""", end="")
 g = False
-if os.path.exists(_list_file_name_):
-	last_downloaded_episode = int(open(_list_file_name_, "r").read().strip())
+if os.path.exists(_last_file_name_):
+	last_downloaded_episode = int(open(_last_file_name_, "r").read().strip())
 	if next_episode - last_downloaded_episode > 1:
 		print(colored(" CONGRATULATIONS", 'red'), end="")
 		g = True
@@ -115,11 +115,13 @@ if (next_episode - last_downloaded_episode) > 1:
 
 
 if g:
-	ans_ = input("\n\nAre you need to update /home/amir/.selcul_last_downloaded.txt file?\n[y|n]  ")
+	ans_ = input(f"\n\nAre you need to update {_last_file_name_} file?\n[y|n]  ")
 	if ans_ == "y":
 		# ans_ = input("Enter last episode you downloaded/watched to enter in /home/amir/.selcul_last_downloaded.txt: ")
-		# open(_list_file_name_, 'w').write(ans_)
-		open(_list_file_name_, 'w').write(str(next_episode-1))
+		# open(_last_file_name_, 'w').write(ans_)
+		print(f"\nBefore: {open(_last_file_name_, 'r').read()}")
+		open(_last_file_name_, 'w').write(str(next_episode-1))
+		print(  f"After : {open(_last_file_name_, 'r').read()} \n")
 print()
 
 

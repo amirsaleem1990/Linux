@@ -46,7 +46,7 @@ for i in s.select("li"):
 s = BeautifulSoup(requests.get(l).text, "lxml")
 print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).text)
 
-_file_name_ = "/home/amir/.kurulus_usman_last_downloaded.txt"
+_file_name_ = "/home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt"
 last_video_downloaded = int(open(_file_name_, "r").read().strip())
 
 
@@ -76,11 +76,11 @@ print("\nLast video downloaded was:", last_video_downloaded)
 
 
 # print("""
-# ####################################################
-# # agar video download kar len to                   #
-# # </home/amir/.kurulus_usman_last_downloaded.txt>  #
-# # file ko update kar den                           #
-# ####################################################
+# #########################################################################
+# # agar video download kar len to                                        #
+# # </home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt>  #
+# # file ko update kar den                                                #
+# #########################################################################
 # \n""")
 
 
