@@ -1,4 +1,4 @@
-#!/bin/bash
+# !/bin/bash
 rm -f ~/.xm2
 IFS=$'\n'
 parameter=$1
@@ -72,7 +72,12 @@ if [[ $parameter -eq 1 ]] ; then
 		echo "$f,`ls *.$extention | wc -l`" >> ~/.xm2
 	done
 else
-	for extention in `tree | rev | grep  '\.'| cut -d. -f1 | rev | sed /─/d | sed /^$/d | sort | uniq`; do
+	echo "No-extention: `find . -type f | rev | cut -d. -f1 | grep / | wc -l`"
+	# for extention in `tree | rev | grep  '\.'| cut -d. -f1 | rev | sed /─/d | sed /^$/d | sort | uniq`; do
+	# for extention in `find . -type f | grep "\." | rev  | sed s:\/.$::g | grep "\." | cut -d. -f1 | sort -u | rev`; do	
+	# for i in `find . -type f | grep "\." | rev  | sed s:\/.$::g | grep "\." | cut -d. -f1 | sort -u | rev`; do 
+	# for i in $(find . -type f | rev | cut -d. -f1 | grep -v / | sed s/[\`\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g | sort -u | rev); do
+	for extention in $(find . -type f  | sed 's/^.\///g'  | sed 's/^\.//g' | rev  | cut -d/ -f1 | grep '\.'  | cut -d. -f1 | rev | sed s/[\`\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]$\//g | sort -u); do
 		echo -n  "$extention," >> ~/.xm2
 		for file in `find . -name "*$extention"`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
@@ -103,3 +108,4 @@ echo -e "Extention,MB,GB,Qty.\n---------,--,--,----\n`cat ~/.xm2 | sort -k3 -nr 
 # # done
 # # cat ~/ab.txt | sort -u
 # #---------------------------------------------------------------------
+
