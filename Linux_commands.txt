@@ -1113,3 +1113,5 @@ get string variable length ........... echo ${#var_name}
 kill 121,323,2323 ................ kill multiple PIDs at once
 service --status-all (note: + mean running services, and - means stoped services )............. list all services 
 
+ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./second_script; ls -ltr"
+
