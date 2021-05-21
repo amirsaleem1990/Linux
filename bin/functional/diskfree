@@ -1,6 +1,14 @@
 #!/usr/bin/python3
+##!/usr/bin/bash
+
+import sys
 import os
 from termcolor import colored
+
+_file__ = '/home/amir/.qmi'
+if os.path.exists(_file__):
+	os.remove(_file__)
+
 print("\n\n#############################################################")
 os.system("echo Filesystem,Size,Used,Avail,Use%,Mounted > /home/amir/.dC")
 # print(colored("", "red") + "\n-----------------------------------------------------")
@@ -8,8 +16,11 @@ os.system("df -h | grep /dev/sd | sed 's/ \{1,\}/,/g' >> /home/amir/.dC")
 os.system("""cat  /home/amir/.dC | column -t -s, | grep --color "\|Filesystem\|Size\|Used\|Avail\|Use%\|Mounted" """)
 print("#############################################################\n\n")
 
-def MB_to_GB(x):
-  return int(x/1024)
+def MB_to_GB(x, round_to_n=0):
+	if round_to_n == 0:
+		return round(x/1024)
+	else:
+		return round(x/1024, round_to_n)
 def m(x, add_pipe_in_last=True):
 	last_ = ""
 	if add_pipe_in_last:
@@ -20,26 +31,35 @@ print(colored(">>>", "red") + ": Used")
 print(colored("!!!", "green") + ": Unused")
 # a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>
 a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g'"))
-print(" " * (45), colored("Total  | Used  | Used  | Avail  | Mounted     ", "red", attrs=['reverse', 'bold']))
+# print(" " * (45), colored("Total  | Used  | Used  | Avail    | Mounted     ", "red", attrs=['reverse', 'bold']))
 for b in a:
+	# sys.exit()
 	total = int(b.split()[1].replace("M", ""))
 	if total < 1000:
 	  continue
 	used = int(b.split()[2].replace("M", ""))
 	avail = int(b.split()[3].replace("M", ""))
+	used_perc = int(b.split()[4].replace("M", "").strip("%"))
 	devided_by = 3
-	used_size = int(used / total * 100) // devided_by
+	# used_size = int(used / total * 100) // devided_by
+	used_size = used_perc // devided_by
 	total_size = 100 // devided_by
 	LEN = len(b.split()[0])
-	print(b.split()[0], 
-		  m(12 - len(b.split()[0]), False),
-		  colored(int(used_size) * ">", "red") + 
-		  colored(int(total_size - used_size) * "!", "green"),
-		  MB_to_GB(total),  m(11- len(str(total))), 
-		  MB_to_GB(used), m(10- len(str(used))),
-		  str(round(used_size/total_size*100)) + " %", m(3),
-		  MB_to_GB(avail), m(11- len(str(avail))),
-		  b.split()[-1])
+
+	# print(b.split()[0], 
+	# 	  m(12 - len(b.split()[0]), False),
+	# 	  colored(int(used_size) * ">", "red") + 
+	# 	  colored(int(total_size - used_size) * "!", "green"),
+	# 	  MB_to_GB(total),  m(11- len(str(total))), 
+	# 	  MB_to_GB(used), m(10- len(str(used))),
+	# 	  str(round(used_size/total_size*100)) + " %", m(3),
+	# 	  MB_to_GB(avail, 1), m(11- len(str(avail))),
+	# 	  b.split()[-1])
+
+	open(_file__, 'a').write(
+		f""" , ,Total,Used,Used,Avail,Mounted\n{b.split()[0]},{int(used_size) * ">"}{int(total_size - used_size) * "!"},{MB_to_GB(total)},{MB_to_GB(used)},{round(used_size/total_size*100)} %,{MB_to_GB(avail, 1)},{b.split()[-1]}\n"""
+		)
+os.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used\|Avail\|Mounted\|>\|!"')
 
 os.remove("/home/amir/.dC")
 #######################################################################
@@ -77,3 +97,15 @@ os.remove("/home/amir/.dC")
 # pprint.pprint(adf[adf.Filesystem.str.contains("/dev")].drop("on", axis=1))
 # #pprint.pprint(df.query("Avail > 0").sort_values("Avail", ascending = False))
 # os.remove("temppp.txt")
+
+
+
+
+# disk=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f1`
+# total=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f2 | sed s:M::g`
+# used=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f3 | sed s:M::g`
+# avail=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f4 | sed s:M::g`
+# use_perc=`  df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f5`
+# mounted_on=`df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f6`
+
+# echo $disk $total $used $avail $use_perc $mounted_on
