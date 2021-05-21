@@ -1110,6 +1110,7 @@ query local sqlite file ........... sqlite3 my_db.sqlite "select * from my_table
 
 get string variable length ........... echo ${#var_name}
 
+<<<<<<< HEAD
 
 
 
@@ -1309,3 +1310,10 @@ shutdown:
 
 rdfind . .................. find duplicated files
 get perameters in script ........... /home/amir/github/Linux/'Use Command Line Arguments(Perameters) in a Bash Script.sh'
+=======
+kill 121,323,2323 ................ kill multiple PIDs at once
+service --status-all (note: + mean running services, and - means stoped services )............. list all services 
+
+ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./second_script; ls -ltr"
+
+>>>>>>> e3740279319983ab20f2142cf1e4f1b8b510bd64
