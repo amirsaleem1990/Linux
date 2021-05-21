@@ -58,12 +58,12 @@ fi
 
 
 if [[ $parameter -eq 1 ]] ; then
-	folders_count=`ls -d */ 2>/dev/null | wc -l`
-	files_count=`find . -maxdepth 1 -type f| wc -l`
+	folders_count=`find . -maxdepth 1 -type f| wc -l`
+	files_count=`find . -maxdepth 1 -type d| wc -l`
 	symbolic_links_count=`ls -l | cut -c -1 | grep -o l | wc -l`
 	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count\nNo-extention `ls | grep  -v '\.' | wc -l`" | column -t -s ' '
 	echo -e "\n"
-	for extention in `ls | grep  '\.' | rev | cut -d. -f1 | rev | sort -u`; do
+	for extention in `find . -maxdepth 1 -type f | grep  '\.' | rev | cut -d. -f1 | rev | sort -u | grep -v /`; do
 		echo -n  "$extention," >> ~/.xm2
 		for file in `ls *.$extention`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
@@ -72,7 +72,12 @@ if [[ $parameter -eq 1 ]] ; then
 		echo "$f,`ls *.$extention | wc -l`" >> ~/.xm2
 	done
 else
-	echo "No-extention: `find . -type f | rev | cut -d. -f1 | grep / | wc -l`"
+	folders_count=`find . -type d 2>/dev/null | wc -l`
+	files_count=`find . -type f| wc -l`
+	symbolic_links_count=`IFS=$'\n'; find . -name "*" -exec ls -l {} \; | cut -c -1 | grep -o l | wc -l`
+	no_extention=`find . -type f | rev | cut -d. -f1 | grep / | wc -l`
+	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count\nNo-extention $no_extention" | column -t -s ' '
+	echo -e "\n"	
 	# for extention in `tree | rev | grep  '\.'| cut -d. -f1 | rev | sed /─/d | sed /^$/d | sort | uniq`; do
 	# for extention in `find . -type f | grep "\." | rev  | sed s:\/.$::g | grep "\." | cut -d. -f1 | sort -u | rev`; do	
 	# for i in `find . -type f | grep "\." | rev  | sed s:\/.$::g | grep "\." | cut -d. -f1 | sort -u | rev`; do 
