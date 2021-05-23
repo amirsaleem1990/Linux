@@ -1317,3 +1317,4 @@ service --status-all (note: + mean running services, and - means stoped services
 ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./second_script; ls -ltr"
 
 >>>>>>> e3740279319983ab20f2142cf1e4f1b8b510bd64
+#  loop over arguments from terminal .............. for var in "$@"; do echo "$var" ; done
