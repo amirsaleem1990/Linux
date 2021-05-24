@@ -1,5 +1,6 @@
 #!/usr/bin/ipython3
 # #!/home/amir/.local/bin/ipython3
+import sys
 from termcolor import colored
 from tabulate import tabulate
 import pandas as pd
@@ -31,8 +32,17 @@ comming_episode_number = int(df.iloc[-1][0])
 print(tabulate(df))
 print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
 
-last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}"
+try:
+	# last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}"
+	last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={      int(d['Name'].split()[-1]) -1}"
+except:
+	#last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[0].strip('.'))}"
+	last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={     int(d['Name'].split()[0].strip('.')) -1}"
 print("Last video page:", last_vid)
+
+
+# a,b = last_vid.split("=")
+# next_vid = f"{a}={str(int(b)+1)}"
 
 s = BeautifulSoup(requests.get(last_vid).text, "lxml")
 for i in s.select("li"):
@@ -46,7 +56,6 @@ for i in s.select("li"):
 			break
 	except:
 		pass
-
 s = BeautifulSoup(requests.get(l).text, "lxml")
 print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).text)
 

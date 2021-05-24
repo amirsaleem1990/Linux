@@ -1110,8 +1110,211 @@ query local sqlite file ........... sqlite3 my_db.sqlite "select * from my_table
 
 get string variable length ........... echo ${#var_name}
 
+<<<<<<< HEAD
+
+
+
+
+# https://www.youtube.com/playlist?list=PLzMcBGfZo4-nUIIMsz040W_X-03QH5c5h
+netstat -a ................ list all listening ports for TCP and UDP connections.
+netstat -at ............... list all TCP port connections.
+netstat -l ................ list all active ports.
+netstat -u ................ list all UDP port connections.
+
+
+curl URL ............................................ sends get   request to the URL
+curl -X POST URL .................................... sends posrt request to the URL 
+curl -X POST --data "p1=value_1&p2=value_2" URL ..... sends posrt request to the URL with perameters
+curl -X POST --d p1=value_1 -d p2=value_2   URL...... sends posrt request to the URL with perameters
+curl -I URL  ........................................ get header
+curl --header "key:value" -X POST  .................. send cutom header with post request 
+
+
+
+on server:
+	chmod a+rwx,u-x,g-rwx,o-rwx ~/.ssh/authoriezed_keys
+	OR
+	chmod 600 authoriezed_keys
+
+	chmod a+rwx,g-rwx,o-rwx ~/.ssh
+	OR
+	chmod 700 ~/.ssh
+
+to access server from your computer copy your rsa.pub to server at ~/.ssh/authoriezed_keys
+
+passphrase:
+	jab ham rsa key ganerate karty hen to hamary sy <Enter passphrase> mangta hy, agar ham is me apni taraf sy koi bhi phrase dal den (eg: 12MYphrase34), to jab ye ganerated public key ksi server par jay gi, or me us server ko connect karun ga, to pehly to wo keys match kary ga k us k pas jo public key h us ki private key mery system par h ya nahi, agar h to ab second phase ye ho ga k wo mery sy ye phrase (12MYphrase34) mangy ga, agar me ny nahi dya to connection nahi ho ga.
+	ye phrase is lye hota h k agar aap ki public and private keys ksi k hath lag bhi jayen tab bhi wo server ko connect na kar saky.
+
+
+Envoirment variables:
+	env .................. see all Envoirment variables.
+	printenv env_variable_name ...... print Envoirment variable value ........... eg: printenv HOME
+		OR
+		echo $env_variable_name ..... eg: echo $HOME
+	set Envoirment variable:
+		for current session only:
+			export my_env_var=my_value
+		perminently (only for this user):
+			echo -e "\nexport my_env_var=my_value\n" >> ~/.bashrc; source ~/.bashrc
+		perminently (globaly, for all users)
+			echo -e "\nexport global_env_var=global_value\n" >> /etc/environment; source /etc/environment
+	remove Envoirment variable:
+		for current session only:
+			unset my_env_var
+		perminently (only for this user):
+			remove it from ~/.bashrc and then source the file
+		perminently (globaly, for all users):
+			remove it from /etc/environment and then source the file
+
+
+nano:
+	copy:
+		1- jahan sy copy karna start karna h wahan par curson ly jayen.
+		2- press CTRL+6
+		3- select needed portion
+		4- press ATL+6
+	cut:
+		do first 3 steps as in <copy section above>
+		4- press CTRL+K
+	paste:
+		press CTRL+U
+
+
+vim:
+	i      - go into insert mode:
+	Esc    - go back to command mode:
+	:wq    - (in command mode) save and quit
+	:q!    - (in command mode) quit without saving
+	v      - (in command mode) go into heilight mode
+	y      - (in heilight mode) copy heilighted portion
+	p      - (in command mode) paste
+	d      - (in heilight mode) delete heilighted portion
+	u      - undo
+	CTRL+r - redo
+	w      - (in insert mode) go to next word
+	b      - (in insert mode) go to back work
+	0	   - (in insert mode) go to beggining of the line
+	SHIFT+4- (in insert mode) go to end       of the line
+
+
+sudo <s(uper)u(ser)do>:
+	stands for: super user do
+	if you are in sudo group you have access to sudo commands.
+
+
+grep:
+	grep a.  file.txt ............ a followed by anything, so ignore lines with only <one a withoud leading and tailing space>
+	grap a.a file.txt ............ a followed by anything and then again a
+	grep [a,b].a file.txt ........ anything statrts with a or b,, then anyting and then a
+	grep -o abc file.txt ......... show only matching patterns, not entire lines
+	grep -r hello /home/amir ..... search hello in all /home/amir/sub_direcoties !!!!!!!!!!!!!!!!!!!!!!! VERY IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!
+	
+chomd +x file.txt ................... give execution permition to user,group and all
+chmod -r file.txt ................... remove reading permition to user,group and all
+functions:
+	func_1(){
+		echo "function called!"
+	}
+
+	func_1 # call the function
+
+
+	func_2(){
+		echo "Argument#1: $1, Argument#2: $2, Argument#3: $3"
+	}
+	func_2 amir              # Argument#1: amir, Argument#2: , Argument#3:
+	func_2 hamza amir        # Argument#1: hamza, Argument#2: amir, Argument#3:
+	func_2 hamza amir saleem # Argument#1: hamza, Argument#2: amir, Argument#3: saleem
+
+
+variables cannot have:
+	- Exclamation points
+	- spaces
+	- statrt with numbers
+
+
+
+if, elif and else:
+	if [[ $x = "amir" ]]; then
+		# do something
+	elif [[ $x = "danish" ]]; then # !!!!!!!!!!!!!!!!!!!!!!! VERY IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!
+		# do something
+	else
+		# do something
+	fi
+
+
+Cron job Vs crontab:
+	crontab:
+		specific to each user.
+		Every user on the system has one.
+	cron job:
+		it is a command that is scheduled to run at specific time.
+		cron job is managed by crontab
+
+crontab:
+	min(0-59), hour(0-23), day-of-month(1-31), month(1-12), day-of-week(0-6)<0 for sunday, and 7 is also sunday>
+	*/1     *  * *   *   command # execute <command> every 1 minute
+	*   */1    * *   *   command # execute <command> every one hour
+	0   */4    * *   *   command # execute <command> every 4   hours
+	*/15    *  * *   *   command # execute <command> every 15 minutes
+	15      *  * *   *   command # execute <command> at 15 minutes (ye 1 din me 24 times chaly gi, har ghanty me 15 minutes par)
+	5,10,15 *  * *   *   command # execute <command> at 5,10,15 minute (ye command har ghanty me 3 time chaly gi, 5th, 10th and 15th minutes for each hour)
+	0       *  * *   *   command # execute <command> at every hour (0th minute)
+	0       0  * *   *   command # execute <command> at every day (0th minute and 0th hour)
+	0		5  * *   *   command # execute <command> at every day at 05:00 AM
+	30      10 1 */3 *   command # execute <command> at every 3 months on the 1st at 10:30 AM
+	0       0  * *   1-5 command # execute <command> at every monday to friday at 00:00 AM
+	@daily               command # execute <command> at every day midnight # the default setting for <@daily> is midnight, so at default it is the same as (@midnight)
+	@midnight            command # execute <command> at every day midnight
+	@reboot              command # execute <command> at every reboot 
+	@weekly              command # execute <command> at every 
+	@annually            command # execute <command> at every 
+	@yearly              command # execute <command> at every 
+	@hourly              command # execute <command> at every 
+	@monthly             command # execute <command> at every 
+
+
+uptime (uptime for the system):
+	>>> uptime 
+	# 14:57:11 up 18:46,  1 user,  load average: 1.52, 1.39, 1.24
+
+wall:
+	broadcast a massage to all currently logged in users
+	wall "hello users"
+
+	wall  displays a message, or the contents of a file, or otherwise its standard input, on the terminals of all currently logged in users.  The command will wrap lines that are longer than 79 characters.  Short lines  are whitespace  padded  to have 79 characters.  The command will always put a carriage return and new line at the end of each line.
+
+	Only the superuser can write on the terminals of users who have chosen to deny messages or are using  a  program which automatically denies messages.
+
+	Reading from a file is refused when the invoker is not superuser and the program is set-user-ID or set-group-ID.
+
+
+wirte user_name:
+	write to specific user:
+		write user_name # and hit Enter
+		no every line you type will show at user_name terminal
+
+mesg:
+	mesg y .......... enable  wrrte  
+	mesg n .......... desable write # no one cat <write> to you
+
+who ...................... list alll loged-in users
+
+shutdown:
+	shutdown -h now ................... shutdown immediatly
+	shutdown -h +10 ................... shutdown after 10 minutes
+	shutdown -r now ................... restart immediatly
+	
+
+rdfind . .................. find duplicated files
+get perameters in script ........... /home/amir/github/Linux/'Use Command Line Arguments(Perameters) in a Bash Script.sh'
+=======
 kill 121,323,2323 ................ kill multiple PIDs at once
 service --status-all (note: + mean running services, and - means stoped services )............. list all services 
 
 ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./second_script; ls -ltr"
 
+>>>>>>> e3740279319983ab20f2142cf1e4f1b8b510bd64
+#  loop over arguments from terminal .............. for var in "$@"; do echo "$var" ; done

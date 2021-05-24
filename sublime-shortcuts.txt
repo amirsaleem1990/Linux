@@ -1,3 +1,4 @@
 multi line selection .................. SHIFT+ALT+DOWN
 all matched word selection ............ go beggining of any word (eg. my_func), and then press CTRL + d, now all my_func appearance will be hilighted
+CTRL+SHIFT+] and CTRL+SHIFT+] for clupping and releasing
 

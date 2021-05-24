@@ -4,6 +4,7 @@ if [[ $@ == "" ]]; then
 	exit
 fi
 
+IFS=$'\n'
 get_size_(){
 	echo -n `du -sh $1  | sed 's/\t/ /g' | cut -d' ' -f1`
 }

@@ -37,7 +37,8 @@ for i in a:
 	files.append(i[i.rfind("/")+1:])
 
 def func_():
-	pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
+	# pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
+	print(duplicates[["Actual_File", "Actual_path", "Size_MB"]].to_string())
 	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nto open a particuler indexed file add <-> to the end of index:\n").strip()
 	if not index:
 		return None
