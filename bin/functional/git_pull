@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+func_(){
+	echo -e "\n\n\n================ $1 ================"
+	cd $1
+	git pull
+}
+
+if [[ ${#@} == 1 ]] ;then 
+	func_ ~/github/$1
+else
+	cd ~/github
+	for repo in `ls -d */`; do
+		func_ $repo
+		cd ../
+	done
+fi
