@@ -7,7 +7,7 @@ convertsecs() {
  printf "%02d:%02d:%02d\n" $h $m $s
 }
 IFS=$'\n'
-read -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
+read -e -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
 # all_data_in_MB=/media/500GB/320GB
 m=$(du -s $all_data_in_MB -BM)
 # m='42384M	/home/amir/g'
