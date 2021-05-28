@@ -57,19 +57,23 @@ next_episode = int(next_episode_number.split(".")[0])
 # else:
 # 	open(file_name, "w").write(ne)
 
-print("""\n\n#############################################################
-####-----------------""", end="")
 g = False
 if os.path.exists(_last_file_name_):
+	print("""\n\n#############################################################
+####-----------------""", end="")
 	last_downloaded_episode = int(open(_last_file_name_, "r").read().strip())
 	if next_episode - last_downloaded_episode > 1:
 		print(colored(" CONGRATULATIONS", 'red'), end="")
 		g = True
 	else:
 		print(colored("--- NO NEW VIDEO", 'red'), end="")
+else:
+	print(f"\n\n<{_last_file_name_}> file not found\nExiting ...... \n")
+	sys.exit(1)
 
 print(""" -------------------####
 #############################################################\n""")
+
 
 
 print("Last downloaded    :", last_downloaded_episode)
