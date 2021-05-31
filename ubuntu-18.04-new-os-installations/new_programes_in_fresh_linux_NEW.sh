@@ -52,17 +52,28 @@ if [[ $? != 0 ]]; then
 fi
 func_ "sudo snap install vlc"
 func_ "sudo apt-get install -y gdebi"
-func_ "firefox http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
-func_ "sudo dpkg -i Downloads/dukto*"
+func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
+
+sudo dpkg -i dukto*
+if [[ $? != 0 ]]; then
+	sudo add-apt-repository ppa:rock-core/qt4
+	sudo apt-get update
+	sudo apt --fix-broken install
+	sudo apt install libqtgui4
+	sudo apt autoremove
+else
+	func_ "dukto installed"
+fi
+
 # func_ "sudo gdebi dukto_6.0-1_amd64.deb"
-# rm -r dukto_6.0-1_amd64.deb
+rm -r dukto*.deb
 
 # func_ "sudo apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base"
 # firefox https://cloud.r-project.org/
 sudo apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
-if [[ $? != 0 ]]; then echo "firefox https://cloud.r-project.org/"; exit ; fi
-read -p "Install R manually, and then pres any key: "
-if [[ $? != 0 ]]; then echo "read -p Install R manually, and then pres any key"; exit ; fi
+if [[ $? != 0 ]]; then 
+	func_ "sudo apt install r-cran-littler"
+if [[ $? != 0 ]]; then read -p "Install R manually, and then pres any key: "; fi
 
 func_ "sudo apt-get -y install openjdk-11-jdk"
 func_ "sudo apt-get -y install r-cran-rjava"
@@ -79,25 +90,27 @@ func_ "sudo apt-get install -y jupyter-client"
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
 func_ "sudo Rscript R_in_jupyter.R"
 
+func_ "sudo apt install adb"
+
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/set_startupscript.py"
 func_ "ipython3 set_startupscript.py"
 rm -f set_startupscript.py  >> /home/amir/results.txT
 
 #func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/alias.txt"
-func_ "wget https://github.com/amirsaleem1990/Linux/blob/master/alias"
-
+#func_ "wget https://github.com/amirsaleem1990/Linux/blob/master/alias"
+func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/alias"
 if [[ $? != 0 ]]; 
 	then echo "cat alias.txt >> ~/.bashrc"
 	exit
 fi
-rm -f alias.txt
+cp .bashrc{,_backup}; cat .bashrc alias  > xmklk; mv xmklk .bashrc; rm -f xmklk; rm -f alias; source .bashrc
+
 
 echo 'PATH="/amir_bin/:$PATH"' >> ~/.bashrc
 source  ~/.bashrc
 
 func_ "pip3 install youtube-dl"
 func_ "pip3 install bs4"
-func_ "pip3 install BeautifulSoup"
 func_ "pip3 install lxml"
 func_ "pip3 install selenium"
 func_ "pip3 install tabulate"
@@ -108,14 +121,14 @@ func_ "pip3 install clipboard "
 func_ "pip3 install termcolor"
 func_ "pip3 install tqdm"
 func_ "pip3 install psutil"
-func_ "pip3 install pickle"
 func_ "pip3 install env"
 
 func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
 func_ "sudo sh get-docker.sh"
 
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/git/master/github%20initial%20setup"
-func_ "bash 'github initial setup'"
+mv 'github initial setup' github_initial_setup
+func_ "bash github_initial_setup"
 
 # func_ "sudo mkdir /amir_bin/"
 sudo ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
