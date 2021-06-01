@@ -1326,3 +1326,8 @@ iterate over arguments in script .............. for var in "$@"; do echo "$var";
 
 
 
+
+
+chage ................ change user password expiry information
+chage -l amir ........ show amir user password expiry information
+
