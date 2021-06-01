@@ -1331,3 +1331,11 @@ iterate over arguments in script .............. for var in "$@"; do echo "$var";
 chage ................ change user password expiry information
 chage -l amir ........ show amir user password expiry information
 
+
+# find with long command ............. find . -name "*.mp4"  -exec bash -c  'for f; do du -sh  "" ; done' _ {} \;
+
+read .txt file withing zip file (withoud unzipping) ................. unzip -p zip.zip file.txt 
+
+
+# erase complete drive (not a partition) ............. sudo shred -v -n1 -z /dev/sdX (replace <sdX> with your device name)
+

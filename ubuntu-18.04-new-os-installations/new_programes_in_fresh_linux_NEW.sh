@@ -143,3 +143,7 @@ latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import reque
 latest_rstudio_download_link="https://download1.rstudio.org/desktop/bionic/amd64/rstudio-$latest_rstudio_version-amd64.deb"
 curl $latest_rstudio_download_link > rstudio-$latest_rstudio_version.deb
 func_ "sudo gdebi -n rstudio*.deb"
+
+
+# dukto
+# sudo add-apt-repository ppa:rock-core/qt4; sudo add-apt-repository ppa:gezakovacs/ppa; sudo apt update; sudo apt-get install -y libqtgui4
