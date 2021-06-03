@@ -1,105 +1,29 @@
 #!/usr/bin/ipython3
-# #!/home/amir/.local/bin/ipython3
-import sys
+import os
 from termcolor import colored
-from tabulate import tabulate
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-url = "https://next-episode.net/kurulus-osman"
-soup = BeautifulSoup(requests.get(url).text, "lxml")
-l = [i.strip() for i in soup.find("div", {"id": "next_episode"}).text.split("\n")[3:] if i][:-1]
-d = {}
-
-
-# use this link
-# https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=59
-
-if 'Sorry' in ''.join(l):
-	print()
-	print('\n'.join(l))
-	import sys
-	sys.exit()
-
-
-for i in l:
-	a = i.split(":")
-	d[a[0]] = a[1]
-df = pd.DataFrame(d, index=["info"]).T
-
-comming_episode_number = int(df.iloc[-1][0])
-
-print(tabulate(df))
-print("\n\nhttps://ardirilisertugrul.net/Kurulus-Osman/home.php\n")
-
-try:
-	# last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[-1])}"
-	last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={      int(d['Name'].split()[-1]) -1}"
-except:
-	#last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={26 + int(d['Name'].split()[0].strip('.'))}"
-	last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={     int(d['Name'].split()[0].strip('.')) -1}"
-print("Last video page:", last_vid)
-
-
-# a,b = last_vid.split("=")
-# next_vid = f"{a}={str(int(b)+1)}"
-
-s = BeautifulSoup(requests.get(last_vid).text, "lxml")
-for i in s.select("li"):
-	try:
-		l = i['data-source']
-		if "videoembed" in l:
-			if not l.startswith("https:"):
-				l = "https:" + l
-			l = l.strip()
-			print("Last video Download/watch link:", l)
-			break
-	except:
-		pass
-s = BeautifulSoup(requests.get(l).text, "lxml")
-print("Last video Duration:", s.find("div", {"class" : "vid-card_duration"}).text)
-
 _file_name_ = "/home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt"
-last_video_downloaded = int(open(_file_name_, "r").read().strip())
+s = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=60").text, 'lxml')
+n = max([int(i.text.strip("episode ")) for i in s.select("button", {"class" : "btn btn-info"}) if i.text.startswith("episode") ])
+last_vid_num = int(open(_file_name_, 'r').read().strip())
+last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={last_vid_num}"
 
-
-# f = """\n\n#############################################################
-# ####-----------------{} -------------------####
-# #############################################################\n"""
-# 
-# if comming_episode_number - last_video_downloaded == 1:
-# 	print(f.format("--- NO NEW VIDEO"))
-# elif comming_episode_number - last_video_downloaded > 1:
-# 	print(colored(f.format(" CONGRATULATIONS"))
-
+print("Last video page:", last_vid)
 print("""\n\n#############################################################
 ####-----------------""", end="")
-g = False
-if comming_episode_number - last_video_downloaded == 1:
-	print(colored("--- NO NEW VIDEO", 'red'), end="")
-elif comming_episode_number - last_video_downloaded > 1:
-	g = True
+
+if n > last_vid_num:
 	print(colored(" CONGRATULATIONS", 'red'), end="")
+	os.popen(f"firefox https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=" + str(n))
+else:
+	print(colored("--- NO NEW VIDEO", 'red'), end="")
 
 print(""" -------------------####
 #############################################################\n""")
 
-
-print("\nLast video downloaded was:", last_video_downloaded)
-
-
-# print("""
-# #########################################################################
-# # agar video download kar len to                                        #
-# # </home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt>  #
-# # file ko update kar den                                                #
-# #########################################################################
-# \n""")
-
-
-if g:
+if n > last_vid_num:
 	ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
 	if ans_ == "y":
-		ans_ = input(f"Enter last episode you downloaded/watched to enter in {_file_name_}: ")
-		open(_file_name_, 'w').write(ans_)
-print()
+		open(_file_name_, 'w').write(str(n))
+	print()
