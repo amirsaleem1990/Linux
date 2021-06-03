@@ -1339,3 +1339,5 @@ read .txt file withing zip file (withoud unzipping) ................. unzip -p z
 
 # erase complete drive (not a partition) ............. sudo shred -v -n1 -z /dev/sdX (replace <sdX> with your device name)
 
+
+# bash modulo if ..................... if ! ((n % 4)); then echo "$n divisible by 4."; fi .................. if [ $(( $a % 4 )) -eq 0 ]; then ..................... if [[ $(( $1 % 4 )) == 0 ]]; then ................. ((a%4)) && echo "$a is not divisible by 4" || echo "$a is divisible by 4" 
