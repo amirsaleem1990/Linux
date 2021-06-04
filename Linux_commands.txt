@@ -1321,12 +1321,7 @@ ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./
 
 # get last character from string ...................... echo "${var_name: -1}"
 
-
 iterate over arguments in script .............. for var in "$@"; do echo "$var"; done
-
-
-
-
 
 chage ................ change user password expiry information
 chage -l amir ........ show amir user password expiry information
@@ -1336,8 +1331,11 @@ chage -l amir ........ show amir user password expiry information
 
 read .txt file withing zip file (withoud unzipping) ................. unzip -p zip.zip file.txt 
 
-
 # erase complete drive (not a partition) ............. sudo shred -v -n1 -z /dev/sdX (replace <sdX> with your device name)
 
-
 # bash modulo if ..................... if ! ((n % 4)); then echo "$n divisible by 4."; fi .................. if [ $(( $a % 4 )) -eq 0 ]; then ..................... if [[ $(( $1 % 4 )) == 0 ]]; then ................. ((a%4)) && echo "$a is not divisible by 4" || echo "$a is divisible by 4" 
+
+# Convert seconds to hours, minutes, seconds ......................... date -d@$57024 -u +%H:%M:%S
+
+# How to download package not install it with apt-get command? .................. sudo apt-get install --download-only package_name ............. This will download pppoe and any dependencies you need, and place them in /var/cache/apt/archives. That way a subsequent apt-get install pppoe will be able to complete without any extra downloads.
+
