@@ -1339,3 +1339,85 @@ read .txt file withing zip file (withoud unzipping) ................. unzip -p z
 
 # How to download package not install it with apt-get command? .................. sudo apt-get install --download-only package_name ............. This will download pppoe and any dependencies you need, and place them in /var/cache/apt/archives. That way a subsequent apt-get install pppoe will be able to complete without any extra downloads.
 
+
+#-----------------
+Check if a Bash array contains a value 
+if [[ " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array contains value
+fi
+
+if [[ ! " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array doesn't contain value
+fi
+
+Note that in cases where the value you are searching for is one of the words in an array element with spaces, it will give false positives. For example
+
+array=("Jack Brown")
+value="Jack"
+
+he regex will see "Jack" as being in the array even though it isn't. So you'll have to change IFS and the separator characters on your regex if you want still to use this solution, like this
+
+IFS=$'\t'
+array=("Jack Brown\tJack Smith")
+unset IFS
+value="Jack"
+
+if [[ "\t${array[@]}\t" =~ "\t${value}\t" ]]; then
+    echo "true"
+else
+    echo "false"
+fi
+
+# False
+
+Obviously this can also be used as a test statement, allowing it to be expressed as a one-liner
+[[ " ${array[@]} " =~ " ${value} " ]] && echo "true" || echo "false"
+
+Second solution:
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+A test run of that function could look like:
+
+>>> array=("something to search for" "a string" "test2000")
+>>> containsElement "a string" "${array[@]}"
+>>> echo $?
+0
+>>> containsElement "blaha" "${array[@]}"
+>>> echo $?
+1
+
+Third solution:
+printf '%s\n' "${myarray[@]}" | grep -P '^mypattern$'
+
+Explanation
+
+The printf statement prints each element of the array on a separate line.
+
+The grep statement uses the special characters ^ and $ to find a line that contains exactly the pattern given as mypattern (no more, no less).
+
+Usage
+
+To put this into an if ... then statement:
+
+if printf '%s\n' "${myarray[@]}" | grep -q -P '^mypattern$'; then
+    # ...
+fi
+
+I added a -q flag to the grep expression so that it won't print matches; it will just treat the existence of a match as "true."
+
+
+fourth solution:
+inarray=$(echo ${haystack[@]} | grep -o "needle" | wc -w)
+
+non zero value indicates a match was found.
+
+... actually, to solve the problem mentioned with it not working with needle1 and needle2, if you only want an exact match, nothing more, nothing less, just add a w after the -o for a whole word match
+
+inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
+
+
