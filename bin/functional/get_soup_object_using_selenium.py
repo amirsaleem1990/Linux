@@ -24,6 +24,12 @@ def get_soup_object_using_selenium(url, visual=False, urls=True):
 				extrected_urls.append(l)
 			except:
 				pass
+		for i in s.select("source"):
+			try:
+				l = i['src']
+				extrected_urls.append(l)
+			except:
+				pass
 		print("\nA tuple is returned, 1st vlues is urls, 2nd value is BeautifulSoup object\n")
 	return (set(extrected_urls), s)
 
