@@ -13,9 +13,25 @@ get_duration(){
 	echo -n `ffmpeg -i $1  2>&1 | grep Duration | cut -d " " -f 4 | sed s/,// `
 }
 
+my_array=(.mp4 .mkv .webm .mov .mp4.part .mkv.part .webm.part .mov.part)
+
+# echo -e 'Sory by: \n1- for by size\n2- by duration\n\t'
+# read  ans
+
 for i in "$@"; do
-	get_size_ $i
-	echo -en "\t"
-	get_duration $i
-	echo -e "\t$i"
-done
+	extention=$(echo .`echo $i | rev | cut -d. -f1 | rev`)
+	# echo $extention
+	if [[ "${my_array[@]}" =~ "${extention}" ]]; then
+		duration=`get_duration $i`
+		if [[ $duration != "" ]] ; then
+		# if [[ $? -eq  0 ]] ; then
+			get_size_ $i
+			echo -en "\t"
+			echo -n $duration
+		else
+			continue
+		fi
+		echo -en "\t"
+		echo -e "\t$i"
+	fi
+done | sort -h
