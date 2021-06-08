@@ -1,0 +1,61 @@
+#!/usr/bin/python3
+import os
+from termcolor import colored
+import requests
+from bs4 import BeautifulSoup
+import get_soup_object_using_selenium
+print()
+
+_file_name_ = "/home/amir/github/Amir-personal/.jalaloddin_last_downloaded.txt"
+
+last_downloaded_video_number = int(open(_file_name_, 'r').read().strip())
+print(f"Last video url:", f"https://www.historicales.com/mendirman-jaloliddin-episode-{last_downloaded_video_number}-english-urdu/" )
+
+url = f"https://www.historicales.com/mendirman-jaloliddin-episode-{last_downloaded_video_number+1}-english-urdu/"
+x = get_soup_object_using_selenium.get_soup_object_using_selenium(url)[0]
+next_vid_download_url = [i for i in x if i.startswith("https://www.mediafire.com") and ('eng' in i)]
+
+print("""\n\n#############################################################
+####-----------------""", end="")
+
+if next_vid_download_url:
+	print(colored(" CONGRATULATIONS", 'red'), end="")                                                                                                               
+else:
+	print(colored("--- NO NEW VIDEO", 'red'), end="")
+
+print(""" -------------------####
+#############################################################\n""")
+
+
+
+
+if next_vid_download_url:
+	if len(next_vid_download_url) == 1:
+		next_vid_download_url = next_vid_download_url[0]
+	else:
+		print(*next_vid_download_url)
+		next_vid_download_url = input("We have these urls, choose one of them: ")
+
+	x = get_soup_object_using_selenium.get_all_links(next_vid_download_url)
+	if x:
+		x = [i for i in x if i.endswith(".mp4")]
+		if len(x) == 1:
+			next_vid_download_url = x[0]
+		else:
+			print(*x)
+			next_vid_download_url = input("We have these urls, choose one of them: ")
+	else:
+		print(f"\nWe dont found any download link at <{x}>\nExiting ......\n")
+		import sys
+		sys.exit(1)
+	ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+	if ans_ == "y":
+		open(_file_name_, 'w').write(str(last_downloaded_video_number+1))
+	ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+	if ans_ == "y":
+		com = f"youtube-dl {next_vid_download_url}"
+		print(f"\nDownload command: {com}\n\n\n")
+		os.system(com)
+	print()
+
+
