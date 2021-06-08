@@ -1,6 +1,12 @@
 #!/bin/bash
+# IFS=$'\n'
 #du -sch * |  sort -h | grep --color "\|total" 
-du -sch .[!.]* * 2>/dev/null |sort -h | grep --color "\|total$"
+args=("$@")
+if  [[ ${#args[@]} -gt 0 ]]; then
+	du -sch .[!.]* "${args[@]}" 2>/dev/null |sort -h | grep --color "\|total$"
+else
+	du -sch .[!.]* * 2>/dev/null |sort -h | grep --color "\|total$"
+fi
 ##########################################################################
 # IFS=$'\n'
 # for i in `ls -Sr`; do 
