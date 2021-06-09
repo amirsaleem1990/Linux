@@ -1,0 +1,3 @@
+git clone git@gitlab.com:lfddevops/kash_nano_laon_prediction.git
+git clone git@gitlab.com:lfddevops/finca-credit-scoring.git
+git clone git@gitlab.com:lfddevops/kashat-algo-phone-raw-data-etl.git
