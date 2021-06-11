@@ -1,5 +1,23 @@
 #!/usr/bin/ipython3
 
+"""
+<rdinfd> Linux me duplicate files find karny ka package h, is ki command ye h (rdfind .), is command sy 1 file <results.txt> ganerate hoti h, jis me sari duplicated files k names or some info hoti h
+
+>>> head results.txt
+# Automatically generated
+# duptype id depth size device inode priority name
+DUPTYPE_FIRST_OCCURRENCE 3598 6 1 2065 16571 1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_WITHIN_SAME_TREE -3598 7 1 2065 8822 1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/Chapter02/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_FIRST_OCCURRENCE 3273 5 23 2065 8720 1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/.git/HEAD
+DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 2825 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/.git/HEAD
+DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 12141 1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/.git/HEAD
+DUPTYPE_FIRST_OCCURRENCE 3704 6 27 2065 3609 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/bookdown/scripts/hello.R
+DUPTYPE_WITHIN_SAME_TREE -3704 6 27 2065 6430 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/original/scripts/hello.R
+
+to is (results.txt) file me mojud files me sy required files remove karny k lye me ny ye script banai h
+
+"""
+
 import sys
 from pandas import DataFrame, concat
 import os
@@ -18,10 +36,14 @@ if not x:
 	print("\nThere is no duplicate files in results.txt\nExiting ......\n")
 	sys.exit(0)
 
-x = list(zip([i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], [' '.join(i.split()[7:]).replace("./", '') for i in x]))
+x = list(zip(
+	[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
+	[' '.join(i.split()[7:]).replace("./", '') for i in x]
+	))
 
 
 df = DataFrame(x)
+
 def GET_SIZE(x):
 	try:
 		return os.path.getsize(x)/1024
@@ -35,36 +57,49 @@ print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is
 df[3] = None
 df.iloc[df[df[0].eq(True)].index.to_list(), 3] = list(range(df[0].eq(True).sum()))
 df[3] = df[3].fillna(method='ffill')
-#ind = df.groupby(3).agg({'size_KB' : max}).sort_values("size_KB", ascending=False).index.to_list()
 r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1][1].to_list() for i in r]
 DELTE_IT = []
 
+for_delete_size = 0
+
+def func(input_):
+	global for_delete_size
+	if "." in input_: # multi index
+		inp = input_.replace(" ", "")
+		try:
+			inp = [int(i) for i in inp.split(".")]
+			for input_ in inp:
+				DELTE_IT.append(node[input_])
+				for_delete_size += os.path.getsize(node[input_])
+				print(f"************ <{node[input_]}> added to REMOVE list ************")
+		except:	
+			raise Exception("Wrong input\nExiting ......\n")
+			sys.exit(1)
+	else: # single index
+		try: # single index
+			input_ = int(input_)
+			DELTE_IT.append(node[input_])
+			for_delete_size += os.path.getsize(node[input_])
+			print(f"************ <{node[input_]}> added to REMOVE list ************")
+		except: # skip
+			pass
+
 for node in r:
 	try:
 		print("\n<<  ==========================================  >>")
+		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB\n")
 		for e,i in enumerate(node):
 			com = f"""echo "{e}- $(du -sh '{i}')" """
 			os.system(com)
-		input_ = input("Enter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by comma), eg(0,3,4)\n\t- Skip (press any key):\n")
-		if "," in input_: # multi index
-			inp = input_.replace(" ", "")
-			try:
-				inp = [int(i) for i in inp.split(",")]
-				for input_ in inp:
-					DELTE_IT.append(node[input_])
-					print(f"************ <{node[input_]}> added to REMOVE list ************")
-			except:	
-				raise Exception("Wrong input\nExiting ......\n")
-				sys.exit(1)
-		else: # single index
-			try: # single index
-				input_ = int(input_)
-				DELTE_IT.append(node[input_])
-				print(f"************ <{node[input_]}> added to REMOVE list ************")
-			except: # skip
-				pass
-	except KeyboardInterrupt:
+		input_ = input("For open all these files type 'open' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		if input_ in ["open", "'open'"]:
+			for i in node:
+				com = f"gopen '{i}'"
+				os.system(com)
+			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		func(input_)
+	except:
 		break
 
 
@@ -79,4 +114,6 @@ if DELTE_IT:
 		for i in DELTE_IT:
 			print(f"Removing {i} ..........")
 			os.remove(i)
+else:
+	print("\nYou didn't choose any file to delete\nExiting ........")
 print()

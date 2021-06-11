@@ -1,7 +1,7 @@
 # !/bin/bash
 mkdir -p /home/amir/.local/share/Trash/files
 
-echo "If you execute this script with sudo please enter any key to proceed, else terminate this script and execute it with sudo"
+echo "If you execute this script with please enter any key to proceed, else terminate this script and execute it with sudo"
 read ans
 
 
@@ -19,78 +19,95 @@ func_(){
 # @install.packages("caret", repos=repo)
 # @install.packages("swirl", repos=repo)
 
+func_ "echo 100 > `locate kbd_backlight`"
 
-func_ "sudo apt-get update"
-func_ "sudo apt-get -y upgrade"
-func_ "sudo apt install -y ipython3"
-func_ "sudo apt install -y python3-pip"
-func_ "sudo apt install -y feh"
-func_ "sudo apt install -y xsel"
-func_ "sudo apt install -y gnustep-gui-runtime"
-func_ "sudo apt install -y vokoscreen"
-func_ "sudo apt install -y git"
-func_ "sudo apt install -y speedtest-cli"
-func_ "sudo apt install -y pinta"
-func_ "sudo apt install -y nautilus-dropbox"
-func_ "sudo apt install -y tmux"
-func_ "sudo apt install -y nethogs"
-func_ "sudo apt install -y tree"
-func_ "sudo apt install -y gdebi-core"
-func_ "sudo apt install -y ffmpeg"
-func_ "sudo apt install -y translate-shell"
-func_ "sudo apt install -y htop"
-func_ "sudo apt install -y apt-transport-https"
-func_ "sudo apt install -y ca-certificates"
-func_ "sudo apt install -y curl"
-func_ "sudo apt install -y software-properties-common"
+func_ "apt-get update"
+func_ "apt-get -y upgrade"
 
-func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -"
-func_ "sudo add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
-func_ "sudo apt install sublime-text"
+func_ "apt install -y virtualbox-qt"
+func_ "apt install -y rdfind"
+func_ "apt install -y xclip"
+func_ "apt install -y dos2unix"
+func_ "apt install -y net-tools"
+func_ "apt install -y mlocate"
+func_ "apt install -y testdisk"
+func_ "apt install -y mysql-client-core*"
+func_ "apt install -y vlc-bin"
+func_ "apt install -y ipython3"
+func_ "apt install -y python3-pip"
+func_ "apt install -y feh"
+func_ "apt install -y xsel"
+func_ "apt install -y gnustep-gui-runtime"
+func_ "apt install -y vokoscreen"
+func_ "apt install -y git"
+func_ "apt install -y speedtest-cli"
+func_ "apt install -y pinta"
+func_ "apt install -y nautilus-dropbox"
+func_ "apt install -y tmux"
+func_ "apt install -y nethogs"
+func_ "apt install -y tree"
+func_ "apt install -y gdebi-core"
+func_ "apt install -y ffmpeg"
+func_ "apt install -y translate-shell"
+func_ "apt install -y htop"
+func_ "apt install -y apt-transport-https"
+func_ "apt install -y ca-certificates"
+func_ "apt install -y curl"
+func_ "apt install -y software-properties-common"
+func_ "apt install -y jupyter-core"
+func_ "apt install -y adb"
+
+func_ "apt-get install -y gdebi"
+func_ "apt-get install -y openjdk-11-jdk"
+func_ "apt-get install -y r-cran-rjava"
+func_ "apt-get install -y libcurl4-openssl-dev"
+func_ "apt-get install -y libxml2-dev"
+func_ "apt-get install -y libssl-dev"
+func_ "apt-get install -y jupyter-client"
+
+
+
+
+func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
+func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
+func_ "apt install sublime-text"
 if [[ $? != 0 ]]; then 
-	func_ "sudo snap install --classic sublime-text"
+	func_ "snap install --classic sublime-text"
 fi
-func_ "sudo snap install vlc"
-func_ "sudo apt-get install -y gdebi"
+func_ "snap install vlc"
+func_ "snap install scrcpy"
+
 func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
 
-sudo dpkg -i dukto*
+dpkg -i dukto*
 if [[ $? != 0 ]]; then
-	sudo add-apt-repository ppa:rock-core/qt4
-	sudo apt-get update
-	sudo apt --fix-broken install
-	sudo apt install libqtgui4
-	sudo apt autoremove
+	add-apt-repository ppa:rock-core/qt4
+	apt-get update
+	apt --fix-broken install
+	apt install libqtgui4
+	apt autoremove
 else
 	func_ "dukto installed"
 fi
 
-# func_ "sudo gdebi dukto_6.0-1_amd64.deb"
+# func_ "gdebi dukto_6.0-1_amd64.deb"
 rm -r dukto*.deb
 
-# func_ "sudo apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base"
+# func_ "apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base"
 # firefox https://cloud.r-project.org/
-sudo apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
+apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
 if [[ $? != 0 ]]; then 
-	func_ "sudo apt install r-cran-littler"
+	func_ "apt install r-cran-littler"
 if [[ $? != 0 ]]; then read -p "Install R manually, and then pres any key: "; fi
 
-func_ "sudo apt-get -y install openjdk-11-jdk"
-func_ "sudo apt-get -y install r-cran-rjava"
-func_ "sudo R CMD javareconf"
-func_ "sudo apt-get install -y libcurl4-openssl-dev"
-func_ "sudo apt-get install -y libxml2-dev"
-func_ "sudo apt-get install -y libssl-dev"
+func_ "R CMD javareconf"
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
-func_ "sudo Rscript r_essential_packages.R"
-func_ "sudo apt install -y jupyter-core"
+func_ "Rscript r_essential_packages.R"
 func_ "pip3 install jupyterlab"
 func_ "pip3 install xlrd==1.2.0"
-func_ "sudo apt-get install -y jupyter-client"
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
-func_ "sudo Rscript R_in_jupyter.R"
+func_ "Rscript R_in_jupyter.R"
 
-func_ "sudo apt install adb"
 
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/set_startupscript.py"
 func_ "ipython3 set_startupscript.py"
@@ -124,14 +141,14 @@ func_ "pip3 install psutil"
 func_ "pip3 install env"
 
 func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
-func_ "sudo sh get-docker.sh"
+func_ "sh get-docker.sh"
 
 func_ "wget https://raw.githubusercontent.com/amirsaleem1990/git/master/github%20initial%20setup"
 mv 'github initial setup' github_initial_setup
 func_ "bash github_initial_setup"
 
-# func_ "sudo mkdir /amir_bin/"
-sudo ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
+# func_ "mkdir /amir_bin/"
+ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
 
 # func_ "pip3 install statsmodels"
 # func_ "apm install ask-stack"
@@ -142,8 +159,8 @@ sudo ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
 latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
 latest_rstudio_download_link="https://download1.rstudio.org/desktop/bionic/amd64/rstudio-$latest_rstudio_version-amd64.deb"
 curl $latest_rstudio_download_link > rstudio-$latest_rstudio_version.deb
-func_ "sudo gdebi -n rstudio*.deb"
+func_ "gdebi -n rstudio*.deb"
 
 
 # dukto
-# sudo add-apt-repository ppa:rock-core/qt4; sudo add-apt-repository ppa:gezakovacs/ppa; sudo apt update; sudo apt-get install -y libqtgui4
+# add-apt-repository ppa:rock-core/qt4; add-apt-repository ppa:gezakovacs/ppa; apt update; apt-get install -y libqtgui4
