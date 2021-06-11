@@ -1,0 +1,82 @@
+#!/usr/bin/ipython3
+
+import sys
+from pandas import DataFrame, concat
+import os
+
+print("""
+
+#####################################################################
+# At any point you can press CTRL+C to skip the process, and delete #
+# files that you marked till that time                              #
+#####################################################################
+
+""")
+
+x = open("results.txt", 'r').read().splitlines()[2:-1]
+if not x:
+	print("\nThere is no duplicate files in results.txt\nExiting ......\n")
+	sys.exit(0)
+
+x = list(zip([i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], [' '.join(i.split()[7:]).replace("./", '') for i in x]))
+
+
+df = DataFrame(x)
+def GET_SIZE(x):
+	try:
+		return os.path.getsize(x)/1024
+	except:
+		return None
+
+df['size_KB'] = df[1].apply(GET_SIZE)
+print(f"\n\nThere are {len(df)} files, among them {df[0].sum()} are unique")
+print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df[0].eq(True)].size_KB.sum()} bytes\n\n")
+
+df[3] = None
+df.iloc[df[df[0].eq(True)].index.to_list(), 3] = list(range(df[0].eq(True).sum()))
+df[3] = df[3].fillna(method='ffill')
+#ind = df.groupby(3).agg({'size_KB' : max}).sort_values("size_KB", ascending=False).index.to_list()
+r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
+r = [i[1][1].to_list() for i in r]
+DELTE_IT = []
+
+for node in r:
+	try:
+		print("\n<<  ==========================================  >>")
+		for e,i in enumerate(node):
+			com = f"""echo "{e}- $(du -sh '{i}')" """
+			os.system(com)
+		input_ = input("Enter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by comma), eg(0,3,4)\n\t- Skip (press any key):\n")
+		if "," in input_: # multi index
+			inp = input_.replace(" ", "")
+			try:
+				inp = [int(i) for i in inp.split(",")]
+				for input_ in inp:
+					DELTE_IT.append(node[input_])
+					print(f"************ <{node[input_]}> added to REMOVE list ************")
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		else: # single index
+			try: # single index
+				input_ = int(input_)
+				DELTE_IT.append(node[input_])
+				print(f"************ <{node[input_]}> added to REMOVE list ************")
+			except: # skip
+				pass
+	except KeyboardInterrupt:
+		break
+
+
+
+if DELTE_IT:
+	print("\n\n\n----------------\nFiles to delete:")
+	# print(*DELTE_IT, sep="\n\t")
+	print('\n\t' + '\n\t'.join(DELTE_IT))
+	input_ = input("\n\nWe are going to delete these files, press y to continue: ")
+	if input_ == 'y':
+		print("")
+		for i in DELTE_IT:
+			print(f"Removing {i} ..........")
+			os.remove(i)
+print()
