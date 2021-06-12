@@ -5,14 +5,14 @@
 
 >>> head results.txt
 # Automatically generated
-# duptype id depth size device inode priority name
-DUPTYPE_FIRST_OCCURRENCE 3598 6 1 2065 16571 1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/web_scraping_test/web_scraping_test/__init__.py
-DUPTYPE_WITHIN_SAME_TREE -3598 7 1 2065 8822 1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/Chapter02/web_scraping_test/web_scraping_test/__init__.py
-DUPTYPE_FIRST_OCCURRENCE 3273 5 23 2065 8720 1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/.git/HEAD
-DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 2825 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/.git/HEAD
+# duptype id depth size device inode priority  name
+DUPTYPE_FIRST_OCCURRENCE 3598  6 1 2065 16571  1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_WITHIN_SAME_TREE -3598 7 1 2065 8822   1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/Chapter02/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_FIRST_OCCURRENCE 3273  5 23 2065 8720  1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/.git/HEAD
+DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 2825  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/.git/HEAD
 DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 12141 1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/.git/HEAD
-DUPTYPE_FIRST_OCCURRENCE 3704 6 27 2065 3609 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/bookdown/scripts/hello.R
-DUPTYPE_WITHIN_SAME_TREE -3704 6 27 2065 6430 1 ./DataScince/Statistics/Learning-Statistics-with-R/github/original/scripts/hello.R
+DUPTYPE_FIRST_OCCURRENCE 3704  6 27 2065 3609  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/bookdown/scripts/hello.R
+DUPTYPE_WITHIN_SAME_TREE -3704 6 27 2065 6430  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/original/scripts/hello.R
 
 to is (results.txt) file me mojud files me sy required files remove karny k lye me ny ye script banai h
 
@@ -50,6 +50,14 @@ def GET_SIZE(x):
 	except:
 		return None
 
+def func_(val):
+	global for_delete_size
+	val = node[int(val)]
+	DELTE_IT.append(val)
+	for_delete_size += os.path.getsize(val)
+	print(f"************ <{val}> added to REMOVE list ************")
+
+
 df['size_KB'] = df[1].apply(GET_SIZE)
 print(f"\n\nThere are {len(df)} files, among them {df[0].sum()} are unique")
 print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df[0].eq(True)].size_KB.sum()} bytes\n\n")
@@ -57,33 +65,31 @@ print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is
 df[3] = None
 df.iloc[df[df[0].eq(True)].index.to_list(), 3] = list(range(df[0].eq(True).sum()))
 df[3] = df[3].fillna(method='ffill')
+
+print("\n\n############# Extenstions Distribution #############\n")
+df[4] = df[1].str.split("/").str[-1].str.split(".").str[-1]
+
+df = df[df.size_KB.notna()]
+df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
+
+m_1 = df.groupby(4).agg({"size_KB" : sum}).div(1024).astype(int).reset_index().rename(columns={4: "Extention", 	'size_KB' : 'Total size (MB)'}).sort_values("Total size (MB)", ascending=False).reset_index(drop=True)
+
+count_ = df[1].str.split("/").str[-1].str.split(".").str[-1].value_counts()
+
+m_2 = count_.reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
+m = m_1.merge(m_2, on="Extention", how='outer')
+print(m.to_string())
+ans_ = input("\nChoose extantin(s)\nIf 1+ extenstions saperate them by pipe '|', eg(pdf|html|txt)\nFor choose all extantions press Enter\n")
+if ans_.strip() != '':
+	df = df[df[4].isin(ans_.split("|"))]
+	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
 r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1][1].to_list() for i in r]
 DELTE_IT = []
 
 for_delete_size = 0
-
-def func(input_):
-	global for_delete_size
-	if "." in input_: # multi index
-		inp = input_.replace(" ", "")
-		try:
-			inp = [int(i) for i in inp.split(".")]
-			for input_ in inp:
-				DELTE_IT.append(node[input_])
-				for_delete_size += os.path.getsize(node[input_])
-				print(f"************ <{node[input_]}> added to REMOVE list ************")
-		except:	
-			raise Exception("Wrong input\nExiting ......\n")
-			sys.exit(1)
-	else: # single index
-		try: # single index
-			input_ = int(input_)
-			DELTE_IT.append(node[input_])
-			for_delete_size += os.path.getsize(node[input_])
-			print(f"************ <{node[input_]}> added to REMOVE list ************")
-		except: # skip
-			pass
 
 for node in r:
 	try:
@@ -98,11 +104,22 @@ for node in r:
 				com = f"gopen '{i}'"
 				os.system(com)
 			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
-		func(input_)
+		input_ = input_.replace(" ", "")
+		if "." in input_: # multi index
+			try:
+				inp = input_.split(".")
+				for input_ in inp:
+					func_(input_)
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		else: # single index
+			try: # single index
+				func_(input_)
+			except: # skip
+				pass
 	except:
 		break
-
-
 
 if DELTE_IT:
 	print("\n\n\n----------------\nFiles to delete:")
