@@ -85,6 +85,12 @@ if ans_.strip() != '':
 	df = df[df[4].isin(ans_.split("|"))]
 	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
+#REMOVE IT IMMEDIATELY
+#---------
+#df = df[~df[1].str.contains("github")]
+#df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+#---------
+
 r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1][1].to_list() for i in r]
 DELTE_IT = []
