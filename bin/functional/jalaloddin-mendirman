@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 from termcolor import colored
+print(colored("\n\n******** Jalalodding ********\n", 'red'))
 import requests
 from bs4 import BeautifulSoup
 import get_soup_object_using_selenium
