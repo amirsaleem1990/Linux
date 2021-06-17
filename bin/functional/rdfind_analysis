@@ -87,7 +87,7 @@ if ans_.strip() != '':
 
 #REMOVE IT IMMEDIATELY
 #---------
-#df = df[~df[1].str.contains("github")]
+#df = df[df[1].str.contains("mp4")]
 #df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 #---------
 
