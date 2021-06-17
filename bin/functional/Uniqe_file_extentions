@@ -58,8 +58,8 @@ fi
 
 
 if [[ $parameter -eq 1 ]] ; then
-	folders_count=`find . -maxdepth 1 -type f| wc -l`
-	files_count=`find . -maxdepth 1 -type d| wc -l`
+	folders_count=`find . -maxdepth 1 -type d| wc -l`
+	files_count=`find . -maxdepth 1 -type f| wc -l`
 	symbolic_links_count=`ls -l | cut -c -1 | grep -o l | wc -l`
 	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count\nNo-extention `ls | grep  -v '\.' | wc -l`" | column -t -s ' '
 	echo -e "\n"
