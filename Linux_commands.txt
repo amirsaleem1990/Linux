@@ -1421,3 +1421,5 @@ non zero value indicates a match was found.
 inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
 
 
+
+# unrar to some_destination ............... unrar e my_file.rar my/desired/destination/
