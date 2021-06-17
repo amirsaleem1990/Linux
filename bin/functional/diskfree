@@ -34,11 +34,14 @@ a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g'"))
 # print(" " * (45), colored("Total  | Used  | Used  | Avail    | Mounted     ", "red", attrs=['reverse', 'bold']))
 open(_file__, 'w').write(
 	", , ,Total,Used,Used,Avail,Mounted")
+a = sorted(a, key=lambda x:x.split()[0])
+# sys.exit()
 for b in a:
-	# sys.exit()
+
 	total = int(b.split()[1].replace("M", ""))
 	if total < 1000:
 	  continue
+	_M_ = b.split()[0][:-1]
 	used = int(b.split()[2].replace("M", ""))
 	avail = int(b.split()[3].replace("M", ""))
 	used_perc = int(b.split()[4].replace("M", "").strip("%"))
@@ -57,7 +60,6 @@ for b in a:
 	# 	  str(round(used_size/total_size*100)) + " %", m(3),
 	# 	  MB_to_GB(avail, 1), m(11- len(str(avail))),
 	# 	  b.split()[-1])
-
 	open(_file__, 'a').write(
 		f"""\n{b.split()[0]},{int(used_size) * ">"}{int(total_size - used_size) * "!"},{MB_to_GB(total)},{MB_to_GB(used)},{round(used_size/total_size*100)} %,{MB_to_GB(avail, 1)},{b.split()[-1]}\n"""
 		)
