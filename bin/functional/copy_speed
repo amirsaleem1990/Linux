@@ -7,29 +7,41 @@ convertsecs() {
  printf "%02d:%02d:%02d\n" $h $m $s
 }
 IFS=$'\n'
-read -e -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
+if [[ $1 == "" ]] ; then
+	read -e -p "Enter your File /Folder absolute path: " all_data_in_MB
+else
+	all_data_in_MB=$1
+fi
+
+if [[ $2 == "" ]]; then
+	read -p "Enter sleep time (in seconds) [default is 60 seconds]: " sleep_time
+else
+	sleep_time=$2
+fi
+
+if [[ $sleep_time = "" ]] ; then
+	sleep_time=60
+fi
+
 # all_data_in_MB=/media/500GB/320GB
 m=$(du -s $all_data_in_MB -BM)
 # m='42384M	/home/amir/g'
+
 m1=${m%[[:space:]]*}
 all_data_in_MB=$(echo $m1 | tr -dc '0-9')
 
 last=$(echo $(du -s -BM) | tr -dc '0-9')
 Average_array=()
 
-read -p "Enter sleep time (in seconds) [default is 60 seconds]: " sleep_time
-if [[ $sleep_time = "" ]] ; then
-	sleep_time=60
-fi
 
 while :
 	do 
 	current=$(echo $(du -s -BM) | tr -dc '0-9')
-	echo -n "TOTAL: $(du -sh), in last $sleep_time Sec:"
-	echo -n `expr $current - $last ` MB `   date +%H:%M:%S`
+	echo -n "TOTAL: $(du -sh | sed 's/[\t,.]//g ') | in last $sleep_time Secs: "
+	echo -n `expr $current - $last ` MB \| `   date +%H:%M:%S`
 	completed=$(echo "scale=2; $current/$all_data_in_MB" | bc)
 	completed=$(echo $completed | tr -dc '0-9')
-	echo -n "       " Completed $completed %
+	echo -n " | " Completed $completed %
 	curent_time=`date +%s`
 	average_speed=$(echo `expr $current - $last `)
 	Average_array+=("$average_speed")
@@ -47,6 +59,6 @@ while :
 	
 	Estimated_time=$(echo "$ab*$mean*$sleep_time" | bc)
 	Estimated_time=${Estimated_time%.*}
-	echo "    Estimated time: `convertsecs $Estimated_time`"
+	echo " | Remaining time: `convertsecs $Estimated_time`"
 	sleep $sleep_time
 done
