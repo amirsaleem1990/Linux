@@ -85,11 +85,20 @@ if ans_.strip() != '':
 	df = df[df[4].isin(ans_.split("|"))]
 	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
-#REMOVE IT IMMEDIATELY
-#---------
-#df = df[df[1].str.contains("mp4")]
-#df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
-#---------
+
+x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
+
+if x in ['1', '2']:
+	a = input("\nEnter substring, if multiple strings saperate them by | :\n")	
+	if x == '1':
+		df = df[df[1].str.contains(a)]
+	elif x == '2':
+		df = df[~df[1].str.contains(a)]
+	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
+
+df.to_csv('/home/amir/._df_1.csv', index=False)
+input("The df is saved as /home/amir/._df_1.csv\nPleas enter any key to proceed: ")
 
 r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1][1].to_list() for i in r]
@@ -104,7 +113,7 @@ for node in r:
 		for e,i in enumerate(node):
 			com = f"""echo "{e}- $(du -sh '{i}')" """
 			os.system(com)
-		input_ = input("For open all these files type 'open' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		input_ = input("\nFor open all these files type 'open' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
 		if input_ in ["open", "'open'"]:
 			for i in node:
 				com = f"gopen '{i}'"
