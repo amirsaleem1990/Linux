@@ -56,6 +56,11 @@ func_ "apt install -y curl"
 func_ "apt install -y software-properties-common"
 func_ "apt install -y jupyter-core"
 func_ "apt install -y adb"
+func_ "apt install -y imagemagick-6.q16hdri"
+func_ "apt install -y python3-virtualenv"
+func_ "apt install -y unrar"
+func_ "apt install -y unrar-free"
+func_ "apt install -y dolphin"
 
 func_ "apt-get install -y gdebi"
 func_ "apt-get install -y openjdk-11-jdk"
@@ -64,9 +69,11 @@ func_ "apt-get install -y libcurl4-openssl-dev"
 func_ "apt-get install -y libxml2-dev"
 func_ "apt-get install -y libssl-dev"
 func_ "apt-get install -y jupyter-client"
+func_ "apt-get install -y gparted"
 
-
-
+func_ "snap install vlc"
+func_ "snap install scrcpy"
+func_ "snap install pdftk"
 
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
 func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
@@ -74,8 +81,6 @@ func_ "apt install sublime-text"
 if [[ $? != 0 ]]; then 
 	func_ "snap install --classic sublime-text"
 fi
-func_ "snap install vlc"
-func_ "snap install scrcpy"
 
 func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
 
@@ -139,6 +144,10 @@ func_ "pip3 install termcolor"
 func_ "pip3 install tqdm"
 func_ "pip3 install psutil"
 func_ "pip3 install env"
+func_ "pip3 install sqlalchemy"
+func_ "pip3 install fpdf"
+func_ "pip3 install pymysql"
+
 
 func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
 func_ "sh get-docker.sh"
