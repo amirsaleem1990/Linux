@@ -113,10 +113,10 @@ for node in r:
 		for e,i in enumerate(node):
 			com = f"""echo "{e}- $(du -sh '{i}')" """
 			os.system(com)
-		input_ = input("\nFor open all these files type 'open' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
-		if input_ in ["open", "'open'"]:
+		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		if input_ in ["o", "'o'"]:
 			for i in node:
-				com = f"gopen '{i}'"
+				com = f"gopen '{i}' 2>/dev/null"
 				os.system(com)
 			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
 		input_ = input_.replace(" ", "")
