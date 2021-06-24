@@ -2,6 +2,7 @@
 RED="\033[0;31m"
 normal="\033[0m"
 
+
 file_name=/home/amir/.todays_first_login_time
 
 last=`cat $file_name`
@@ -11,6 +12,7 @@ last_date=`date -d @$last +%D`
 now_date=`date -d @$now +%D`
 
 if [[ $last_date != $now_date ]]; then
+	sleep 1m
     # echo $now > $file_name
 	/home/amir/github/Amir-personal/get_actual_login_time_at_HRM_tool.py 
 fi
