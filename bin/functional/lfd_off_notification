@@ -23,7 +23,7 @@ while :; do
 	time_passed=`echo $now-$todays_first_login_time | bc`
 	time_left=`echo 32400 - $time_passed | bc`
 
-	if [[ $time_left < 600 ]] ; then 
+	if [[ $time_left -lt 600 ]] ; then 
 		# echo "only << `$time_left/60|bc` >> mins left" > /home/amir/.time_LEFT
 		# subl /home/amir/.time_LEFT
 		TEXT="only << `echo "$time_left/60"|bc` >> mins left to leave."
