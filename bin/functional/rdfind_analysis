@@ -48,6 +48,10 @@ def GET_SIZE(x):
 	try:
 		return os.path.getsize(x)/1024
 	except:
+		try:
+			return os.path.getsize(x.replace("\)", ") "))/1024
+		except:
+			return None
 		return None
 
 def func_(val):
@@ -57,6 +61,7 @@ def func_(val):
 	for_delete_size += os.path.getsize(val)
 	print(f"************ <{val}> added to REMOVE list ************")
 
+#sys.exit()
 
 df['size_KB'] = df[1].apply(GET_SIZE)
 print(f"\n\nThere are {len(df)} files, among them {df[0].sum()} are unique")
@@ -91,7 +96,8 @@ x = input("\nAre you need some specific substring in file_names? if yes \n\t1- i
 if x in ['1', '2']:
 	a = input("\nEnter substring, if multiple strings saperate them by | :\n")	
 	if x == '1':
-		df = df[df[1].str.contains(a)]
+		#df = df[df[1].str.contains(a)]
+		df = df[df[3].isin(list(df[df[1].str.contains(a)][3].unique()))]
 	elif x == '2':
 		df = df[~df[1].str.contains(a)]
 	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
@@ -105,11 +111,13 @@ r = [i[1][1].to_list() for i in r]
 DELTE_IT = []
 
 for_delete_size = 0
+delete_items_qty = 0
 
 for node in r:
 	try:
 		print("\n<<  ==========================================  >>")
-		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB\n")
+		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
+		print(f"Delete items Qty: {delete_items_qty} (among {df[0].sum()} unique files)\n")
 		for e,i in enumerate(node):
 			com = f"""echo "{e}- $(du -sh '{i}')" """
 			os.system(com)
@@ -124,12 +132,14 @@ for node in r:
 			try:
 				inp = input_.split(".")
 				for input_ in inp:
+					delete_items_qty += 1
 					func_(input_)
 			except:	
 				raise Exception("Wrong input\nExiting ......\n")
 				sys.exit(1)
 		else: # single index
 			try: # single index
+				delete_items_qty += 1
 				func_(input_)
 			except: # skip
 				pass
