@@ -3,6 +3,8 @@ rm -f _m__
 rm -f _diffrent_size_count__
 rm -f _file_not_found_count__
 
+
+
 echo -e "
 ####################################
 # This script itereate over all files HERE and if the same named found THERE(which you specify soon)
