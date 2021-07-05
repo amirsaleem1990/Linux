@@ -31,6 +31,10 @@ fi
 array_len="${#myArray[@]}"
 if [[ $array_len = 1 ]]; then
 	file_folder "${myArray[0]}"
+	if [[ $file_folder == "" ]]; then
+		echo -e "\n<${myArray[0]}> NOT FOUND !!!!!!\nExiting .........\n"
+		exit
+	fi
 	if [[ $(stat -c '%U' "${myArray[0]}") == "root" ]];then
 		print__ $type "${myArray[0]}" | grep -v 'Are you really want to\|\[y\|n\]:'
 		echo -e "\nSorry, this file/directory owned by root .......... Skipping\n"
