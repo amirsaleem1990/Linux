@@ -1,8 +1,6 @@
 #!/bin/bash
-if [[ $@ == "" ]]; then
-	echo -e "\nNo video name provided.\nExiting ......\n"
-	exit
-fi
+
+DEL -rf /home/amir/.duration
 
 IFS=$'\n'
 get_size_(){
@@ -18,20 +16,80 @@ my_array=(.mp4 .mkv .webm .mov .mp4.part .mkv.part .webm.part .mov.part)
 # echo -e 'Sory by: \n1- for by size\n2- by duration\n\t'
 # read  ans
 
-for i in "$@"; do
-	extention=$(echo .`echo $i | rev | cut -d. -f1 | rev`)
+func_(){
+	extention=$(echo .`echo $1 | rev | cut -d. -f1 | rev`)
 	# echo $extention
 	if [[ "${my_array[@]}" =~ "${extention}" ]]; then
-		duration=`get_duration $i`
+		duration=`get_duration $1`
 		if [[ $duration != "" ]] ; then
+			echo $duration >> /home/amir/.duration
 		# if [[ $? -eq  0 ]] ; then
-			get_size_ $i
+			get_size_ $1
 			echo -en "\t"
 			echo -n $duration
 		else
 			continue
 		fi
 		echo -en "\t"
-		echo -e "\t$i"
+		echo -e "\t$1"
 	fi
-done | sort -h
+}
+
+if [[ $@ == "" ]]; then
+	count=`ls | grep ".mp4$\|.mkv$\|.webm$\|.mov$\|.mp4.part$\|.mkv.part$\|.webm.part$\|.mov.part$" | wc -l`
+	if [[ $count -gt 0 ]] ; then 
+		IFS=$'\n'
+		for i in `ls | grep ".mp4$\|.mkv$\|.webm$\|.mov$\|.mp4.part$\|.mkv.part$\|.webm.part$\|.mov.part$"`; do
+			func_ $i
+		done | sort -h
+	fi
+else
+	for i in "$@"; do
+		func_ $i
+	done | sort -h 
+fi
+
+
+
+
+
+# total_secs=0
+# IFS=$'\n'
+# for duration in `cat /home/amir/.duration`; do
+# 	h=`echo $duration | cut -d: -f1`
+# 	if [[ $h != "00" ]] ; then
+# 		h=`echo $h*3600|bc`
+# 		total_secs=`echo $total_secs+$h|bc`
+# 	fi
+
+
+# 	m=`echo $duration | cut -d: -f2`
+# 	if [[ $m != "00" ]] ; then
+# 		m=`echo $m*60|bc`
+# 		# let "total_secs+=m"
+# 		total_secs=`echo $total_secs+m|bc`
+# 	fi
+
+# 	s=`echo $duration | cut -d: -f3`
+# 	if [[ $m != "00" ]] ; then
+# 		s=${s%.*} # float to integer
+# 		# # let "total_secs+=s"
+# 		total_secs=`echo $total_secs+$s|bc`
+# 	fi
+
+# 	# echo -e "$duration\t$total_secs"
+# done
+
+# echo $total_secs
+# echo -e "\n\nTotal time:\n`date -d@$total_secs -u +%H:%M:%S`"
+python3 <<< '
+f = open("/home/amir/.duration", "r").read().splitlines()
+total_secs = 0
+for i in f:
+	h,m,s = i.split(":")
+	total_secs += float(s)        if s != "00" else 0
+	total_secs += float(m) * 60   if m != "00" else 0
+	total_secs += float(h) * 3600 if m != "00" else 0
+open("/home/amir/.duration", "w").write(str(int(total_secs)))
+'
+echo -e "\n\nTotal time:\n`date -d@$(cat /home/amir/.duration) -u +%H:%M:%S`"
