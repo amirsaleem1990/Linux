@@ -38,3 +38,15 @@ Mn
 /usr/bin/xdotool key space
 shift+ctrl+m
 
+
+
+
+Night_light_modify shiny
+/amir_bin/Night_light_modify +
+CTRL + ALT + +
+
+
+Night_light_modify dark
+/amir_bin/Night_light_modify -
+CTRL + ALT + -
+
