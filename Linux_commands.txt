@@ -1425,3 +1425,5 @@ inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
 # unrar to some_destination ............... unrar e my_file.rar my/desired/destination/
 
 # python -m http.server 9000 .............. run http-server 
+#Create python virutal envoirment ................. python3 -m venv /path/to/new/virtual/environment
+
