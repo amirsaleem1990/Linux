@@ -6,7 +6,7 @@ sleep 5m
 
 todays_first_login_time=`cat /home/amir/.todays_first_login_time`
 
-if [[ `date -d @$todays_first_login_time +%H` == 09 ]] &&  [[ `date -d @$todays_first_login_time +%M` > 30 ]] &&  [[ `date -d @$todays_first_login_time +%M` < 45 ]]; then
+if [[ `date -d @$todays_first_login_time +%H` == 09 ]] &&  [[ `date -d @$todays_first_login_time +%M` > 30 ]] &&  [[ `date -d @$todays_first_login_time +%M` < 46 ]]; then
 	x=$(date -d @`echo $todays_first_login_time` +%Y-%m-%d\ 09:30:00)
 	date --date "$x" +%s > /home/amir/.todays_first_login_time
 fi
