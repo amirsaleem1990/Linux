@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+# https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
+import multiprocessing.dummy
+import subprocess
+import os
+
+error_file = "/home/amir/.downloading_errors.txt"
+if os.path.exists(error_file):
+	os.remove(error_file)
+
+def download(url):
+	try:
+		subprocess.check_call(['youtube-dl', url])
+		open("downloaded.txt", "a").write(url+"\n")
+	except:
+		e_ = traceback.format_exc()
+		print("\n\nERROR --------------------------------------------------")
+		print(f"url: {url}")
+		print(e_)
+		print("---------------------------------------------- Error END\n\n")
+		open(error_file, 'a').wirte(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
+
+
+try:
+	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
+except:
+	file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
+	arr = [i for i in set(open(file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+
+try:
+	downloaded = open("downloaded.txt", "r").read().splitlines()
+	arr = [i for i in arr if not i in downloaded]
+except:
+	pass
+	
+p = multiprocessing.dummy.Pool()
+p.map(download, arr)
+
+
+
+
+if os.path.exists(error_file):
+	errors = open(error_file, 'r').read()
+	print("\n\n\n*********** Error URLs ***********\n")
+	print(errors)
