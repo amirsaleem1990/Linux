@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython3
 from tabulate import tabulate
+from termcolor import colored
 from datetime import datetime
 import numpy as np
 from pprint import pprint
@@ -14,18 +15,18 @@ today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
 
 
 def fun_(x):
-    try:
-        y = x.split(":")[1]
-    except:
-        pass
-    x = x.split(":")[0]
-    x = x if not x.startswith("0") else x[1:]
-    x = x if int(x) < 13 else str(int(x)-12)
-    x = x if len(x) == 2 else "0"+x
-    try:
-        return x + ":" + y
-    except:
-        return x 
+	try:
+		y = x.split(":")[1]
+	except:
+		pass
+	x = x.split(":")[0]
+	x = x if not x.startswith("0") else x[1:]
+	x = x if int(x) < 13 else str(int(x)-12)
+	x = x if len(x) == 2 else "0"+x
+	try:
+		return x + ":" + y
+	except:
+		return x 
 
 tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
 try:
@@ -36,23 +37,66 @@ except:
 	sys.exit(0)
 
 X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
-print(tabulate(X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"}), headers='keys', tablefmt='psql'))
+d =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+d['NextNamaz'] = ''
+d.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
+
+
+####################################
+def string_time_to_minutes(str_time_1, str_time_2):
+    return  (int(str_time_1.split(":")[1]) + (int(str_time_1.split(":")[0])*60)) - \
+            (int(str_time_2.split(":")[1]) + (int(str_time_2.split(":")[0])*60))
+
+def accurate_time(i):
+    ii = i.split(":")[0]
+    ii = ii[1] if ii.startswith("0") else ii
+    ii = (int(ii) + 12)# % 24
+    tim = f'{ii if not str(ii) == "0" else "00" }:{i.split(":")[1]}'
+    return tim
+
+d['TimeLeft'] = ''
+q = d.loc["Asr":].TIME.apply(accurate_time).to_frame().merge(d, right_index=True, left_index=True)
+q.loc[q[q.NextNamaz == "<=======>"].index[0]:, 'TimeLeft'] = q.loc[q[q.NextNamaz == "<=======>"].index[0]:].apply(lambda x:string_time_to_minutes(x.TIME_x, tm),1).to_list()
+q = q.drop("TIME_x", axis=1).rename(columns={"TIME_y" : "TIME"})
+d = d.loc[:"Zuhar"].append(q)
+
+import time
+d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0)))
+
+
+####################################
+
+print("\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft [mins]') + "{:<12}".format('TimeLeft H:M:S'))
+print("  --------------------------------------------------------------------------")
+for i in d.iterrows(): 
+	row = i[1]
+	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row.TimeLeft)} | {row.TimeLeft_}"
+	if row.NextNamaz == "<=======>":
+		print(colored(to_print, "red"))
+	else:
+		print(to_print)
+print("  --------------------------------------------------------------------------")
+import sys
+sys.exit()
+#print(tabulate(
+#    d, headers='keys', tablefmt='psql'
+#))
 
 def remaining_time(current_time, last_time):
-    c1 = current_time.split(":")
-    l1 = last_time.split(":")
-    ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
-    cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
-    lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
-    lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
-    remainting_minutes = ((lh - ch) * 60) + (lm - cm)
-    rh = remainting_minutes // 60
-    remainting_minutes -= rh * 60
-    if len(str(rh)) == 1:
-        rh = "0" + str(rh)
-    if len(str(remainting_minutes)) == 1:
-        remainting_minutes = "0" + str(remainting_minutes)
-    print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
+	c1 = current_time.split(":")
+	l1 = last_time.split(":")
+	ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
+	cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
+	lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
+	lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
+	remainting_minutes = ((lh - ch) * 60) + (lm - cm)
+	rh = remainting_minutes // 60
+	remainting_minutes -= rh * 60
+	if len(str(rh)) == 1:
+		rh = "0" + str(rh)
+	if len(str(remainting_minutes)) == 1:
+		remainting_minutes = "0" + str(remainting_minutes)
+	print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
 print("\n"+"#"*30)
 remaining_time(tm, current_prayer_time.values[0])
 print("#"*30)
