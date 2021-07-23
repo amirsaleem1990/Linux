@@ -4,7 +4,6 @@ mkdir -p /home/amir/.local/share/Trash/files
 echo "If you execute this script with please enter any key to proceed, else terminate this script and execute it with sudo"
 read ans
 
-
 echo "\n\nRedirected to /home/amir/results.txT\n\n"
 func_(){
 	echo -e "\n\n>>>>>>>>>>>>>>>>>>>>>>>> Start: $1\n\n"
@@ -61,6 +60,7 @@ func_ "apt install -y python3-virtualenv"
 func_ "apt install -y unrar"
 func_ "apt install -y unrar-free"
 func_ "apt install -y dolphin"
+func_ "apt install -y nomacs"
 
 func_ "apt-get install -y gdebi"
 func_ "apt-get install -y openjdk-11-jdk"
@@ -74,6 +74,7 @@ func_ "apt-get install -y gparted"
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
+func_ "snap install googler"
 
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
 func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
@@ -173,3 +174,15 @@ func_ "gdebi -n rstudio*.deb"
 
 # dukto
 # add-apt-repository ppa:rock-core/qt4; add-apt-repository ppa:gezakovacs/ppa; apt update; apt-get install -y libqtgui4
+
+
+
+echo -e "\n\n"
+echo "Please set <nomacs> as default app as image viewer. and then entery any key ......"
+gnome-control-center default-apps
+read ans
+
+
+
+# keyboad light ka time 100 seconds kar dya h, by default is ka time 1s hota h
+echo 100s > /sys/devices/platform/dell-laptop/leds/dell\:\:kbd_backlight/stop_timeout
