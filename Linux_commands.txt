@@ -1427,3 +1427,19 @@ inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
 # python -m http.server 9000 .............. run http-server 
 #Create python virutal envoirment ................. python3 -m venv /path/to/new/virtual/environment
 
+#---------------------
+# List open Firefox tabs from the command line?
+https://superuser.com/questions/269443/list-open-firefox-tabs-from-the-command-line
+I recommend using https://github.com/balta2ar/brotab for this purpose:
+
+>>> pip3 install brotab
+>>> brotab install
+
+Install the web extension as well: https://addons.mozilla.org/en-US/firefox/addon/brotab/
+
+Restart Firefox, and you can run brotab commands such as:
+
+>>> brotab list
+#---------------------
+
+# disable internet for a user on a system ................. sudo iptables -A OUTPUT -m owner --uid-owner {USERNAME} -j REJECT
