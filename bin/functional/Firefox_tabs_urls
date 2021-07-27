@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+# this script prints firefox opened tab urls
+if [[ `ps -e | grep "firefox" | wc -l` -eq 1 ]] || [[ `brotab list | sed '/^$/d' | wc -l` -eq 0 ]]; then 
+	(firefox &)  
+	sleep 5s
+fi
+brotab list| sed 's/\t/,/g' | cut -d, -f3
