@@ -50,3 +50,8 @@ Night_light_modify dark
 /amir_bin/Night_light_modify -
 CTRL + ALT + -
 
+
+night_light
+/amir_bin/night_light
+CTRL + ALT + N
+
