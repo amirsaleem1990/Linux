@@ -3,6 +3,7 @@
 import multiprocessing.dummy
 import subprocess
 import os
+import traceback
 
 error_file = "/home/amir/.downloading_errors.txt"
 if os.path.exists(error_file):
@@ -18,7 +19,7 @@ def download(url):
 		print(f"url: {url}")
 		print(e_)
 		print("---------------------------------------------- Error END\n\n")
-		open(error_file, 'a').wirte(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
+		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
 
 
 try:
