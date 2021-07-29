@@ -1,4 +1,7 @@
 #!/usr/bin/env ipython3
+import warnings
+warnings.filterwarnings("ignore")
+
 from tabulate import tabulate
 from termcolor import colored
 from datetime import datetime
@@ -38,75 +41,43 @@ except:
 
 X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
 d =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+#"""
 d['NextNamaz'] = ''
 d.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
 
 
-####################################
-def string_time_to_minutes(str_time_1, str_time_2):
-    return  (int(str_time_1.split(":")[1]) + (int(str_time_1.split(":")[0])*60)) - \
-            (int(str_time_2.split(":")[1]) + (int(str_time_2.split(":")[0])*60))
+d['Accurate_time'] = None
+d.loc[3:, 'Accurate_time'] = (pd.to_datetime(d.TIME[3:]) + pd.Timedelta(hours=12)).dt.time.astype(str).to_list()
 
-def accurate_time(i):
-    ii = i.split(":")[0]
-    ii = ii[1] if ii.startswith("0") else ii
-    ii = (int(ii) + 12)# % 24
-    tim = f'{ii if not str(ii) == "0" else "00" }:{i.split(":")[1]}'
-    return tim
+d.iloc[:3].Accurate_time = pd.to_datetime(d.iloc[:3].TIME).dt.time.astype(str).to_list()
 
-d['TimeLeft'] = ''
-q = d.loc["Asr":].TIME.apply(accurate_time).to_frame().merge(d, right_index=True, left_index=True)
-q.loc[q[q.NextNamaz == "<=======>"].index[0]:, 'TimeLeft'] = q.loc[q[q.NextNamaz == "<=======>"].index[0]:].apply(lambda x:string_time_to_minutes(x.TIME_x, tm),1).to_list()
-q = q.drop("TIME_x", axis=1).rename(columns={"TIME_y" : "TIME"})
-d = d.loc[:"Zuhar"].append(q)
+def string_time_to_minutes(x):
+	h,m,_ = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
+
+d['Time_in_minutes'] = d.Accurate_time.apply(string_time_to_minutes) 
+now_time = string_time_to_minutes(str(datetime.now()).split()[1].split(".")[0])
+d['TimeLeft'] = (d.Time_in_minutes - now_time).astype(str)
+
+d = d.drop(columns=['Accurate_time', 'Time_in_minutes'])
+
+d.loc[d.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
 
 import time
-d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0)))
+d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
+
+d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
 
 
-####################################
-
-print("\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft [mins]') + "{:<12}".format('TimeLeft H:M:S'))
+print("\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft[mins]') + "{:<12}".format('TimeLeft[H:M:S]'))
 print("  --------------------------------------------------------------------------")
 for i in d.iterrows(): 
 	row = i[1]
-	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row.TimeLeft)} | {row.TimeLeft_}"
+	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row['TimeLeft[mins]'])} | {row['TimeLeft[H:M:S]']}"
 	if row.NextNamaz == "<=======>":
 		print(colored(to_print, "red"))
 	else:
 		print(to_print)
 print("  --------------------------------------------------------------------------")
-import sys
-sys.exit()
-#print(tabulate(
-#    d, headers='keys', tablefmt='psql'
-#))
-
-def remaining_time(current_time, last_time):
-	c1 = current_time.split(":")
-	l1 = last_time.split(":")
-	ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
-	cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
-	lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
-	lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
-	remainting_minutes = ((lh - ch) * 60) + (lm - cm)
-	rh = remainting_minutes // 60
-	remainting_minutes -= rh * 60
-	if len(str(rh)) == 1:
-		rh = "0" + str(rh)
-	if len(str(remainting_minutes)) == 1:
-		remainting_minutes = "0" + str(remainting_minutes)
-	print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
-print("\n"+"#"*30)
-remaining_time(tm, current_prayer_time.values[0])
-print("#"*30)
-
-
-
-# minimum and maximux prayter times
-# def f(x):
-#     return pd.to_datetime(x, format='%H:%M').dt.time
-# df = pd.concat([df[["Month", "Date"]], 
-#            df[['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']].apply(f)], 
-#            axis=1)
-# print(tabulate(df.apply([min, max]), headers='keys', tablefmt='psql'))
