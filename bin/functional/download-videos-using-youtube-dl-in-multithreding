@@ -21,10 +21,11 @@ def download(url):
 		print("---------------------------------------------- Error END\n\n")
 		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
 
-
 try:
 	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
 except:
+	import readline
+	readline.parse_and_bind("tab: complete")
 	file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
 	arr = [i for i in set(open(file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
@@ -36,8 +37,6 @@ except:
 	
 p = multiprocessing.dummy.Pool()
 p.map(download, arr)
-
-
 
 
 if os.path.exists(error_file):
