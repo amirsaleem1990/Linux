@@ -1443,3 +1443,6 @@ Restart Firefox, and you can run brotab commands such as:
 #---------------------
 
 # disable internet for a user on a system ................. sudo iptables -A OUTPUT -m owner --uid-owner {USERNAME} -j REJECT
+
+
+# control android from linux .......... scrcpy
