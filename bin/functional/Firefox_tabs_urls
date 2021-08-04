@@ -4,4 +4,5 @@ if [[ `ps -e | grep "firefox" | wc -l` -eq 1 ]] || [[ `brotab list | sed '/^$/d'
 	(firefox &)  
 	sleep 5s
 fi
-brotab list| sed 's/\t/,/g' | cut -d, -f3
+# brotab list| sed 's/\t/,/g' | cut -d, -f3
+brotab list | cut -d$'\t' -f3
