@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+cd /media/sdb3/Github_backup
+if [[ $? -ne 0 ]]; then
+	echo -e "##########################################\nCould'nt go into /media/sdb3/Github_backup\n##########################################\n"
+	exit
+fi
+IFS=$'\n'
+for repo in `curl -s "https://api.github.com/users/amirsaleem1990/repos?per_page=1000" | grep -w clone_url | grep -o '[^"]\+://.\+.git'` ; do
+	directory_name=`echo $repo | rev | cut -d/ -f1 | rev | sed 's/.git$//g'`
+	echo -e "\n\n..................... Repo: $directory_name"
+	test -e /home/amir/github/$directory_name
+	if [[ $? -eq 0 ]] ; then
+		#echo -e "\nThe repo <$directory_name> is in local system, so we copy it from there instead of downloading it .........."
+		#cp -rv /home/amir/github/$directory_name .
+		#echo -e "\n\n\n"
+		:
+	else
+		repo=`echo $repo | sed 's/https\:\/\//git\@/g' | sed 's/com\/ami/com\:ami/g'`
+		git clone "$repo"
+	fi
+done
