@@ -32,7 +32,7 @@ array_len="${#myArray[@]}"
 if [[ $array_len = 1 ]]; then
 	file_folder "${myArray[0]}"
 	if [[ $type_ == "" ]]; then
-		echo -e "\n<${myArray[0]}> NOT FOUND !!!!!!\nExiting .........\n"
+		echo -e "\n<${myArray[0]}> \e[31mNOT FOUND !!!!!!\e[0m\nExiting .........\n"
 		exit
 	fi
 	if [[ $(stat -c '%U' "${myArray[0]}") == "root" ]];then
