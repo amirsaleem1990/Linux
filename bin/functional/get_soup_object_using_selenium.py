@@ -7,10 +7,9 @@ try:
 except:
 	pass
 
-def get_soup_object_using_selenium(url, visual=False, urls=True):
+def get_soup_object_using_selenium(url, visual=False):
 	from selenium import webdriver
 	from bs4 import BeautifulSoup
-	
 	# url = input("Enter your url: ")
 	# visusl = True if input("Visual or not? [y|n]") in ['y', 'Y'] else False
 
@@ -24,21 +23,9 @@ def get_soup_object_using_selenium(url, visual=False, urls=True):
 
 	browser.get(url)
 	s = BeautifulSoup(browser.page_source, "lxml")
-	extrected_urls = []
-	if urls:
-		for i in s.select("a"):
-			try:
-				l = i['href']
-				extrected_urls.append(l)
-			except:
-				pass
-		for i in s.select("source"):
-			try:
-				l = i['src']
-				extrected_urls.append(l)
-			except:
-				pass
-		print("\nA tuple is returned, 1st vlues is urls, 2nd value is BeautifulSoup object\n")
+	extrected_urls =  [i['href'] for i in s.find_all('a', href=re.compile(''))] +\
+	[i['src'] for i in s.find_all('source', href=re.compile(''))]
+	print("\nA tuple is returned, 1st vlues is urls, 2nd value is BeautifulSoup object\n")
 	return (set(extrected_urls), s)
 
 
@@ -55,13 +42,10 @@ def get_all_links(url, pattern=""):
 	x2= s.find_all('source', href=re.compile(pattern))
 	extrected_urls += [i['src'] for i in x2]
 
-	se = []
-	for i in extrected_urls:
-		if not i in se:
-			se.append(i)
+	extrected_urls = list(set(extrected_urls))
 	if url_passed:
-		print(*se, sep="\n")
-	return se
+		print(*extrected_urls, sep="\n")
+	return extrected_urls
 
 
 if url_passed:
@@ -73,18 +57,5 @@ def get_all_links_from_html_file(file_name):
 
 	s = BeautifulSoup(open(file_name, 'r').read(), 'lxml')
 
-	extrected_urls = []
-
-	for i in s.select("a"):
-		try:
-			l = i['href']
-			extrected_urls.append(l)
-		except:
-			pass
-	for i in s.select("source"):
-		try:
-			l = i['src']
-			extrected_urls.append(l)
-		except:
-			pass
-	return extrected_urls
+	return [i['href'] for i in s.find_all('a', href=re.compile(''))] + \
+	[i['src'] for i in s.find_all('source', href=re.compile(''))]
