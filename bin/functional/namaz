@@ -1,4 +1,5 @@
 #!/usr/bin/env ipython3
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -8,6 +9,17 @@ from datetime import datetime
 import numpy as np
 from pprint import pprint
 import pandas as pd
+
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+import sys
+in_file = '/home/amir/github/Linux/bin/functional/namaz.png'
+out_file = '/home/amir/github/Linux/bin/functional/namaz_2.png'
+img = Image.open(in_file)
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype('FreeMono.ttf', 40)
+
 
 df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
 df.drop("Asr_1", axis=1, inplace=True)
@@ -70,14 +82,51 @@ d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime
 
 d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
 
+y_ = 10
 
-print("\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft[mins]') + "{:<12}".format('TimeLeft[H:M:S]'))
-print("  --------------------------------------------------------------------------")
+draw.text(
+	(700, y_), 
+	f"Current Time: {tm}", 
+	fill='white', ##FFFFFF 
+	font=font
+	)
+
+y_ = 80
+
+draw.text(
+	(0, y_), 
+	"\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft[mins]') + "{:<12}".format('TimeLeft[H:M:S]') + "\n   -------------------------------------------------------------------------\n", 
+	fill='white', 
+	font=font
+	)
+y_ += 120
+
 for i in d.iterrows(): 
 	row = i[1]
 	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row['TimeLeft[mins]'])} | {row['TimeLeft[H:M:S]']}"
 	if row.NextNamaz == "<=======>":
-		print(colored(to_print, "red"))
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='red', 
+			font=font
+		)
 	else:
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='#FFFFFF', 
+			font=font
+		)
 		print(to_print)
-print("  --------------------------------------------------------------------------")
+	y_ += 40
+draw.text(
+	(50, y_+10), 
+	" -------------------------------------------------------------------------\n", 
+	fill='#FFFFFF', 
+	font=font
+)
+
+img.save(out_file)
+import os
+os.system(f"feh -F {out_file}")
