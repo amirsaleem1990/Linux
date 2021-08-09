@@ -4,6 +4,9 @@ import multiprocessing.dummy
 import subprocess
 import os
 import traceback
+import sys
+
+
 
 error_file = "/home/amir/.downloading_errors.txt"
 if os.path.exists(error_file):
@@ -24,9 +27,12 @@ def download(url):
 try:
 	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
 except:
-	import readline
-	readline.parse_and_bind("tab: complete")
-	file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
+	try:
+		file_name = sys.argv[1]
+	except:	
+		import readline
+		readline.parse_and_bind("tab: complete")
+		file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
 	arr = [i for i in set(open(file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
 try:
