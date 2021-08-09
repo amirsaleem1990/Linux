@@ -3,13 +3,15 @@ import sys
 url_passed = False
 try:
 	url = sys.argv[1]
-	url_passed = True
+	if url.startswith("http"):
+		url_passed = True
 except:
 	pass
 
 def get_soup_object_using_selenium(url, visual=False):
 	from selenium import webdriver
 	from bs4 import BeautifulSoup
+	import re
 	# url = input("Enter your url: ")
 	# visusl = True if input("Visual or not? [y|n]") in ['y', 'Y'] else False
 
@@ -20,9 +22,11 @@ def get_soup_object_using_selenium(url, visual=False):
 		options = Options()
 		options.add_argument("--headless")
 		browser = webdriver.Firefox(executable_path = "/home/amir/github/Daily_facebook/geckodriver", options=options)
-
+	print(">>> browser.get(url)")
 	browser.get(url)
+	print('>>> s = BeautifulSoup(browser.page_source, "lxml")')
 	s = BeautifulSoup(browser.page_source, "lxml")
+	browser.close()
 	extrected_urls =  [i['href'] for i in s.find_all('a', href=re.compile(''))] +\
 	[i['src'] for i in s.find_all('source', href=re.compile(''))]
 	print("\nA tuple is returned, 1st vlues is urls, 2nd value is BeautifulSoup object\n")
