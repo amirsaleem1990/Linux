@@ -83,3 +83,31 @@ else:
 	print()
 
 
+to_be_commit = d_['To be commit']
+for i in to_be_commit:
+	os.chdir(f"/home/amir/github/{i}")
+	os.system("git status > ~/x")
+	status = [i.strip() for i in open("/home/amir/x", 'r').read().splitlines() if i ]
+	if 'Untracked files:' in status:
+		q = status[status.index('Untracked files:'):]
+		for zz in q:
+		    for ii in ['Untracked files', 'git add', 'git commit']:
+		        if  ii in zz:
+		            break
+		    else:
+		        com = f'git add {zz}; git commit -m "new"'
+		        os.system(com)
+	if ('(use "git add <file>...' in ''.join(status)) and ('(use "git restore <file>' in ''.join(status)):
+		q = [i.strip("modified:").strip() for i in status if i.startswith("modified")]
+
+		print(f"##################### {i} ########################")
+		for qm in q:
+			print(f"---------------- {qm} --------------------")
+			com = f"git diff {qm}"
+			os.system(com)
+
+			commit = input("Enter your commit: ")
+			com = f'git add {qm}; git commit -m "{commit}"'
+			print(com)
+			os.system(com)
+			print("\n\n\n-------------------------------------------------------")
