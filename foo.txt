@@ -1,0 +1,219 @@
+[1mdiff --git a/bin/functional/diskfree b/bin/functional/diskfree[m
+[1mindex 4650307..ff2eaa8 100755[m
+[1m--- a/bin/functional/diskfree[m
+[1m+++ b/bin/functional/diskfree[m
+[36m@@ -27,89 +27,128 @@[m [mdef m(x, add_pipe_in_last=True):[m
+ 		last_ = "|"[m
+ 	return " " * (x - 2) + last_[m
+ import os[m
+[32m+[m[32m###############[m
+[32m+[m[32mmounted_at = list(os.popen("df | grep ^/dev/sd | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | rev | cut -d, -f1 | rev"))[m
+[32m+[m[32mmounted_at = [i.strip() for i in mounted_at][m
+[32m+[m
+[32m+[m[32mdevs = list(os.popen("df | grep ^/dev/sd | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | cut -d, -f1"))[m
+[32m+[m[32mdevs = [i.strip() for i in devs][m
+[32m+[m[32m###############[m
+[32m+[m
+[32m+[m
+ print(colored(">>>", "red") + ": Used")[m
+ print(colored("!!!", "green") + ": Unused")[m
+[31m-# a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>[m
+[31m-a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g'"))[m
+[31m-# print(" " * (45), colored("Total  | Used  | Used  | Avail    | Mounted     ", "red", attrs=['reverse', 'bold']))[m
+[31m-open(_file__, 'w').write([m
+[31m-	", , ,Total,Used,Used,Avail,Mounted")[m
+[31m-a = sorted(a, key=lambda x:x.split()[0])[m
+[31m-# sys.exit()[m
+[31m-for b in a:[m
+[31m-[m
+[31m-	total = int(b.split()[1].replace("M", ""))[m
+[31m-	if total < 1000:[m
+[31m-	  continue[m
+[31m-	_M_ = b.split()[0][:-1][m
+[31m-	used = int(b.split()[2].replace("M", ""))[m
+[31m-	avail = int(b.split()[3].replace("M", ""))[m
+[31m-	used_perc = int(b.split()[4].replace("M", "").strip("%"))[m
+[31m-	devided_by = 3[m
+[31m-	# used_size = int(used / total * 100) // devided_by[m
+[31m-	used_size = used_perc // devided_by[m
+[31m-	total_size = 100 // devided_by[m
+[31m-	LEN = len(b.split()[0])[m
+[31m-[m
+[31m-	# print(b.split()[0], [m
+[31m-	# 	  m(12 - len(b.split()[0]), False),[m
+[31m-	# 	  colored(int(used_size) * ">", "red") + [m
+[31m-	# 	  colored(int(total_size - used_size) * "!", "green"),[m
+[31m-	# 	  MB_to_GB(total),  m(11- len(str(total))), [m
+[31m-	# 	  MB_to_GB(used), m(10- len(str(used))),[m
+[31m-	# 	  str(round(used_size/total_size*100)) + " %", m(3),[m
+[31m-	# 	  MB_to_GB(avail, 1), m(11- len(str(avail))),[m
+[31m-	# 	  b.split()[-1])[m
+[31m-	open(_file__, 'a').write([m
+[31m-		f"""\n{b.split()[0]},{int(used_size) * ">"}{int(total_size - used_size) * "!"},{MB_to_GB(total)},{MB_to_GB(used)},{round(used_size/total_size*100)} %,{MB_to_GB(avail, 1)},{b.split()[-1]}\n"""[m
+[31m-		)[m
+[31m-os.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used\|Avail\|Mounted\|>\|!"')[m
+[31m-[m
+[31m-os.remove("/home/amir/.dC")[m
+[31m-#######################################################################[m
+[31m-# #!/bin/bash[m
+[31m-# echo -e "[m
+[31m-# -----------------------------------------------------[m
+[31m-# Filesystem          Size  Used     Avail Use% Mounted[m
+[31m-# -----------------------------------------------------"[m
+[31m-# df -BG | grep /dev/sd | grep -v "1G    1G" [m
+[31m-#######################################################################[m
+[31m-[m
+[31m-[m
+[31m-#######################################################################[m
+[31m-# #!/usr/bin/env ipython3[m
+[31m-# import os[m
+[31m-# os.system("df -h > temppp.txt")[m
+[31m-# with open("temppp.txt", "r") as file:[m
+[31m-#   a = file.readlines()[m
+[31m-# import pandas as pd[m
+[31m-# #pd.set_option('display.max_columns', 10)[m
+[31m-# columns = ["Filesystem","Size","Used","Avail","Use%", "Mounted", "on"][m
+[31m-# df = pd.DataFrame([i.split() for i in a], columns=columns).drop(0)[m
+[31m-# avail = [][m
+[31m-# for i in df.Avail:[m
+[31m-#     if i.endswith("G"):[m
+[31m-#         avail.append(float(i.replace("G", "")))[m
+[31m-#     elif i.endswith("M"):[m
+[31m-#         avail.append(float(i.replace("M", ""))/1024)[m
+[31m-#     else:[m
+[31m-#         avail.append(int(i))[m
+[31m-# df.Avail = avail[m
+[31m-# import pprint[m
+[31m-# adf = df.query("Avail > 0").sort_values("Avail", ascending = False)[m
+[31m-# adf.Avail = adf.Avail.astype(int).astype(str) + " GB"[m
+[31m-# pprint.pprint(adf[adf.Filesystem.str.contains("/dev")].drop("on", axis=1))[m
+[31m-# #pprint.pprint(df.query("Avail > 0").sort_values("Avail", ascending = False))[m
+[31m-# os.remove("temppp.txt")[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-# disk=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f1`[m
+[31m-# total=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f2 | sed s:M::g`[m
+[31m-# used=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f3 | sed s:M::g`[m
+[31m-# avail=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f4 | sed s:M::g`[m
+[31m-# use_perc=`  df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f5`[m
+[31m-# mounted_on=`df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f6`[m
+[31m-[m
+[31m-# echo $disk $total $used $avail $use_perc $mounted_on[m
+\ No newline at end of file[m
+[32m+[m
+[32m+[m
+[32m+[m[32m########################[m
+[32m+[m[32mdef bytes_to(bytes_):[m
+[32m+[m	[32msize = round(bytes_ / 1024 / 1024 / 1024)[m
+[32m+[m	[32msize_str = f"{size}G"[m
+[32m+[m	[32mif size < 1:[m
+[32m+[m		[32msize = round(bytes_ / 1024 / 1024)[m
+[32m+[m		[32msize_str = f"{size}G"[m
+[32m+[m	[32mreturn size_str[m
+[32m+[m
+[32m+[m
+[32m+[m[32mimport shutil[m
+[32m+[m[32mr = [' , ,Total,Used,Avail,Used%,Mounted'][m
+[32m+[m[32mfor m, d in zip(mounted_at, devs):[m
+[32m+[m	[32mtotal, used, free = shutil.disk_usage(m) # in bytes[m
+[32m+[m	[32mused_perc = round(used / total * 100)#str() + "%"[m
+[32m+[m	[32mi = '>'*(used_perc//3) + "!"*((100-used_perc)//3)[m
+[32m+[m	[32m# print(total, used,free)[m
+[32m+[m	[32mtotal = bytes_to(total)[m
+[32m+[m	[32mused = bytes_to(used)[m
+[32m+[m	[32mfree = bytes_to(free)[m
+[32m+[m	[32mf = f"{d},{i},{total},{used},{free},{used_perc}%,{m}"[m
+[32m+[m	[32mr.append(f)[m
+[32m+[m	[32m# break[m
+[32m+[m[32mopen(_file__, 'w').write('\n'.join(r)+"\n")[m
+[32m+[m[32mos.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used[%]*\|Avail\|Mounted\|>\|!"')[m
+[32m+[m[32mprint()[m
+[32m+[m
+[32m+[m[32m########################[m
+[32m+[m[32m# # a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | sort -k5 -nr")) # sorted by <used %>[m
+[32m+[m[32m# a = list(os.popen("df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g'"))[m
+[32m+[m[32m# # print(" " * (45), colored("Total  | Used  | Used  | Avail    | Mounted     ", "red", attrs=['reverse', 'bold']))[m
+[32m+[m[32m# open(_file__, 'w').write([m
+[32m+[m[32m# 	", , ,Total,Used,Used,Avail,Mounted")[m
+[32m+[m[32m# a = sorted(a, key=lambda x:x.split()[0])[m
+[32m+[m[32m# # sys.exit()[m
+[32m+[m[32m# for b in a:[m
+[32m+[m
+[32m+[m[32m# 	total = int(b.split()[1].replace("M", ""))[m
+[32m+[m[32m# 	if total < 1000:[m
+[32m+[m[32m# 	  continue[m
+[32m+[m[32m# 	_M_ = b.split()[0][:-1][m
+[32m+[m[32m# 	used = int(b.split()[2].replace("M", ""))[m
+[32m+[m[32m# 	avail = int(b.split()[3].replace("M", ""))[m
+[32m+[m[32m# 	used_perc = int(b.split()[4].replace("M", "").strip("%"))[m
+[32m+[m[32m# 	devided_by = 3[m
+[32m+[m[32m# 	# used_size = int(used / total * 100) // devided_by[m
+[32m+[m[32m# 	used_size = used_perc // devided_by[m
+[32m+[m[32m# 	total_size = 100 // devided_by[m
+[32m+[m[32m# 	LEN = len(b.split()[0])[m
+[32m+[m
+[32m+[m[32m# 	# print(b.split()[0],[m[41m [m
+[32m+[m[32m# 	# 	  m(12 - len(b.split()[0]), False),[m
+[32m+[m[32m# 	# 	  colored(int(used_size) * ">", "red") +[m[41m [m
+[32m+[m[32m# 	# 	  colored(int(total_size - used_size) * "!", "green"),[m
+[32m+[m[32m# 	# 	  MB_to_GB(total),  m(11- len(str(total))),[m[41m [m
+[32m+[m[32m# 	# 	  MB_to_GB(used), m(10- len(str(used))),[m
+[32m+[m[32m# 	# 	  str(round(used_size/total_size*100)) + " %", m(3),[m
+[32m+[m[32m# 	# 	  MB_to_GB(avail, 1), m(11- len(str(avail))),[m
+[32m+[m[32m# 	# 	  b.split()[-1])[m
+[32m+[m[32m# 	open(_file__, 'a').write([m
+[32m+[m[32m# 		f"""\n{b.split()[0]},{int(used_size) * ">"}{int(total_size - used_size) * "!"},{MB_to_GB(total)},{MB_to_GB(used)},{round(used_size/total_size*100)} %,{MB_to_GB(avail, 1)},{b.split()[-1]}\n"""[m
+[32m+[m[32m# 		)[m
+[32m+[m[32m# os.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used\|Avail\|Mounted\|>\|!"')[m
+[32m+[m
+[32m+[m[32m# os.remove("/home/amir/.dC")[m
+[32m+[m[32m# #######################################################################[m
+[32m+[m[32m# # #!/bin/bash[m
+[32m+[m[32m# # echo -e "[m
+[32m+[m[32m# # -----------------------------------------------------[m
+[32m+[m[32m# # Filesystem          Size  Used     Avail Use% Mounted[m
+[32m+[m[32m# # -----------------------------------------------------"[m
+[32m+[m[32m# # df -BG | grep /dev/sd | grep -v "1G    1G"[m[41m [m
+[32m+[m[32m# #######################################################################[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# #######################################################################[m
+[32m+[m[32m# # #!/usr/bin/env ipython3[m
+[32m+[m[32m# # import os[m
+[32m+[m[32m# # os.system("df -h > temppp.txt")[m
+[32m+[m[32m# # with open("temppp.txt", "r") as file:[m
+[32m+[m[32m# #   a = file.readlines()[m
+[32m+[m[32m# # import pandas as pd[m
+[32m+[m[32m# # #pd.set_option('display.max_columns', 10)[m
+[32m+[m[32m# # columns = ["Filesystem","Size","Used","Avail","Use%", "Mounted", "on"][m
+[32m+[m[32m# # df = pd.DataFrame([i.split() for i in a], columns=columns).drop(0)[m
+[32m+[m[32m# # avail = [][m
+[32m+[m[32m# # for i in df.Avail:[m
+[32m+[m[32m# #     if i.endswith("G"):[m
+[32m+[m[32m# #         avail.append(float(i.replace("G", "")))[m
+[32m+[m[32m# #     elif i.endswith("M"):[m
+[32m+[m[32m# #         avail.append(float(i.replace("M", ""))/1024)[m
+[32m+[m[32m# #     else:[m
+[32m+[m[32m# #         avail.append(int(i))[m
+[32m+[m[32m# # df.Avail = avail[m
+[32m+[m[32m# # import pprint[m
+[32m+[m[32m# # adf = df.query("Avail > 0").sort_values("Avail", ascending = False)[m
+[32m+[m[32m# # adf.Avail = adf.Avail.astype(int).astype(str) + " GB"[m
+[32m+[m[32m# # pprint.pprint(adf[adf.Filesystem.str.contains("/dev")].drop("on", axis=1))[m
+[32m+[m[32m# # #pprint.pprint(df.query("Avail > 0").sort_values("Avail", ascending = False))[m
+[32m+[m[32m# # os.remove("temppp.txt")[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# # disk=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f1`[m
+[32m+[m[32m# # total=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f2 | sed s:M::g`[m
+[32m+[m[32m# # used=`      df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f3 | sed s:M::g`[m
+[32m+[m[32m# # avail=`     df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f4 | sed s:M::g`[m
+[32m+[m[32m# # use_perc=`  df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f5`[m
+[32m+[m[32m# # mounted_on=`df -BM | grep /dev/sd | sed 's/\ \{2,\}/\ /g' | cut -d' ' -f6`[m
+[32m+[m
+[32m+[m[32m# # echo $disk $total $used $avail $use_perc $mounted_on[m
+\ No newline at end of file[m
