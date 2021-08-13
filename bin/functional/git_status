@@ -98,9 +98,8 @@ for i in to_be_commit:
 		        os.system(com)
 	if ('(use "git add <file>...' in ''.join(status)) and ('(use "git restore <file>' in ''.join(status)):
 		q = [i.lstrip('modified:').lstrip() for i in status if i.startswith("modified")]       
-		print(f"\n\n_____________________________ {i} ___________________________________________")
 		for qm in q:
-			print(f"---------------- {qm} --------------------")
+			print(f"\n\n_____________________________ {i}/{qm} ___________________________________________")
 			# com = f"git diff {qm}"
 			com = f"git diff --color {qm}  > /home/amir/.x ; cat /home/amir/.x" # <--color> presever coloring
 			os.system(com)
