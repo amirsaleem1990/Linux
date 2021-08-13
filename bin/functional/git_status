@@ -82,12 +82,11 @@ else:
 		print("\nNothing to Add or Push")
 	print()
 
-
 to_be_commit = d_['To be commit']
 for i in to_be_commit:
 	os.chdir(f"/home/amir/github/{i}")
-	os.system("git status > ~/x")
-	status = [i.strip() for i in open("/home/amir/x", 'r').read().splitlines() if i ]
+	os.system("git status > ~/.x")
+	status = [i.strip() for i in open("/home/amir/.x", 'r').read().splitlines() if i ]
 	if 'Untracked files:' in status:
 		q = status[status.index('Untracked files:'):]
 		for zz in q:
@@ -98,12 +97,12 @@ for i in to_be_commit:
 		        com = f'git add {zz}; git commit -m "new"'
 		        os.system(com)
 	if ('(use "git add <file>...' in ''.join(status)) and ('(use "git restore <file>' in ''.join(status)):
-		q = [i.strip("modified:").strip() for i in status if i.startswith("modified")]
-
-		print(f"##################### {i} ########################")
+		q = [i.lstrip('modified:').lstrip() for i in status if i.startswith("modified")]       
+		print(f"\n\n_____________________________ {i} ___________________________________________")
 		for qm in q:
 			print(f"---------------- {qm} --------------------")
-			com = f"git diff {qm}"
+			# com = f"git diff {qm}"
+			com = f"git diff --color {qm}  > /home/amir/.x ; cat /home/amir/.x" # <--color> presever coloring
 			os.system(com)
 
 			commit = input("Enter your commit: ")
