@@ -1,3 +1,121 @@
+
+# -------------------------------------- amir saleem
+
+if [ "$color_prompt" = yes ]; then
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
+    # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
+    # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
+    PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
+fi
+
+
+
+alias Alias_backup='alias > _alias_temp ; diff _alias_temp github/Linux/alias  | grep ^\< | sed '\''s/^< //g'\'' > _alias_tempp; cat _alias_tempp >> github/Linux/alias; rm -f _alias_temp*'
+alias Atom='atom'
+alias NL_down='blugon --setcurrent="-500"'
+alias NL_up='blugon --setcurrent="+500"'
+# alias Youtube_480='youtube-dl -f '\''bestvideo[height<=480]+bestaudio/best[height<=480]'\'''
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias c='rm c_program; gcc -o c_program c_program.c ; ./c_program'
+alias c_p='cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c_program.c ; (gopen *.pdf &); gnome-terminal ; (jl *.ipynb &) ; sleep 3; exit'
+alias c_server='read -p '\''Enter last 3 digits from server IP address: '\'' ip;  sudo ssh lfd-server@192.168.8.'
+alias c_subl='subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660'
+alias calc='gcalccmd'
+alias copyfrom='xclip -sel cli <'
+alias copyto='xsel -b >'
+alias cpu_info='cat /proc/cpuinfo | grep '\''model name'\'' | uniq ; echo -en '\''Cores           : 8\n'\'''
+alias current_wifi_name='echo yes:Jazz-LTE-438A | sed '\''s/yes://g'\'''
+alias d='du -sh -B M * | sort -nr'
+alias dropbox_sync='~/.dropbox-dist/dropboxd'
+alias eclipse='/home/amir/eclipse/java-2020-03/eclipse/eclipse'
+alias egrep='egrep --color=auto'
+alias facebook-links='/home/amir/github/Daily_facebook/facebook-links.py'
+alias fgrep='fgrep --color=auto'
+alias freemem='cat /proc/meminfo | grep -i '\''inactive:\|memfree:'\'''
+alias g='read a; firefox google.com/search?q="$a"; sleep 2; exit'
+alias grep='grep --color=auto'
+alias h1-zong='nmcli d w c H1-Zong password wifi@lfd'
+alias hotspot='nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123'
+alias i='ipython3'
+alias jazz='nmcli d w c Jazz-LTE-438A password 34969900'
+alias jazz_3='nmcli d w c Jazz-LTE-33ED password 78384606'
+alias jl='jupyter-lab'
+alias jn='jupyter-notebook'
+alias jp='jupyter-notebook'
+alias l='ls -CF'
+alias la='ls -A'
+alias lfd_jazz='nmcli d w c lfd_jazz password lfd@12345'
+alias ll='ls -latr'
+alias ls='ls --color=auto -F'
+alias mv='mv -i'
+alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
+alias p='python3 -c '\''t=input(); print(eval(t))'\'''
+alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
+alias pin='i /home/amir/github/Amir-personal/PIN/pin2.py'
+alias ping='ping 8.8.8.8'
+alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
+alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
+alias rm='mv -t ~/.local/share/Trash/files'
+alias sharjeel='bash ~/awesome-sharjeel-wifi-connect.wifi'
+alias si='xclip -selection clipboard -t image/png -o >'
+alias sqlectron='/usr/Sqlectron-1.30.0/sqlectron'
+alias telenor='nmcli d w c Telenor\ 4G-D9BF password 91423958'
+alias tor='cd /etc/tor-browser_en-US; ./start-tor-browser.desktop'
+alias tu='trans :ur'
+alias u='del -rf /home/amir/db/*; del -rf /home/amir/Script/logs.csv; del -rf /home/amir/Script/logs.pkl'
+alias wl='nmcli d w r; sleep 10; nmcli d w l'
+alias z='ls *.mp4 -1'
+alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
+alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
+
+# alias youtube-dl="while :; do /usr/local/bin/youtube-dl -t ; done"
+# alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
+
+HISTSIZE=1000000
+HISTFILESIZE=-1
+
+
+Youtube_dl() {
+    echo -e "\n\nThere are other `echo $(ps aux | grep youtube-dl | wc -l)-1|bc` youtube-dl downloading jobs running\n\n"
+    while :; do
+        echo -e "\n\n*************** New attempt ***************\n\n" 
+        /usr/local/bin/youtube-dl $1
+        if [[ $? -eq 0 ]] ; then 
+            return 1
+        fi
+    done
+}
+
+poweroff() {
+    read -p "Are you punched out? [yes|no]: " ans
+    cp -r  /home/amir/.mozilla/firefox/d8z03upu.default-release/sessionstore-backups /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
+    if [[ $ans == "yes" ]] ; then 
+        /sbin/poweroff
+    elif [[ $ans == "no" ]]; then 
+        /home/amir/H/manually_login_on_hrm_tool.py 1
+        if [[ $? -eq 0 ]] ;then 
+            /sbin/poweroff
+        else 
+            echo -e "\n\nAn error occured\n\n"
+        fi
+    else 
+        echo -e "\n\nError: wrong input,\nExiting .........\n"
+    fi
+}
+rdfind(){
+    if [[ `find . -maxdepth 1  -printf '%u:'  | cut -d: -f1` == 'root' ]]; then 
+        echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
+    else 
+        free_space_in_current_directory=$(df -BM | grep `df -P . | sed -n '$s/[[:blank:]].*//p'` | sed 's/ \{1,\}/,/g' | cut -d, -f4  | cut -dM -f1)
+        if [[ $free_space_in_current_directory -lt 1000 ]]; then
+            echo -e "\nSorry, There is only $free_space_in_current_directory MB left in current partition\nExitting ........\n\n"
+            return 1
+        fi 
+        /usr/bin/rdfind .
+    fi 
+}
+
 day_of_week=`date +%u`
 if   [[ $day_of_week = 6 ]] ; then
     poweroff
@@ -7,19 +125,19 @@ elif [[ $day_of_week = 7 ]] ; then
     fi
 fi
 
-replace
-	HISTSIZE=100000
-	HISTFILESIZE=-1
 
-	PS1='\[\033[01;32m\]`date  +%d-%B-%y\ %H:%M:%S`:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='\[\033[01;32m\]\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='\[\e]0;\u@\h: \w\a\]\e[1m\e[20m\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
-	PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
+PATH=$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids
+export PYTHONPATH="/amir_bin/"
+bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
-add:
-	PATH=$PATH:/amir_bin
-	export PYTHONPATH="/amir_bin/"
-	bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"' 
+
+export Kashat_user='kash-admin2'
+export kashat_password='K@sh@t#2020#'
+export kashat_profile='Kashmasr-Client'
+
+export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
+export PYTHONPATH="/amir_bin/"
+
+
+
 
