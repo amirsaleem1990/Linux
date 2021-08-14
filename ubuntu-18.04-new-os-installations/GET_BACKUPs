@@ -1,5 +1,5 @@
 browser bookmarks
-save ~/.ssh folder
+#save ~/.ssh folder
 github last push
 gitlab las push
 dropbox push
@@ -11,7 +11,7 @@ keyboard shortucts
 copy amir portion from ~/.bashrc file
 
 save github/lfd-projects directory
-save ~/.config/autostart
+#save ~/.config/autostart
 
 
 # ab /amir_bin/ ko copy nahi karta balky <ln -s /home/amir/github/Linux/bin/functional/ /amir_bin
