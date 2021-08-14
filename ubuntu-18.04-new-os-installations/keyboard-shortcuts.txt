@@ -25,7 +25,7 @@ current window screenshot and copy to clipboard
 ALT + S
 
 
-touchpad on off
+touch_on_off
 /amir_bin/touch_on_off
 shitft + ctrl + f9
 
@@ -54,4 +54,9 @@ CTRL + ALT + -
 night_light
 /amir_bin/night_light
 CTRL + ALT + N
+
+namaz
+/amir_bin/namaz
+SHIFT + CTRL + N
+
 
