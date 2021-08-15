@@ -85,8 +85,8 @@ d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:
 y_ = 10
 
 draw.text(
-	(700, y_), 
-	f"Current Time: {tm}", 
+	(680, y_), 
+	f"Current Time: {datetime.now().strftime('%I:%M:%S')}", 
 	fill='white', ##FFFFFF 
 	font=font
 	)
