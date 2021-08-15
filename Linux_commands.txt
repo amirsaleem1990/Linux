@@ -1448,3 +1448,6 @@ Restart Firefox, and you can run brotab commands such as:
 # control android from linux .......... scrcpy
 
 ports in use ............. sudo lsof -i -P -n | grep LISTEN
+# print stderr only, not stdout ................... cmd > /dev/null ............. cmd 2>&1 > /dev/null
+# check if video is completely downloaded .............. if [[ 1 -gt 0 ]] ;then echo MY_VIDEO_NAME is not complete; else echo MY_VIDEO_NAME is complete ; fi
+# append lines in file ................. cat >> my/file/path.txt << eof .......... jab tak ksi new line me srif <eof> nahi likha jay ga, ham apni lines likh sakty hen, jesy hi <eof> likh kar enter karen gy to input terminate ho jay ga, or is line sy pehly ka sara contant my/file/path.txt me APPEND ho jay ga.
