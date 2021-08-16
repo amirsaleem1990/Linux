@@ -983,7 +983,7 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 
 
 
-# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc
+# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7
 # find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
 # get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
 
@@ -1451,3 +1451,12 @@ ports in use ............. sudo lsof -i -P -n | grep LISTEN
 # print stderr only, not stdout ................... cmd > /dev/null ............. cmd 2>&1 > /dev/null
 # check if video is completely downloaded .............. if [[ 1 -gt 0 ]] ;then echo MY_VIDEO_NAME is not complete; else echo MY_VIDEO_NAME is complete ; fi
 # append lines in file ................. cat >> my/file/path.txt << eof .......... jab tak ksi new line me srif <eof> nahi likha jay ga, ham apni lines likh sakty hen, jesy hi <eof> likh kar enter karen gy to input terminate ho jay ga, or is line sy pehly ka sara contant my/file/path.txt me APPEND ho jay ga.
+
+write stdout & stderr to different files ............... cmd 1> output 2> error
+
+stdout & stderr to one file  ........... cmd &> streams
+
+It's recommended to use $(command) instead of `command`
+
+ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=enp2s0 --localnet  
+
