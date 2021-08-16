@@ -52,6 +52,9 @@ def bytes_to(bytes_):
 
 import shutil
 r = [' , ,Total,Used,Avail,Used%,Mounted']
+
+lst = []
+
 for m, d in zip(mounted_at, devs):
 	total, used, free = shutil.disk_usage(m) # in bytes
 	used_perc = round(used / total * 100)#str() + "%"
@@ -60,9 +63,12 @@ for m, d in zip(mounted_at, devs):
 	total = bytes_to(total)
 	used = bytes_to(used)
 	free = bytes_to(free)
-	f = f"{d},{i},{total},{used},{free},{used_perc}%,{m}"
-	r.append(f)
+	lst.append([d,i,total,used,free,used_perc,m])
 	# break
+lst = sorted(lst, key=lambda x:x[-1])
+for i in lst:
+	f = f"{i[0]},{i[1]},{i[2]},{i[3]},{i[4]},{i[5]}%,{i[6]}"
+	r.append(f)
 open(_file__, 'w').write('\n'.join(r)+"\n")
 os.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used[%]*\|Avail\|Mounted\|>\|!"')
 print()
