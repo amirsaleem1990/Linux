@@ -1,13 +1,10 @@
-
 # -------------------------------------- amir saleem
 
-if [ "$color_prompt" = yes ]; then
-    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
-    # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
-    # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
-    PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
-fi
+# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
+# PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
+# PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
+PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 
 
@@ -127,17 +124,10 @@ fi
 
 
 PATH=$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids
-export PYTHONPATH="/amir_bin/"
+export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
 bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 
 export Kashat_user='kash-admin2'
 export kashat_password='K@sh@t#2020#'
 export kashat_profile='Kashmasr-Client'
-
-export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
-export PYTHONPATH="/amir_bin/"
-
-
-
-
