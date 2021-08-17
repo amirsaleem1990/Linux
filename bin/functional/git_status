@@ -80,6 +80,8 @@ else:
 		print()
 	if break_:
 		print("\nNothing to Add or Push")
+		import sys
+		sys.exit(0)
 	print()
 
 # to_be_commit = d_['To be commit']
