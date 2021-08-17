@@ -138,3 +138,11 @@ for repo in repos:
 				print(com)
 				os.system(com)
 				print("\n\n\n-------------------------------------------------------")
+q = 0
+for repo in repos:
+	os.chdir(f"/home/amir/github/{repo}")
+	q += len(list(os.popen("`git ls-files --others --exclude-standard`")) + list(os.popen("git ls-files -m")))
+if q == 0:
+	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+	if ans == "y":
+		os.system("git_push")
