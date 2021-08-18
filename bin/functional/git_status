@@ -139,7 +139,6 @@ for repo in repos:
 
 				commit = input("\nEnter your commit: ")
 				com = f'git add {updated_file}; git commit -m "{commit}"'
-				print(com)
 				os.system(com)
 				print("\n\n\n-------------------------------------------------------")
 		# else:
@@ -165,3 +164,6 @@ if q > 0:
 	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
 	if ans == "y":
 		os.system("git_push")
+
+os.remove("/home/amir/.only_new_files")
+os.remove("/home/amir/.only_updated_files")
