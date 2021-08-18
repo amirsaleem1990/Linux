@@ -5,4 +5,4 @@ __pycache__
 */*/*/__pycache__
 */*/*/*/__pycache__
 autostart/functional/lfd_notification_2.png
-
+bin/functional/__pycache__
