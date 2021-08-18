@@ -55,3 +55,5 @@ while :; do
 	fi
 	sleep $sleep_time
 done
+
+rm -f /home/amir/._amb
