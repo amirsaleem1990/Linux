@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython3
 from termcolor import colored
+import sys
 # print(colored("\n\n\tFor actual status for each repo run:", 'red'),
 # 	colored("""\n\t\tcd /home/amir/github/; for i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; cd ../ ; done\n""", 'green')) 
 
@@ -147,6 +148,7 @@ for repo in repos:
 					ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
 					if ans == "y":
 						os.system("git_push")
+						sys.exit()
 			except:
 				pass	
 
