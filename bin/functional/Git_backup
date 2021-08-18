@@ -11,7 +11,7 @@ for repo in `curl -s "https://api.github.com/users/amirsaleem1990/repos?per_page
 	test -e /home/amir/github/$directory_name
 	if [[ $? -eq 0 ]] ; then
 		echo -e "\nThe repo <$directory_name> is in local system, so we copy it from there instead of downloading it .........."
-		cp -rv /home/amir/github/$directory_name .
+		cp -r /home/amir/github/$directory_name .
 		echo -e "\n\n\n"
 	else
 		repo=`echo $repo | sed 's/https\:\/\//git\@/g' | sed 's/com\/ami/com\:ami/g'`
