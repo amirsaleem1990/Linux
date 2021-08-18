@@ -149,13 +149,39 @@ for node in r:
 if DELTE_IT:
 	print("\n\n\n----------------\nFiles to delete:")
 	# print(*DELTE_IT, sep="\n\t")
-	print('\n\t' + '\n\t'.join(DELTE_IT))
-	input_ = input("\n\nWe are going to delete these files, press y to continue: ")
+	for n,i in enumerate(DELTE_IT):
+	    print(f"\t{n}- {i}")
+	#print('\n\t' + '\n\t'.join(DELTE_IT))
+	input_ = input("\n\nWe are going to delete these files.\n\tpress y to continue\n\tOR\n\tEnter index number to exclude file/s from deletion (if multiple use ',' as delimeter (eg:2,4,5): \n")
+	print("")
 	if input_ == 'y':
-		print("")
 		for i in DELTE_IT:
 			print(f"Removing {i} ..........")
 			os.remove(i)
+	else:
+		if "," in input_:
+			indexes = [int(i.strip()) for i in input_.split(",")]
+		else:
+			indexes = int(input_.strip())
+		D_ = []
+		excluded  = []
+		for n, i in enumerate(DELTE_IT):
+			if not n in indexes:
+				D_.append(i)
+			else:
+				excluded.append(i)
+		if D_:
+			print(f"\n\n============== Excluded files from deletion ==============")
+			print(*excluded, sep="\n")
+
+			print(f"\n\n============== Files to be deleted ==============")
+			print(*D_, sep="\n")
+			if input("\n\nAre you agree to deleted above mentions files? [y|n]\n") == "y":
+				for i in D_:
+					print(f"Removing {i} ..........")
+					os.remove(i)
+		else:
+			print("\nWRONG indexes!!\n")
 else:
 	print("\nYou didn't choose any file to delete\nExiting ........")
 print()
