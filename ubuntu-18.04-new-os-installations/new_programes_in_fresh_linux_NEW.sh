@@ -22,6 +22,7 @@ func_ "apt-get update"
 func_ "apt-get -y upgrade"
 
 func_ "apt install -y virtualbox-qt"
+func_ "apt install -y screen"
 func_ "apt install -y rdfind"
 func_ "apt install -y xclip"
 func_ "apt install -y dos2unix"
@@ -29,8 +30,6 @@ func_ "apt install -y net-tools"
 func_ "apt install -y mlocate"
 func_ "apt install -y testdisk"
 func_ "apt install -y mysql-client-core*"
-
-
 func_ "apt install -y vlc-bin"
 func_ "apt install -y ipython3"
 func_ "apt install -y python3-pip"
@@ -71,13 +70,14 @@ func_ "apt-get install -y libxml2-dev"
 func_ "apt-get install -y libssl-dev"
 func_ "apt-get install -y jupyter-client"
 func_ "apt-get install -y gparted"
-
+func_ "apt-get install -y youtube-dl"
 
 
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
 func_ "snap install googler"
+func_ "snap install chromium"
 
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
 func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
@@ -135,7 +135,7 @@ func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/alias"
 #echo 'PATH="/amir_bin/:$PATH"' >> ~/.bashrc
 #source  ~/.bashrc
 
-func_ "pip3 install youtube-dl"
+# func_ "pip3 install youtube-dl"
 func_ "pip3 install bs4"
 func_ "pip3 install lxml"
 func_ "pip3 install selenium"
