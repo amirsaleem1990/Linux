@@ -142,22 +142,26 @@ for repo in repos:
 				print(com)
 				os.system(com)
 				print("\n\n\n-------------------------------------------------------")
-		else:
-			try:
-				if int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip()) > 0:
-					ans = input("\n\nSab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
-					if ans == "y":
-						os.system("git_push")
-						sys.exit()
-						print("--------")
-			except:
-				pass	
+		# else:
+			# try:
+			# 	if int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip()) > 0:
+			# 		ans = input("\n\nSab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+			# 		if ans == "y":
+			# 			os.system("git_push")
+			# 			sys.exit()
+			# 			print("--------")
+			# except:
+			# 	pass	
 
 q = 0
 for repo in repos:
 	os.chdir(f"/home/amir/github/{repo}")
-	q += len(list(os.popen("`git ls-files --others --exclude-standard`")) + list(os.popen("git ls-files -m")))
-if q == 0:
+	try:
+		q += int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip())
+	except:
+		pass	
+	# q += len(list(os.popen("`git ls-files --others --exclude-standard`")) + list(os.popen("git ls-files -m")))
+if q > 0:
 	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
 	if ans == "y":
 		os.system("git_push")
