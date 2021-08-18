@@ -149,6 +149,7 @@ for repo in repos:
 					if ans == "y":
 						os.system("git_push")
 						sys.exit()
+						print("--------")
 			except:
 				pass	
 
