@@ -28,7 +28,7 @@ func_(){
 			echo -en "\t"
 			echo -n $duration
 		else
-			continue
+			return 0
 		fi
 		echo -en "\t"
 		echo -e "\t$1"
