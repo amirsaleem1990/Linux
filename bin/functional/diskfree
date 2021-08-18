@@ -57,6 +57,7 @@ lst = []
 
 for m, d in zip(mounted_at, devs):
 	total, used, free = shutil.disk_usage(m) # in bytes
+	total *= 0.95 # total ka 5% hissa qabil-e-istimal nahi hota
 	used_perc = round(used / total * 100)#str() + "%"
 	i = '>'*(used_perc//3) + "!"*((100-used_perc)//3)
 	# print(total, used,free)
