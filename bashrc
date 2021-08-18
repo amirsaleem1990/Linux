@@ -86,7 +86,7 @@ Youtube_dl() {
 
 poweroff() {
     read -p "Are you punched out? [yes|no]: " ans
-    cp -r  /home/amir/.mozilla/firefox/d8z03upu.default-release/sessionstore-backups /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
+    cp -r  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups/ /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
     if [[ $ans == "yes" ]] ; then 
         /sbin/poweroff
     elif [[ $ans == "no" ]]; then 
