@@ -39,50 +39,50 @@ for i in not_to_commit_repos:
 
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos and not repo.startswith(".")]
-r = ["Your branch is up to date with 'origin/master'.\n", '\n', 'Changes not staged for commit:\n', '  (use "git add <file>..." to update what will be committed)\n', '  (use "git checkout -- <file>..." to discard changes in working directory)\n', 'no changes added to commit (use "git add" and/or "git commit -a")\n']
-d_ = {"To be pushed" : [],
-	   "To be commit" : []}
-for i in repos:
-	os.chdir(i)
-	a = list(os.popen("git status"))
-	a = [i.strip() for i in '||'.join(a).replace("\n", "").replace("\t", '').split('||') if i]
-	if '(use "git push" to publish your local commits)' in ''.join(a):
-		d_['To be pushed'].append(i)
-	if '(use "git add <file>..." to update what will be committed)' in ''.join(a) or ('(use "git add <file>..." to include in what will be committed)' in ''.join(a)) :
-		d_['To be commit'].append(i)
-		if '(use "git add <file>..." to include in what will be committed)' in ''.join(a):
-			d_['To be pushed'].append(i)
-	else:
-		lst = True
-	os.chdir("../")
+# r = ["Your branch is up to date with 'origin/master'.\n", '\n', 'Changes not staged for commit:\n', '  (use "git add <file>..." to update what will be committed)\n', '  (use "git checkout -- <file>..." to discard changes in working directory)\n', 'no changes added to commit (use "git add" and/or "git commit -a")\n']
+# d_ = {"To be pushed" : [],
+	   # "To be commit" : []}
+# for i in repos:
+# 	os.chdir(f"/home/amir/github/{i}")
+# 	a = list(os.popen("git status"))
+# 	a = [i.strip() for i in '||'.join(a).replace("\n", "").replace("\t", '').split('||') if i]
+# 	if '(use "git push" to publish your local commits)' in ''.join(a):
+# 		d_['To be pushed'].append(i)
+# 	if '(use "git add <file>..." to update what will be committed)' in ''.join(a) or ('(use "git add <file>..." to include in what will be committed)' in ''.join(a)) :
+# 		d_['To be commit'].append(i)
+# 		if '(use "git add <file>..." to include in what will be committed)' in ''.join(a):
+# 			d_['To be pushed'].append(i)
+# 	else:
+# 		lst = True
+# 	os.chdir("../")
 
-for i in d_['To be pushed']:
-	if i in d_['To be commit']:
-		d_['To be pushed'].remove(i)
-break_ = True
+# for i in d_['To be pushed']:
+# 	if i in d_['To be commit']:
+# 		d_['To be pushed'].remove(i)
+# break_ = True
 
 
-if d_['To be pushed'] and (not d_['To be commit']):
-	print("")
-	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
-	if ans == "y":
-		os.system("git_push")
+# if d_['To be pushed'] and (not d_['To be commit']):
+# 	print("")
+# 	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+# 	if ans == "y":
+# 		os.system("git_push")
 
-else:
-	for k,v in d_.items():
-		if not v:
-			continue
-		print(colored(f">>>>>>> {k} <<<<<<<<<", 'red'))
-		for val in set(v):
-			#print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
-			print("   ", val)
-			break_ = False
-		print()
-	if break_:
-		print("\nNothing to Add or Push")
-		import sys
-		sys.exit(0)
-	print()
+# else:
+# 	for k,v in d_.items():
+# 		if not v:
+# 			continue
+# 		print(colored(f">>>>>>> {k} <<<<<<<<<", 'red'))
+# 		for val in set(v):
+# 			#print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
+# 			print("   ", val)
+# 			break_ = False
+# 		print()
+# 	if break_:
+# 		print("\nNothing to Add or Push")
+# 		import sys
+# 		sys.exit(0)
+# 	print()
 
 # to_be_commit = d_['To be commit']
 # for i in to_be_commit:
@@ -131,6 +131,7 @@ for repo in repos:
 		updated_files = open("/home/amir/.only_updated_files", 'r').read().splitlines()
 		if updated_files:
 			for updated_file in updated_files:
+				os.system("clear")
 				print(f"\n\n============================== {repo}/{updated_file} ==============================\n")
 				com = f"git diff --color {updated_file}  > /home/amir/.x ; cat /home/amir/.x" # <--color> presever coloring
 				os.system(com)
