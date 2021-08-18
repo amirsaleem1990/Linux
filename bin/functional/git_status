@@ -145,7 +145,7 @@ for repo in repos:
 		else:
 			try:
 				if int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip()) > 0:
-					ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+					ans = input("\n\nSab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
 					if ans == "y":
 						os.system("git_push")
 						sys.exit()
