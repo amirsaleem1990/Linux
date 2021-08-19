@@ -19,7 +19,6 @@ f = list(os.popen(command))
 os.remove("/home/amir/.amda_amir")
 if f:
 	print("\n\n")
-	from termcolor import colored
 	print(colored("""
 -------------- Filese Larger then 49 MB --------------
 NOTE: files > 49 are not allowd. either remove this/these file/s or move it/these to another directory
@@ -28,6 +27,7 @@ NOTE: files > 49 are not allowd. either remove this/these file/s or move it/thes
 	for i in f:
 		print(colored(i, 'green'))
 	print("\n\n")
+	sys.exit()
 if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
@@ -35,8 +35,8 @@ aa = True
 not_to_commit_repos = ["lfd-projects"]
 if not_to_commit_repos:
 	print("************************************")
-for i in not_to_commit_repos:
-	print(f"<{i}> repository excluded from this opereation\n")
+	for i in not_to_commit_repos:
+		print(f"<{i}> repository excluded from this opereation\n")
 
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos and not repo.startswith(".")]
