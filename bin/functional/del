@@ -46,6 +46,10 @@ if [[ $array_len = 1 ]]; then
 			# else
 			IFS= 
 			for i in {1..3}; do 
+				if [[ $i -eq 1 ]]; then
+					echo -e "\n--------------------"
+					tree "${myArray[0]}"
+				fi
 				print__ $type_ "${myArray[0]}"
 				read m
 				echo 
