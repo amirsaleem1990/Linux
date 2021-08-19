@@ -6,9 +6,10 @@ import os
 import traceback
 import sys
 
-
-
 error_file = "/home/amir/.downloading_errors.txt"
+
+before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+
 if os.path.exists(error_file):
 	os.remove(error_file)
 
@@ -42,10 +43,17 @@ except:
 	pass
 	
 p = multiprocessing.dummy.Pool()
-p.map(download, arr)
-
+try:
+	p.map(download, arr)
+except:
+	pass
 
 if os.path.exists(error_file):
 	errors = open(error_file, 'r').read()
 	print("\n\n\n*********** Error URLs ***********\n")
 	print(errors)
+
+print(f"\n\nErrors saved as {error_file}\n\n")
+after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+downloaded_size= after - before
+print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
