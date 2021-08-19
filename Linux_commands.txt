@@ -1461,3 +1461,5 @@ It's recommended to use $(command) instead of `command`
 
 ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=enp2s0 --localnet  
 
+
+# remove punctuation .......... echo 'olj;adf79329s;jfa(&*&^#@_(!_*)(' | sed s/[`\!\@\#$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g
