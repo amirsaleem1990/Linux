@@ -1463,3 +1463,6 @@ ARP (Address Resolution Protocol) is a protocol that maps IP network addresses o
 
 
 # remove punctuation .......... echo 'olj;adf79329s;jfa(&*&^#@_(!_*)(' | sed s/[`\!\@\#$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g
+
+# see full terminal output using `screen`  .............. ctrl+a followed by [, followed by the up and down arrows.
+
