@@ -21,6 +21,7 @@ func_(){
 func_ "apt-get update"
 func_ "apt-get -y upgrade"
 
+
 func_ "apt install -y virtualbox-qt"
 func_ "apt install -y screen"
 func_ "apt install -y rdfind"
@@ -61,6 +62,7 @@ func_ "apt install -y unrar-free"
 func_ "apt install -y dolphin"
 func_ "apt install -y nomacs"
 
+func_ "apt-get install -y coreutils"
 func_ "apt-get install -y mysql-server"
 func_ "apt-get install -y gdebi"
 func_ "apt-get install -y openjdk-11-jdk"
