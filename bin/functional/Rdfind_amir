@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+IFS=$'\n'
+rm -f /home/amir/.Rdfind_amir_file.csv 2>/dev/null
+for file in $(find . -type f); do
+  echo "$file,$(du -s -k $file | cut -d$'\t' -f1),'$(cksum $file | cut -d. -f 1)'" >> /home/amir/.Rdfind_amir_file.csv
+done
+
+
+python3 <<< '
+from pandas import read_csv
+x = read_csv("/home/amir/.Rdfind_amir_file.csv", header=None)
+for index,group in x.sort_values(1).groupby([1,2]):
+    if len(group) > 1:
+        size = group[1].iloc[0]
+        r = f"""\n\n>>>>>>>>>> Size: {size}KB, {str(round(size/1024,2))+"MB" if size > 1024 else ""}, {str(round(size/1024/1024, 2))+"GB" if size > 1024*1024 else "" } """
+        print(r.replace(" ,", "").rstrip(",").rstrip(", "))
+        print(*group[0].to_list(), sep="\n")
+'
+        # f""
+# 
+# x[x.duplicated(subset=[1,2], keep=False)].sort_values([1,2])
