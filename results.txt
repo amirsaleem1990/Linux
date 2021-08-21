@@ -1,0 +1,51 @@
+# Automatically generated
+# duptype id depth size device inode priority name
+DUPTYPE_FIRST_OCCURRENCE 1043 3 41 2066 12979984 1 ./.git/refs/heads/master
+DUPTYPE_WITHIN_SAME_TREE -1043 4 41 2066 12979975 1 ./.git/refs/remotes/origin/master
+DUPTYPE_FIRST_OCCURRENCE 102 1 107 2066 12976565 1 ./How To Use Google Translate From Commandline In Linux_files/a_010.html
+DUPTYPE_WITHIN_SAME_TREE -102 3 107 2066 12976589 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_008/ads_data/si.html
+DUPTYPE_WITHIN_SAME_TREE -102 3 107 2066 12976580 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_007/ads_data/si.html
+DUPTYPE_WITHIN_SAME_TREE -102 3 107 2066 12976570 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_002/ads_data/si.html
+DUPTYPE_WITHIN_SAME_TREE -102 3 107 2066 12976574 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_003/ads_data/si.html
+DUPTYPE_FIRST_OCCURRENCE 191 1 170 2066 12976721 1 ./bin/Chrome_all_tabs
+DUPTYPE_WITHIN_SAME_TREE -191 2 170 2066 12976726 1 ./bin/functional/Chrome_all_tabs
+DUPTYPE_FIRST_OCCURRENCE 1045 3 251 2066 12976569 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_002/ads_data/ads.html
+DUPTYPE_WITHIN_SAME_TREE -1045 3 251 2066 12976572 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_003/ads_data/ads.html
+DUPTYPE_WITHIN_SAME_TREE -1045 3 251 2066 12976579 1 ./How To Use Google Translate From Commandline In Linux_files/a_data_007/ads_data/ads.html
+DUPTYPE_FIRST_OCCURRENCE 231 1 1028 2066 12979572 1 ./ubuntu-18.04-new-os-installations/set_startupscript.py
+DUPTYPE_WITHIN_SAME_TREE -231 1 1028 2066 12979484 1 ./ubuntu-18.04-new-os-installations/set_startupscript.py.1
+DUPTYPE_FIRST_OCCURRENCE 22 0 3678 2066 12976695 1 ./alias
+DUPTYPE_WITHIN_SAME_TREE -22 1 3678 2066 12976944 1 ./ubuntu-18.04-new-os-installations/alias
+DUPTYPE_FIRST_OCCURRENCE 192 1 10607 2066 12976829 1 ./github_commints_qty/Untitled.ipynb
+DUPTYPE_WITHIN_SAME_TREE -192 2 10607 2066 12976828 1 ./github_commints_qty/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+DUPTYPE_FIRST_OCCURRENCE 394 2 10938 2066 12976867 1 ./pip-downloads/coursera-dl/six-1.14.0-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -394 2 10938 2066 12976880 1 ./pip-downloads/edx/six-1.14.0-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 397 2 11774 2066 12976870 1 ./pip-downloads/coursera-dl/webencodings-0.5.1-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -397 2 11774 2066 12976883 1 ./pip-downloads/edx/webencodings-0.5.1-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 255 2 22891 2066 12976546 1 ./.git/logs/HEAD
+DUPTYPE_WITHIN_SAME_TREE -255 4 22891 2066 12976545 1 ./.git/logs/refs/heads/master
+DUPTYPE_FIRST_OCCURRENCE 142 1 29295 2066 12976631 1 ./How To Use Google Translate From Commandline In Linux_files/style_002.css
+DUPTYPE_WITHIN_SAME_TREE -142 1 29295 2066 12976654 1 ./How to Remotely Manage Ubuntu Server with SSH_files/style.css
+DUPTYPE_FIRST_OCCURRENCE 188 1 33139 2066 12976707 1 ./autostart/lfd_nofication_1.png
+DUPTYPE_WITHIN_SAME_TREE -188 1 33139 2066 12976708 1 ./autostart/lfd_notification_1.png
+DUPTYPE_FIRST_OCCURRENCE 395 2 33516 2066 12976868 1 ./pip-downloads/coursera-dl/soupsieve-1.9.5-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -395 2 33516 2066 12976881 1 ./pip-downloads/edx/soupsieve-1.9.5-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 104 1 44287 2066 12976593 1 ./How To Use Google Translate From Commandline In Linux_files/analytics.js
+DUPTYPE_WITHIN_SAME_TREE -104 1 44287 2066 12976644 1 ./How to Remotely Manage Ubuntu Server with SSH_files/analytics.js
+DUPTYPE_FIRST_OCCURRENCE 393 2 57952 2066 12976866 1 ./pip-downloads/coursera-dl/requests-2.22.0-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -393 2 57952 2066 12976879 1 ./pip-downloads/edx/requests-2.22.0-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 387 2 58594 2066 12976860 1 ./pip-downloads/coursera-dl/idna-2.8-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -387 2 58594 2066 12976878 1 ./pip-downloads/edx/idna-2.8-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 379 2 106874 2066 12976852 1 ./pip-downloads/coursera-dl/beautifulsoup4-4.8.2-py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -379 2 106874 2066 12976873 1 ./pip-downloads/edx/beautifulsoup4-4.8.2-py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 386 2 117321 2066 12976859 1 ./pip-downloads/coursera-dl/html5lib-1.0.1-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -386 2 117321 2066 12976877 1 ./pip-downloads/edx/html5lib-1.0.1-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 396 2 125642 2066 12976869 1 ./pip-downloads/coursera-dl/urllib3-1.25.8-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -396 2 125642 2066 12976882 1 ./pip-downloads/edx/urllib3-1.25.8-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 382 2 133356 2066 12976855 1 ./pip-downloads/coursera-dl/chardet-3.0.4-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -382 2 133356 2066 12976875 1 ./pip-downloads/edx/chardet-3.0.4-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 380 2 156030 2066 12976853 1 ./pip-downloads/coursera-dl/certifi-2019.11.28-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -380 2 156030 2066 12976874 1 ./pip-downloads/edx/certifi-2019.11.28-py2.py3-none-any.whl
+DUPTYPE_FIRST_OCCURRENCE 410 2 1811630 2066 12976884 1 ./pip-downloads/edx/youtube_dl-2020.1.24-py2.py3-none-any.whl
+DUPTYPE_WITHIN_SAME_TREE -410 2 1811630 2066 12976885 1 ./pip-downloads/youtube-dl/youtube_dl-2020.1.24-py2.py3-none-any.whl
+# end of file
