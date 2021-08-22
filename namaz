@@ -1,0 +1,133 @@
+#!/usr/bin/env ipython3
+
+import warnings
+warnings.filterwarnings("ignore")
+
+from tabulate import tabulate
+from termcolor import colored
+from datetime import datetime
+import numpy as np
+from pprint import pprint
+import pandas as pd
+
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+import sys
+import getpass
+in_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz.png'
+out_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz_2.png'
+img = Image.open(in_file)
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype('FreeMono.ttf', 40)
+
+
+df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+df.drop("Asr_1", axis=1, inplace=True)
+df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
+
+d = str(datetime.now()).split()[0][5:].split("-")
+today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
+
+
+def fun_(x):
+	try:
+		y = x.split(":")[1]
+	except:
+		pass
+	x = x.split(":")[0]
+	x = x if not x.startswith("0") else x[1:]
+	x = x if int(x) < 13 else str(int(x)-12)
+	x = x if len(x) == 2 else "0"+x
+	try:
+		return x + ":" + y
+	except:
+		return x 
+
+tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
+try:
+	current_prayer_time = today[2:].iloc[np.where(today[2:] > tm)[0][0]]
+except:
+	print("No Another Namaz today, Sleep! :p")
+	import sys
+	sys.exit(0)
+
+X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
+d =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+#"""
+d['NextNamaz'] = ''
+d.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
+
+
+d['Accurate_time'] = None
+d.loc[3:, 'Accurate_time'] = (pd.to_datetime(d.TIME[3:]) + pd.Timedelta(hours=12)).dt.time.astype(str).to_list()
+
+d.iloc[:3].Accurate_time = pd.to_datetime(d.iloc[:3].TIME).dt.time.astype(str).to_list()
+
+def string_time_to_minutes(x):
+	h,m,_ = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
+
+d['Time_in_minutes'] = d.Accurate_time.apply(string_time_to_minutes) 
+now_time = string_time_to_minutes(str(datetime.now()).split()[1].split(".")[0])
+d['TimeLeft'] = (d.Time_in_minutes - now_time).astype(str)
+
+d = d.drop(columns=['Accurate_time', 'Time_in_minutes'])
+
+d.loc[d.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
+
+import time
+d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
+
+d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
+
+y_ = 10
+
+draw.text(
+	(680, y_), 
+	f"Current Time: {datetime.now().strftime('%I:%M:%S')}", 
+	fill='white', ##FFFFFF 
+	font=font
+	)
+
+y_ = 80
+
+draw.text(
+	(0, y_), 
+	"\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft[mins]') + "{:<12}".format('TimeLeft[H:M:S]') + "\n   -------------------------------------------------------------------------\n", 
+	fill='white', 
+	font=font
+	)
+y_ += 120
+
+for i in d.iterrows(): 
+	row = i[1]
+	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row['TimeLeft[mins]'])} | {row['TimeLeft[H:M:S]']}"
+	if row.NextNamaz == "<=======>":
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='red', 
+			font=font
+		)
+	else:
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='#FFFFFF', 
+			font=font
+		)
+		print(to_print)
+	y_ += 40
+draw.text(
+	(50, y_+10), 
+	" -------------------------------------------------------------------------\n", 
+	fill='#FFFFFF', 
+	font=font
+)
+
+img.save(out_file)
+import os
+os.system(f"feh -F {out_file}")
