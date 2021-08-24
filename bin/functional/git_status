@@ -123,7 +123,7 @@ for repo in repos:
 		new = open("/home/amir/.only_new_files", 'r').read().splitlines()
 		if new:
 			for new_file in new:
-				com = f'git add {new_file}; git commit -m "new"'
+				com = f"""git add '{new_file}'; git commit -m "new" """
 				os.system(com)
 
 	# only modified files:
@@ -138,7 +138,7 @@ for repo in repos:
 				os.system(com)
 
 				commit = input("\nEnter your commit: ")
-				com = f'git add {updated_file}; git commit -m "{commit}"'
+				com = f"""git add '{updated_file}'; git commit -m "{commit}" """
 				os.system(com)
 				print("\n\n\n-------------------------------------------------------")
 		# else:
