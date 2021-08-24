@@ -1466,3 +1466,5 @@ ARP (Address Resolution Protocol) is a protocol that maps IP network addresses o
 
 # see full terminal output using `screen`  .............. ctrl+a followed by [, followed by the up and down arrows.
 
+
+# .bashrc me jo alias ham define karty hen un ka code dekhly k lye ham terminal sy (alias alias_name) type karty hen, magar .bashrc jo functions defined hoty hen un ka code dekhny k lye ye kaam nahi karta, is kaam k lye ham function k uper ye line likhty hen ................ declare -f your_function_name ............. phir terminal par ja kar (type your_function_name) likhen.
