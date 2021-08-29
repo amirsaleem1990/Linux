@@ -1,4 +1,3 @@
-bin/functional/namaz_2.png
 __pycache__
 */__pycache__
 */*/__pycache__
@@ -6,3 +5,4 @@ __pycache__
 */*/*/*/__pycache__
 autostart/functional/lfd_notification_2.png
 bin/functional/__pycache__
+namaz_2.png
