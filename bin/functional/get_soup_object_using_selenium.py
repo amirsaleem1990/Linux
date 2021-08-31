@@ -1,4 +1,5 @@
 #!/usr/bin/ipython3
+import re
 import sys
 url_passed = False
 try:
