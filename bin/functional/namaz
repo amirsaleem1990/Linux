@@ -1,8 +1,12 @@
 #!/usr/bin/env ipython3
 
+import os
+import sys
+import os
 import warnings
 warnings.filterwarnings("ignore")
 
+import time
 from tabulate import tabulate
 from termcolor import colored
 from datetime import datetime
@@ -15,20 +19,13 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import sys
 import getpass
-in_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz.png'
-out_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz_2.png'
-img = Image.open(in_file)
-draw = ImageDraw.Draw(img)
-font = ImageFont.truetype('FreeMono.ttf', 40)
 
 
-df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
-df.drop("Asr_1", axis=1, inplace=True)
-df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
-
-d = str(datetime.now()).split()[0][5:].split("-")
-today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
-
+def string_time_to_minutes(x):
+	h,m,_ = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
 
 def fun_(x):
 	try:
@@ -44,12 +41,62 @@ def fun_(x):
 	except:
 		return x 
 
+
+in_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz.png'
+out_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz_2.png'
+img = Image.open(in_file)
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype('FreeMono.ttf', 40)
+
+
+df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+df.drop("Asr_1", axis=1, inplace=True)
+df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
+
+d = str(datetime.now()).split()[0][5:].split("-")
+today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
+
+
+
 tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
 try:
 	current_prayer_time = today[2:].iloc[np.where(today[2:] > tm)[0][0]]
 except:
-	print("No Another Namaz today, Sleep! :p")
-	import sys
+	# print("No Another Namaz today, Sleep! :p")
+	y_ = 10
+
+	draw.text(
+		(680, y_), 
+		f"Current Time: {datetime.now().strftime('%I:%M:%S')}", 
+		fill='white', ##FFFFFF 
+		font=font
+		)
+
+	y_ = 120
+
+	today = today.iloc[2:]
+	for namaz, time in today.iterrows(): 
+		# row = i[1]
+		to_print = "                           | {:<12}  {}  |  ".format(namaz, str(time.iloc[0]))
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='#FFFFFF', 
+			font=font
+		)
+		y_ += 40
+
+
+	draw.text(
+		(50, y_+10), 
+		"\n\n------------------ No Another Namaz today, Sleep! :p ------------------ \n", 
+		fill='#FFFFFF', 
+		font=font
+	)
+
+	img.save(out_file)
+	os.system(f"feh -F {out_file}")
+
 	sys.exit(0)
 
 X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
@@ -64,11 +111,7 @@ d.loc[3:, 'Accurate_time'] = (pd.to_datetime(d.TIME[3:]) + pd.Timedelta(hours=12
 
 d.iloc[:3].Accurate_time = pd.to_datetime(d.iloc[:3].TIME).dt.time.astype(str).to_list()
 
-def string_time_to_minutes(x):
-	h,m,_ = x.split(":")
-	h = int(h[1]) if h.startswith("0") else int(h)
-	m = int(m[1]) if m.startswith("0") else int(m)
-	return h*60 + m
+
 
 d['Time_in_minutes'] = d.Accurate_time.apply(string_time_to_minutes) 
 now_time = string_time_to_minutes(str(datetime.now()).split()[1].split(".")[0])
@@ -78,7 +121,7 @@ d = d.drop(columns=['Accurate_time', 'Time_in_minutes'])
 
 d.loc[d.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
 
-import time
+
 d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
 
 d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
@@ -129,5 +172,4 @@ draw.text(
 )
 
 img.save(out_file)
-import os
 os.system(f"feh -F {out_file}")
