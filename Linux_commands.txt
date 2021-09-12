@@ -184,7 +184,8 @@ grep 'word1\|word2\|word3' /path/to/file
 # ls only folders size ............. du -sh $(ls -d */)
 # cpu usage ................................ nmon
 # multiple terminals in one screen ........................... tmux ............ CTRL+B SHIFT+% ............... CTRL+B D ...................... tmux new -s assig_a_name ................. tmux a -t assig_a_name ............... 
-# install .deb file from terminal ........... sudo dpkg -i example.deb
+# install .deb file from terminal ........... sudo dpkg -i example.deb ............ gdebi example.deb
+
 # unzip .tar file ....................... tar xvf file_name.tar
 # ls output to array and then slice this array , for learning by watching series of videos stored in HDD ............... array=($(ls -1)) ..... this is one time only, then : vlc ${array[0]} ........... change <0> for each video.
 # open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
@@ -976,13 +977,6 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 # another pdf reader .............. okular
 
 # convert epoch seconds to date time ............ date -d  @1612762179
-
-# install .deb file using:
-#### gdebi (gdebi application.deb)
-#### dpkg  (dpkg -i application.deb)
-
-
-
 
 # calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7 ........ bc <<< "scale=4;  2/66"
 # find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
