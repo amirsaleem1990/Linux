@@ -13,9 +13,17 @@ before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
 if os.path.exists(error_file):
 	os.remove(error_file)
 
+low_quality = False
+if input("Are you need to download low quality videos? [y|n]: ").strip().lower() == "y":
+	low_quality = True
+
+
 def download(url):
 	try:
-		subprocess.check_call(['youtube-dl', url])
+		if low_quality:
+			subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
+		else:
+			subprocess.check_call(['youtube-dl', '--no-playlist', url])
 		open("downloaded.txt", "a").write(url+"\n")
 	except:
 		e_ = traceback.format_exc()
