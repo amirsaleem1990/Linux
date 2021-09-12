@@ -257,11 +257,13 @@ if not course_name_received:
 	open(f"{base_dir}/.coursera_course_name.txt", 'w').write(course_name.strip())
 
 
-email_address = "amirsaleem1990@hotmail.com"
+# email_address = "amirsaleem1990@hotmail.com"
+# pas = list(os.popen("echo 1 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1 | sed 's/t./traders/'"))[0].strip()
+email_address = "hamzaamirr2014@gmail.com"
+pas = list(os.popen("echo 2 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1"))[0].strip()
+
 login_url = "https://www.coursera.org/?authMode=login"
 
-import os
-pas = list(os.popen("echo 1 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1 | sed 's/t./traders/'"))[0].strip()
 
 logged_in = False
 
