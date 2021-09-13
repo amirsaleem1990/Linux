@@ -78,6 +78,7 @@ def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
 
 	if len(vids_download_urls):
 		print(f"\n\nDVides downlonload links saved as {base_dir}/vids_download_urls.pkl")
+		pickle.dump(vids_download_urls, open(f"{base_dir}/vids_download_urls.pkl", 'wb'))
 		print(json.dumps(vids_download_urls, indent=4))
 		print()
 	else:
@@ -87,7 +88,6 @@ def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
 
 def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
 	URL = f"https://www.coursera.org/learn/{course_name}/home/week/"
-	week = starting_week
 	# for week in range(starting_week, total_weeks+1):
 	while True:
 
@@ -99,7 +99,6 @@ def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
 
 		if (starting_week != 1) and (browser.current_url.split("/")[-1] == '1'):
 				break
-		starting_week += 1
 
 		extrected_urls = []
 		s = BeautifulSoup(browser.page_source, "lxml")
@@ -112,30 +111,33 @@ def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
 		x2= s.find_all('source', href=re.compile(pattern))
 		extrected_urls += [i['src'] for i in x2]
 
-		vids[week] = extrected_urls
-		print(f"\nWeek #{week} has {len(vids[week])} videos")
-
-		open(f"{course_name}/Week_{week}-supplement.txt", 'w').write(
+		open(f"{course_name}/Week_{starting_week}-supplement.txt", 'w').write(
 			"\n".join(
 				[i for i in extrected_urls if f"{course_name}/supplement" in i]
 				)
 			)
-		open(f"{course_name}/Week_{week}-exam.txt", 'w').write(
+		open(f"{course_name}/Week_{starting_week}-exam.txt", 'w').write(
 			"\n".join(
 				[i for i in extrected_urls if f"{course_name}/exam" in i]
 				)
 			)
-		open(f"{course_name}/Week_{week}-ungradedLab.txt", 'w').write(
+		open(f"{course_name}/Week_{starting_week}-ungradedLab.txt", 'w').write(
 			"\n".join(
 				[i for i in extrected_urls if f"{course_name}/ungradedLab" in i]
 				)
 			)
-		open(f"{course_name}/Week_{week}-all_links.txt", 'w').write(
+		open(f"{course_name}/Week_{starting_week}-all_links.txt", 'w').write(
 			"\n".join(
 				extrected_urls
 				)
 			)
+
 		extrected_urls = [i for i in extrected_urls if f"{course_name}/lecture" in i]
+
+		vids[starting_week] = extrected_urls
+		print(f"\nWeek #{starting_week} has {len(vids[starting_week])} videos")
+
+		starting_week += 1
 
 	for k, v in vids.items():
 		vids[k] = ['https://www.coursera.org' + i for i in v]
@@ -192,7 +194,6 @@ def func(course_name, browser=None):
 		vids_download_urls = pickle.load(open(f"{base_dir}/vids_download_urls.pkl", 'rb'))
 		vids = pickle.load(open(f"{base_dir}/vids.pkl", 'rb'))
 	else:
-		vids_download_urls = {}
 		vids = {}
 		# if vids_pkl_is_provided:
 			# vids = pickle.load(open(f"{base_dir}/vids.pkl", 'rb'))
@@ -208,12 +209,11 @@ def func(course_name, browser=None):
 			base_dir      = base_dir
 			)
 		vids_download_urls, browser = fetch_video_urls(
-			vids               = vids,
+			vids               = pickle.load(open(f"{base_dir}/vids.pkl", 'rb')),
 			browser            = browser,
 			base_dir           = base_dir,
-			vids_download_urls = vids_download_urls
+			vids_download_urls = {}
 			)
-		pickle.dump(vids_download_urls, open(f"{base_dir}/vids_download_urls.pkl", 'wb'))
 
 	download(
 		vids               = vids,
