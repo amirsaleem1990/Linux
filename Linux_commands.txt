@@ -1467,3 +1467,49 @@ ARP (Address Resolution Protocol) is a protocol that maps IP network addresses o
 
 bluetooth ............ Identify your computer bluetooth: hcitool dev ............ Scan available devices : hcitool -i hci0 scan ................. bluetoothctl ................ paired-devices ............... connect XX:XX:XX:XX:XX:XX
 
+
+#--------------------------------------------------------
+# open image file 
+x-www-browser : in browser
+display       : imagemagic
+feh           :
+eog           : a default GNOME image viewer
+
+
+>>> mimeopen --help
+Usage:
+    mimeopen [options] [-] files
+
+Options:
+    -a, --ask
+        Do not execute the default application but ask which application to
+        run. This does not change the default application.
+
+    -d, --ask-default
+        Let the user choose a new default program for given files.
+
+    -n, --no-ask
+        Don't ask the user which program to use. Choose the default program
+        or the first program known to handle the file mimetype. This does
+        not set the default application.
+
+    -M, --magic-only
+        Do not check for extensions, globs or inode type, only look at the
+        content of the file. This is particularly useful if for some reason
+        you don't trust the name or the extension a file has.
+
+    --database=mimedir:mimedir:...
+        Force the program to look in these directories for the shared
+        mime-info database. The directories specified by the basedir
+        specification are ignored.
+
+    -D, --debug
+        Print debug information about how the mimetype was determined.
+
+    -h, --help
+    -u, --usage
+        Print a help message and exits.
+
+    -v, --version
+        Print the version of the program and exit.
+#--------------------------------------------------------
