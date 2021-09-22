@@ -69,10 +69,13 @@ alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
 # alias youtube-dl="while :; do /usr/local/bin/youtube-dl -t ; done"
 # alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
 
+# commit <HISTSIZE> above
 HISTSIZE=1000000
+# commit <HISTFILESIZE> above
 HISTFILESIZE=-1
 
 
+declare -f Youtube_dl
 Youtube_dl() {
     echo -e "\n\nThere are other `echo $(ps aux | grep youtube-dl | wc -l)-1|bc` youtube-dl downloading jobs running\n\n"
     while :; do
@@ -84,9 +87,10 @@ Youtube_dl() {
     done
 }
 
+declare -f poweroff
 poweroff() {
     read -p "Are you punched out? [yes|no]: " ans
-    cp -r  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups/ /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
+    cp -rv  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
     if [[ $ans == "yes" ]] ; then 
         /sbin/poweroff
     elif [[ $ans == "no" ]]; then 
@@ -100,6 +104,8 @@ poweroff() {
         echo -e "\n\nError: wrong input,\nExiting .........\n"
     fi
 }
+
+declare -f rdfind
 rdfind(){
     if [[ `find . -maxdepth 1  -printf '%u:'  | cut -d: -f1` == 'root' ]]; then 
         echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
@@ -113,15 +119,37 @@ rdfind(){
     fi 
 }
 
-day_of_week=`date +%u`
-if   [[ $day_of_week = 6 ]] ; then
-    poweroff
-elif [[ $day_of_week = 7 ]] ; then
-    if [[ `date +%H | sed 's/^0//g'` < 21 ]] ; then
-        poweroff
-    fi
-fi
+# day_of_week=`date +%u`
+# if   [[ $day_of_week = 6 ]] ; then
+#     poweroff
+# elif [[ $day_of_week = 7 ]] ; then
+#     if [[ `date +%H | sed 's/^0//g'` < 21 ]] ; then
+#         poweroff
+#     fi
+# fi
 
+declare -f calculator
+calculator(){
+    expression=$1
+    if [[ -z $expression ]]; then
+        read -p "Enter you expression: " expression
+    fi
+    x=$(bc <<< "scale=4; $expression")
+    if [[ "${x:0:1}" == "." ]]; then
+        echo 0$x
+    else
+        echo $x
+    fi
+}
+
+declare -f calculator_while_loop
+calculator_while_loop(){
+    while :; do
+        echo ''
+        read -p "Enter you expression: " expression
+        calculator "$expression"
+    done
+}
 
 PATH=$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids
 export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
@@ -131,3 +159,5 @@ bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 export Kashat_user='kash-admin2'
 export kashat_password='K@sh@t#2020#'
 export kashat_profile='Kashmasr-Client'
+
+export air_buds_mac='AB:98:36:50:99:2F'
