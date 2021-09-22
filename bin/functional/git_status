@@ -114,22 +114,32 @@ repos = [repo for repo in repos if not repo in not_to_commit_repos and not repo.
 # 			print("\n\n\n-------------------------------------------------------")
 
 
+only_new_files     = "/home/amir/.only_new_files"
+only_updated_files = "/home/amir/.only_updated_files"
+
+print("\n\n")
 
 for repo in repos:
 	os.chdir(f"/home/amir/github/{repo}")
+
 	# only new files:
+	if os.path.exists(only_new_files):
+		os.remove(only_new_files)
 	os.system("git ls-files --others --exclude-standard > /home/amir/.only_new_files")
-	if os.path.exists("/home/amir/.only_new_files"):
-		new = open("/home/amir/.only_new_files", 'r').read().splitlines()
+	if os.path.exists(only_new_files):
+		new = open(only_new_files, 'r').read().splitlines()
 		if new:
 			for new_file in new:
+				print(f">>> Added new file: {repo}/{new_file}")
 				com = f"""git add '{new_file}'; git commit -m "new" """
 				os.system(com)
 
 	# only modified files:
+	if os.path.exists(only_updated_files):
+		os.remove(only_updated_files)
 	os.system("git ls-files -m > /home/amir/.only_updated_files")
-	if os.path.exists("/home/amir/.only_updated_files"):
-		updated_files = open("/home/amir/.only_updated_files", 'r').read().splitlines()
+	if os.path.exists(only_updated_files):
+		updated_files = open(only_updated_files, 'r').read().splitlines()
 		if updated_files:
 			for updated_file in updated_files:
 				os.system("clear")
@@ -165,5 +175,5 @@ if q > 0:
 	if ans == "y":
 		os.system("git_push")
 
-os.remove("/home/amir/.only_new_files")
-os.remove("/home/amir/.only_updated_files")
+os.remove(only_new_files)
+os.remove(only_updated_files)
