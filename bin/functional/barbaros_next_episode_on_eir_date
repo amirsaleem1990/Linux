@@ -23,7 +23,8 @@ print(""" -------------------####
 #############################################################\n""")
 
 if n > last_vid_num:
-	q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/1.php?id="+str(n)).text, 'lxml')
+	# q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/1.php?id="+str(n)).text, 'lxml')
+	q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/Barbaroslar-Episode-"+str(n)).text, 'lxml')
 	if 'Next Part soon..' in q.text:
 		print("\n **** Full video NOT uploaded yet ****\n")
 		os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
