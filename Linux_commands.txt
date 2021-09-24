@@ -1513,3 +1513,107 @@ Options:
     -v, --version
         Print the version of the program and exit.
 #--------------------------------------------------------
+
+#---------------------------------
+Ubuntu is derived from Debian Linux. Debian uses the dpkg packaging system. A packaging system is a way to provide programs and applications for installation. This way, you don’t have to build a program from the source code.
+
+APT (Advanced Package Tool) is the command line tool to interact with this packaging system. There are already dpkg commands to manage it, but apt is a more user-friendly way to handle packages.
+
+There are two main tools around APT: apt-get and apt-cache. apt-get is for installing, upgrading, and cleaning packages, while apt-cache command is used for finding new packages. 
+
+apt-get basically works on a database of available packages. If you don’t update this database, the system won’t know if there are newer packages available or not.
+
+Once you have updated the package database, you can upgrade the installed packages. The most convenient way is to upgrade all the packages that have updates available. You can use the command below for this purpose:
+    sudo apt-get upgrade
+To upgrade only a specific program, use the command below:
+    sudo apt-get upgrade <package_name>
+There is another way to perform a complete upgrade, by using the command below:
+    sudo apt-get dist-upgrade
+    But you should avoid using this command.
+
+Difference between upgrade and dist-upgrade
+    The command apt-get upgrade is very obedient. It never tries to remove any packages or tries to install a new package on its own.
+    The command apt-get dist-upgrade, on the other hand, is proactive. It looks for dependencies with the newer version of the package being installed and it tries to install new packages or remove an existing ones on its own.
+    It sounds like dist-upgrade is more powerful and intelligent, doesn’t it? But there is a risk with it.
+    See, it has a “smart” conflict resolution system. It will attempt to upgrade the most important packages, at the expense of the less important ones. This may lead to the removal of some packages, which you might not want. This is the main reason why dist-upgrade should be avoided on production machines.
+
+What is the difference between apt-get update and apt-get upgrade?
+    apt-get update ONLY updates the database of available packages
+    and 'apt-get upgrade' upgrades the installed packages to the newer version.    
+
+apt-cache:
+    command to search for packages
+    apt-cache search <search term>
+    you don’t need to know the exact name of the package. It searches in package names and their short descriptions, and shows result based on that.
+    If you just want to search the apt packages with specific package names, you can use the command below:
+        apt-cache pkgnames <search_term>
+        This gives you the list of all the packages starting with your search term.
+    Once you know the exact package name, you can get more information about it, such as version, dependencies, etc., by using the command below:
+        apt-cache showpkg <package_name>
+
+install multiple packages:
+    sudo apt-get install <package_1> <package_2> <package_3>
+
+What if you run install on an already installed package?
+    Suppose you already have a package installed, but you used the install command for it anyway. apt-get will actually look into the database, and if a newer version is available, it will upgrade the installed package to the newer one. So no harm is done by using this command — unless you don’t want the package to be upgraded.
+    
+    Suppose for some reason you want to install a package but don’t want to upgrade it if it is already installed. It sounds weird, but you may have reasons to do that.
+        For that case, you can use the no-upgrade flag in the following manner:
+        sudo apt-get install <package_name> --no-upgrade
+    How to only upgrade a package, not install it:
+        In case you want to upgrade a package provided it’s already installed, but don’t want to install it if it’s not, you can do that with the following command:
+            sudo apt-get install <package_name> --only-upgrade
+Another way of uninstalling packages is to use purge. The command is used in the following manner:
+    sudo apt-get purge <package_name>
+
+    What is the difference between apt-get remove and apt-get purge?
+        apt-get remove just removes the binaries of a package. It doesn’t touch the configuration files
+        apt-get purge removes everything related to a package, including the configuration files
+
+        So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+        Purge is particularly useful when you have messed up with the configuration of a program, when you want to completely erase its traces from the system and start afresh.
+
+        Most of the time, a simple remove is more than enough for uninstalling a package.
+
+
+Clear apt cache:
+    You can use the command below to clear apt cache (locally saved retrieved package files):
+        sudo apt-get clean
+    
+    Another way is to use autoclean. Unlike the above clean command, autoclean only removes those retrieved package files that have a newer version now, and so won’t be used anymore.
+        sudo apt-get autoclean
+
+    Another way to free up disk space is to use autoremove. It removes libraries and packages that were installed automatically to satisfy the dependencies of another installed package. If that package is removed, these automatically installed packages are useless in the system. This command removes such packages.
+        sudo apt-get autoremove
+
+    This is a command-line way of cleaning a Linux system. If you prefer a GUI, here are some CCleaner alternatives for Linux which you can use on Ubuntu and Ubuntu-based Linux distributions.
+
+
+So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+Difference Between apt and apt-get Explained
+    The reality is that the first stable version of apt was released in the year 2014
+    Debian, mother Linux of distributions like Ubuntu, Linux Mint, elementary OS etc, has a robust packaging system and every component and application is built into a package that is installed on your system. Debian uses a set of tools called Advanced Packaging Tool (APT) to manage this packaging system. Don’t confuse it with the command apt, it’s not the same.
+    There are various tools that interact with APT and allow you to install, remove and manage packages in Debian based Linux distributions. apt-get is one such command-line tool which is widely popular. Another popular tool is Aptitude with both GUI and command-line options.
+    You see, these commands are way too low level and they have so many functionalities which are perhaps never used by an average Linux user. On the other hand, the most commonly used package management commands are scattered across apt-get and apt-cache.
+    The apt commands have been introduced to solve this problem. apt consists some of the most widely used features from apt-get and apt-cache leaving aside obscure and seldom used features. It can also manage apt.conf file.
+    With apt, you don’t have to fiddle your way from apt-get commands to apt-cache. apt is more structured and provides you with necessary options needed to manage packages.
+    Bottom line: apt=most common used command options from apt-get and apt-cache.
+    So with apt, you get all the necessary tools in one place. You won’t be lost under tons of command options. The main aim of apt is to provide an efficient way of handling package in a way “pleasant for end users”.
+    When Debian says “pleasant for end users”, it actually means that. It has fewer but sufficient command options but in a more organized way. On top of that, it enables a few options by default that is actually helpful for the end users.
+    For example, you get to see the progress bar while installing or removing a program in apt.
+    apt also prompts you with the number of packages that can be upgraded when you update the repository database.
+    You can achieve the same with apt-get as well if you use additional command options. apt enables them by default and takes the pain away.
+
+    apt has a few commands of its own as well.
+
+        new apt command  | function of the command
+        ------------------------------------------
+        apt list         | Lists packages with criteria (installed, upgradable etc)
+        apt edit-sources | Edits sources list
+
+    One point to note here is that apt is under continuous development. So you may see a few new options added to the command in the future versions.
+    apt is the command that is being recommended by the Linux distributions. It provides the necessary option to manage the packages. Most important of all, it is easier to use with its fewer but easy to remember options.
+
+#---------------------------------
