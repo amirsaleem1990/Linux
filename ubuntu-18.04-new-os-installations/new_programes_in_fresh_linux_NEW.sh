@@ -18,8 +18,8 @@ func_(){
 # @install.packages("caret", repos=repo)
 # @install.packages("swirl", repos=repo)
 
-func_ "apt-get update"
-func_ "apt-get -y upgrade"
+func_ "apt -y update"
+func_ "apt -y upgrade"
 
 
 func_ "apt install -y virtualbox-qt"
@@ -61,18 +61,17 @@ func_ "apt install -y unrar"
 func_ "apt install -y unrar-free"
 func_ "apt install -y dolphin"
 func_ "apt install -y nomacs"
-
-func_ "apt-get install -y coreutils"
-func_ "apt-get install -y mysql-server"
-func_ "apt-get install -y gdebi"
-func_ "apt-get install -y openjdk-11-jdk"
-func_ "apt-get install -y r-cran-rjava"
-func_ "apt-get install -y libcurl4-openssl-dev"
-func_ "apt-get install -y libxml2-dev"
-func_ "apt-get install -y libssl-dev"
-func_ "apt-get install -y jupyter-client"
-func_ "apt-get install -y gparted"
-func_ "apt-get install -y youtube-dl"
+func_ "apt install -y coreutils"
+func_ "apt install -y mysql-server"
+func_ "apt install -y gdebi"
+func_ "apt install -y openjdk-11-jdk"
+func_ "apt install -y r-cran-rjava"
+func_ "apt install -y libcurl4-openssl-dev"
+func_ "apt install -y libxml2-dev"
+func_ "apt install -y libssl-dev"
+func_ "apt install -y jupyter-client"
+func_ "apt install -y gparted"
+func_ "apt install -y youtube-dl"
 
 
 func_ "snap install vlc"
