@@ -368,7 +368,7 @@ copy from vim to another application .............. Position the cursor where yo
 # replace dosts <.> in filename with <_>.................. a=a.b.c.d.pdf ; mv a.b.c.d.pdf "${a//\./_}"
 # git commit large file ...................... git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch large_file_name_with_path'
 
-Ctrl+U: This clears the entire line so you can type in a completely new command.
+Ctrl+U: This deletes the line from the beggining of the line to the position of the cursonr. # Possible made a mistake in typing the password? Instead of using backspace key all the way, simply use Ctrl+U and retype the password. You can discover plenty of other uses for these shortcuts. 
 Ctrl+K: This deletes the line from the position of the cursor to the end of the line.
 Ctrl+W: This deletes the word before the cursor only.
 
@@ -688,7 +688,7 @@ password=type_you_password_here
 
 #swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
 # to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
-# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
+# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way : ((count--)) ................. another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
 
 check if two files are identical .......... cmp --silent $old $new || echo "files are different"
 #-----------------------
@@ -1617,3 +1617,13 @@ Difference Between apt and apt-get Explained
     apt is the command that is being recommended by the Linux distributions. It provides the necessary option to manage the packages. Most important of all, it is easier to use with its fewer but easy to remember options.
 
 #---------------------------------
+# Reading compressed file without extracting ................ z commands provide alternatives of the regular commands that you use to deal with log files such as less, cat, grep etc. So you get zless, zcat, zgrep etc and you don’t even have to explicitly extract the compressed files
+
+
+# copy&paste in terminal ................... Select the text for copying and middle click (scroll button on the mouse) for paste
+
+
+# du -ah ..................... recursive ALL FILES sizes
+
+# grep -E .................. `grep -E "a|e"` is equals to `grep "a\|e"`
+# adb screen sharing ............ scrcpy
