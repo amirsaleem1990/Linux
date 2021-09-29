@@ -1627,3 +1627,4 @@ Difference Between apt and apt-get Explained
 
 # grep -E .................. `grep -E "a|e"` is equals to `grep "a\|e"`
 # adb screen sharing ............ scrcpy
+# search for a file by its exact name (not *name*): .....................   locate -b '\domain-list.txt'
