@@ -1629,3 +1629,36 @@ Difference Between apt and apt-get Explained
 # adb screen sharing ............ scrcpy
 # search for a file by its exact name (not *name*): .....................   locate -b '\domain-list.txt'
 # select multiple lines in terminal ; double click on the beggining line / word, press CTRL + SHIF + single click on the last word of desired selection
+
+
+anacron .........  anacron is a Linux facility used to run commands periodically with a frequency defined in days, weeks and months. Unlike its sister cron; it assumes that a system will not run continuously, therefore if a scheduled job is due when the system is off, it’s run once the machine is powered on. For more information about anacron and cron read: https://www.tecmint.com/cron-vs-anacron-schedule-jobs-using-anacron-on-linux/
+
+apropos ............ short man page
+
+at (schedule tasks to run in a future time) .............. sudo echo "shutdown -h now" | at -m 23:55 ............ 'atq' command is used to view jobs in at command queue ............ 'atrm' command is used to remove/deletes jobs (identified by their job number) from at command queue
+
+basename ................  It's helps to print the name of a file stripping of directories in the absolute path ............... basename /my/folder/my/subfolder/myfile.txt -> myfile.txt
+
+cksum .......... It's used to display the CRC checksum and byte count of an input file.
+
+cmp ............. It's  performs a byte-by-byte comparison of two files like this.
+
+comm ............. It's used to compare two sorted files line-by-line
+
+diff .......... It's used to compare two files line by line. It can also be used to find the difference between two directories in Linux.
+
+change host name .............. sudo hostname your_new_host_name
+
+killall ......... It's used to kill a process by its name.............. killall firefox
+
+lscpu ........... It's  displays system’s CPU architecture information (such as number of CPUs, threads, cores, sockets, and more)
+
+md5sum ........... It's used to compute and print the MD5 message digest of a file. If run without arguments, debsums checks every file on your system against the stock md5sum files
+
+nc -zv 192.168.253.2 5000 ................... checking if the port 5000 is open on the host 192.168.253.2
+
+nice -12 tar -czf backup.tar.bz2 /home/* ................. The command starts the process “tar command” setting the “nice” value to 12.
+
+openssl  ..............  The openssl is a command line tool for using the different cryptography operations of OpenSSL’s crypto library from the shell. The command below will create an archive of all files in the current directory and encrypt the contents of the archive file ................ tar -czf - * | openssl enc -e -aes256 -out backup.tar.gz
+
+pidof ................... pidof displays the process ID of a running program/command
