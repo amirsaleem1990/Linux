@@ -196,3 +196,7 @@ func_ "echo 100 > `locate kbd_backlight`"
 
 
 echo "Apply this <'/home/amir/github/Linux/ubuntu-18.04-new-os-installations/Mount\ drive\ in\ linux\ and\ set\ auto-mount\ at\ boot\ -\ Tech\ Knowledge\ Base\ -\ jaytaala.com\ Confluence\ \(8_17_2021\ 1_41_49\ PM\).html'>"
+
+
+echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | sudo tee --append /etc/crontab # Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
+
