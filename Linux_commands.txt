@@ -1453,7 +1453,7 @@ stdout & stderr to one file  ........... cmd &> streams
 
 It's recommended to use $(command) instead of `command`
 
-ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=enp2s0 --localnet  
+ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=wlp3s0 --localnet  
 
 
 # remove punctuation .......... echo 'olj;adf79329s;jfa(&*&^#@_(!_*)(' | sed s/[`\!\@\#$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g
@@ -1662,3 +1662,12 @@ nice -12 tar -czf backup.tar.bz2 /home/* ................. The command starts th
 openssl  ..............  The openssl is a command line tool for using the different cryptography operations of OpenSSL’s crypto library from the shell. The command below will create an archive of all files in the current directory and encrypt the contents of the archive file ................ tar -czf - * | openssl enc -e -aes256 -out backup.tar.gz
 
 pidof ................... pidof displays the process ID of a running program/command
+
+cut -d: -f1 < /etc/passwd
+
+use xargs to copy a file to multiple directories at once; in this example we are trying to copy the file. ................ echo ./Templates/ ./Documents/ | xargs -n 1 cp -v ./Downloads/SIC_Template.xlsx 
+
+delete all files within a directory except one or few files with a given extension................... find . -type f -not -name '*gz' -print0 | xargs -0 -I {} rm -v {}
+
+
+
