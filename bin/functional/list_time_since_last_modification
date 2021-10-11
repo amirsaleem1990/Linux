@@ -3,7 +3,7 @@ IFS=$'\n'
 rm -f ~/.sb1
 echo -e  "==,==,==,==,==,==============================\nTotal_SEC,DD,HH,MM,SS,File Name\n==,==,==,==,==,==============================" >~/.sb1
 for file in `ls`; do 
-	SEC=$(( `date +%s` - `stat -c %Y $file` ))
+	SEC=$(( `date +%s` - `stat -c %Y "$file"` ))
 	x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) D,%H H,%M M,%S S')"`
 	echo "$SEC,$x,$file"
 done | sort -g >>  ~/.sb1
