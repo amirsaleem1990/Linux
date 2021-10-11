@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 cd /media/sdb2/Github_backup
 if [[ $? -ne 0 ]]; then
-	echo -e "##########################################\nCould'nt go into /media/sdb2/Github_backup\n##########################################\n"
+	echo -e "##########################################\nCould'nt cd into /media/sdb2/Github_backup\n##########################################\n"
 	exit
 fi
 IFS=$'\n'
