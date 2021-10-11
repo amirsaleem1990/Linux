@@ -9,9 +9,10 @@ while :; do
 		sleep 10
 		nmcli d w r
 		sleep 10
-		nmcli d w c $desired_wifi password `sudo cat /etc/NetworkManager/system-connections/$desired_wifi | grep psk= | sed 's/psk=//g'`
+		# nmcli d w c $desired_wifi password `sudo cat /etc/NetworkManager/system-connections/$desired_wifi | grep psk= | sed 's/psk=//g'`
+		nmcli -a c up "$desired_wifi"
 	else
-		echo "Connected to $desired_wifi successfully"
+		echo "Connected to "$desired_wifi" successfully"
 		exit
 	fi
 done
