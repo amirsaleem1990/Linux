@@ -6,21 +6,57 @@ rm -f _file_not_found_count__
 
 
 echo -e "
-####################################
-# This script itereate over all files HERE and if the same named found THERE(which you specify soon)
-####################################
+#######################################################################################
+# This script itereate over all files HERE and if the same named file found THERE,    #
+# there is a comparison between the two.                                              #
+#######################################################################################
 "
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --there)
+      from="$2"
+      ;;
+    -h|--help)
+      echo -e "
+  Usage:
+
+  --there ............. path/to/be/compared
+  --help  ............. help page
+  "
+      exit
+      ;;
+    *)
+      echo -e "
+    ***************************
+    * Error: Invalid argument.*
+    ***************************
+      "
+      exit 1
+  esac
+  shift
+  shift
+done
+
+if [[ -z $from ]]; then
+	echo -e "\n'there' perameter not passed\nAborting.....\n\n"
+	exit
+fi
+
 function x(){ 
 	IFS=$'\n'
 	du -s $1 | sed 's/\t/,/g' | cut -d, -f1 ; 
 	}
 
-#from=/media/450GB/320GB/MultiMedia/audio/call\ recordings
-from=$1
-if [[ $from = "" ]]; then
-	echo -en "Enter $from full/relative path\n(eg:/media/450GB/320GB/MultiMedia/audio/call\ recordings)\n\t"
-	read -e from
-fi
+# from=/media/450GB/320GB/MultiMedia/audio/call\ recordings
+
+# from=$1
+# if [[ $from = "" ]]; then
+# 	echo -en "Enter $from full/relative path\n(eg:/media/450GB/320GB/MultiMedia/audio/call\ recordings)\n\t"
+# 	read -e from
+# fi
+
+
 
 m=0
 diffrent_size_count=0
