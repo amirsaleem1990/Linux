@@ -1,0 +1,37 @@
+CPU  MEM  COMMAND                                   MEM(MB)  CPU  MEM  COMMAND
+
+===  ===  ======= CPU ============================  =======  ===  ===  ======= RAM ============================
+---  0.1  evolution-calen                           16       ---  0.1  evolution-calen
+---  0.1  evolution-sourc                           16       ---  0.1  evolution-sourc
+---  0.1  gjs                                       16       ---  0.1  gjs
+---  0.1  gnome-shell-cal                           16       ---  0.1  gnome-shell-cal
+---  0.1  gsd-color                                 16       ---  0.1  gsd-color
+---  0.1  gsd-keyboard                              16       ---  0.1  gsd-keyboard
+---  0.1  gsd-media-keys                            16       ---  0.1  gsd-media-keys
+---  0.1  gsd-power                                 16       ---  0.1  gsd-power
+---  0.1  gsd-wacom                                 16       ---  0.1  gsd-wacom
+---  0.1  gsd-xsettings                             16       ---  0.1  gsd-xsettings
+---  0.1  ibus-extension-                           16       ---  0.1  ibus-extension-
+---  0.1  ibus-x11                                  16       ---  0.1  ibus-x11
+---  0.1  tracker-miner-f                           16       ---  0.1  tracker-miner-f
+---  0.1  update-notifier                           16       ---  0.1  update-notifier
+---  0.2  goa-daemon                                16       0.1  0.1  plugin_host-3.8
+---  0.2  seahorse                                  16       0.3  0.1  tracker-store
+---  0.2  Socket-Process                            16       1.5  0.1  pulseaudio
+---  0.3  barbaros_next_e                           32       ---  0.2  goa-daemon
+---  0.3  evolution-alarm                           32       ---  0.2  seahorse
+---  0.3  gnome-calendar                            32       ---  0.2  Socket-Process
+---  0.3  RDD-Process                               32       0.8  0.2  youtube-dl
+---  0.6  Privileged-Cont                           48       ---  0.3  barbaros_next_e
+0.1  0.7  WebExtensions                             48       ---  0.3  evolution-alarm
+0.1  0.1  plugin_host-3.8                           48       ---  0.3  gnome-calendar
+0.3  0.1  tracker-store                             48       ---  0.3  RDD-Process
+0.4  2.8  Web-Content                               48       0.8  0.3  gnome-terminal-
+0.8  0.2  youtube-dl                                95       ---  0.6  Privileged-Cont
+0.8  0.3  gnome-terminal-                           111      0.1  0.7  WebExtensions
+1.5  0.1  pulseaudio                                111      4.0  0.7  Xorg
+2.9  0.9  sublime_text                              143      2.9  0.9  sublime_text
+3.2  2.6  GeckoMain                                 255      3.7  1.6  gnome-shell
+3.7  1.6  gnome-shell                               414      3.2  2.6  GeckoMain
+4.0  0.7  Xorg                                      445      0.4  2.8  Web-Content
+===  ===  ======= CPU ============================  =======  ===  ===  ======= RAM ============================
