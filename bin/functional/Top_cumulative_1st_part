@@ -18,7 +18,7 @@ if [[ $1 == 1 ]] ; then
 	detailed=1
 else
 	detailed=0
-	echo -e "\n************ Short list ************\n\n"
+	echo -e "\n************ Short list ************\n*(for long list give '1' as a perameter)\n"
 fi
 
 sort_by=1
