@@ -1,8 +1,9 @@
 print("""
 Usage:
-	improt sys
+	import sys
 	sys.path += ['/amir_bin/']
-	type_casting.Type_casting(id(df)) # call it only, this function not return anything, but your <df> is now types casted.
+	import type_casting 
+	type_casting.Type_casting(id(df)) # call it only, this function not return anything, but your <df> is now type casted.
 """)
 import pandas as pd
 import numpy as np
@@ -36,7 +37,7 @@ def Type_casting(df_id):
 
 	a = df.memory_usage(deep=True).sum()
 	a_ = df.memory_usage(deep=True)
-	print(f"\n\nTotal Reduction: {round((1-a/b)*100, 2)} %\n\n")
+	print(f"\n\nTotal Reduction: {round((1-a/b)*100, 2)} %\n")
 	print(f"Before : {round(b    / 1024 ** 2, 2) } MB")
 	print(f"After  : {round(a    / 1024 ** 2, 2) } MB")
 	print(f"Reduced: {round((b-a)/ 1024 ** 2, 2) } MB")
@@ -47,4 +48,4 @@ def Type_casting(df_id):
 	# plt.ylabel("Frequency"   , size=14) #, color='red');
 	# plt.title ("Reduction % plot", size=16, color='red');
 
-	# plt.show()
+	plt.show()
