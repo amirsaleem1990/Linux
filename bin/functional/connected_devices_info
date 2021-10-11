@@ -1,32 +1,34 @@
 #!/bin/bash
-echo "
-***************************************************************************
-* UNSTABLE                                                                *
-* This script will print all computer IPS and their MAC addresses in LAN  *
-***************************************************************************
-"
-#sudo arp-scan -l --interface=wlp3s0
-#sudo arp-scan --localnet
-num=$@
+sudo arp-scan --interface=wlp3s0 --localnet
+####################################################################################
+# echo "
+# ***************************************************************************
+# * UNSTABLE                                                                *
+# * This script will print all computer IPS and their MAC addresses in LAN  *
+# ***************************************************************************
+# "
+# #sudo arp-scan -l --interface=wlp3s0
+# #sudo arp-scan --localnet
+# num=$@
 
-# if $num is not supplied by user then the $num is 10
-if [[ $num == "" ]] ; then
-	num=10
-fi
+# # if $num is not supplied by user then the $num is 10
+# if [[ $num == "" ]] ; then
+# 	num=10
+# fi
 
-for i in `seq $num`; do 
-	sudo arp-scan --localnet 2>/dev/null | sed 's/\t/\ /g' | cut -c -33 | cut -d " " -f1,2 >> .am.hide
-	echo -n "$i | " ; 
-	sleep 1
-done
+# for i in `seq $num`; do 
+# 	sudo arp-scan --localnet 2>/dev/null | sed 's/\t/\ /g' | cut -c -33 | cut -d " " -f1,2 >> .am.hide
+# 	echo -n "$i | " ; 
+# 	sleep 1
+# done
 
-echo ""
-cat .am.hide | grep 192.168 | sed 's/\ /\t\t/g' | sort -u | sort -k1 -n > .amFINAL.hide
-cat .amFINAL.hide
-echo "QTY: `wc -l .amFINAL.hide`" | sed 's/.amFINAL.hide//g'
+# echo ""
+# cat .am.hide | grep 192.168 | sed 's/\ /\t\t/g' | sort -u | sort -k1 -n > .amFINAL.hide
+# cat .amFINAL.hide
+# echo "QTY: `wc -l .amFINAL.hide`" | sed 's/.amFINAL.hide//g'
 
 
-yes | DEL -rf .am.hide .amFINAL.hide
+# yes | DEL -rf .am.hide .amFINAL.hide
 #####################################################################################
 # OLD
 # IFS=$'\n'
