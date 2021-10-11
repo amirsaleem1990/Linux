@@ -1,95 +1,96 @@
 #!/usr/bin/ipython3
-from termcolor import colored
-import os
-import pprint
-import pandas as pd
-pd.set_option('max_colwidth', 100)
-import sys
-import warnings
-warnings.filterwarnings("ignore")
+print("\n\nDeprecated\nUse 'rdfind' instead\n")
+# from termcolor import colored
+# import os
+# import pprint
+# import pandas as pd
+# pd.set_option('max_colwidth', 100)
+# import sys
+# import warnings
+# warnings.filterwarnings("ignore")
 
 
-size_limit = input("Enter file size limit (in MB), or leave it for default (0): ")
-if size_limit == "":
-	size_limit = 0
-else:
-	size_limit = int(size_limit.strip())
-# Size_MB
-
-
-
-mode_ = int(input("Enter your mode:\n1-only SAME SIZE\n2-only Diffrent SIZE\n3-All\n\t:"))
-mode_2 = int(input("Are you interested in Hidden files?\n1-yes\n2-No\n"))
-os.system('find . -type f -name "*" > files-with-complete-path.txt')
-with open("files-with-complete-path.txt", "r") as file:
-	b = file.read().splitlines()
+# size_limit = input("Enter file size limit (in MB), or leave it for default (0): ")
+# if size_limit == "":
+# 	size_limit = 0
+# else:
+# 	size_limit = int(size_limit.strip())
+# # Size_MB
 
 
 
+# mode_ = int(input("Enter your mode:\n1-only SAME SIZE\n2-only Diffrent SIZE\n3-All\n\t:"))
+# mode_2 = int(input("Are you interested in Hidden files?\n1-yes\n2-No\n"))
+# os.system('find . -type f -name "*" > files-with-complete-path.txt')
+# with open("files-with-complete-path.txt", "r") as file:
+# 	b = file.read().splitlines()
 
-os.remove("files-with-complete-path.txt")
 
-a = [i.strip().replace("_", "").replace("-", "").replace(" ", "").replace("۔", "").strip() for i in b]
-files = []
-for i in a:
-	if i.startswith("./"):	   
-		i = i[2:]				   
-	files.append(i[i.rfind("/")+1:])
 
-def func_():
-	# pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
-	print(duplicates[["Actual_File", "Actual_path", "Size_MB"]].to_string())
-	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nto open a particuler indexed file add <-> to the end of index:\n").strip()
-	if not index:
-		return None
-	if index.endswith("-"):
-		index = index.strip("-")
-		command = "gopen " + duplicates.iloc[int(index)-1]["Actual_path"][2:].replace(" ", "\ ").\
-			replace("&", "\&").replace(":", "\:")
-		os.popen(command)
+
+# os.remove("files-with-complete-path.txt")
+
+# a = [i.strip().replace("_", "").replace("-", "").replace(" ", "").replace("۔", "").strip() for i in b]
+# files = []
+# for i in a:
+# 	if i.startswith("./"):	   
+# 		i = i[2:]				   
+# 	files.append(i[i.rfind("/")+1:])
+
+# def func_():
+# 	# pprint.pprint(duplicates[["Actual_File", "Actual_path", "Size_MB"]])
+# 	print(duplicates[["Actual_File", "Actual_path", "Size_MB"]].to_string())
+# 	index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nto open a particuler indexed file add <-> to the end of index:\n").strip()
+# 	if not index:
+# 		return None
+# 	if index.endswith("-"):
+# 		index = index.strip("-")
+# 		command = "gopen " + duplicates.iloc[int(index)-1]["Actual_path"][2:].replace(" ", "\ ").\
+# 			replace("&", "\&").replace(":", "\:")
+# 		os.popen(command)
 		
-		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <-> to the end of index:\n").strip()
+# 		index = input("Enter index number to remove a file \nor type multiple index sapared by coma <,>\nor type 0 for skip this step\nor add <-> to the end of index:\n").strip()
 
-	if  ":" in index:
-		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
-		for i in list(duplicates.iloc[indexes]["Actual_path"]):
-			# pass
-			os.remove(i)
+# 	if  ":" in index:
+# 		indexes = [i-1 for i in range(int(index.split(":")[0]), int(index.split(":")[1])+1)]
+# 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
+# 			# pass
+# 			os.remove(i)
 
-	elif not "." in index:
-		index = int(index)
-		if index != 0:
-			# pass
-			os.remove(duplicates.iloc[index-1]["Actual_path"])
+# 	elif not "." in index:
+# 		index = int(index)
+# 		if index != 0:
+# 			# pass
+# 			os.remove(duplicates.iloc[index-1]["Actual_path"])
 
-	else:
-		indexes = [int(i.strip())-1 for i in index.split(".")]
-		for i in list(duplicates.iloc[indexes]["Actual_path"]):
-			# pass
-			os.remove(i)	
+# 	else:
+# 		indexes = [int(i.strip())-1 for i in index.split(".")]
+# 		for i in list(duplicates.iloc[indexes]["Actual_path"]):
+# 			# pass
+# 			os.remove(i)	
 
-adf = pd.DataFrame({"Actual_File" : [i.split("/")[-1] for i in b], 
-	"Formatted_File" : files, 
-	"Actual_path" : b, 
-	"Formatted_path" : a})
-print(f"\nThere are {adf.Formatted_File.duplicated().sum()} files names duplicated\n")
-for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted_File"))["Formatted_File"].unique():
-	if (mode_2 == 2) and unique_value.startswith("."):
-		continue 
-	duplicates = adf[adf.Formatted_File == unique_value]
-	duplicates["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicates.Actual_path]
-	duplicates = duplicates.sort_values("Size_MB")
-	if not (duplicates.Size_MB > size_limit).any():
-		continue
-	duplicates.reset_index(inplace=True)
-	duplicates.drop("index", axis=1, inplace=True)
-	duplicates.index += 1
-	if duplicates["Size_MB"].nunique() == 1:
-		if mode_ in [1,3]:
-			print("*****************", colored('SAME SIZE', 'red'), "******************")
-			func_()
-	else:
-		if mode_ in [2,3]:
-			print("****************", colored('Diffrent SIZE', 'red'), "****************")
-			func_()
-	print("\n\n")
+# adf = pd.DataFrame({"Actual_File" : [i.split("/")[-1] for i in b], 
+# 	"Formatted_File" : files, 
+# 	"Actual_path" : b, 
+# 	"Formatted_path" : a})
+# print(f"\nThere are {adf.Formatted_File.duplicated().sum()} files names duplicated\n")
+# for unique_value in (adf[adf.Formatted_File.duplicated()].sort_values("Formatted_File"))["Formatted_File"].unique():
+# 	if (mode_2 == 2) and unique_value.startswith("."):
+# 		continue 
+# 	duplicates = adf[adf.Formatted_File == unique_value]
+# 	duplicates["Size_MB"] = [os.stat(i).st_size/1024/1024 for i in duplicates.Actual_path]
+# 	duplicates = duplicates.sort_values("Size_MB")
+# 	if not (duplicates.Size_MB > size_limit).any():
+# 		continue
+# 	duplicates.reset_index(inplace=True)
+# 	duplicates.drop("index", axis=1, inplace=True)
+# 	duplicates.index += 1
+# 	if duplicates["Size_MB"].nunique() == 1:
+# 		if mode_ in [1,3]:
+# 			print("*****************", colored('SAME SIZE', 'red'), "******************")
+# 			func_()
+# 	else:
+# 		if mode_ in [2,3]:
+# 			print("****************", colored('Diffrent SIZE', 'red'), "****************")
+# 			func_()
+# 	print("\n\n")
