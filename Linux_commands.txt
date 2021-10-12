@@ -1670,4 +1670,4 @@ use xargs to copy a file to multiple directories at once; in this example we are
 delete all files within a directory except one or few files with a given extension................... find . -type f -not -name '*gz' -print0 | xargs -0 -I {} rm -v {}
 
 
-
+check comma count in each line of the file ................. awk -F ',' 'NF{print NF-1}' train.csv  | sort | uniq -c
