@@ -1671,3 +1671,14 @@ delete all files within a directory except one or few files with a given extensi
 
 
 check comma count in each line of the file ................. awk -F ',' 'NF{print NF-1}' train.csv  | sort | uniq -c
+
+If you’ve a collection of files with “.html” extension and you want to rename all of them with “.php” extension, you can type the command below. ...................  rename 's/\.html$/\.php/' *.html
+
+
+
+rdiff-backup is a powerful local/remote incremental backup script written in Python. It works on any POSIX operating system such as Linux, Mac OS X. Note that for remote backups, you must install the same version of rdiff-backup on both the local and remote machines. Below is an example of a local backup command:......................  sudo rdiff-backup /etc /media/tecmint/Backup/server_etc.backup
+
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+
+
