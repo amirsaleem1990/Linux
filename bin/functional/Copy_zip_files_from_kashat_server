@@ -6,7 +6,7 @@ if [[ -z "$1" ]] ; then
 fi
 
 echo -e "\n\nConnecting to VPN.........."
-VPN
+(yes | naclient login -user  $Kashat_user -password $kashat_password -profile "$kashat_profile" >/dev/null 2>&1)
 
 echo -e "\n\nCollecting zip files from the server........."
 ssh 192.168.253.2 get_raw_files "$@"
