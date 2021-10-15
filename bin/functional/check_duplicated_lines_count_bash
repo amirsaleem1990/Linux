@@ -1,0 +1,6 @@
+if [[ -z $1 ]]; then
+	echo -e "No file passed\nAborting ....... \n"
+	exit
+fi
+duplicated_lines="|$(sort  "$1" | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | cut -d, -f2-10 | awk '{$1=$1};1' | paste -sd '\|' | sed 's/|//')"
+grep -E  --color=auto "$duplicated_lines"  "$1"
