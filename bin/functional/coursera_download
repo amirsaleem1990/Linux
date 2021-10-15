@@ -227,7 +227,6 @@ def func(course_name, browser=None):
 		return None
 
 
-import webbrowser
 import traceback
 import sys
 import json
@@ -235,10 +234,7 @@ import pickle
 from selenium import webdriver
 import time
 from bs4 import BeautifulSoup
-import requests
 import re
-import numpy as np
-from selenium.webdriver.firefox.options import Options
 import os
 import sys
 
@@ -260,7 +256,9 @@ if not course_name_received:
 # email_address = "amirsaleem1990@hotmail.com"
 # pas = list(os.popen("echo 1 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1 | sed 's/t./traders/'"))[0].strip()
 email_address = "hamzaamirr2014@gmail.com"
-pas = list(os.popen("echo 2 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1"))[0].strip()
+ipython3_path = list(os.popen("which ipython3"))[0].strip()
+command = f"echo 2 | {ipython3_path} /home/amir/github/*/*/*in2.py  2 coursera | tail -1"
+pas = list(os.popen(command))[0].strip()
 
 login_url = "https://www.coursera.org/?authMode=login"
 
