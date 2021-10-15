@@ -6,7 +6,6 @@ Usage:
 	type_casting.Type_casting(id(df)) # call it only, this function not return anything, but your <df> is now type casted.
 """)
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import ctypes
 def Type_casting(df_id):
