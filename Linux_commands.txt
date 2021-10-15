@@ -1682,3 +1682,6 @@ rdiff-backup is a powerful local/remote incremental backup script written in Pyt
 ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 
 
+trim leading and trailing whitespace from each line of some output .................. awk '{$1=$1;print}' ........... awk '{$1=$1};1'
+
+join multiple lines of file names into one with custom delimiter ............ ls -1 | paste -sd "," -
