@@ -14,7 +14,7 @@ if os.path.exists(error_file):
 	os.remove(error_file)
 
 low_quality = False
-if input("Are you need to download low quality videos? [y|n]: ").strip().lower() == "y":
+if input("Are you need to download low quality videos? [yes|no]: ").strip().lower() == "yes":
 	low_quality = True
 
 
@@ -33,8 +33,16 @@ def download(url):
 		print("---------------------------------------------- Error END\n\n")
 		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
 
+part_files_exists = False
 try:
 	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
+	part_files = [i for i in os.listdir() if i.endswith(".part")]
+	if part_files: 
+		part_files_str = ' '.join(part_files)
+		x = [i for i in arr if i.split("/")[-1] in part_files_str]
+		if x:
+			arr = x
+			part_files_exists = True
 except:
 	try:
 		file_name = sys.argv[1]
@@ -44,18 +52,26 @@ except:
 		file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
 	arr = [i for i in set(open(file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
-try:
-	downloaded = open("downloaded.txt", "r").read().splitlines()
-	arr = [i for i in arr if not i in downloaded]
-except:
-	pass
-	
-p = multiprocessing.dummy.Pool()
+def func():
+	try:
+		downloaded = open("downloaded.txt", "r").read().splitlines()
+		arr = [i for i in arr if not i in downloaded]
+	except:
+		pass		
+	p = multiprocessing.dummy.Pool()
+	return p
+p = func()
 try:
 	p.map(download, arr)
 except:
 	pass
-
+if part_files_exists:
+	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]	
+	p = func()
+	try:
+		p.map(download, arr)
+	except:
+		pass
 if os.path.exists(error_file):
 	errors = open(error_file, 'r').read()
 	print("\n\n\n*********** Error URLs ***********\n")
