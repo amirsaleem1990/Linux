@@ -978,7 +978,7 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 
 # convert epoch seconds to date time ............ date -d  @1612762179
 
-# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7 ........ bc <<< "scale=4;  2/66"
+# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7 ........ bc <<< "scale=4;  2/66" ............. if you need long float output just use <-l> option, eg: bc -l <<< 4/7 #.57142857142857142857 
 # find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
 # get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
 
@@ -1685,3 +1685,5 @@ ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 trim leading and trailing whitespace from each line of some output .................. awk '{$1=$1;print}' ........... awk '{$1=$1};1'
 
 join multiple lines of file names into one with custom delimiter ............ ls -1 | paste -sd "," -
+
+do nothing when I close my laptop lid ................... 1- open /etc/systemd/logind.conf; If HandleLidSwitch is not set to ignore then change it ; Make sure it's not commented out; Restart the systemd daemon (be aware that this will log you off) sudo service systemd-logind restart
