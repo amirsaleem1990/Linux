@@ -6,18 +6,6 @@ import os
 import traceback
 import sys
 
-error_file = "/home/amir/.downloading_errors.txt"
-
-before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
-
-if os.path.exists(error_file):
-	os.remove(error_file)
-
-low_quality = False
-if input("Are you need to download low quality videos? [yes|no]: ").strip().lower() == "yes":
-	low_quality = True
-
-
 def download(url):
 	try:
 		if low_quality:
@@ -32,6 +20,37 @@ def download(url):
 		print(e_)
 		print("---------------------------------------------- Error END\n\n")
 		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
+
+def func():
+	try:
+		downloaded = open("downloaded.txt", "r").read().splitlines()
+		arr = [i for i in arr if not i in downloaded]
+	except:
+		pass		
+	p = multiprocessing.dummy.Pool()
+	return p
+
+def func2():
+	arr_exculded = []
+	for i in exclude.split("|"):
+		for url in arr:
+			if not i.lower().strip() in url:
+				arr_exculded.append(url)
+	return arr_exculded
+
+error_file = "/home/amir/.downloading_errors.txt"
+exclude = input("Words to exclude (if multiple separate them by '|')  ")
+
+before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+
+if os.path.exists(error_file):
+	os.remove(error_file)
+
+low_quality = False
+ans = input("Are you need to download low quality videos? [yes|no]: ").strip().lower()
+if  ans == "yes":
+	if input("Are you sure? [yes|no]").lower().strip() == "yes":
+		low_quality = True
 
 part_files_exists = False
 try:
@@ -52,26 +71,25 @@ except:
 		file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
 	arr = [i for i in set(open(file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
-def func():
-	try:
-		downloaded = open("downloaded.txt", "r").read().splitlines()
-		arr = [i for i in arr if not i in downloaded]
-	except:
-		pass		
-	p = multiprocessing.dummy.Pool()
-	return p
+
 p = func()
 try:
+	if exclude:
+		arr = func2()
 	p.map(download, arr)
-except:
-	pass
+except KeyboardInterrupt:
+	sys.exit(1)
+
 if part_files_exists:
 	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]	
+	if exclude:
+		arr = func2()
 	p = func()
 	try:
 		p.map(download, arr)
-	except:
-		pass
+	except KeyboardInterrupt:
+		sys.exit(1)
+
 if os.path.exists(error_file):
 	errors = open(error_file, 'r').read()
 	print("\n\n\n*********** Error URLs ***********\n")
