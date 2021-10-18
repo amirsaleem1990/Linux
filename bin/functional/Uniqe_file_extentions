@@ -68,7 +68,7 @@ if [[ $parameter -eq 1 ]] ; then
 		for file in `ls *.$extention`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > ~/.xm1
-		f=$( echo `cat ~/.xm1` / 1024 | bc )
+		f=$( echo `cat ~/.xm1` | bc )
 		echo "$f,`ls *.$extention | wc -l`" >> /home/amir/.xm2
 	done
 else
@@ -96,13 +96,19 @@ if [[ $no_extention -eq $files_count ]]; then
 	exit
 fi
 python3 <<< '
+# from tabulate import tabulate
+from IPython.display import display
 from pandas import read_csv
-df =read_csv("/home/amir/.xm2", names=["Extention", "MB", "Qty"])
-df.assign(GB=df.MB/1024).iloc[:, [0,1,3,2]].round(3).to_csv("/home/amir/.xm2", index=False, header=False)
+df =read_csv("/home/amir/.xm2", names=["Extention", "Size", "Qty"])
+df.Size = df.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB") 
+# df.to_csv("/home/amir/.xm2", index=False, header=False)
+# print(df.to_string())
+# print(tabulate(df, headers = "keys", tablefmt = "psql"))
+display(df)
 '
 
 # echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /home/amir/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
-echo -e "Extention,MB,GB,Qty.\n---------,--,--,----\n`cat /home/amir/.xm2 | sort -k3 -nr -t, `" | column -t -s,
+# echo -e "Extention,Size,Qty.\n---------,----,----\n`cat /home/amir/.xm2`" | column -t -s,
 # cat /home/amir/.xm2 | column -t -s,
 
 
