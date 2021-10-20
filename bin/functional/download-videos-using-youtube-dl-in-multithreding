@@ -6,6 +6,18 @@ import os
 import traceback
 import sys
 
+exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+if os.path.exists(exclude_file):
+	if input("Are you need to exclude last stuff [yes|no]  (which is:\n" + open(exclude_file, 'r').read().strip()).lower().strip() == 'yes':
+		exclude = open(exclude_file, 'r').read().strip()
+	else:
+		exclude = input("Words to exclude (if multiple separate them by '|')  ")
+		open(exclude_file, 'w').write(exclude)
+else:
+	exclude = input("Words to exclude (if multiple separate them by '|')  ")
+	open(exclude_file, 'w').write(exclude)
+
+
 def download(url):
 	try:
 		if low_quality:
@@ -38,8 +50,16 @@ def func2():
 				arr_exculded.append(url)
 	return arr_exculded
 
+def Exit():
+	print(f"\n\nErrors saved as {error_file}\n\n")
+	after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+	downloaded_size= after - before
+	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
+	sys.exit(1)
+
+
 error_file = "/home/amir/.downloading_errors.txt"
-exclude = input("Words to exclude (if multiple separate them by '|')  ")
+
 
 before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
 
@@ -78,7 +98,8 @@ try:
 		arr = func2()
 	p.map(download, arr)
 except KeyboardInterrupt:
-	sys.exit(1)
+	Exit()
+	# sys.exit(1)
 
 if part_files_exists:
 	arr = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]	
@@ -88,14 +109,12 @@ if part_files_exists:
 	try:
 		p.map(download, arr)
 	except KeyboardInterrupt:
-		sys.exit(1)
+		Exit()
+		# sys.exit(1)
 
 if os.path.exists(error_file):
 	errors = open(error_file, 'r').read()
 	print("\n\n\n*********** Error URLs ***********\n")
 	print(errors)
 
-print(f"\n\nErrors saved as {error_file}\n\n")
-after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
-downloaded_size= after - before
-print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
+
