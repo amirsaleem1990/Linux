@@ -34,60 +34,34 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+echo ""
 if [[ -z $sleep_time ]]; then
-	echo ">>> 'sleep_time' argument not passed, so default (60) is set.\n"
+	echo -e ">>> 'sleep_time' argument not passed, so default (60) is set.\n"
 	sleep_time=60
 fi
 
 if [[ -z $extention ]]; then
-	echo ">>> 'extention' argument not passed, so default 'mp4' is set.\n"
+	echo -e ">>> 'extention' argument not passed, so default 'mp4' is set.\n"
 	extention=mp4
 fi
-
-# sleep_time=$1
-# if [[ $sleep_time == "" ]]; then
-# 	sleep_time=60
-# 	echo "You didn't give sleep_time as an argument, the defulat is 60 seconds"
-# fi
-
-# read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
-# if [[ $extention = "" ]]; then
-# 	extention=mp4 
-# fi
 
 SUM=`du -shL -BM | sed 's/M..//g'`
 
 IFS=$'\n'
-before_files=`ls | grep -v .part | grep -v .ytdl | wc -l`
+before_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
 
 c=0
 while :; do
 	current=`du -shL -BM | sed 's/M..//g'`
 	if [[ $? != 0 ]]; then
 		sleep 1s
-		continue
+		# continue
 	fi
 	incremental=$(( $current - $SUM ))
 	SUM=$current
-	# m=0
-	# for i in `ls`; do
-	# 	[[ ${before_files[*]} =~ $i ]] && m=yes || m=no
-	# 	if [[ $m == "no" ]]; then
-	# 		let "m++"
-	# 	fi
-	# done
-	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
-	# new_filesQty=$(for i in `ls`; do 
-		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
-	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
-	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
-	# if [[ $c == 0 ]] ; then
+	after_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
 	echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty" > $file_
-	# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ls *.part | wc -l`" >> $file_
-	echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ps aux | grep youtube-dl | grep python3 | wc -l`" >> $file_
-	# else
-		# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > $file_
-	# fi
+	echo "`date +%H:%M`,$incremental,$SUM,`bc <<< $after_files-$before_files`,$after_files, `ls *.part | wc -l`" >> $file_
 	let "c++"
 	if [[ $c == 1 ]]; then
 		cat $file_ | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty"
