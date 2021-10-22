@@ -6,9 +6,22 @@ import requests
 from bs4 import BeautifulSoup
 _file_name_ = "/home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt"
 s = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=1").text, 'lxml')
-n = max([int(i.text.strip("episode ")) for i in s.select("button", {"class" : "btn btn-info"}) if i.text.startswith("episode") ])
+# n = max([int(i.text.strip("episode ")) for i in s.select("button", {"class" : "btn btn-info"}) if i.text.startswith("episode") ])
+n = 0
+for i in s.select("button", {"class" : "btn btn-info"}):
+	i = i.text.strip().split()
+	if i and  i[-1].isnumeric():
+		i = int(i[-1])
+		if i > n:
+			n = i
 last_vid_num = int(open(_file_name_, 'r').read().strip())
 last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={last_vid_num}"
+
+if last_vid_num+1 < n:	
+	inp_ = input(f"Last video downloaded is {last_vid_num}, and now the episode #{n} is ready to download, are you sure to download #{n} before the missing one? [y|n]   ")
+	if inp_.lower().strip() != 'y':
+		import sys
+		sys.exit()
 
 print("Last video page:", last_vid)
 print("""\n\n#############################################################
