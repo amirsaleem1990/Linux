@@ -514,7 +514,7 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 # list only particuler extention files ...................... ls *.{png,txt}
 
 
-# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png
+# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png [Old version, NO LONGER WORK] .............. pdfunite $(ls file_{1,2,3,4}.pdf)  file_COMPLETE.pdf 
 
 # remove selected files .................... rm {17,18,19,20,21}*.mp4
 
@@ -1687,3 +1687,9 @@ trim leading and trailing whitespace from each line of some output .............
 join multiple lines of file names into one with custom delimiter ............ ls -1 | paste -sd "," -
 
 do nothing when I close my laptop lid ................... 1- open /etc/systemd/logind.conf; If HandleLidSwitch is not set to ignore then change it ; Make sure it's not commented out; Restart the systemd daemon (be aware that this will log you off) sudo service systemd-logind restart
+
+round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.3f\n", $1) }'
+
+# skip / exclude first n 8 lines of the file .............. sed 1,8d file.txt
+
+# indent the output .......... command/script | sed 's/^/     /'
