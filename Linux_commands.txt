@@ -1695,3 +1695,8 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 # indent the output .......... command/script | sed 's/^/     /'
 
 # Run A Command For A Specific Time ...................... timeout <time-limit-interval> <command> ............. timeout 10s tail -f /var/log/pacman.log
+
+# 'source .bashrc' is equal to '. .bashrc' ............... 'source ~/.bash_profile' is equal to '. ~/.bash_profile'
+
+# Remove lines containing non-numeric entries  .......................... sed  '/[^[:digit:].+-]/d' file
+
