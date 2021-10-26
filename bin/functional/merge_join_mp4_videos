@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+FS=$'\n'
+x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+new_file_name=$(basename $(pwd)-COMPLETE_WEEK_IN_ONE_FILE.mkv)
+mkvmerge -o $new_file_name $x
