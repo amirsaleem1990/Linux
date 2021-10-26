@@ -1700,3 +1700,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 
 # Remove lines containing non-numeric entries  .......................... sed  '/[^[:digit:].+-]/d' file
 
+# join/merge multiple mp4/videos into one .......... mkvmerge -o outfile.mkv infile_01.mp4 \+ infile_02.mp4 \+ infile_03.mp4
+
