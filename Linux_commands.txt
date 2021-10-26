@@ -1693,3 +1693,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 # skip / exclude first n 8 lines of the file .............. sed 1,8d file.txt
 
 # indent the output .......... command/script | sed 's/^/     /'
+
+# Run A Command For A Specific Time ...................... timeout <time-limit-interval> <command> ............. timeout 10s tail -f /var/log/pacman.log
