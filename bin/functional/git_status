@@ -32,14 +32,15 @@ if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
 
-not_to_commit_repos = ["lfd-projects"]
+not_to_commit_repos = ["lfd-projects", 'Fantasy_cricket_app_Django']
 if not_to_commit_repos:
 	print("************************************")
 	for i in not_to_commit_repos:
 		print(f"<{i}> repository excluded from this opereation\n")
 
 repos = os.listdir() # list of all local repositories
-repos = [repo for repo in repos if not repo in not_to_commit_repos and not repo.startswith(".")]
+repos = [repo for repo in repos if (not repo in not_to_commit_repos) and not (repo.startswith(".")) and (os.path.isdir(repo))]
+
 # r = ["Your branch is up to date with 'origin/master'.\n", '\n', 'Changes not staged for commit:\n', '  (use "git add <file>..." to update what will be committed)\n', '  (use "git checkout -- <file>..." to discard changes in working directory)\n', 'no changes added to commit (use "git add" and/or "git commit -a")\n']
 # d_ = {"To be pushed" : [],
 	   # "To be commit" : []}
