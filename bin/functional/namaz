@@ -40,7 +40,7 @@ def fun_(x):
 
 
 in_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz.png'
-out_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz_2.png'
+out_file = f'/home/{getpass.getuser()}/.namaz_2.png'
 img = Image.open(in_file)
 draw = ImageDraw.Draw(img)
 font = ImageFont.truetype('FreeMono.ttf', 40)
