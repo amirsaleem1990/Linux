@@ -46,6 +46,16 @@ def get_duration(vid_url):
 
 if n > last_vid_num:
 	q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Kurulus-Osman/1.php?id="+str(n)).text, 'lxml')
+	lst = []
+	for i in q.select("a"):
+	    try:
+	        if i['href'].startswith("https://ardirilisertugrul.net/Kurulus-Osman/Episode/"):
+	            lst.append(i['href'])
+	    except:
+	        pass
+	lst = list(set(lst))
+	latest_video = sorted(lst, key=lambda x:x.split("-")[-1])[-1]
+	q = BeautifulSoup(requests.get(latest_video).text, 'lxml')
 	for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
 		try:
 			l = i['href']
