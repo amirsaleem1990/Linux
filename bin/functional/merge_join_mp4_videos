@@ -3,3 +3,18 @@ FS=$'\n'
 x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 new_file_name=$(basename $(pwd)-COMPLETE_WEEK_IN_ONE_FILE.mkv)
 mkvmerge -o $new_file_name $x
+
+# test -f output.mp4
+# if [[ $? -ne 0 ]]; then
+# 	echo -e "\n\nThe file 'output.mp4' already exists, please proveide a name: "
+# 	read new_file_name
+# else
+# 	new_file_name=output.mp4
+# fi
+
+# melt $(ls *.mp4 | xargs) -consumer avformat:$new_file_name acodec=libmp3lame vcodec=libx264
+# if [[ $? -q 0 ]]; then
+# 	echo -e "\n\nThe merged file is saved as 'output.mp4' successfully\n\n"
+# else
+# 	echo -e "\n\nAn Error occured\n\n"
+# fi
