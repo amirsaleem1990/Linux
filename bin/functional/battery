@@ -16,3 +16,25 @@ ${RED}EnergyRate :${normal} Amount of energy being drained from the source, meas
 ${RED}TimeToEmpty:${normal} Number of seconds until the power source is considered empty.
 ${RED}TimeToFull :${normal} Number of seconds until the power source is considered full.
 "
+
+# echo key,value > /home/amir/.battery_1
+# upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u | sed 's/:\ \{1,\}/,/g' >> /home/amir/.battery_1
+# echo -e "\n\n"
+# python3 <<< '
+# import pandas as pd
+# print(
+# 	(
+# 	"\n"
+# 	.join(pd.read_csv("/home/amir/.battery_1").merge(pd.read_csv("/home/amir/github/Amir-personal/.battery_2"), on="key", how="left")
+# 		.apply(lambda x:":".join(x.dropna().astype(str).to_list()), axis=1)
+# 		.to_list()
+# 		)
+# 	)
+# 	)
+# ' | column -t -s:
+
+
+# echo -e "\n\n--------------------------\n\n"
+# upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
+
+# echo -e "\n\n"
