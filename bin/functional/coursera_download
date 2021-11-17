@@ -95,7 +95,7 @@ def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
 
 		browser.get(url)
 		# time.sleep(10)
-		time.sleep(30)
+		input("Press any key after 'audit'...........\n")
 
 		if (starting_week != 1) and (browser.current_url.split("/")[-1] == '1'):
 				break
@@ -189,7 +189,6 @@ def func(course_name, browser=None):
 			browser = LOGIN()
 			logged_in = True
 			input("\nPress any key after captcha..........\n")
-
 	if vids_download_urls_is_provided:
 		vids_download_urls = pickle.load(open(f"{base_dir}/vids_download_urls.pkl", 'rb'))
 		vids = pickle.load(open(f"{base_dir}/vids.pkl", 'rb'))
