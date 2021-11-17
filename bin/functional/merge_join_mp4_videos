@@ -1,20 +1,63 @@
 #!/usr/bin/bash
+echo -e "\n1-Current mp4 files\n2-Recursive mp4 files"
+read option_
 FS=$'\n'
-x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
-new_file_name=$(basename $(pwd)-COMPLETE_WEEK_IN_ONE_FILE.mkv)
-mkvmerge -o $new_file_name $x
+if [[ $option_ -eq 1 ]]; then
+	x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+else
+	if [[ $option_ -eq 2 ]]; then
+		x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+	else
+		echo -e "!! WRONG INPUT, Your input should be 1 or 2\nAborting.....\n"
+		exit
+	fi
+fi
+output_file_name=$(basename $(pwd)-COMPLETE_WEEK_IN_ONE_FILE.mkv)
+mkvmerge -o $output_file_name $x >/dev/null 2>&1
 
-# test -f output.mp4
-# if [[ $? -ne 0 ]]; then
-# 	echo -e "\n\nThe file 'output.mp4' already exists, please proveide a name: "
-# 	read new_file_name
-# else
-# 	new_file_name=output.mp4
-# fi
+if [[ $? -eq 0 ]] ; then
 
-# melt $(ls *.mp4 | xargs) -consumer avformat:$new_file_name acodec=libmp3lame vcodec=libx264
-# if [[ $? -q 0 ]]; then
-# 	echo -e "\n\nThe merged file is saved as 'output.mp4' successfully\n\n"
-# else
-# 	echo -e "\n\nAn Error occured\n\n"
-# fi
+	echo -e "\nBelow files merged into $output_file_name\n\n"
+
+	IFS=\ +
+
+	for i in $x ; do 
+		if [[ $i != $output_file_name ]] ; then
+			echo $i
+		fi
+	done
+
+else
+
+	test -f output.mp4
+
+	if [[ $? -eq 0 ]]; then
+		echo -e "\n\nThe file 'output.mp4' already exists, please proveide a name: "
+		read output_file_name
+	else
+		output_file_name=output.mp4
+	fi
+
+	if [[ $option_ -eq 1 ]]; then
+		x=$(ls *.mp4 | xargs)
+	else
+		x=$(find . -name "*.mp4" | sort -n | sed 's/\.\///g' | xargs)
+	fi
+
+	melt $x -consumer avformat:$output_file_name acodec=libmp3lame vcodec=libx264
+
+	if [[ $? -eq 0 ]]; then
+
+		echo -e "\nBelow files merged into $output_file_name\n\n"
+
+		IFS=\ +
+
+		for i in $x ; do 
+			if [[ $i != $output_file_name ]] ; then
+				echo $i
+			fi
+		done
+	else
+		echo -e "\n\nAn Error occured\n\n"
+	fi
+fi
