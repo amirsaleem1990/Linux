@@ -48,7 +48,9 @@ def download(vids, vids_download_urls, course_name):
 
 def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
 	for k,v in vids.items():
+		print(f"...................................... {k} ......................................")
 		for video in v:
+			print(">>>>>>>>>> Fatching video url of " + video)
 			browser.get(video)
 			time.sleep(30)
 			s = BeautifulSoup(browser.page_source, "lxml")
@@ -77,7 +79,7 @@ def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
 				print(f"No download link for the video : {video}")
 
 	if len(vids_download_urls):
-		print(f"\n\nDVides downlonload links saved as {base_dir}/vids_download_urls.pkl")
+		print(f"\n\nVideos downlonload links saved as {base_dir}/vids_download_urls.pkl")
 		pickle.dump(vids_download_urls, open(f"{base_dir}/vids_download_urls.pkl", 'wb'))
 		print(json.dumps(vids_download_urls, indent=4))
 		print()
@@ -94,8 +96,8 @@ def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
 		url = URL + str(starting_week)
 
 		browser.get(url)
-		# time.sleep(10)
-		input("Press any key after 'audit'...........\n")
+
+		time.sleep(30)
 
 		if (starting_week != 1) and (browser.current_url.split("/")[-1] == '1'):
 				break
@@ -207,6 +209,7 @@ def func(course_name, browser=None):
 			browser       = browser,
 			base_dir      = base_dir
 			)
+		input("Press any key after 'audit'...........\n")
 		vids_download_urls, browser = fetch_video_urls(
 			vids               = pickle.load(open(f"{base_dir}/vids.pkl", 'rb')),
 			browser            = browser,
