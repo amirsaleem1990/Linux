@@ -10,7 +10,7 @@ get_size_(){
 get_duration(){
 	echo -n `ffmpeg -i $1  2>&1 | grep Duration | cut -d " " -f 4 | sed s/,// `
 }
-
+original_IFS=$IFS
 my_array=(.mp4 .mkv .webm .mov .mp4.part .mkv.part .webm.part .mov.part)
 
 # echo -e 'Sory by: \n1- for by size\n2- by duration\n\t'
@@ -38,12 +38,12 @@ func_(){
 if [[ $@ == "" ]]; then
 	count=`ls | grep ".mp4$\|.mkv$\|.webm$\|.mov$\|.mp4.part$\|.mkv.part$\|.webm.part$\|.mov.part$" | wc -l`
 	if [[ $count -gt 0 ]] ; then 
-		IFS=$'\n'
 		for i in `ls | grep ".mp4$\|.mkv$\|.webm$\|.mov$\|.mp4.part$\|.mkv.part$\|.webm.part$\|.mov.part$"`; do
 			func_ $i
 		done | sort -h
 	fi
 else
+	IFS=$'\n'
 	for i in "$@"; do
 		func_ $i
 	done | sort -h 
