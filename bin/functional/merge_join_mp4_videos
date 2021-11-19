@@ -1,12 +1,44 @@
 #!/usr/bin/bash
+original_IFS=$IFS
 echo -e "\n1-Current mp4 files\n2-Recursive mp4 files"
 read option_
+
+files_func(){
+	python3 <<< '
+import pandas as pd
+df = pd.DataFrame(pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list(), columns=["week", "video"])
+df["week_numebr"] = (df.week.str.split("-").str[1]).astype(int)
+df["video_numebr"] = (df.video.str.split("-").str[0]).astype(int)
+df = df.sort_values(["week_numebr", "video_numebr"])
+open("/home/amir/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
+'	
+	}
 FS=$'\n'
 if [[ $option_ -eq 1 ]]; then
 	x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 else
 	if [[ $option_ -eq 2 ]]; then
-		x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+		for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
+			echo $i
+		done > /home/amir/.m
+
+		files_func
+		# x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+
+		x=$(cat /home/amir/.m2)
+		
+		IFS=' \+'
+		for i in $x ; do 
+			echo $i
+		done
+		IFS=$original_IFS
+
+		echo -e "\nWe are going to merge above files in mentioned order, Are you agree? [y|n]"
+		read answer_
+		if [[ $answer_ != "y" ]]; then
+			echo -e "\nYou are not agree!\nAborting.........\n"
+			exit 2
+		fi
 	else
 		echo -e "!! WRONG INPUT, Your input should be 1 or 2\nAborting.....\n"
 		exit
@@ -19,13 +51,17 @@ if [[ $? -eq 0 ]] ; then
 
 	echo -e "\nBelow files merged into $output_file_name\n\n"
 
-	IFS=\ +
+	files_func
 
+	x=$(cat /home/amir/.m2)
+	
+	IFS=' \+'
 	for i in $x ; do 
 		if [[ $i != $output_file_name ]] ; then
 			echo $i
 		fi
 	done
+	IFS=$original_IFS
 
 else
 
@@ -50,13 +86,15 @@ else
 
 		echo -e "\nBelow files merged into $output_file_name\n\n"
 
-		IFS=\ +
+		x=$(cat /home/amir/.m2)
 
+		IFS=\ +
 		for i in $x ; do 
 			if [[ $i != $output_file_name ]] ; then
 				echo $i
 			fi
 		done
+		IFS=$original_IFS
 	else
 		echo -e "\n\nAn Error occured\n\n"
 	fi
