@@ -44,9 +44,15 @@ if [[ $@ == "" ]]; then
 	fi
 else
 	IFS=$'\n'
-	for i in "$@"; do
-		func_ $i
-	done | sort -h 
+	if [[ "$@" == "2" ]]; then
+		for i in $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov"); do
+			func_ $i
+		done | sort -h
+	else
+		for i in "$@"; do
+			func_ $i
+		done | sort -h 
+	fi
 fi
 
 
