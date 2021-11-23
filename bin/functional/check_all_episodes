@@ -1,17 +1,5 @@
 #!/usr/bin/bash
-to_be_download=()
-for i in barbaros_next_episode_on_eir_date kurulus_usman_next_episode_on_eir_date alparsalan_next_episode_on_eir_date jalaloddin-mendirman; do
-	eval $i | grep CONGRATULATIONS >/dev/null
-	if [[ $? -eq 0 ]]; then
-		ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
-		to_be_download+=("$ii")
-	fi
-done
-
-if [[ "${#to_be_download[@]}" -eq 0 ]] ; then 
-	exit
-fi
-
+# to_be_download=()
 input_image="/home/amir/.config/autostart/check_all_episodes.png"
 output_image="/home/amir/.check_all_episodes_2.png"
 
@@ -23,14 +11,22 @@ msg="CONGRATULATIONS! Now You can download these episodes"
 
 convert -font helvetica -fill red -pointsize $font_size -draw "text $x_start,$y_start '$msg'" $input_image $output_image
 
+n=0
 
 x_start=500
 font_size=30
 
-for i in "${to_be_download[@]}"; do
-	let "y_start+=100"
-	convert -font helvetica -fill white -pointsize $font_size -draw "text $x_start,$y_start $i" $output_image $output_image
+for i in barbaros_next_episode_on_eir_date kurulus_usman_next_episode_on_eir_date alparsalan_next_episode_on_eir_date jalaloddin-mendirman; do
+	echo ">>>>>>>> $i"
+	eval $i | grep CONGRATULATIONS >/dev/null
+	if [[ $? -eq 0 ]]; then
+		let "y_start+=100"
+		ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
+		convert -font helvetica -fill white -pointsize $font_size -draw "text $x_start,$y_start $ii" $output_image $output_image
+		let "n++"
+	fi
 done
 
-feh -F $output_image
-
+if [[ $n -gt 0 ]]; then
+	feh -F $output_image
+fi
