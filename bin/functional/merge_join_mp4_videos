@@ -2,12 +2,15 @@
 original_IFS=$IFS
 echo -e "\n1-Current mp4 files\n2-Recursive mp4 files"
 read option_
-
+echo 
 files_func(){
 	python3 <<< '
 import pandas as pd
 df = pd.DataFrame(pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list(), columns=["week", "video"])
-df["week_numebr"] = (df.week.str.split("-").str[1]).astype(int)
+try:
+	df["week_numebr"] = df.week.astype(int)
+except:
+	df["week_numebr"] = (df.week.str.split("-").str[1]).astype(int)
 df["video_numebr"] = (df.video.str.split("-").str[0]).astype(int)
 df = df.sort_values(["week_numebr", "video_numebr"])
 open("/home/amir/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
@@ -18,6 +21,8 @@ if [[ $option_ -eq 1 ]]; then
 	x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 else
 	if [[ $option_ -eq 2 ]]; then
+		orignial_duration=$(/amir_bin/video_duration 2 | tail -n1)
+		orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
 		for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
 			echo $i
 		done > /home/amir/.m
@@ -99,3 +104,14 @@ else
 		echo -e "\n\nAn Error occured\n\n"
 	fi
 fi
+
+one_file_duration=$(video_duration $output_file_name | head -n1 | sed 's/\t\{1,\}/,/g' | cut -d, -f2)
+on_file_size_mb=$(du -s -BM $output_file_name | cut -d 'M' -f1)
+
+echo -e "\n----------- Comparison -----------"
+echo "Combined duration: $orignial_duration"
+echo "One file duration: $one_file_duration"
+echo 
+echo "Combined size    : $orignal_size_mb M"
+echo "One file size    : $on_file_size_mb M"
+echo 
