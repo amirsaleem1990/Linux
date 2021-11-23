@@ -14,12 +14,18 @@ s = BeautifulSoup(requests.get(next_video_url).text, "lxml")
 print("Last video:", last_video_url)
 print("Next video:", next_video_url)
 
-if s.find("div", {"class" : "WatchSection activee text-center"}) is None:
-	print("""\n\n#############################################################
-####------------------""", colored(" NO NEW VIDEO", 'red'),
-""" -------------------####
-#############################################################\n""")
-	sys.exit()
+# if s.find("div", {"class" : "WatchSection activee text-center"}) is None:
+# 	print("""\n\n#############################################################
+# ####------------------""", colored(" NO NEW VIDEO", 'red'),
+# """ -------------------####
+# #############################################################\n""")
+# 	sys.exit()
+
+to_print = """\n\n
+#############################################################
+####------------------ {} -----------------####
+#############################################################
+\n"""
 
 link = ''
 for i in s.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
@@ -29,8 +35,11 @@ for i in s.find("div", {"class" : "WatchSection activee text-center"}).select("a
     except:
         pass
 if not link:
-	print("No video fount!!")
-	sys.exit(1)
+	# print("No video found!!")
+	print(to_print.format("  NO NEW VIDEO  "))
+	sys.exit()
+
+print(to_print.format(" CONGRATULATIONS"))
 
 def get_duration(vid_url):
 	import youtube_dl
