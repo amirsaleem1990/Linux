@@ -18,7 +18,7 @@ font_size=30
 
 for i in barbaros_next_episode_on_eir_date kurulus_usman_next_episode_on_eir_date alparsalan_next_episode_on_eir_date jalaloddin-mendirman; do
 	echo ">>>>>>>> $i"
-	eval $i | grep CONGRATULATIONS >/dev/null
+	yes n | eval $i | grep CONGRATULATIONS >/dev/null
 	if [[ $? -eq 0 ]]; then
 		let "y_start+=100"
 		ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
