@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=lfd_time_off
+Exec=#/amir_bin/lfd_off_notification
+Type=Application
+X-GNOME-Autostart-enabled=true
