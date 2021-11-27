@@ -61,9 +61,9 @@ function x(){
 m=0
 diffrent_size_count=0
 file_not_found_count=0
-total_files_count=`ls|wc -l`
+total_files_count=`ls -a|wc -l`
 IFS=$'\n'
-for i in `ls`; do 
+for i in `ls -a`; do 
 	here=`x $i`
 	test -e  $from/$i
 	if [[ $? != 0 ]]; then
