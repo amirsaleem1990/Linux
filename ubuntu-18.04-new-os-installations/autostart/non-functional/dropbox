@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=dropbox
+Exec=~/.dropbox-dist/dropboxd
+Type=Application
+X-GNOME-Autostart-enabled=true
