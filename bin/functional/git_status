@@ -27,7 +27,8 @@ NOTE: files > 49 are not allowd. either remove this/these file/s or move it/thes
 	for i in f:
 		print(colored(i, 'green'))
 	print("\n\n")
-	sys.exit()
+	if input("If you included this/these file/s in .gitignore you can proceed.\nAre you need to proceed [y|n]?  ").strip().lower() != 'y':
+		sys.exit()
 if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
