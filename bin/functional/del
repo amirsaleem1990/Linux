@@ -7,7 +7,8 @@ NC='\033[0m' # No Color
 function print__ {
 	# $1 = type, $2 = file_name
 		# echo -en "${RED}$1:${NC} $2,  ${RED}SIZE: ${NC}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "
-		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`${NC}\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
+		size=`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`
+		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}$size${NC}\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
 }
 
 function file_folder { 
