@@ -4,11 +4,11 @@ mkdir -p /home/amir/.local/share/Trash/files
 echo "If you execute this script with please enter any key to proceed, else terminate this script and execute it with sudo"
 read ans
 
-echo "\n\nRedirected to /home/amir/results.txT\n\n"
+echo -e "\n\nRedirected to /home/amir/results.txT\n\n"
 func_(){
 	echo -e "\n\n>>>>>>>>>>>>>>>>>>>>>>>> Start: $1\n\n"
 	eval $1 >> /home/amir/results.txT
-	if [[ $? != 0 ]]; then 
+	if [[ $? -ne 0 ]]; then 
 		echo "FAIL: $1"
 		exit
 	fi
@@ -83,60 +83,41 @@ func_ "snap install chromium"
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
 func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
 func_ "apt install sublime-text"
-if [[ $? != 0 ]]; then 
+if [[ $? -ne 0 ]]; then 
 	func_ "snap install --classic sublime-text"
 fi
 
 func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
-
 dpkg -i dukto*
-if [[ $? != 0 ]]; then
-	add-apt-repository ppa:rock-core/qt4
-	apt-get update
-	apt --fix-broken install
-	apt install libqtgui4
-	apt autoremove
-else
-	func_ "dukto installed"
+if [[ $? -ne 0 ]]; then
+	func_ "apt -f install"
+	if [[ $? -ne 0 ]] ;then
+		add-apt-repository ppa:rock-core/qt4
+		add-apt-repository ppa:gezakovacs/ppa
+		apt-get update -y
+		apt --fix-broken install -y
+		apt install libqtgui4 -y
+		apt autoremove -y
+	fi
 fi
-
-# func_ "gdebi dukto_6.0-1_amd64.deb"
 rm -r dukto*.deb
 
-# func_ "apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base"
-# firefox https://cloud.r-project.org/
-# apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
-# if [[ $? != 0 ]]; then 
-	# func_ "apt install r-cran-littler"
-# if [[ $? != 0 ]]; then read -p "Install R manually, and then pres any key: "; fi
+apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
+if [[ $? -ne 0 ]]; then 
+	func_ "apt install r-cran-littler"
+if [[ $? -ne 0 ]]; then 
+	read -p "Install R manually, and then pres any key: "; 
+	firefox https://cloud.r-project.org/
+fi
 
-# func_ "R CMD javareconf"
-# func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
-# func_ "Rscript r_essential_packages.R"
+func_ "R CMD javareconf"
+func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
+func_ "Rscript r_essential_packages.R"
 func_ "pip3 install jupyterlab"
 func_ "pip3 install xlrd==1.2.0"
-# func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
-# func_ "Rscript R_in_jupyter.R"
+func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
+func_ "Rscript R_in_jupyter.R"
 
-
-func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/set_startupscript.py"
-func_ "ipython3 set_startupscript.py"
-rm -f set_startupscript.py  >> /home/amir/results.txT
-
-#func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/alias.txt"
-#func_ "wget https://github.com/amirsaleem1990/Linux/blob/master/alias"
-func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/alias"
-# if [[ $? != 0 ]]; 
-	#then echo "cat alias.txt >> ~/.bashrc"
-	#exit
-# fi
-# cp .bashrc{,_backup}; cat .bashrc alias  > xmklk; mv xmklk .bashrc; rm -f xmklk; rm -f alias; source .bashrc
-
-
-#echo 'PATH="/amir_bin/:$PATH"' >> ~/.bashrc
-#source  ~/.bashrc
-
-# func_ "pip3 install youtube-dl"
 func_ "pip3 install bs4"
 func_ "pip3 install lxml"
 func_ "pip3 install selenium"
@@ -154,31 +135,38 @@ func_ "pip3 install fpdf"
 func_ "pip3 install pymysql"
 
 
-#func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
-#func_ "sh get-docker.sh"
+func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
+func_ "sh get-docker.sh"
 
-#func_ "wget https://raw.githubusercontent.com/amirsaleem1990/git/master/github%20initial%20setup"
-#mv 'github initial setup' github_initial_setup
-#func_ "bash github_initial_setup"
+func_ "ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin"
 
-# func_ "mkdir /amir_bin/"
-ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin
-
-# func_ "pip3 install statsmodels"
+func_ "pip3 install statsmodels"
 # func_ "apm install ask-stack"
 # func_ "apm install stack-overflow-help"
 
 
 # rstudio
-#latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
-#latest_rstudio_download_link="https://download1.rstudio.org/desktop/bionic/amd64/rstudio-$latest_rstudio_version-amd64.deb"
-#curl $latest_rstudio_download_link > rstudio-$latest_rstudio_version.deb
-#func_ "gdebi -n rstudio*.deb"
+latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
 
-
-# dukto
-# add-apt-repository ppa:rock-core/qt4; add-apt-repository ppa:gezakovacs/ppa; apt update; apt-get install -y libqtgui4
-
+latest_rstudio_download_link=$(python3 <<< "
+from bs4 import BeautifulSoup
+import requests
+soup = BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml') 
+for i in soup.select('a'):
+    try:
+        l = i['href']
+        if l.endswith('.deb') and not '/debian' in l:
+            print(i['href'])
+    except:
+        pass
+")
+curl $latest_rstudio_download_link > "rstudio-$latest_rstudio_version.deb"
+# func_ "gdebi -n rstudio*.deb"
+dpkg -i rstudio*.deb >> /home/amir/results.txT
+if [[ $? -ne 0 ]]; then
+	apt -f install
+	func_ "dpkg -i rstudio*.deb"
+fi
 
 
 echo -e "\n\n"
@@ -187,16 +175,14 @@ gnome-control-center default-apps
 read ans
 
 
-
-# keyboad light ka time 100 seconds kar dya h, by default is ka time 1s hota h
-echo 100s > /sys/devices/platform/dell-laptop/leds/dell\:\:kbd_backlight/stop_timeout
+# keyboad light ka time 2m seconds kar dya h, by default is ka time 1m hota h
+echo 2m > /sys/devices/platform/dell-laptop/leds/dell\:\:kbd_backlight/stop_timeout
 
 func_ "echo 100 > `locate kbd_backlight`"
-
-
 
 echo "Apply this <'/home/amir/github/Linux/ubuntu-18.04-new-os-installations/Mount\ drive\ in\ linux\ and\ set\ auto-mount\ at\ boot\ -\ Tech\ Knowledge\ Base\ -\ jaytaala.com\ Confluence\ \(8_17_2021\ 1_41_49\ PM\).html'>"
 
 
-echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | sudo tee --append /etc/crontab # Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
+echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | sudo tee --append /etc/crontab 
+# Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
 
