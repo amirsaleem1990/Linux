@@ -17,6 +17,21 @@ fi
 """.strip()
 f = list(os.popen(command))
 os.remove("/home/amir/.amda_amir")
+
+#-----
+to_remove = []
+for F in f:
+	repo_name, *_, big_file_name = F.split("\t")[1].strip().replace("./", "").split("/")
+	gitignore_file = "/home/amir/github/" + repo_name + "/.gitignore"
+	if os.path.exists(gitignore_file):
+		gitignore = open(gitignore_file, 'r').read().splitlines()
+	for gitignore_entry in gitignore:
+		if big_file_name in gitignore_entry:
+			to_remove.append(F)
+			break
+
+f = [i for i in f if not i in to_remove]
+#-----
 if f:
 	print("\n\n")
 	print(colored("""
