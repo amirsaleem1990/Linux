@@ -8,7 +8,7 @@ copy data from another partitions (if exist)
 keyboard shortucts
 #alias
 #echo $PS1 > github/Linux/PS1
-copy amir portion from ~/.bashrc file
+#copy amir portion from ~/.bashrc file
 
 save github/lfd-projects directory
 #save ~/.config/autostart
