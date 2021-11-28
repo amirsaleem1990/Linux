@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 import os
 from termcolor import colored
 print(colored("\n\n******** Jalalodding ********\n", 'red'))
@@ -13,22 +14,31 @@ last_downloaded_video_number = int(open(_file_name_, 'r').read().strip())
 print(f"Last video url:", f"https://www.historicales.com/mendirman-jaloliddin-episode-{last_downloaded_video_number}-english-urdu/" )
 
 url = f"https://www.historicales.com/mendirman-jaloliddin-episode-{last_downloaded_video_number+1}-english-urdu/"
+
+def print_msg(condition, if_true_congralatue=True, if_false_exit=True):
+	if condition:
+		if if_true_congralatue:
+			msg = " CONGRATULATIONS"
+		else:
+			msg = False
+	else:
+		msg = "--- NO NEW VIDEO"
+
+	if msg:
+		print(f"""\n\n
+#############################################################
+####-----------------{colored(msg, 'red')} -------------------####
+#############################################################\n
+	""")
+	if not condition and (if_false_exit):
+		exit()
+
+print_msg(requests.get(url).ok, if_true_congralatue=False)
+
 x = get_soup_object_using_selenium.get_soup_object_using_selenium(url)[0]
 next_vid_download_url = [i for i in x if i.startswith("https://www.mediafire.com") and ('eng' in i)]
 
-print("""\n\n#############################################################
-####-----------------""", end="")
-
-if next_vid_download_url:
-	print(colored(" CONGRATULATIONS", 'red'), end="")                                                                                                               
-else:
-	print(colored("--- NO NEW VIDEO", 'red'), end="")
-
-print(""" -------------------####
-#############################################################\n""")
-
-
-
+print_msg(next_vid_download_url)
 
 if next_vid_download_url:
 	if len(next_vid_download_url) == 1:
