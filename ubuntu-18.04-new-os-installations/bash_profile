@@ -218,3 +218,18 @@ pwd_print(){
     x=$(eval "pwd")
     echo $x/$1
 }
+
+
+declare -f kill_youtube
+kill_youtube() {
+    if [[ $( ps aux | grep youtube-dl |wc -l) -ne 2 ]]; then
+        echo -e "\nThere are more than one youtube-dl session"
+        exit
+    fi
+    kill $(ps aux | grep youtube-dl | head -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2)
+    if [[ $? -eq 0 ]]; then
+        echo -e "\n\nyoutube-dl session killed successfully\n"
+    else
+        echo -e "\n\nAn error occured during killing youtube-dl sessson"
+    fi
+}
