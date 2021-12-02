@@ -29,7 +29,7 @@ if [[ $file_greater_than_one > 0 ]]; then
 	echo -e "\n\n${RED}These files are > 50MB, we need files < 50MB\nPrepare these files and try again${NC}\n\n"
 	echo -e "\n\nThese files are > 50MB, we need files < 50MB\nPrepare these files and try again\n\n" >> /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 
-	subl /home/amir/.GIT_FILES_GRATER_THAN_50_MB
+	#subl /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 	echo -e "\nAre these files in .gitignore, and you're sure that they can't be pushed? [y|n] "
 	read ans
 	if [[ $ans == "y" ]]; then
