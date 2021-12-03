@@ -64,7 +64,7 @@ before_files=0
 if $multiple_extentions; then
 	IFS=,
 	for e in $extention ; do 
-		before_files=$(bc <<< $before_files+$(ls *.$e | wc -l))
+		before_files=$(bc <<< $before_files+$(ls *.$e 2>/dev/null| wc -l))
 	done
 else
 	before_files=$(ls *.$extention | wc -l)
@@ -85,7 +85,7 @@ while :; do
 	if $multiple_extentions; then
 		IFS=,
 		for e in $extention ; do 
-			after_files=$(bc <<< $after_files+$(ls *.$e | wc -l))
+			after_files=$(bc <<< $after_files+$(ls *.$e 2>/dev/null | wc -l))
 		done
 	else
 		after_files=$(ls *.$extention | wc -l)
@@ -93,7 +93,7 @@ while :; do
 
 	
 	echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty" > $file_
-	echo "`date +%H:%M`,$incremental,$SUM,`bc <<< $after_files-$before_files`,$after_files, `ls *.part | wc -l`" >> $file_
+	echo "`date +%H:%M`,$incremental,$SUM,`bc <<< $after_files-$before_files`,$after_files, `ls *.part 2>/dev/null| wc -l`" >> $file_
 	let "c++"
 	if [[ $c == 1 ]]; then
 		cat $file_ | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty"
