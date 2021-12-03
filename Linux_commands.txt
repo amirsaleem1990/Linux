@@ -1704,3 +1704,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 
 # push to a branch ............. git push -u origin main:your_branch_name
 
+# vifm is  a terminal-based file browser application
+
