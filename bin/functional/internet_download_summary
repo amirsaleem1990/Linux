@@ -69,7 +69,7 @@ if $multiple_extentions; then
 else
 	before_files=$(ls *.$extention | wc -l)
 fi
-
+total_increment=0
 c=0
 while :; do
 	current=`du -shL -BM | sed 's/M..//g'`
@@ -78,6 +78,7 @@ while :; do
 		# continue
 	fi
 	incremental=$(( $current - $SUM ))
+	total_increment=$(bc <<< $total_increment+$incremental)
 	SUM=$current
 	# after_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
 
@@ -91,12 +92,17 @@ while :; do
 		after_files=$(ls *.$extention | wc -l)
 	fi
 
-	
-	echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty" > $file_
-	echo "`date +%H:%M`,$incremental,$SUM,`bc <<< $after_files-$before_files`,$after_files, `ls *.part 2>/dev/null| wc -l`" >> $file_
+	date=$(date +%H:%M)
+	IncremenalFilesQty=$(bc <<< $after_files-$before_files)
+	part_Qty=$(ls *.part 2>/dev/null| wc -l)
+	AvailibleDisk=$(df -h | grep /dev/sda5 | sed 's/\ \{1,\}/,/g' | cut -d, -f4)
+
+	echo "Time,IncremenalSize,TotalIncrement,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty,AvailibleDisk" > $file_
+	echo "$date,$incremental,$total_increment,$SUM,$IncremenalFilesQty,$after_files,$part_Qty,$AvailibleDisk" >> $file_
+
 	let "c++"
 	if [[ $c == 1 ]]; then
-		cat $file_ | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty"
+		cat $file_ | column -t -s, | grep --color "\|Time\|IncremenalSize\|TotalIncrement\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty\|AvailibleDisk"
 	else
 		cat $file_ | column -t -s, | tail -1
 	fi
