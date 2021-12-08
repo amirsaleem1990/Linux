@@ -1,6 +1,8 @@
 #!/bin/bash
 IFS=$'\n'
-echo -e  "=========,===========,==================================\n
+echo 
+echo -e  "
+=========,===========,==================================\n
 Total_SEC,DD:HH:MM:SS,File Name\n
 =========,===========,==================================" >~/.sb1
 for file in `ls -a | sed 's/@$//g; s/*$//g'`; do 
@@ -11,5 +13,10 @@ for file in `ls -a | sed 's/@$//g; s/*$//g'`; do
 		x=0$x
 	fi
 	echo "$SEC,$x,$file"
-done | sort -n >>  ~/.sb1
-cat ~/.sb1 | column -t -s, 
+done | sort -nr >>  ~/.sb1
+echo -e  "
+=========,===========,==================================\n
+Total_SEC,DD:HH:MM:SS,File Name\n
+=========,===========,==================================" >>~/.sb1
+cat ~/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|File Name' 
+echo
