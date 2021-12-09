@@ -1706,3 +1706,4 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 
 # vifm is  a terminal-based file browser application
 
+# split one line into multiple lines ................. command | xargs -n 1 #https://stackoverflow.com/questions/36689275/bash-split-line-into-multiple-lines
