@@ -7,10 +7,26 @@ if [[ -z $1 ]]; then
     echo -e "\nArgument not passed, so this is the result of current directory only.\nFor all subdirectories give the perameter <2>\n\n"
     Max_Depth=1
 else
-    Max_Depth=$(IFS=$'\n' ; for i in $(find . -type d) ; do echo "$i" | grep -o '/' | wc -l ; done | sort -n | tail -n1)
+    Max_Depth=$(IFS=$'\n'
+                for i in $(find . -type f) ; do 
+                    echo "$i" | grep -o '/' | wc -l
+                done |
+                sort -n |
+                tail -n1
+                )
 fi
 
-find . -maxdepth $Max_Depth -type f -exec basename {} \; | grep '\.' |grep -v '^\.'| rev | cut -d. -f1 | grep -v \" | rev | sort | uniq -c | sed 's/^\ \{1,\}//g'| sort -k2> $file_1
+find . -maxdepth $Max_Depth -type f -exec basename {} \; | 
+    grep '\.' |
+    grep -v '^\.'|
+    rev | 
+    cut -d. -f1 | 
+    grep -v \" | 
+    rev | 
+    sort | 
+    uniq -c | 
+    sed 's/^\ \{1,\}//g'| 
+    sort -k2 > $file_1
 echo "$(bc <<< `find . -maxdepth $Max_Depth -type d | wc -l`-1) FOLDERS" >> $file_1
 cat $file_1 | sort -k1 -nr > $file_2
 
