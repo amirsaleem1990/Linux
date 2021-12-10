@@ -10,52 +10,6 @@ if [[ -z "$parameter" ]] ;	then  # if parameter not passed
 	parameter=1
 fi
 
-# if [[ $parameter -eq 1 ]] ; then
-# 	folders_count=`ls -d */ 2>/dev/null | wc -l`
-# 	files_count=`find . -maxdepth 1 -type f| wc -l`
-# 	symbolic_links_count=`ls -l | cut -c -1 | grep -o l | wc -l`
-# 	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count" | column -t -s ' '
-# 	echo -e "\n"
-# 	ls -p |\
-# 		grep -v /  |\
-# 		grep '\.' |\
-# 		rev |\
-# 		cut -d. -f1 |\
-# 		rev |\
-# 		sort |\
-# 		uniq -c |\
-# 		sed 's/\ \{2,\}//g' |\
-# 		sort -n |\
-# 		column -t -s ' '
-
-# else
-# 	# tree |\
-# 	# 	rev |\
-# 	# 	grep  '\.'|\
-# 	# 	cut -d. -f1 |\
-# 	# 	rev |\
-# 	# 	sed /─/d |\
-# 	# 	sed /^$/d |\
-# 	# 	# sed '$ d' |\
-# 	# 	sort |\
-# 	# 	uniq -c |\
-# 	# 	sed 's/^ \{1,\}//g' |\
-# 	# 	column -t 
-# 	for extention in `tree | rev | grep  '\.'| cut -d. -f1 | rev | sed /─/d | sed /^$/d | sort | uniq`; do
-# 		func_1 $extention
-# 	done
-# 	python3 <<< '
-# from pandas import read_csv
-# df =read_csv("/home/amir/.xm2", names=["Extention", "MB", "Qty"])
-# df.assign(GB=df.MB/1024).iloc[:, [0,1,3,2]].round(3).to_csv("/home/amir/.xm2", index=False, header=False)
-# 	'
-
-
-# 	# echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /home/amir/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
-# 	echo -e "Extention,MB,GB,Qty.\n---------,--,--,----\n`cat /home/amir/.xm2 | sort -k3 -nr -t, `" | column -t -s,
-# 	# cat /home/amir/.xm2 | column -t -s,
-# fi
-
 
 if [[ $parameter -eq 1 ]] ; then
 	folders_count=`find . -maxdepth 1 -type d| wc -l`
@@ -87,8 +41,7 @@ else
 		for file in `find . -name "*$extention"`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > ~/.xm1
-		f=$( echo `cat ~/.xm1` / 1024 | bc )
-		echo "$f,`find . -name "*$extention" | wc -l`" >> /home/amir/.xm2
+		echo "`cat ~/.xm1`,`find . -name "*$extention" | wc -l`" >> /home/amir/.xm2
 	done
 fi
 if [[ $no_extention -eq $files_count ]]; then
@@ -100,7 +53,7 @@ python3 <<< '
 from IPython.display import display
 from pandas import read_csv
 df =read_csv("/home/amir/.xm2", names=["Extention", "Size", "Qty"])
-df.Size = df.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB") 
+df.Size = df.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
 # df.to_csv("/home/amir/.xm2", index=False, header=False)
 # print(df.to_string())
 # print(tabulate(df, headers = "keys", tablefmt = "psql"))
