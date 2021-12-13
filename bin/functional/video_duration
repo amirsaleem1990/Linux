@@ -88,14 +88,16 @@ fi
 
 # echo $total_secs
 # echo -e "\n\nTotal time:\n`date -d@$total_secs -u +%H:%M:%S`"
-python3 <<< '
+echo '
 f = open("/home/amir/.duration", "r").read().splitlines()
 total_secs = 0
 for i in f:
+	if not ":" in i:
+		continue
 	h,m,s = i.split(":")
 	total_secs += float(s)        if s != "00" else 0
 	total_secs += float(m) * 60   if m != "00" else 0
 	total_secs += float(h) * 3600 if m != "00" else 0
 open("/home/amir/.duration", "w").write(str(int(total_secs)))
-'
+' | python3
 echo -e "\n\nTotal time:\n`date -d@$(cat /home/amir/.duration) -u +%H:%M:%S`"
