@@ -1709,3 +1709,6 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 # split one line into multiple lines ................. command | xargs -n 1 #https://stackoverflow.com/questions/36689275/bash-split-line-into-multiple-lines
 
 # If you use Ctrl+S in the terminal, your terminal ‘freezes’. This is coming from the legacy computing where there was no scope of scrolling back up. Hence, if there were lots of output lines, Ctrl+S was used for stopping the screen so that text on the screen could be read. You can unfreeze your terminal with Ctrl+Q. But again, avoid using Ctrl+S in the terminal.
+
+# in an nautilus open window, you can show hidden files by CTRL+H
+
