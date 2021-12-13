@@ -7,15 +7,24 @@ import traceback
 import sys
 
 exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+get_input_from_user = False
 if os.path.exists(exclude_file):
-	if input("Are you need to exclude last stuff [yes|no]  (which is:\n" + open(exclude_file, 'r').read().strip()).lower().strip() == 'yes':
-		exclude = open(exclude_file, 'r').read().strip()
+	e = open(exclude_file, 'r').read().strip()
+	if e:
+		user_inp = input("Are you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+		if user_inp.lower().strip() == 'yes':
+			exclude = e
+		else:
+			get_input_from_user=True
 	else:
-		exclude = input("Words to exclude (if multiple separate them by '|')  ")
-		open(exclude_file, 'w').write(exclude)
+		get_input_from_user= True
 else:
+	get_input_from_user=True
+if get_input_from_user:
 	exclude = input("Words to exclude (if multiple separate them by '|')  ")
-	open(exclude_file, 'w').write(exclude)
+	if exclude:
+		open(exclude_file, 'w').write(exclude)
+
 
 
 def download(url):
