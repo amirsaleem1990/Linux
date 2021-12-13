@@ -1,32 +1,44 @@
 #!/usr/bin/bash
 # to_be_download=()
-input_image="/home/amir/.config/autostart/check_all_episodes.png"
-output_image="/home/amir/.check_all_episodes_2.png"
+dpkg -s convert 2>/dev/null
+if [[ $? -eq 0 ]] ; then
+	image=true
+fi
 
-y_start=260
+if $image; then
+	input_image="/home/amir/.config/autostart/check_all_episodes.png"
+	output_image="/home/amir/.check_all_episodes_2.png"
+	y_start=260
 
-x_start=10
-font_size=40
-msg="CONGRATULATIONS! Now You can download these episodes"
+	x_start=10
+	font_size=40
+	msg="CONGRATULATIONS! Now You can download these episodes"
 
-convert -font helvetica -fill red -pointsize $font_size -draw "text $x_start,$y_start '$msg'" $input_image $output_image
+	convert -font helvetica -fill red -pointsize $font_size -draw "text $x_start,$y_start '$msg'" $input_image $output_image
 
-n=0
+	n=0
 
-x_start=500
-font_size=30
+	x_start=500
+	font_size=30
+fi
 
 for i in destan_next_episode_on_eir_date barbaros_next_episode_on_eir_date kurulus_usman_next_episode_on_eir_date alparsalan_next_episode_on_eir_date jalaloddin-mendirman; do
 	echo ">>>>>>>> $i"
 	yes n | eval $i | grep CONGRATULATIONS >/dev/null
 	if [[ $? -eq 0 ]]; then
-		let "y_start+=100"
-		ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
-		convert -font helvetica -fill white -pointsize $font_size -draw "text $x_start,$y_start $ii" $output_image $output_image
-		let "n++"
+		if $image; then
+			let "y_start+=100"
+			ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
+			convert -font helvetica -fill white -pointsize $font_size -draw "text $x_start,$y_start $ii" $output_image $output_image
+			let "n++"
+		else
+			echo -e "\n\nA video is availibe for $i series.\n"
+		fi
 	fi
 done
 
-if [[ $n -gt 0 ]]; then
-	feh -F $output_image
+if $image; then
+	if [[ $n -gt 0 ]]; then
+		feh -F $output_image
+	fi
 fi
