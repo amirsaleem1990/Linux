@@ -224,7 +224,7 @@ declare -f kill_youtube
 kill_youtube() {
     if [[ $( ps aux | grep youtube-dl |wc -l) -ne 2 ]]; then
         echo -e "\nThere are more than one youtube-dl session"
-        exit
+       return 1
     fi
     kill $(ps aux | grep youtube-dl | head -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2)
     if [[ $? -eq 0 ]]; then
