@@ -5,7 +5,7 @@ echo -e  "
 =========,===========,==================================\n
 Total_SEC,DD:HH:MM:SS,File Name\n
 =========,===========,==================================" >~/.sb1
-for file in `ls -a | sed 's/@$//g; s/*$//g'`; do 
+for file in `ls -a | sed 's/@$//g; s/*$//g'`; do
 	SEC=$(( `date +%s` - `stat -c %Y "$file"` ))
 	# x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) D,%H H,%M M,%S S')"`
 	x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)):%H:%M:%S')"`
