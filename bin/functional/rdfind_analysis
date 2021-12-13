@@ -37,9 +37,10 @@ if not x:
 	sys.exit(0)
 
 x = list(zip(
-	[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
-	[' '.join(i.split()[7:]).replace("./", '') for i in x]
-	))
+		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
+		[' '.join(i.split()[7:]).replace("./", '') for i in x]
+			)
+		)
 
 
 df = DataFrame(x)
