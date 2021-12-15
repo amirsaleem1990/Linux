@@ -1712,3 +1712,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 
 # in an nautilus open window, you can show hidden files by CTRL+H
 
+# Find which disk/partition current directory is on ................. findmnt --output target --noheadings --target . ....................... df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
+
