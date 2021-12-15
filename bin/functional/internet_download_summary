@@ -2,6 +2,8 @@
 
 file_=/home/amir/._amb
 
+recursive=false
+
 while [ $# -gt 0 ]; do
 	case "$1" in
 		-s|--sleep_time)
@@ -14,14 +16,17 @@ while [ $# -gt 0 ]; do
 			echo -e "
 	Usage:
 
-	-s, --sleep_time ........ sleep time (in seconds)
-														default is '60'
+	-s, --sleep_time ........ sleep time (in seconds). default is '60'
 	-e, --extention  ........ extention
 								default is 'mp4'
-							    You can pass multiple such as '--extention mp4,mkv,webm'
+								You can pass multiple such as '--extention mp4,mkv,webm
+	-r  --recursive ......... if 'true' the script consider all subdirectories.
 	-h, --help  ............. help page
 	"
 	exit
+			;;
+		-r|--recursive)
+			recursive="$2"
 			;;
 		*)
 			echo -e "
@@ -64,10 +69,18 @@ before_files=0
 if $multiple_extentions; then
 	IFS=,
 	for e in $extention ; do 
-		before_files=$(bc <<< $before_files+$(ls *.$e 2>/dev/null| wc -l))
+		if $recursive; then
+			before_files=$(bc <<< $before_files+$(find . -name "*.$e" 2>/dev/null| wc -l))
+		else
+			before_files=$(bc <<< $before_files+$(ls *.$e 2>/dev/null| wc -l))
+		fi
 	done
 else
-	before_files=$(ls *.$extention | wc -l)
+	if $recursive; then
+		before_files=$(find . -name "*.$extention" | wc -l)
+	else
+		before_files=$(ls *.$extention | wc -l)
+	fi
 fi
 total_increment=0
 c=0
@@ -86,17 +99,29 @@ while :; do
 	if $multiple_extentions; then
 		IFS=,
 		for e in $extention ; do 
-			after_files=$(bc <<< $after_files+$(ls *.$e 2>/dev/null | wc -l))
+			if $recursive; then
+				after_files=$(bc <<< $after_files+$(find . -name "*.$e" 2>/dev/null | wc -l))
+			else
+				after_files=$(bc <<< $after_files+$(ls *.$e 2>/dev/null | wc -l))
+			fi
 		done
 	else
-		after_files=$(ls *.$extention | wc -l)
+		if $recursive; then
+			after_files=$(find . -name "*.$extention" | wc -l)
+		else
+			after_files=$(ls *.$extention | wc -l)
+		fi
 	fi
 
 	date=$(date +%H:%M)
 	IncremenalFilesQty=$(bc <<< $after_files-$before_files)
-	part_Qty=$(ls *.part 2>/dev/null| wc -l)
-	AvailibleDisk=$(df -h | grep /dev/sda5 | sed 's/\ \{1,\}/,/g' | cut -d, -f4)
-
+	if $recursive; then
+		part_Qty=$(find . -name "*.part" 2>/dev/null| wc -l)
+	else
+		part_Qty=$(ls *.part 2>/dev/null| wc -l)
+	fi
+	current_partition=$(findmnt --output target --noheadings --target .) # df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
+	AvailibleDisk=$(df -hP "$current_partition" | sed 's/\ \{1,\}/,/g' | cut -d, -f4 | tail -n1)
 	echo "Time,IncremenalSize,TotalIncrement,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty,AvailibleDisk" > $file_
 	echo "$date,$incremental,$total_increment,$SUM,$IncremenalFilesQty,$after_files,$part_Qty,$AvailibleDisk" >> $file_
 
