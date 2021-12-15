@@ -5,7 +5,7 @@ if [[ $? -eq 0 ]] ; then
 	image=true
 fi
 
-if $image; then
+if [[ $image == true ]]; then
 	input_image="/home/amir/.config/autostart/check_all_episodes.png"
 	output_image="/home/amir/.check_all_episodes_2.png"
 	y_start=260
@@ -26,7 +26,7 @@ for i in destan_next_episode_on_eir_date barbaros_next_episode_on_eir_date kurul
 	echo ">>>>>>>> $i"
 	yes n | eval $i | grep CONGRATULATIONS >/dev/null
 	if [[ $? -eq 0 ]]; then
-		if $image; then
+		if [[ $image == true ]]; then
 			let "y_start+=100"
 			ii=$(echo "$i" | sed 's/_next_episode_on_eir_date//g')
 			convert -font helvetica -fill white -pointsize $font_size -draw "text $x_start,$y_start $ii" $output_image $output_image
@@ -37,7 +37,7 @@ for i in destan_next_episode_on_eir_date barbaros_next_episode_on_eir_date kurul
 	fi
 done
 
-if $image; then
+if [[ $image == true ]]; then
 	if [[ $n -gt 0 ]]; then
 		feh -F $output_image
 	fi
