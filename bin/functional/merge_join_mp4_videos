@@ -16,98 +16,104 @@ df = df.sort_values(["week_numebr", "video_numebr"])
 open("/home/amir/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
 '
 	}
-files_func_called_one=false
-FS=$'\n'
-if [[ $option_ -eq 1 ]]; then
-	x=$(for i in $(ls -1 | sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
-else
-	if [[ $option_ -eq 2 ]]; then
-		orignial_duration=$(/amir_bin/video_duration 2 | tail -n1)
-		orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
-		for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
-			echo $i
-		done > /home/amir/.m
-		files_func
-		if [[ $? -eq 0 ]]; then
-			files_func_called_one=true
-		fi
-		# x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 
-		x=$(cat /home/amir/.m2)
-		
-		IFS=' \+'
-		for i in $x ; do 
-			echo $i
-		done
-		IFS=$original_IFS
-
-		echo -e "\nWe are going to merge above files in mentioned order, Are you agree? [y|n]"
-		read answer_
-		if [[ $answer_ != "y" ]]; then
-			echo -e "\nYou are not agree!\nAborting.........\n"
-			exit 2
-		fi
-	else
-		echo -e "!! WRONG INPUT, Your input should be 1 or 2\nAborting.....\n"
-		exit
-	fi
-fi
-output_file_name=$(basename $(pwd)-COMPLETE_WEEK_IN_ONE_FILE.mkv)
-mkvmerge -o $output_file_name $x >/dev/null 2>&1
-if [[ $? -eq 0 ]] ; then
-
-	echo -e "\nBelow files merged into $output_file_name\n\n"
-	if [[ $files_func_called_one == false ]] ; then
-		files_func
-	fi
-
-	x=$(cat /home/amir/.m2)
-	
-	IFS=' \+'
-	for i in $x ; do 
-		if [[ $i != $output_file_name ]] ; then
-			echo $i
-		fi
-	done
-	IFS=$original_IFS
-
-else
-
-	test -f output.mp4
-
-	if [[ $? -eq 0 ]]; then
-		echo -e "\n\nThe file 'output.mp4' already exists, please proveide a name: "
-		read output_file_name
-	else
-		output_file_name=output.mp4
-	fi
-
+prepare_files_names() {
+	FS=$'\n'
 	if [[ $option_ -eq 1 ]]; then
-		x=$(ls *.mp4 | xargs)
+		x=$(for i in $(ls -1 *.mp4 *.webm *.mkv *.mov| sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 	else
-		x=$(find . -name "*.mp4" | sort -n | sed 's/\.\///g' | xargs)
+		if [[ $option_ -eq 2 ]]; then
+			orignial_duration=$(/amir_bin/video_duration 2 | tail -n1)
+			orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
+			for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
+				echo $i
+			done > /home/amir/.m
+			files_func
+			if [[ $? -eq 0 ]]; then
+				files_func_called_once=true
+			fi
+			# x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+
+			x=$(cat /home/amir/.m2)
+			
+			IFS=' \+'
+			for i in $x ; do 
+				echo $i
+			done
+			IFS=$original_IFS
+
+			echo -e "\nWe are going to merge above files in mentioned order, Are you agree? [y|n]"
+			read answer_
+			if [[ $answer_ != "y" ]]; then
+				echo -e "\nYou are not agree!\nAborting.........\n"
+				exit 2
+			fi
+		else
+			echo -e "!! WRONG INPUT, Your input should be 1 or 2\nAborting.....\n"
+			exit
+		fi
 	fi
+}
 
-	melt $x -consumer avformat:$output_file_name acodec=libmp3lame vcodec=libx264
+merge_(){
 
-	if [[ $? -eq 0 ]]; then
+	mkvmerge -o $output_file_name $x >/dev/null 2>&1
+
+	if [[ $? -eq 0 ]] ; then
 
 		echo -e "\nBelow files merged into $output_file_name\n\n"
 
-		x=$(cat /home/amir/.m2)
-
-		IFS=\ +
+		IFS=' \+'
 		for i in $x ; do 
-			if [[ $i != $output_file_name ]] ; then
-				echo $i
-			fi
+			# if [[ $i != $output_file_name ]] ; then
+			echo $i
+			# fi
 		done
 		IFS=$original_IFS
+
 	else
-		echo -e "\n\nAn Error occured\n\n"
-		exit
+
+		x=$(echo $x | sed 's/\ +/ /g')
+		# if [[ $option_ -eq 1 ]]; then
+		# 	x=$(ls *.mp4 | xargs)
+		# else
+		# 	x=$(find . -name "*.mp4" | sort -n | sed 's/\.\///g' | xargs)
+		# fi
+
+		melt $x -consumer avformat:$output_file_name acodec=libmp3lame vcodec=libx264
+
+		if [[ $? -eq 0 ]]; then
+
+			echo -e "\nBelow files merged into $output_file_name\n\n"
+
+			for i in $x ; do 
+				if [[ $i != $output_file_name ]] ; then
+					echo $i
+				fi
+			done
+		else
+			echo -e "\n\nAn Error occured\n\n"
+			exit
+		fi
 	fi
-fi
+}
+
+output_name(){
+	
+	output_file_name=$(basename $(pwd)-MERGED.mp4)
+	
+	test -f $output_file_name
+
+	if [[ $? -eq 0 ]]; then
+		echo -e "\n\nThe file $output_file_name already exists, please proveide a name: "
+		read output_file_name
+	fi
+}
+files_func_called_once=false
+output_name
+prepare_files_names
+merge_
+
 
 one_file_duration=$(video_duration $output_file_name | head -n1 | sed 's/\t\{1,\}/,/g' | cut -d, -f2)
 on_file_size_mb=$(du -s -BM $output_file_name | cut -d 'M' -f1)
