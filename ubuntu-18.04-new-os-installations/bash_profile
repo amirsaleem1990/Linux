@@ -216,7 +216,10 @@ max(){
 declare -f pwd_print
 pwd_print(){
     x=$(eval "pwd")
-    echo $x/$1
+    echo -n "'$x/$1'" | xclip -sel clip
+    if [[ $? -eq 0 ]]; then
+        echo -e "\nCopied to clipboard\n"
+    fi
 }
 
 
