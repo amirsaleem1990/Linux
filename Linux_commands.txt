@@ -1714,3 +1714,4 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 
 # Find which disk/partition current directory is on ................. findmnt --output target --noheadings --target . ....................... df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
 
+#Extract Audio From Video  ...........  ffmpeg -i input-video-file output-audio-file
