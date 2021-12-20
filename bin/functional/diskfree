@@ -28,7 +28,7 @@ def m(x, add_pipe_in_last=True):
 	return " " * (x - 2) + last_
 import os
 ###############
-mounted_at = list(os.popen("df | grep ^/dev/sd | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | rev | cut -d, -f1 | rev"))
+mounted_at = list(os.popen("df | grep ^/dev/sd | sed 's/\ \{2,\}/,/g' | grep -v  /boot/efi | rev | cut -d, -f1 | rev  | cut -d' ' -f2-5"))
 mounted_at = [i.strip() for i in mounted_at]
 
 devs = list(os.popen("df | grep ^/dev/sd | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | cut -d, -f1"))
@@ -46,7 +46,10 @@ def bytes_to(bytes_):
 	size_str = f"{size}G"
 	if size < 1:
 		size = round(bytes_ / 1024 / 1024)
-		size_str = f"{size}G"
+		size_str = f"{size}M"
+		if size < 1:
+			size = round(bytes_ / 1024)
+			size_str = f"{size}K"
 	return size_str
 
 
