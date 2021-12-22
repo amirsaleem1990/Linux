@@ -53,13 +53,22 @@ python3 <<< '
 from IPython.display import display
 from pandas import read_csv
 df =read_csv("/home/amir/.xm2", names=["Extention", "Size", "Qty"])
-df.Size = df.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
+df1 = df.copy()
+df1.Size = df1.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
 # df.to_csv("/home/amir/.xm2", index=False, header=False)
 # print(df.to_string())
 # print(tabulate(df, headers = "keys", tablefmt = "psql"))
-display(df)
+df1.to_csv("/home/amir/.Unique_extentions_df1", index=False)
+
+df2 = df.copy()
+df2 = df2.sort_values("Size")
+df2.Size = df2.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
+df2.to_csv("/home/amir/.Unique_extentions_df2", index=False)
 '
 
+echo -e "\n\e[1m\e[31m=== Sorted by extention ===\t\t\t=== Sorted by size ===   \e[22m\e[39m \n"
+
+paste ~/.Unique_extentions_df* | column -t -s, | sed 's/\t/\t\t\t\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
 # echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /home/amir/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
 # echo -e "Extention,Size,Qty.\n---------,----,----\n`cat /home/amir/.xm2`" | column -t -s,
 # cat /home/amir/.xm2 | column -t -s,
