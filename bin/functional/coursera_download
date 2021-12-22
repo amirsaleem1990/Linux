@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+audit_every_course = input("Are you need to audit every course? [yes|no]")
+
 def LOGIN():
 	print("Attempting to Login   ")
 
@@ -25,6 +27,15 @@ def LOGIN():
 	loginButton[0].click()
 
 	print("Successfully Logged in", "\n\n\n")
+	if audit_every_course == "yes":
+		if "|" in course_name:
+			for course in course_name.split("|"):
+				browser.get(f"https://www.coursera.org/learn/{course.strip()}")
+				input("\nPress any key after audit: ")
+			else:
+				browser.get(f"https://www.coursera.org/learn/{course_name.strip()}")
+				input("\nPress any key after audit: ")
+
 	return browser
 
 def download(vids, vids_download_urls, course_name):             
@@ -209,7 +220,6 @@ def func(course_name, browser=None):
 			browser       = browser,
 			base_dir      = base_dir
 			)
-		input("Press any key after 'audit'...........\n")
 		vids_download_urls, browser = fetch_video_urls(
 			vids               = pickle.load(open(f"{base_dir}/vids.pkl", 'rb')),
 			browser            = browser,
