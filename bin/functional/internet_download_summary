@@ -18,7 +18,7 @@ while [ $# -gt 0 ]; do
 
 	-s, --sleep_time ........ sleep time (in seconds). default is '60'
 	-e, --extention  ........ extention
-								default is 'mp4'
+								default is 'mp4,mkv,webm'
 								You can pass multiple such as '--extention mp4,mkv,webm
 	-r  --recursive ......... if 'true' the script consider all subdirectories.
 	-h, --help  ............. help page
@@ -47,8 +47,8 @@ if [[ -z $sleep_time ]]; then
 fi
 
 if [[ -z $extention ]]; then
-	echo -e ">>> 'extention' argument not passed, so default 'mp4' is set.\n"
-	extention=mp4
+	echo -e ">>> 'extention' argument not passed, so default 'mp4,mkv,webm' is set.\n"
+	extention=mp4,mkv,webm
 fi
 
 
