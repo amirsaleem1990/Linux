@@ -63,7 +63,7 @@ if n > last_vid_num:
 	else:
 		print("Last video page:", last_vid)
 		print("""\n\n#############################################################
-		####-----------------""", end="")
+####-----------------""", end="")
 
 		if n > last_vid_num:
 			print(colored(" CONGRATULATIONS", 'red'), end="")                                                                                                               
@@ -71,7 +71,7 @@ if n > last_vid_num:
 			print(colored("--- NO NEW VIDEO", 'red'), end="")
 
 		print(""" -------------------####
-		#############################################################\n""")
+#############################################################\n""")
 	
 		get_duration(vid_url=l)
 		ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
