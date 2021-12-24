@@ -35,7 +35,7 @@ echo -e  "====== ===========Sorted.by.Extention=========== ====== ===========Sor
 Count Extention  Count Extention
 ------ ----------------------------------------- ------ -------------------------------------" > $file_3
 paste -d " " $file_1 $file_2  >> $file_3
-cat $file_3 | column -t -s ' ' | grep --color "\|Count\|Extention\|Sorted\|by"
+cat $file_3 | column -t -s ' ' | grep --color "\|Count\|Extention\|Sorted\|by\|FOLDERS"
 
 
 /amir_bin/DEL -f "$file_1" "$file_2" "$file_3"
