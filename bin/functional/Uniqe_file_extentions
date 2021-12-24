@@ -66,9 +66,20 @@ df2.Size = df2.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1
 df2.to_csv("/home/amir/.Unique_extentions_df2", index=False)
 '
 
-echo -e "\n\e[1m\e[31m=== Sorted by extention ===\t\t\t=== Sorted by size ===   \e[22m\e[39m \n"
+echo '
+import pandas as pd
+print(pd.read_csv("/home/amir/.Unique_extentions_df1").to_string(index=False))
+' | python3 > /home/amir/.Unique_extentions_df1_2
+echo '
+import pandas as pd
+print(pd.read_csv("/home/amir/.Unique_extentions_df2").to_string(index=False))
+' | python3 > /home/amir/.Unique_extentions_df2_2
 
-paste ~/.Unique_extentions_df* | column -t -s, | sed 's/\t/\t\t\t\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
+echo -e "\n\e[1m\e[31m=== Sorted by extention ===\t\t=== Sorted by size ===   \e[22m\e[39m \n"
+paste -d '|\t' /home/amir/.Unique_extentions_df{1,2}_2 | sed 's/|/\t\t|\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
+
+
+#paste ~/.Unique_extentions_df* | column -t -s, | sed 's/\t/\t\t\t\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
 # echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /home/amir/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
 # echo -e "Extention,Size,Qty.\n---------,----,----\n`cat /home/amir/.xm2`" | column -t -s,
 # cat /home/amir/.xm2 | column -t -s,
