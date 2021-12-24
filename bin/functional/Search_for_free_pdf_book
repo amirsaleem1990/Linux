@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+book_name="$1"
+if [[ -z "$book_name" ]]; then
+	echo -e "\nNo book name given\nExiting ....\n"
+	exit 1
+fi
+
+book_name=$(echo "$book_name" | sed 's/\ /\+/g')
+firefox "https://www.pdfdrive.com/search?q=$book_name"
+firefox "https://kupdf.net/search/$book_name"
+firefox "http://libgen.rs/search.php?req=$book_name"
+
+book_name=$(echo "$book_name" | sed 's/\+/\%20/g')
+firefox "https://archive.org/search.php?query=$book_name"
+firefox "https://pk1lib.org/s/$book_name"
+
