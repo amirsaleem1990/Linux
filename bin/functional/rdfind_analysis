@@ -121,7 +121,8 @@ for node in r:
 		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
 		print(f"Delete items Qty: {delete_items_qty} (among {df[0].sum()} unique files)\n")
 		for e,i in enumerate(node):
-			com = f"""echo "{e}- $(du -sh '{i}')" """
+			d = f'$(du -sh "{i}")'
+			com = f"""echo "{e}- {d}" """
 			os.system(com)
 		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
 		if input_ in ["o", "'o'"]:
