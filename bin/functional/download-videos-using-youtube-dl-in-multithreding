@@ -6,26 +6,6 @@ import os
 import traceback
 import sys
 
-exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
-get_input_from_user = False
-if os.path.exists(exclude_file):
-	e = open(exclude_file, 'r').read().strip()
-	if e:
-		user_inp = input("Are you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
-		if user_inp.lower().strip() == 'yes':
-			exclude = e
-		else:
-			get_input_from_user=True
-	else:
-		get_input_from_user= True
-else:
-	get_input_from_user=True
-if get_input_from_user:
-	exclude = input("Words to exclude (if multiple separate them by '|')  ")
-	if exclude:
-		open(exclude_file, 'w').write(exclude)
-
-
 
 def download(url):
 	try:
@@ -67,6 +47,26 @@ def Exit():
 	sys.exit(1)
 
 
+exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+get_input_from_user = False
+if os.path.exists(exclude_file):
+	e = open(exclude_file, 'r').read().strip()
+	if e:
+		user_inp = input("Are you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+		if user_inp.lower().strip() == 'yes':
+			exclude = e
+		else:
+			get_input_from_user=True
+	else:
+		get_input_from_user= True
+else:
+	get_input_from_user=True
+if get_input_from_user:
+	exclude = input("Words to exclude (if multiple separate them by '|')  ")
+	if exclude:
+		open(exclude_file, 'w').write(exclude)
+
+
 error_file = "/home/amir/.downloading_errors.txt"
 if os.path.exists(error_file):
 	os.remove(error_file)
@@ -94,14 +94,16 @@ except:
 	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
 
+def main_func():
+	p = pool_func()
+	try:
+		p.map(download, urls_to_download)
+	except KeyboardInterrupt:
+		Exit()
 
 if exclude:
 	urls_to_download = exclude_func()
-p = pool_func()
-try:
-	p.map(download, urls_to_download)
-except KeyboardInterrupt:
-	Exit()
+main_func()
 
 while True:
 	part_files = [i for i in os.listdir() if i.endswith(".part")]
@@ -109,15 +111,11 @@ while True:
 		Exit()
 	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 	part_files_str = ' '.join(part_files)
-	part_files = [i for i in urls_to_download if i.split("/")[-1] in part_files_str]
+	part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
 	if not part_files:
 		Exit()	
 	urls_to_download = part_files
 	if exclude:
 		urls_to_download = exclude_func()
-	p = pool_func()
-	try:
-		p.map(download, urls_to_download)
-	except KeyboardInterrupt:
-		Exit()
-
+	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
+	main_func()
