@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 audit_every_course = input("Are you need to audit every course? [yes|no]")
 
 def LOGIN():
