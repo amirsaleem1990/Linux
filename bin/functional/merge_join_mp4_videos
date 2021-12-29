@@ -6,7 +6,7 @@ echo
 files_func(){
 	python3 <<< '
 import pandas as pd
-df = pd.DataFrame(pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list(), columns=["week", "video"])
+df = pd.DataFrame(pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list(), columns=["week", "video"]).dropna()
 try:
     df["week_numebr"] = df.week.astype(int)
 except:
@@ -23,7 +23,7 @@ prepare_files_names() {
 		x=$(for i in $(ls -1 *.mp4 *.webm *.mkv *.mov| sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 	else
 		if [[ $option_ -eq 2 ]]; then
-			orignial_duration=$(/amir_bin/video_duration 2 | tail -n1)
+			orignial_duration=$(/amir_bin/video_duration 2 | grep -v ^$| tail -n1)
 			orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
 			for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
 				echo $i
@@ -99,15 +99,14 @@ merge_(){
 }
 
 output_name(){
-	
-	output_file_name=$(basename $(pwd)-MERGED.mp4)
-	
-	test -f $output_file_name
 
-	if [[ $? -eq 0 ]]; then
-		echo -e "\n\nThe file $output_file_name already exists, please proveide a name: "
-		read output_file_name
-	fi
+	output_file_name=$(basename $(pwd)-MERGED.mp4)
+
+	test -f $output_file_name
+		if [[ $? -eq 0 ]]; then
+			echo -e "\n\nThe file $output_file_name already exists, please proveide a name: "
+			read output_file_name
+		fi
 }
 files_func_called_once=false
 output_name
