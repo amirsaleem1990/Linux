@@ -100,4 +100,6 @@ for i in f:
 	total_secs += float(h) * 3600 if m != "00" else 0
 open("/home/amir/.duration", "w").write(str(int(total_secs)))
 ' | python3
-echo -e "\n\nTotal time:\n`date -d@$(cat /home/amir/.duration) -u +%H:%M:%S`"
+echo -e "\nDD:HH:MM:SS"
+eval "echo $(date -ud "@$(cat /home/amir/.duration)" +'$((%s/3600/24)):%H:%M:%S')"
+echo 
