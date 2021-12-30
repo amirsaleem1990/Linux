@@ -26,30 +26,34 @@
 # trans -shell :ar
 
 
-file_name="/home/amir/.translate_temp"
-while :; do 
-	read -p "Enter: " ans
-	clear
-	# trans :ar -d "$(xsel -b)" | fribidi > $file_name
-	trans :ar -d "$ans" > $file_name
-	echo -e "\n==================================\n" >> $file_name
-	# x=$(trans :ar -b "$(xsel -b)" | fribidi)
-	x=$(trans :ar -b "$ans")
-	# echo -e "\n\t$(xsel -b):\n\t$x" >> $file_name
-	echo -e "\n\t$ans:\n\t$x" >> $file_name
-	cat $file_name
-done
-
-
-
-
-
 # file_name="/home/amir/.translate_temp"
-# trans :ar -d "$(xsel -b)" | fribidi > $file_name
-# echo -e "\n==================================\n" >> $file_name
-# x=$(trans :ar -b "$(xsel -b)" | fribidi)
-# echo -e "\n\t$(xsel -b):\n\t$x" >> $file_name
+# while :; do 
+# 	read -p "Enter: " ans
+# 	clear
+# 	# trans :ar -d "$(xsel -b)" | fribidi > $file_name
+# 	trans :ar -d "$ans" > $file_name
+# 	echo -e "\n==================================\n" >> $file_name
+# 	# x=$(trans :ar -b "$(xsel -b)" | fribidi)
+# 	x=$(trans :ar -b "$ans")
+# 	# echo -e "\n\t$(xsel -b):\n\t$x" >> $file_name
+# 	echo -e "\n\t$ans:\n\t$x" >> $file_name
+# 	cat $file_name
+# done
+
+
+
+
+while :; do
+	read -p "Enter: " input_
+	clear
+	# long_output=$(trans :ar -d "$(xsel -b)" | fribidi) > $file_name
+	# small_output=$(trans :ar -b "$(xsel -b)" | fribidi)
+	long_output=$(trans :ar -d "$input_" | fribidi)
+	small_output=$(trans :ar -b "$input_" | fribidi)
+	echo -e "$long_output\n==================================\n\n\t$input_:\n\t$small_output"
+done
 # soffice --infilter="Text (encoded):UTF8,,Courier New,en-US" --convert-to jpg $file_name 2>/dev/null
 # mogrify -trim -bordercolor "#FFF" -border 10 +repage $file_name.jpg 
 # feh -F $file_name.jpg 
 
+# book
