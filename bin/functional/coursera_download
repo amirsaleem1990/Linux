@@ -33,12 +33,12 @@ def LOGIN():
 			for course in course_name.split("|"):
 				browser.get(f"https://www.coursera.org/learn/{course.strip()}")
 				input("\nPress any key after audit: ")
-			else:
-				browser.get(f"https://www.coursera.org/learn/{course_name.strip()}")
-				input("\nPress any key after audit: ")
+		else:
+			browser.get(f"https://www.coursera.org/learn/{course_name.strip()}")
+			input("\nPress any key after audit: ")
 
 	return browser
-
+	
 def download(vids, vids_download_urls, course_name):             
 	for week, videos_urls in vids.items():
 		week_ = f"Week-{week}"
