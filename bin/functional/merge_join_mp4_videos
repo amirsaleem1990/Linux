@@ -57,7 +57,7 @@ prepare_files_names() {
 
 merge_(){
 
-	mkvmerge -o $output_file_name $x >/dev/null 2>&1
+	mkvmerge -o "$output_file_name" $x >/dev/null 2>&1
 
 	if [[ $? -eq 0 ]] ; then
 
@@ -80,14 +80,14 @@ merge_(){
 		# 	x=$(find . -name "*.mp4" | sort -n | sed 's/\.\///g' | xargs)
 		# fi
 
-		melt $x -consumer avformat:$output_file_name acodec=libmp3lame vcodec=libx264
+		melt $x -consumer avformat:"$output_file_name" acodec=libmp3lame vcodec=libx264
 
 		if [[ $? -eq 0 ]]; then
 
 			echo -e "\nBelow files merged into $output_file_name\n\n"
 
 			for i in $x ; do 
-				if [[ $i != $output_file_name ]] ; then
+				if [[ $i != "$output_file_name" ]] ; then
 					echo $i
 				fi
 			done
@@ -100,9 +100,9 @@ merge_(){
 
 output_name(){
 
-	output_file_name=$(basename $(pwd)-MERGED.mp4)
+	output_file_name=$(basename "$(pwd)-MERGED.mp4")
 
-	test -f $output_file_name
+	test -f "$output_file_name"
 		if [[ $? -eq 0 ]]; then
 			echo -e "\n\nThe file $output_file_name already exists, please proveide a name: "
 			read output_file_name
@@ -114,8 +114,8 @@ prepare_files_names
 merge_
 
 
-one_file_duration=$(video_duration $output_file_name | head -n1 | sed 's/\t\{1,\}/,/g' | cut -d, -f2)
-on_file_size_mb=$(du -s -BM $output_file_name | cut -d 'M' -f1)
+one_file_duration=$(video_duration "$output_file_name" | head -n1 | sed 's/\t\{1,\}/,/g' | cut -d, -f2)
+on_file_size_mb=$(du -s -BM "$output_file_name" | cut -d 'M' -f1)
 
 echo -e "\n----------- Comparison -----------"
 echo "Combined duration: $orignial_duration"
