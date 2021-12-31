@@ -29,9 +29,6 @@ if n > last_vid_num:
 		print("\n **** Full video NOT uploaded yet ****\n")
 		os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
 	else:
-		ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
-		if ans_ == "y":
-			open(_file_name_, 'w').write(str(n))
 		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
 			for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
@@ -42,9 +39,25 @@ if n > last_vid_num:
 						break
 				except:
 					pass
+			else:
+				for i in q.select("li"):
+					try:
+						l = i['data-source']
+						if "ok.ru" in l: 
+							l = l.replace("videoembed", "video")
+							break 
+					except:
+						pass
+				else:
+					print("NO video url")
+					exit()
+				print(l)
+
 			com = f"youtube-dl -f18 {l} || youtube-dl -f sd {l} || youtube-dl -f hd {l} || youtube-dl {l}"
 			print(f"\nDownload command: {com}\n\n\n")
 			os.system(com)
-	print()
+			ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+			if ans_ == "y":
+				open(_file_name_, 'w').write(str(n))
 
 
