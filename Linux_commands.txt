@@ -294,7 +294,9 @@ Search for a specific string “myname” in a file myfile.txt -----------------
 Search for a specific string “myname” with ignoring the case in a file myfile.txt -----------------grep -i “myname” myfile.txt
 Search for a specific string “myname” in a all files in current directory -----------------grep “myname” *
 Search for full word “myword” in a file myfile.txt -----------------grep -w “myword” myfile.txt
-Search a string “myname” in all files in all subdirectories recursively -----------------grep -r “myname” *
+Search a string “myname” in all files in all subdirectories recursively -----------------grep -r “myname” * ...........
+Search a string “myname” in all .sh files in all subdirectories recursively .............  grep --include="*.sh" -ri myname
+Search a string “myname” in all files (exluding binary files) in all subdirectories recursively .............  grep -rI myname
 ---------------
 # chmod
 # The command for manipulating the file permissions For better security, the permissions for file in Linux OS are categorized into different groups, users and other sections. You have the option of controlling the permissions by assigning the users under the given divisions via the command of ‘chmod’. These permissions would help the users to write, read and execute the respective files. This option is very much handy when you have to run a script in order to install the package, which remains non executable in the default for security reasons. With the command of ‘chmod +x’ you could end up making the script executable over your Linux system.
