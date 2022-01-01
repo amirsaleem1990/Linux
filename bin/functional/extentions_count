@@ -7,13 +7,22 @@ if [[ -z $1 ]]; then
     echo -e "\nArgument not passed, so this is the result of current directory only.\nFor all subdirectories give the perameter <2>\n\n"
     Max_Depth=1
 else
-    Max_Depth=$(IFS=$'\n'
-                for i in $(find . -type f) ; do 
-                    echo "$i" | grep -o '/' | wc -l
-                done |
-                sort -n |
-                tail -n1
-                )
+    if [[ $1 == 2 ]]; then
+        Max_Depth=$(IFS=$'\n'
+                    for i in $(find . -type f) ; do 
+                        echo "$i" | grep -o '/' | wc -l
+                    done |
+                    sort -n |
+                    tail -n1
+                    )
+    else
+        Max_Depth=1
+        cd $1
+        if [[ $? -ne 0 ]]; then
+            echo -e "\nThis is not a vlid direcotry\nAborting..."
+            exit 2
+        fi
+    fi
 fi
 
 find . -maxdepth $Max_Depth -type f -exec basename {} \; | 
