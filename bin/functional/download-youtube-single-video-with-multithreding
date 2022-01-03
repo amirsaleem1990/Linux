@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+# --embed-thumbnail                               : Embed thumbnail in the audio as cover art
+# --download-archive ytdl-archive.txt             : Download only videos not listed in the archive file. Record the IDs of 
+#                                                   all downloaded videos in it.
+# --all-subs                                      : Download all the available subtitles of the video 
+# --embed-subs                                    : Embed subtitles in the video (only for mp4, webm and mkv videos) 
+# --ffmpeg-location FFMPEG LOCATION -o a.mp4      : "%(uploader)s-%(title)s-%(id)s.%(ext)s" # Location of the #                                                   ffmpeg/avconv binary; either the path to the binary or its containing directory.
+# -i                                              : Continue on download errors, for example to skip unavailable videos in a playlist
+# -a links.txt                                    : File containing URLs to download ('-' for stdin), one URL per line. Lines 
+#                                                   starting with '#', ';' or ']' are considered as comments and ignored. 
+# --external-downloader aria2c                    : Use the specified external downloader. Currently 
+#                                                   supports aria2c,avconv,axel,c url,ffmpeg,httpie,wget
+# --external-downloader-args "-x 16 -s 16 -k 1M"  :  Give these arguments to the external downloader
+
+echo 
+read -p "Enter links file name: " links_file
+youtube-dl --embed-thumbnail \
+	--download-archive ytdl-archive.txt \
+	--all-subs \
+	--embed-subs \
+	--merge-output-format mkv \
+	--ffmpeg-location FFMPEG LOCATION -o "%(uploader)s-%(title)s-%(id)s.%(ext)s"\
+	-i \
+	-a $links_file \
+	--external-downloader aria2c \
+	--external-downloader-args "-x 16 -s 16 -k 1M"
