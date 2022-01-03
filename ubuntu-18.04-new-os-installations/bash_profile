@@ -180,11 +180,14 @@ si(){
     if [[ -z $file_name ]] ; then
         # echo "\nPlease Enter file name, (eg: si my_file_name\n"
         # return 1
-        file_name=$(max $(ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d'))
-        let "file_name++"
-        echo -e "\nYou don't provide a file name, so we saving it as <$file_name.png>\n"
+        if [[ $( ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d' | wc -l) -eq 0 ]]; then
+            file_name=1
+        else
+            file_name=$(max $(ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d'))
+            let "file_name++"
+        fi
+        echo -e "\nYou don't provided a file name, so we saved it as <$file_name.png>\n"
     fi
-
 
     test -f "$file_name"
     res_0=$?
