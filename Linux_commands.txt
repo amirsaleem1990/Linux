@@ -1717,3 +1717,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 # Find which disk/partition current directory is on ................. findmnt --output target --noheadings --target . ....................... df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
 
 #Extract Audio From Video  ...........  ffmpeg -i input-video-file output-audio-file
+
+Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }' data.txt .............. $ awk '{ sum += $NF } END { print sum }' data.txt # NF is the last column
