@@ -9,7 +9,13 @@ try:
 	if not 'youtube' in play_list_url and (not 'playlis' in play_list_url):
 		play_list_url = input("Enter playlist url: ")
 except:
-	play_list_url = input("Enter playlist url: ")
+	if os.path.exists("LINK"):
+		play_list_url = open("LINK", 'r').read().strip()
+		can_we_user_LINK_url = input("We're going to use url in LINK, Are you need to proceed? [yes|no] ") == 'yes'
+		if not can_we_user_LINK_url:
+			play_list_url = input("Enter playlist url: ")
+	else:	
+		play_list_url = input("Enter playlist url: ")
 
 
 x = get_soup_object_using_selenium(play_list_url)
