@@ -25,10 +25,11 @@ for F in f:
 	gitignore_file = "/home/amir/github/" + repo_name + "/.gitignore"
 	if os.path.exists(gitignore_file):
 		gitignore = open(gitignore_file, 'r').read().splitlines()
-	for gitignore_entry in gitignore:
-		if big_file_name in gitignore_entry:
-			to_remove.append(F)
-			break
+		if gitignore:
+			for gitignore_entry in gitignore:
+				if big_file_name in gitignore_entry:
+					to_remove.append(F)
+					break
 
 f = [i for i in f if not i in to_remove]
 #-----
