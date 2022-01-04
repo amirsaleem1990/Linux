@@ -1,0 +1,113 @@
+#!/usr/bin/python3
+from termcolor import colored
+import sys
+import os
+import pandas as pd
+
+if len(sys.argv) == 1:
+	there = input("Enter <there> direcotry: ")
+else:
+	there = sys.argv[1]
+
+while not os.path.exists(there):
+	print(f"\nSorry, this {there} is not a valid direcoty, please Enter a valid path: ")
+	there = input()
+
+if not there.endswith("/"):
+	there += "/"
+
+here_files  = [i for i in os.listdir()      if os.path.isfile(i)]
+there_files = [i for i in os.listdir(there) if os.path.isfile(there+i)]
+if not (here_files and there_files):
+	print(f"\nThere is no file in {os.getcwd() if not here_files else there} to compare\nAborting....")
+	exit(1)
+all_files = list(set(here_files + there_files))
+
+def get_size(x):
+	bytes_ = os.path.getsize(x)
+	kilobytes = bytes_ / 1000
+	megabytes = bytes_ / 1000 / 1000
+	gigabytes = bytes_ / 1000 / 1000 / 1000
+	return bytes_, kilobytes, megabytes, gigabytes
+
+
+d = {}
+for file in all_files:
+	if (file in here_files) and (file in there_files):
+		d[file] = ["IN BOTH",    file, get_size(file), get_size(there+file)]
+	elif file in here_files:
+		d[file] = ["HERE ONLY",  file, get_size(file), ()                       ]
+	else: # file in there_files ONLY:
+		d[file] = ["THERE ONLY", file, ()            , get_size(there+file)]
+
+df = pd.DataFrame.from_dict(d, orient="index").reset_index(drop=True)
+v = pd.concat([pd.DataFrame(df[2].to_list()),pd.DataFrame(df[3].to_list())], axis=1)
+v.columns = ['Here_B', 'Here_KB', 'Here_MB', 'Here_GB', 'THERE_B', 'THERE_KB', 'THERE_MB', 'THERE_GB']
+df = pd.concat([df.iloc[:, [0,1]], v], axis=1).rename(columns={1:"File", 0:"Existance"})
+
+df = df[['File', 'Existance', 'Here_B', 'THERE_B', 'Here_KB', 'THERE_KB', 'Here_MB', 'THERE_MB', 'Here_GB', 'THERE_GB']]
+
+x = ( df.Existance.eq("IN BOTH") & df.Here_B.eq(df.THERE_B) )
+
+if x.sum():
+	print(colored(f"There are {x.sum()} files that are in both directories AND have SAME size, files of which directory you need to REMOVE?", 'red'), f"\n0\t{os.getcwd()}\n1\t{there}")
+	which_one_to_remove = input()
+	if not which_one_to_remove in ['0', '1']:
+		print("\nWrong input\nAborting....")
+		exit(1)
+	here_remove = (which_one_to_remove == '0')
+	print(colored("\n\nWe're going to remove the following files, Are you need to proceed? [yes|no] ", 'red'))
+	to_remove_list = df[x].File.to_list()
+	if not here_remove:
+		to_remove_list = [there+i for i in to_remove_list]
+	print(*to_remove_list, sep="\n")
+	if input() != 'yes':
+		print("\nSkipping .........")
+	else:
+		for file_to_remove in df[x].File.to_list():
+			os.remove(file_to_remove)
+
+
+x = ( df.Existance.eq("IN BOTH") & df.Here_B.ne(df.THERE_B) )
+to_remove_list = []
+if x.sum():
+	print(colored(f"There are {x.sum()} files that are in both directories BUT have DIFFERENT sizes", 'red'))
+	for i in df[df.Existance.eq("IN BOTH") & df.Here_B.ne(df.THERE_B)].iterrows():
+		v = i[1]
+		if v.Here_B < v.THERE_B:
+			to_remove_list.append(v.File)
+		else:
+			to_remove_list.append(there+v.File)
+	print(colored("\n\nWe're going to remove the following files (The smallest in two directories) Are you need to proceed? [yes|no] ", 'red'))
+	print(*to_remove_list, sep="\n")
+	if input() != 'yes':
+		print("\nSkipping .........")
+	else:
+		for file_to_remove in to_remove_list:
+			os.remove(file_to_remove)
+
+
+print("\n\nNow you have unique files in both directories, you can move any of them to other.\n\n")
+# x = ( df.Existance.ne("IN BOTH"))
+# to_remove_lst = []
+# if x.sum():
+# 	for i in df[x].iterrows(): 
+# 		v = i[1] 
+# 		print("\n\n=================================")
+# 		print(v)
+# 		print(colored(f"\nWhich file you want to remove?\n0-\t{v.File}\n1-\t{there+v.File}", 'red'))
+# 		to_remove = input()
+# 		if not to_remove in ['0', '1']:
+# 			print(colored("\nSkipping..", 'red'))
+# 		else:
+# 			if to_remove == '0':
+# 				to_remove_lst.append(v.File)
+# 			else:
+# 				to_remove_lst.append(there+v.File)
+
+# 	print(colored("\n\nWe're going to remove the following files, Are you need to proceed? [yes|no] ", 'red'))
+# 	print(*to_remove_lst, sep="\n")
+# 	if input() == 'yes':
+# 		for i in to_remove_lst:
+# 			print("..Removing", i)
+# 			os.remove(i)
