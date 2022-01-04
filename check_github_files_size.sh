@@ -11,6 +11,7 @@ echo "
 cd /home/amir/github/
 rm -f /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 file_greater_than_one=0
+IFS=$'\n'
 for i in $(find . -size  +51199k | grep -v  '^.\/\.' | grep -v '\.pack$\|lfd-projects') ; do  
 	file_name=$(basename $i)
 	# git_lfs_files=$(cat `find /home/amir/github -name ".gitattributes"` | grep $file_name | wc -l)
