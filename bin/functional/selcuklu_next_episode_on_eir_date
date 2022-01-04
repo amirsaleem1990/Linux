@@ -129,14 +129,3 @@ if g:
 		open(_last_file_name_, 'w').write(str(next_episode-1))
 		print(  f"After : {open(_last_file_name_, 'r').read()} \n")
 print()
-
-
-print("""
-#############################################
-# agar video download kar len to            #
-# </home/amir/.selcul_last_downloaded.txt>  #
-# file ko update kar den                    #
-#############################################
-""")
-
-print()
