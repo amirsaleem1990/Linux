@@ -79,7 +79,8 @@ if n > last_vid_num:
 			open(_file_name_, 'w').write(str(n))
 		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
-			com = f"youtube-dl -f18 {l} || youtube-dl -f sd {l} || youtube-dl -f hd {l} || youtube-dl {l}"
+			#com = f"youtube-dl -f18 {l} || youtube-dl -f sd {l} || youtube-dl -f hd {l} || youtube-dl {l}"
+			com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
 			print(f"\nDownload command: {com}\n\n\n")
 			os.system(com)
 	print()
