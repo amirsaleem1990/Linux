@@ -17,7 +17,7 @@ os.chdir("/home/amir/github/")
 # 	           #  os.remove("git_files.txt")
 #             sys.exit()
 # os.remove("git_files.txt")
-exit_code = os.system("/home/amir/github/Linux/check_github_files_size.sh")
+exit_code = os.system("check_github_files_size.sh")
 if exit_code != 0:
 	import sys
 	sys.exit(2)
