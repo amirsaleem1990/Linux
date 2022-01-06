@@ -12,8 +12,20 @@ cd /home/amir/github/
 rm -f /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 file_greater_than_one=0
 IFS=$'\n'
+n=0
 for i in $(find . -size  +51199k | grep -v  '^.\/\.' | grep -v '\.pack$\|lfd-projects') ; do  
 	file_name=$(basename $i)
+	git_ignore_file=/home/amir/github/$(echo $i|  sed 's/^\.\///g' | cut -d/ -f1)/.gitignore
+	big_file_name=$(echo $i | rev | cut -d/ -f1 | rev)
+	
+	grep $big_file_name $git_ignore_file >/dev/null
+	if [[ $? -ne 0 ]]; then
+		echo -e "\nThe big file $big_file_name is not included in the git_ignore_file\n"
+		let "n++"
+	else
+		continue
+	fi
+
 	# git_lfs_files=$(cat `find /home/amir/github -name ".gitattributes"` | grep $file_name | wc -l)
 	# if [[ $git_lfs_files > 0 ]]; then
 	# continue
