@@ -1719,3 +1719,4 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 #Extract Audio From Video  ...........  ffmpeg -i input-video-file output-audio-file
 
 Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }' data.txt .............. $ awk '{ sum += $NF } END { print sum }' data.txt # NF is the last column
+# Check existence of input argument ....................... if [ 0 -eq 0 ]; then echo "No arguments supplied"; fi
