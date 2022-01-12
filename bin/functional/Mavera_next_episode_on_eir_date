@@ -1,0 +1,65 @@
+#!/usr/bin/ipython3
+from termcolor import colored
+print(colored("\n\n******** Mavera ********\n", 'red'))
+import os
+import sys
+import requests
+from bs4 import BeautifulSoup
+
+_file_name_ = "/home/amir/github/Amir-personal/.Mavera_last_downloaded.txt"
+last_vid_num = int(open(_file_name_, 'r').read().strip())
+last_video_url = "https://ardirilisertugrul.net/episode/Mavera-episode-" + str(last_vid_num)
+next_video_url = "https://ardirilisertugrul.net/episode/Mavera-episode-" + str(last_vid_num + 1)
+s = BeautifulSoup(requests.get(next_video_url).text, "lxml")
+print("Last video:", last_video_url)
+print("Next video:", next_video_url)
+
+# if s.find("div", {"class" : "WatchSection activee text-center"}) is None:
+# 	print("""\n\n#############################################################
+# ####------------------""", colored(" NO NEW VIDEO", 'red'),
+# """ -------------------####
+# #############################################################\n""")
+# 	sys.exit()
+
+to_print = """\n\n
+#############################################################
+####------------------ {} -----------------####
+#############################################################
+\n"""
+
+link = ''
+for i in s.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+    try:
+        if 'ok.ru' in i['href']:
+            link = 'https:' + i['href']
+    except:
+        pass
+if not link:
+	# print("No video found!!")
+	print(to_print.format("  NO NEW VIDEO  "))
+	sys.exit()
+
+print(to_print.format(" CONGRATULATIONS"))
+
+def get_duration(vid_url):
+	import youtube_dl
+	from datetime import timedelta
+	ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
+	with ydl:
+	    x = ydl.extract_info(vid_url, download=False)
+	duration = str(timedelta(seconds=int(x['duration'])))
+	print(f"\n\nDuration:\nHH:MM:SS\n0{duration}\n\n")
+
+get_duration(vid_url=link)
+ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+if ans_ == "y":
+	open(_file_name_, 'w').write(str(last_vid_num + 1 ))
+ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+if ans_ == "y":
+	#com = f"youtube-dl -f18 {link} || youtube-dl -f sd {link} || youtube-dl -f hd {link} || youtube-dl {link}"
+	com = f"/amir_bin/download-youtube-single-video-with-multithreding {link}"
+	print(f"\nDownload command: {com}\n\n\n")
+	os.system(com)
+print()
+
+
