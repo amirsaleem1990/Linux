@@ -28,6 +28,9 @@ to_print = """\n\n
 \n"""
 
 link = ''
+x = s.find("div", {"class" : "WatchSection activee text-center"})
+if x is None:
+	sys.exit()
 for i in s.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
     try:
         if 'ok.ru' in i['href']:
