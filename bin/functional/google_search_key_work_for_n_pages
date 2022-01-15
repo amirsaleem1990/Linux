@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+from get_soup_object_using_selenium import get_soup_object_using_selenium
+import pandas as pd
+user_input = input("Enter your keyword: ")
+base_url = f"https://www.google.com/search?q={user_input if not ' ' in user_input else '+'.join(user_input.split())}&start="
+pages_qty = int(input("Enter pages to search: "))
+pages_urls = [base_url + str(i) for i in range(0, pages_qty, 1)]
+all_links = []
+for page_url in pages_urls:
+	x = get_soup_object_using_selenium(page_url)
+	all_links += list({i for i in x[0] if i.startswith("http") and not 'google' in i})
+	print(f"\nExtracted {len(set(all_links))} unique urls from {pages_urls.index(page_url)+1} pages")
+print("\n\n")
+print(pd.Series(all_links).str.split("//").str[1].str.split("/").str[0].value_counts().to_string())
+print("\n\n")
+print(*sorted(set(all_links)), sep="\n")
+print("\n\n")
+com = "firefox " +  "'" + "' '".join(all_links) + "'"
+print(com)
