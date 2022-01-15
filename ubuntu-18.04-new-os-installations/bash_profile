@@ -102,6 +102,7 @@ poweroff() {
     elif [[ $ans == "no" ]]; then 
         /home/amir/H/manually_login_on_hrm_tool.py 1
         if [[ $? -eq 0 ]] ;then 
+            sleep 4s
             /sbin/poweroff
         else 
             echo -e "\n\nAn error occured\n\n"
