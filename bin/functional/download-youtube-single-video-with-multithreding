@@ -30,4 +30,5 @@ else
 	if [[ $? -ne 0 ]]; then
 		echo -e "\n\nAn error accured, Starting in normal downloading mode......"
 		youtube-dl -f hd "$1"
+	fi
 fi
