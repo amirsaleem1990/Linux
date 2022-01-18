@@ -2,9 +2,9 @@
 IFS=$'\n'
 echo 
 echo -e  "
-=========,===========,==================================\n
-Total_SEC,DD:HH:MM:SS,File Name\n
-=========,===========,==================================" >~/.sb1
+=========,===========,====,==============================\n
+Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
+=========,===========,====,==============================" >~/.sb1
 
 func(){
 	SEC=$(( `date +%s` - `stat -c %Y "$1"` ))
@@ -13,7 +13,8 @@ func(){
 	if [[ $(echo $x | grep '^[0-9]\:' | wc -l) -gt 0 ]]; then
 		x=0$x
 	fi
-	echo "$SEC,$x,$1"
+	size=$(du -sh "$1" | cut -d $'\t' -f1)
+	echo "$SEC,$x,$size,$1"
 }
 
 if [ $# -eq 0 ]; then
@@ -26,10 +27,9 @@ else
 	done | sort -nr >>  ~/.sb1
 fi
 
-
 echo -e  "
-=========,===========,==================================\n
-Total_SEC,DD:HH:MM:SS,File Name\n
-=========,===========,==================================" >>~/.sb1
-cat ~/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|File Name' 
+=========,===========,====,==============================\n
+Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
+=========,===========,====,==============================" >>~/.sb1
+cat ~/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|SIZE\|File Name' 
 echo
