@@ -17,3 +17,9 @@ print(*sorted(set(all_links)), sep="\n")
 print("\n\n")
 com = "firefox " +  "'" + "' '".join(all_links) + "'"
 print(com)
+
+print("\n\n")
+
+com = "firefox --private-window " +  "'" + "' '".join(all_links) + "'"
+print(com)
+
