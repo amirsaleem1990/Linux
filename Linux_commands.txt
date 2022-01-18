@@ -1721,3 +1721,5 @@ round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.
 Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }' data.txt .............. $ awk '{ sum += $NF } END { print sum }' data.txt # NF is the last column
 # Check existence of input argument ....................... if [ 0 -eq 0 ]; then echo "No arguments supplied"; fi
 # Check disk health ........... sudo '/home/amir/github/Linux/hdsentinel.gz'
+
+# echo with sudo ........... echo 'deb blah ... blah' | sudo tee -a /etc/apt/sources.list > /dev/null
