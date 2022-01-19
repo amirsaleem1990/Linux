@@ -88,6 +88,11 @@ fi
 
 # echo $total_secs
 # echo -e "\n\nTotal time:\n`date -d@$total_secs -u +%H:%M:%S`"
+test -f /home/amir/.duration
+if [[ $? -ne 0 ]] ;then
+	exit
+fi
+
 echo '
 f = open("/home/amir/.duration", "r").read().splitlines()
 total_secs = 0
