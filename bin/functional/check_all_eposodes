@@ -12,8 +12,11 @@ class Next_video:
 
 	def get_duration(self, vid_url):
 		ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
-		with ydl:
-		    x = ydl.extract_info(vid_url, download=False)
+		try:
+			with ydl:
+			    x = ydl.extract_info(vid_url, download=False)
+		except:
+			return
 		duration = str(timedelta(seconds=int(x['duration'])))
 		print(f"\n\nDuration:\nHH:MM:SS\n0{duration}\n\n")
 
@@ -73,7 +76,9 @@ class Next_video:
 				try:
 					l = i['href']
 					if "ok.ru" in l: 
-						l = 'https:' + l.replace("videoembed", "video")
+						l = l.replace("videoembed", "video")
+						if not l.startswith("https:"):
+							l = 'https:' + l
 						break
 				except:
 					pass
@@ -116,7 +121,9 @@ class Next_video:
 						try:
 							l = i['href']
 							if "ok.ru" in l: 
-								l = 'https:' + l.replace("videoembed", "video")
+								l = l.replace("videoembed", "video")
+								if not l.startswith("https:"):
+									l = "https" + l
 								break
 						except:
 							pass
@@ -136,12 +143,12 @@ class Next_video:
 						print(l)
 
 					self.download_a_video(_file_name_, l, n)
-					com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
-					print(f"\nDownload command: {com}\n\n\n")
-					os.system(com)
-					ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
-					if ans_ == "y":
-						open(_file_name_, 'w').write(str(n))
+					# com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
+					# print(f"\nDownload command: {com}\n\n\n")
+					# os.system(com)
+					# ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+					# if ans_ == "y":
+					# 	open(_file_name_, 'w').write(str(n))
 
 	def alp_arsalan_or_destan(self, name):
 		print(colored(f"\n\n******** {name} ********\n", 'red'))
