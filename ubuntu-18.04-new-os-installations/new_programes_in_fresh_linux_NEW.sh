@@ -74,6 +74,7 @@ func_ "apt install -y gparted"
 func_ "apt install -y youtube-dl"
 
 
+
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
@@ -186,3 +187,7 @@ echo "Apply this <'/home/amir/github/Linux/ubuntu-18.04-new-os-installations/Mou
 echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | sudo tee --append /etc/crontab 
 # Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
 
+
+
+#lated
+sudo apt-get install texlive-lang-cyrillic texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-latex-base -y
