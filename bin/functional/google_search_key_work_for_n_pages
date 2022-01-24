@@ -9,17 +9,25 @@ all_links = []
 for page_url in pages_urls:
 	x = get_soup_object_using_selenium(page_url)
 	all_links += list({i for i in x[0] if i.startswith("http") and not 'google' in i})
-	print(f"\nExtracted {len(set(all_links))} unique urls from {pages_urls.index(page_url)+1} pages")
+	all_links = list(set(all_links))
+	print(f"\nExtracted {len(all_links)} unique urls from {pages_urls.index(page_url)+1} pages")
 print("\n\n")
 print(pd.Series(all_links).str.split("//").str[1].str.split("/").str[0].value_counts().to_string())
 print("\n\n")
-print(*sorted(set(all_links)), sep="\n")
+print(*sorted(all_links), sep="\n")
 print("\n\n")
-com = "firefox " +  "'" + "' '".join(all_links) + "'"
-print(com)
+user_input_ =  input("""
+1- Open the urls in the normal setting
+2- Open the urls in the private setting
 
-print("\n\n")
-
-com = "firefox --private-window " +  "'" + "' '".join(all_links) + "'"
-print(com)
-
+""") 
+if user_input_ == "1":
+	com = "firefox " +  "'" + "' '".join(all_links) + "'"
+	os.system(com)
+elif user_input_ == "2":
+	com = "firefox --private-window " +  "'" + "' '".join(all_links) + "'"
+	os.system(com)
+else:
+	print("\n\nWrong input\n")
+	print("firefox " +  "'" + "' '".join(all_links) + "'")
+	print()
