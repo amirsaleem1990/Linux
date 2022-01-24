@@ -1723,3 +1723,5 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 # Check disk health ........... sudo '/home/amir/github/Linux/hdsentinel.gz'
 
 # echo with sudo ........... echo 'deb blah ... blah' | sudo tee -a /etc/apt/sources.list > /dev/null
+# open ssh server ......... sudo apt-get install openssh-server; sudo systemctl enable ssh; sudo systemctl start ssh
+
