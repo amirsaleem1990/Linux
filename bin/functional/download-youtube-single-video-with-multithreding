@@ -26,9 +26,9 @@ if [[ -z $1 ]]; then
 	--external-downloader aria2c \
 	--external-downloader-args "-x 16 -s 16 -k 1M"
 else
-	youtube-dl -f hd --external-downloader aria2c "$1"
+	youtube-dl --external-downloader aria2c "$1"
 	if [[ $? -ne 0 ]]; then
 		echo -e "\n\nAn error accured, Starting in normal downloading mode......"
-		youtube-dl -f hd "$1"
+		youtube-dl "$1"
 	fi
 fi
