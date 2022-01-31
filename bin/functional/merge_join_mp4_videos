@@ -13,9 +13,12 @@ files_func(){
 	python3 <<< '
 import pandas as pd
 x = pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list()
-df = pd.DataFrame(x, columns=(["week", "video"] if {len(i) for i in x} == 2 else ["course", "week", "video"] )).dropna()
+df = pd.DataFrame(x, columns=(["week", "video"] if ({len(i) for i in x} == {2}) else ["course", "week", "video"] )).dropna()
+
+course_exists=False
 if df.shape[1] == 3:
 	course_exists=True
+
 if course_exists:
 	try:
 	    df["course_numebr"] = df.course.astype(int)
