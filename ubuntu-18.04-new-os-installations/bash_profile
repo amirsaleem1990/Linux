@@ -66,8 +66,8 @@ alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status | grep 'Acti
 # alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
 
 
-# alias Latex="echo R | latex -output-format pdf resume.tex; evince resume.pdf"
-alias Latex="echo R | latex -output-format pdf resume.tex"
+alias Latex="echo R | latex -output-format pdf resume.tex; evince resume.pdf"
+#alias Latex="echo R | latex -output-format pdf resume.tex"
 
 
 
