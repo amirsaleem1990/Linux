@@ -35,7 +35,11 @@ class Next_video:
 			open(_file_name_, 'w').write(str(n))
 		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
-			com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
+			#com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
+			print("\n\n")
+			os.system(f"youtube-dl -F {l}")
+			usr_inpt = input("\nSelect the quality: ")
+			com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
 			print(f"\nDownload command: {com}\n\n\n")
 			os.system(com)
 
@@ -141,7 +145,7 @@ class Next_video:
 							# exit()
 							return 
 						print(l)
-
+					print(l)
 					self.download_a_video(_file_name_, l, n)
 
 
