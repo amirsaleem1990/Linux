@@ -1,6 +1,7 @@
 #!/usr/bin/env ipython3
-
+import matplotlib.pyplot as plt
 import os
+from calendar import isleap
 import sys
 import os
 import warnings
@@ -20,6 +21,12 @@ import getpass
 
 def string_time_to_minutes(x):
 	h,m,_ = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
+
+def string_time_to_minutes_2(x):
+	h,m = x.split(":")
 	h = int(h[1]) if h.startswith("0") else int(h)
 	m = int(m[1]) if m.startswith("0") else int(m)
 	return h*60 + m
@@ -123,6 +130,14 @@ d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime
 
 d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
 
+
+
+
+
+
+df2 = df.copy()
+
+
 y_ = 10
 
 draw.text(
@@ -170,3 +185,22 @@ draw.text(
 
 img.save(out_file)
 os.system(f"feh -F {out_file}")
+
+
+
+if not isleap(datetime.now().year):
+	df2 = df2[~(df2.Month.eq("2") & df2.Date.eq("29"))].reset_index(drop=True)	
+df2['Date'] = pd.to_datetime(str(datetime.now().year)  + "-" + df2.Month.apply(lambda x:"0" + x if len(x) == 1 else x) + "-" + df2.Date.apply(lambda x:"0" + x if len(x) == 1 else x) )      
+df2 = df2.sort_values("Date")
+
+plt.figure(figsize=(20, 8))  # make separate figure
+for e,i in enumerate(['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib','Isha'], start=1):
+	plt.subplot(3, 2, e)
+	x = df2.sort_values("Date").set_index("Date")[i]
+	ax = x.apply(string_time_to_minutes_2).plot(title=i)
+	plt.axvline(pd.Timestamp(str(datetime.now().date())),color='r')
+plt.show()
+
+
+
+
