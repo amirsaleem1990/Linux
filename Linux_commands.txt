@@ -1727,3 +1727,5 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # you can install a deb file using apt too ........... sudo apt install ./my_file.deb
 
+# launch evince in presentation mode ......... evince -s  file.pdf
+
