@@ -1729,3 +1729,5 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # launch evince in presentation mode ......... evince -s  file.pdf
 
+# list all files and directories (to the end) .............. find
+
