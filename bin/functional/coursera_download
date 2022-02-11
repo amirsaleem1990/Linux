@@ -5,7 +5,7 @@ audit_every_course = input("Are you need to audit every course? [yes|no]")
 def LOGIN():
 	print("Attempting to Login   ")
 
-	browser = webdriver.Firefox(executable_path = f"{base_dir}/github/working/Facebook_posts_links/geckodriver")
+	browser = webdriver.Firefox(executable_path = "geckodriver")
 
 	#navigates you to the  page.
 	browser.get(login_url)
@@ -45,7 +45,7 @@ def download(vids, vids_download_urls, course_name):
 		for video_url in videos_urls:
 			if not os.path.exists(f"{course_name}/{week_}"):
 				os.mkdir(f"{course_name}/{week_}")
-				open(f"{course_name}/LINK", 'w').write(f"https://www.coursera.org/learn/{course_name}")
+				open(f"{course_name}/LINK", 'w').write(f"https://www.coursera.org/learn/{course_name}\n")
 			try:
 				download_url = vids_download_urls[video_url][0]
 				vid_name = f"{week_}/{vids[week].index(video_url)+1}-{video_url.split('/')[-1]}"
