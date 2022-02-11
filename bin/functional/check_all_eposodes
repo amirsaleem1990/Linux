@@ -35,14 +35,15 @@ class Next_video:
 			open(_file_name_, 'w').write(str(n))
 		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
-			#com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
-			print("\n\n")
-			os.system(f"youtube-dl -F {l}")
-			usr_inpt = input("\nSelect the quality: ")
-			com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
-			print(f"\nDownload command: {com}\n\n\n")
+			if os.system(f"youtube-dl -F {l} | grep mpd-3 | wc -l") > 0:
+				com = f"youtube-dl -f mpd-3 --external-downloader aria2c {l}"
+			else:
+				print("\n\n")
+				os.system(f"youtube-dl -F {l}")
+				usr_inpt = input("\nSelect the quality: ")
+				com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
+			print(f"\nDownload command:\n{com}\n\n\n")
 			os.system(com)
-
 
 	def kurulus_osman(self):
 		print(colored("\n\n******** Kurulus usman ********\n", 'red'))
