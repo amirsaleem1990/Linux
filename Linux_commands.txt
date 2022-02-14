@@ -1731,3 +1731,11 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # list all files and directories (to the end) .............. find
 
+###########
+#merge/join multiple pictures into one
+#https://askubuntu.com/questions/226054/how-do-i-join-two-images-together
+#  join images horizontally ............ convert +append *.png out.png 
+#  join images vertically .............  convert -append *.png out.png
+####### END
+
+
