@@ -70,18 +70,18 @@ def extract_urls_from_html_file(file_name):
 
 
 def extract_urls_from_soup_object(s):
-    lst = []
-    for i in s.select("a"): 
-        try:
-        	lst.append(i['href']) 
-        except: 
-            pass 
-    for i in s.select("source"): 
-        try: 
-        	lst.append(i['src']) 
-        except: 
-            pass
-    return list(set(lst))
+	lst = []
+	for i in s.select("a"): 
+		try:
+			lst.append(i['href']) 
+		except: 
+			pass 
+	for i in s.select("source"): 
+		try: 
+			lst.append(i['src']) 
+		except: 
+			pass
+	return list(set(lst))
 
 
 
@@ -91,17 +91,17 @@ def extract_urls_from_url(url):
 	import requests
 
 	s = BeautifulSoup(requests.get(url).text, "lxml")
-    lst = []
-    for i in s.select("a"): 
-        try:
-        	lst.append(i['href']) 
-        except: 
-            pass 
-    for i in s.select("source"): 
-        try: 
-        	lst.append(i['src']) 
-        except: 
-            pass
-    return list(set(lst))
+	lst = []
+	for i in s.select("a"): 
+		try:
+			lst.append(i['href']) 
+		except: 
+			pass 
+	for i in s.select("source"): 
+		try: 
+			lst.append(i['src']) 
+		except: 
+			pass
+	return list(set(lst))
 
 
