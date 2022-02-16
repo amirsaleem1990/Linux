@@ -35,13 +35,16 @@ class Next_video:
 			open(_file_name_, 'w').write(str(n))
 		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
-			if os.system(f"youtube-dl -F {l} | grep mpd-3 | wc -l") > 0:
+			if int(list(os.popen(f"youtube-dl -F {l} 2>/dev/null| grep mpd-3 | wc -l"))[0].strip()) > 0:
 				com = f"youtube-dl -f mpd-3 --external-downloader aria2c {l}"
 			else:
-				print("\n\n")
-				os.system(f"youtube-dl -F {l}")
-				usr_inpt = input("\nSelect the quality: ")
-				com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
+				if int(list(os.popen("youtube-dl -F https://ardirilisertugrul.net/episode/AlpArslan-Buyuk-Selcuklu-episode-13 2>/dev/null| grep ^18 | wc -l"))[0].strip()) > 0:
+					com = f"youtube-dl -f 18 --external-downloader aria2c {l}"	
+				else:
+					print("\n\n")
+					os.system(f"youtube-dl -F {l}")
+					usr_inpt = input("\nSelect the quality: ")
+					com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
 			print(f"\nDownload command:\n{com}\n\n\n")
 			os.system(com)
 
