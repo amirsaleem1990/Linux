@@ -1,22 +1,18 @@
 #!/usr/bin/env ipython3
-import matplotlib.pyplot as plt
-import os
-from calendar import isleap
-import sys
-import os
+
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
+import sys
 import time
-from datetime import datetime
+import getpass
 import numpy as np
 import pandas as pd
-
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-import sys
-import getpass
+from PIL import Image, ImageFont, ImageDraw
+from calendar import isleap
+from datetime import datetime
+import matplotlib.pyplot as plt
 
 
 def string_time_to_minutes(x):
@@ -187,8 +183,10 @@ draw.text(
 )
 
 img.save(out_file_1)
-#os.system(f"feh -F {out_file_1}")
 
+
+os.system(f"feh -F {out_file_1}")
+sys.exit()
 
 
 if not isleap(datetime.now().year):
