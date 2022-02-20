@@ -106,7 +106,7 @@ repos = [repo for repo in repos if (not repo in not_to_commit_repos) and not (re
 # to_be_commit = d_['To be commit']
 # for i in to_be_commit:
 # 	os.chdir(f"/home/amir/github/{i}")
-# 	os.system("git status > ~/.x")
+# 	os.system("git status > /tmp/amir/.x")
 # 	status = [i.strip() for i in open("/home/amir/.x", 'r').read().splitlines() if i ]
 # 	if 'Untracked files:' in status:
 # 		q = status[status.index('Untracked files:'):]
