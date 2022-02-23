@@ -1,12 +1,63 @@
 #!/bin/bash
-echo "
-####################################################################################################################
-# This script get 3 inputs from user and then DOWNLOAD specific portion of video according to user inputs:         #
-#   1- URL                                                                                                         #
-#   2- starting point (from where you want to download), eg: 00:01:00.00, this means (from 1Minute:0Seconds)       #
-#   3- end point      (total time you want to download), eg: 00:10:00.00, this means (download only 10 seconds)    #
-####################################################################################################################
-"
+# echo "
+# ####################################################################################################################
+# # This script get 3 inputs from user and then DOWNLOAD specific portion of video according to user inputs:         #
+# #   1- URL                                                                                                         #
+# #   2- starting point (from where you want to download), eg: 00:01:00.00, this means (from 1Minute:0Seconds)       #
+# #   3- end point      (total time you want to download), eg: 00:10:00.00, this means (download only 10 seconds)    #
+# ####################################################################################################################
+# "
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -u|--url)
+      URL="$2"
+      ;;
+    -s|--starting_point)
+      startpoint="$2"
+      ;;
+    -e|--endpoint)
+	  endpoint="$2"
+	  ;;
+	-o|--output_file_name)
+	  output_file_name="$2"
+	  ;;
+    -h|--help)
+      echo -e "
+
+  Usage:
+  download_portion_of_video -u you_url -s 00:01:00.00 -e 00:10:00.00 -o out_put_file_name.mp4
+  # download 10 seconds from 1Minute:0Seconds of this URL. 
+
+  -u, --url   ............. video link
+  -s, --starting_point .... starting time eg: 00:01:00.00, this means (from 1Minute:0Seconds)
+  -e, --endpoint .......... time period   eg: 00:10:00.00, this means (download only 10 seconds)
+  -o  --output_file_name .. output file name
+  -h, --help  ............. help page
+
+  "
+  exit
+      ;;
+    *)
+      echo -e "
+    ***************************
+    * Error: Invalid argument.*
+    ***************************
+      "
+      exit 1
+  esac
+  shift
+  shift
+done
+
+[[ -z $URL ]] || [[ -z $startpoint ]] || [[ -z $endpoint ]] || [[ -z $output_file_name ]]
+if [[ $? -eq 0 ]]; then
+	echo -e "
+	Please provide all perameters
+	Aborting........
+	"
+	exit
+fi
+
 # read -p "Enter you URL: " URL
 # # URL=https://youtu.be/sQ870aTKqiM
 # a=`youtube-dl -g  $URL`
@@ -18,8 +69,10 @@ echo "
 # ffmpeg -ss $startpoint -i $first_url -ss $startpoint -i $second_url -t $endpoint -map 0:v -map 1:a -c:v libx264 -c:a aac output.mkv
 
 
-read -p "Enter you URL:                          " URL
-read -p "Enter start point    (eg: 00:01:00)     " startpoint
-read -p "Enter time your need (eg: 00:00:10)     " endpoint
-read -p "Enter output file name:                 " output_file_name
-ffmpeg -i $(youtube-dl -f 22 --get-url $URL) -ss $startpoint -to $endpoint -c:v copy -c:a copy $output_file_name
+# read -p "Enter you URL:                          " URL
+# read -p "Enter start point    (eg: 00:01:00)     " startpoint
+# read -p "Enter time your need (eg: 00:00:10)     " endpoint
+# read -p "Enter output file name:                 " output_file_name
+
+
+ffmpeg -i $(youtube-dl --get-url "$URL") -ss $startpoint -to $endpoint -c:v copy -c:a copy "$output_file_name"

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/ipython3 /home/amir/github/Amir-personal/todo_picture.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=todo
+Name=todo
+Comment[en_US]=todo
+Comment=todo

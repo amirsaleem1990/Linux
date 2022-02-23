@@ -183,7 +183,8 @@ grep 'word1\|word2\|word3' /path/to/file
 # ls only folders size ............. du -sh $(ls -d */)
 # cpu usage ................................ nmon
 # multiple terminals in one screen ........................... tmux ............ CTRL+B SHIFT+% ............... CTRL+B D ...................... tmux new -s assig_a_name ................. tmux a -t assig_a_name ............... 
-# install .deb file from terminal ........... sudo dpkg -i example.deb
+# install .deb file from terminal ........... sudo dpkg -i example.deb ............ gdebi example.deb
+
 # unzip .tar file ....................... tar xvf file_name.tar
 # ls output to array and then slice this array , for learning by watching series of videos stored in HDD ............... array=($(ls -1)) ..... this is one time only, then : vlc ${array[0]} ........... change <0> for each video.
 # open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
@@ -293,7 +294,9 @@ Search for a specific string “myname” in a file myfile.txt -----------------
 Search for a specific string “myname” with ignoring the case in a file myfile.txt -----------------grep -i “myname” myfile.txt
 Search for a specific string “myname” in a all files in current directory -----------------grep “myname” *
 Search for full word “myword” in a file myfile.txt -----------------grep -w “myword” myfile.txt
-Search a string “myname” in all files in all subdirectories recursively -----------------grep -r “myname” *
+Search a string “myname” in all files in all subdirectories recursively -----------------grep -r “myname” * ...........
+Search a string “myname” in all .sh files in all subdirectories recursively .............  grep --include="*.sh" -ri myname
+Search a string “myname” in all files (exluding binary files) in all subdirectories recursively .............  grep -rI myname
 ---------------
 # chmod
 # The command for manipulating the file permissions For better security, the permissions for file in Linux OS are categorized into different groups, users and other sections. You have the option of controlling the permissions by assigning the users under the given divisions via the command of ‘chmod’. These permissions would help the users to write, read and execute the respective files. This option is very much handy when you have to run a script in order to install the package, which remains non executable in the default for security reasons. With the command of ‘chmod +x’ you could end up making the script executable over your Linux system.
@@ -366,7 +369,7 @@ copy from vim to another application .............. Position the cursor where yo
 # replace dosts <.> in filename with <_>.................. a=a.b.c.d.pdf ; mv a.b.c.d.pdf "${a//\./_}"
 # git commit large file ...................... git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch large_file_name_with_path'
 
-Ctrl+U: This clears the entire line so you can type in a completely new command.
+Ctrl+U: This deletes the line from the beggining of the line to the position of the cursonr. # Possible made a mistake in typing the password? Instead of using backspace key all the way, simply use Ctrl+U and retype the password. You can discover plenty of other uses for these shortcuts. 
 Ctrl+K: This deletes the line from the position of the cursor to the end of the line.
 Ctrl+W: This deletes the word before the cursor only.
 
@@ -512,7 +515,7 @@ Set volume to 80%      ------------     amixer set 'Master' 80%
 # list only particuler extention files ...................... ls *.{png,txt}
 
 
-# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png
+# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png [Old version, NO LONGER WORK] .............. pdfunite $(ls file_{1,2,3,4}.pdf)  file_COMPLETE.pdf 
 
 # remove selected files .................... rm {17,18,19,20,21}*.mp4
 
@@ -612,6 +615,7 @@ chown new_user:new_group file
 # change owner and group in one line ...................... chown specific_user:group2 myfile
 #mplayer is a video player in linux
 # totem is ubuntu default video player
+# mpv is an ubuntu video player
 # split screen horisontaly .......... gTile(install it) ; and then SUPPER+ENTER(numberpad)
 # find empty folders ..................... find . -type d -empty
 # get video dimentions ................... ffmpeg -i Video.mkv 2>&1 | perl -lane 'print $1 if /(\d+x\d+)/'
@@ -686,7 +690,7 @@ password=type_you_password_here
 
 #swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
 # to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
-# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
+# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way : ((count--)) ................. another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
 
 check if two files are identical .......... cmp --silent $old $new || echo "files are different"
 #-----------------------
@@ -976,14 +980,7 @@ get only specific range of lines ................. sed -n '16224,16482p;16483q' 
 
 # convert epoch seconds to date time ............ date -d  @1612762179
 
-# install .deb file using:
-#### gdebi (gdebi application.deb)
-#### dpkg  (dpkg -i application.deb)
-
-
-
-
-# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc
+# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7 ........ bc <<< "scale=4;  2/66" ............. if you need long float output just use <-l> option, eg: bc -l <<< 4/7 #.57142857142857142857 
 # find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
 # get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
 
@@ -1321,12 +1318,7 @@ ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./
 
 # get last character from string ...................... echo "${var_name: -1}"
 
-
 iterate over arguments in script .............. for var in "$@"; do echo "$var"; done
-
-
-
-
 
 chage ................ change user password expiry information
 chage -l amir ........ show amir user password expiry information
@@ -1336,6 +1328,414 @@ chage -l amir ........ show amir user password expiry information
 
 read .txt file withing zip file (withoud unzipping) ................. unzip -p zip.zip file.txt 
 
-
 # erase complete drive (not a partition) ............. sudo shred -v -n1 -z /dev/sdX (replace <sdX> with your device name)
+
+# bash modulo if ..................... if ! ((n % 4)); then echo "$n divisible by 4."; fi .................. if [ $(( $a % 4 )) -eq 0 ]; then ..................... if [[ $(( $1 % 4 )) == 0 ]]; then ................. ((a%4)) && echo "$a is not divisible by 4" || echo "$a is divisible by 4" 
+
+# Convert seconds to hours, minutes, seconds ......................... date -d@$57024 -u +%H:%M:%S
+
+# How to download package not install it with apt-get command? .................. sudo apt-get install --download-only package_name ............. This will download pppoe and any dependencies you need, and place them in /var/cache/apt/archives. That way a subsequent apt-get install pppoe will be able to complete without any extra downloads.
+
+
+#-----------------
+Check if a Bash array contains a value 
+if [[ " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array contains value
+fi
+
+if [[ ! " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array doesn't contain value
+fi
+
+Note that in cases where the value you are searching for is one of the words in an array element with spaces, it will give false positives. For example
+
+array=("Jack Brown")
+value="Jack"
+
+he regex will see "Jack" as being in the array even though it isn't. So you'll have to change IFS and the separator characters on your regex if you want still to use this solution, like this
+
+IFS=$'\t'
+array=("Jack Brown\tJack Smith")
+unset IFS
+value="Jack"
+
+if [[ "\t${array[@]}\t" =~ "\t${value}\t" ]]; then
+    echo "true"
+else
+    echo "false"
+fi
+
+# False
+
+Obviously this can also be used as a test statement, allowing it to be expressed as a one-liner
+[[ " ${array[@]} " =~ " ${value} " ]] && echo "true" || echo "false"
+
+Second solution:
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+A test run of that function could look like:
+
+>>> array=("something to search for" "a string" "test2000")
+>>> containsElement "a string" "${array[@]}"
+>>> echo $?
+0
+>>> containsElement "blaha" "${array[@]}"
+>>> echo $?
+1
+
+Third solution:
+printf '%s\n' "${myarray[@]}" | grep -P '^mypattern$'
+
+Explanation
+
+The printf statement prints each element of the array on a separate line.
+
+The grep statement uses the special characters ^ and $ to find a line that contains exactly the pattern given as mypattern (no more, no less).
+
+Usage
+
+To put this into an if ... then statement:
+
+if printf '%s\n' "${myarray[@]}" | grep -q -P '^mypattern$'; then
+    # ...
+fi
+
+I added a -q flag to the grep expression so that it won't print matches; it will just treat the existence of a match as "true."
+
+
+fourth solution:
+inarray=$(echo ${haystack[@]} | grep -o "needle" | wc -w)
+
+non zero value indicates a match was found.
+
+... actually, to solve the problem mentioned with it not working with needle1 and needle2, if you only want an exact match, nothing more, nothing less, just add a w after the -o for a whole word match
+
+inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
+
+
+
+# unrar to some_destination ............... unrar e my_file.rar my/desired/destination/
+
+# python -m http.server 9000 .............. run http-server 
+#Create python virutal envoirment ................. python3 -m venv /path/to/new/virtual/environment
+
+#---------------------
+# List open Firefox tabs from the command line?
+https://superuser.com/questions/269443/list-open-firefox-tabs-from-the-command-line
+I recommend using https://github.com/balta2ar/brotab for this purpose:
+
+>>> pip3 install brotab
+>>> brotab install
+
+Install the web extension as well: https://addons.mozilla.org/en-US/firefox/addon/brotab/
+
+Restart Firefox, and you can run brotab commands such as:
+
+>>> brotab list
+#---------------------
+
+# disable internet for a user on a system ................. sudo iptables -A OUTPUT -m owner --uid-owner {USERNAME} -j REJECT
+
+
+# control android from linux .......... scrcpy
+
+ports in use ............. sudo lsof -i -P -n | grep LISTEN
+# print stderr only, not stdout ................... cmd > /dev/null ............. cmd 2>&1 > /dev/null
+# check if video is completely downloaded .............. if [[ 1 -gt 0 ]] ;then echo MY_VIDEO_NAME is not complete; else echo MY_VIDEO_NAME is complete ; fi
+# append lines in file ................. cat >> my/file/path.txt << eof .......... jab tak ksi new line me srif <eof> nahi likha jay ga, ham apni lines likh sakty hen, jesy hi <eof> likh kar enter karen gy to input terminate ho jay ga, or is line sy pehly ka sara contant my/file/path.txt me APPEND ho jay ga.
+
+write stdout & stderr to different files ............... cmd 1> output 2> error
+
+stdout & stderr to one file  ........... cmd &> streams
+
+It's recommended to use $(command) instead of `command`
+
+ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=wlp3s0 --localnet  
+
+
+# remove punctuation .......... echo 'olj;adf79329s;jfa(&*&^#@_(!_*)(' | sed s/[`\!\@\#$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g
+
+# see full terminal output using `screen`  .............. ctrl+a followed by [, followed by the up and down arrows.
+
+
+# .bashrc me jo alias ham define karty hen un ka code dekhly k lye ham terminal sy (alias alias_name) type karty hen, magar .bashrc jo functions defined hoty hen un ka code dekhny k lye ye kaam nahi karta, is kaam k lye ham function k uper ye line likhty hen ................ declare -f your_function_name ............. phir terminal par ja kar (type your_function_name) likhen.
+
+# copy folder with hidden files ............ cp -r path/to/existing/folder a/new/path ............. NOTE: omit slashed from both paths
+
+bluetooth ............ Identify your computer bluetooth: hcitool dev ............ Scan available devices : hcitool -i hci0 scan ................. bluetoothctl ................ paired-devices ............... connect XX:XX:XX:XX:XX:XX
+
+
+#--------------------------------------------------------
+# open image file 
+x-www-browser : in browser
+display       : imagemagic
+feh           :
+eog           : a default GNOME image viewer
+
+
+>>> mimeopen --help
+Usage:
+    mimeopen [options] [-] files
+
+Options:
+    -a, --ask
+        Do not execute the default application but ask which application to
+        run. This does not change the default application.
+
+    -d, --ask-default
+        Let the user choose a new default program for given files.
+
+    -n, --no-ask
+        Don't ask the user which program to use. Choose the default program
+        or the first program known to handle the file mimetype. This does
+        not set the default application.
+
+    -M, --magic-only
+        Do not check for extensions, globs or inode type, only look at the
+        content of the file. This is particularly useful if for some reason
+        you don't trust the name or the extension a file has.
+
+    --database=mimedir:mimedir:...
+        Force the program to look in these directories for the shared
+        mime-info database. The directories specified by the basedir
+        specification are ignored.
+
+    -D, --debug
+        Print debug information about how the mimetype was determined.
+
+    -h, --help
+    -u, --usage
+        Print a help message and exits.
+
+    -v, --version
+        Print the version of the program and exit.
+#--------------------------------------------------------
+
+#---------------------------------
+Ubuntu is derived from Debian Linux. Debian uses the dpkg packaging system. A packaging system is a way to provide programs and applications for installation. This way, you don’t have to build a program from the source code.
+
+APT (Advanced Package Tool) is the command line tool to interact with this packaging system. There are already dpkg commands to manage it, but apt is a more user-friendly way to handle packages.
+
+There are two main tools around APT: apt-get and apt-cache. apt-get is for installing, upgrading, and cleaning packages, while apt-cache command is used for finding new packages. 
+
+apt-get basically works on a database of available packages. If you don’t update this database, the system won’t know if there are newer packages available or not.
+
+Once you have updated the package database, you can upgrade the installed packages. The most convenient way is to upgrade all the packages that have updates available. You can use the command below for this purpose:
+    sudo apt-get upgrade
+To upgrade only a specific program, use the command below:
+    sudo apt-get upgrade <package_name>
+There is another way to perform a complete upgrade, by using the command below:
+    sudo apt-get dist-upgrade
+    But you should avoid using this command.
+
+Difference between upgrade and dist-upgrade
+    The command apt-get upgrade is very obedient. It never tries to remove any packages or tries to install a new package on its own.
+    The command apt-get dist-upgrade, on the other hand, is proactive. It looks for dependencies with the newer version of the package being installed and it tries to install new packages or remove an existing ones on its own.
+    It sounds like dist-upgrade is more powerful and intelligent, doesn’t it? But there is a risk with it.
+    See, it has a “smart” conflict resolution system. It will attempt to upgrade the most important packages, at the expense of the less important ones. This may lead to the removal of some packages, which you might not want. This is the main reason why dist-upgrade should be avoided on production machines.
+
+What is the difference between apt-get update and apt-get upgrade?
+    apt-get update ONLY updates the database of available packages
+    and 'apt-get upgrade' upgrades the installed packages to the newer version.    
+
+apt-cache:
+    command to search for packages
+    apt-cache search <search term>
+    you don’t need to know the exact name of the package. It searches in package names and their short descriptions, and shows result based on that.
+    If you just want to search the apt packages with specific package names, you can use the command below:
+        apt-cache pkgnames <search_term>
+        This gives you the list of all the packages starting with your search term.
+    Once you know the exact package name, you can get more information about it, such as version, dependencies, etc., by using the command below:
+        apt-cache showpkg <package_name>
+
+install multiple packages:
+    sudo apt-get install <package_1> <package_2> <package_3>
+
+What if you run install on an already installed package?
+    Suppose you already have a package installed, but you used the install command for it anyway. apt-get will actually look into the database, and if a newer version is available, it will upgrade the installed package to the newer one. So no harm is done by using this command — unless you don’t want the package to be upgraded.
+    
+    Suppose for some reason you want to install a package but don’t want to upgrade it if it is already installed. It sounds weird, but you may have reasons to do that.
+        For that case, you can use the no-upgrade flag in the following manner:
+        sudo apt-get install <package_name> --no-upgrade
+    How to only upgrade a package, not install it:
+        In case you want to upgrade a package provided it’s already installed, but don’t want to install it if it’s not, you can do that with the following command:
+            sudo apt-get install <package_name> --only-upgrade
+Another way of uninstalling packages is to use purge. The command is used in the following manner:
+    sudo apt-get purge <package_name>
+
+    What is the difference between apt-get remove and apt-get purge?
+        apt-get remove just removes the binaries of a package. It doesn’t touch the configuration files
+        apt-get purge removes everything related to a package, including the configuration files
+
+        So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+        Purge is particularly useful when you have messed up with the configuration of a program, when you want to completely erase its traces from the system and start afresh.
+
+        Most of the time, a simple remove is more than enough for uninstalling a package.
+
+
+Clear apt cache:
+    You can use the command below to clear apt cache (locally saved retrieved package files):
+        sudo apt-get clean
+    
+    Another way is to use autoclean. Unlike the above clean command, autoclean only removes those retrieved package files that have a newer version now, and so won’t be used anymore.
+        sudo apt-get autoclean
+
+    Another way to free up disk space is to use autoremove. It removes libraries and packages that were installed automatically to satisfy the dependencies of another installed package. If that package is removed, these automatically installed packages are useless in the system. This command removes such packages.
+        sudo apt-get autoremove
+
+    This is a command-line way of cleaning a Linux system. If you prefer a GUI, here are some CCleaner alternatives for Linux which you can use on Ubuntu and Ubuntu-based Linux distributions.
+
+
+So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+Difference Between apt and apt-get Explained
+    The reality is that the first stable version of apt was released in the year 2014
+    Debian, mother Linux of distributions like Ubuntu, Linux Mint, elementary OS etc, has a robust packaging system and every component and application is built into a package that is installed on your system. Debian uses a set of tools called Advanced Packaging Tool (APT) to manage this packaging system. Don’t confuse it with the command apt, it’s not the same.
+    There are various tools that interact with APT and allow you to install, remove and manage packages in Debian based Linux distributions. apt-get is one such command-line tool which is widely popular. Another popular tool is Aptitude with both GUI and command-line options.
+    You see, these commands are way too low level and they have so many functionalities which are perhaps never used by an average Linux user. On the other hand, the most commonly used package management commands are scattered across apt-get and apt-cache.
+    The apt commands have been introduced to solve this problem. apt consists some of the most widely used features from apt-get and apt-cache leaving aside obscure and seldom used features. It can also manage apt.conf file.
+    With apt, you don’t have to fiddle your way from apt-get commands to apt-cache. apt is more structured and provides you with necessary options needed to manage packages.
+    Bottom line: apt=most common used command options from apt-get and apt-cache.
+    So with apt, you get all the necessary tools in one place. You won’t be lost under tons of command options. The main aim of apt is to provide an efficient way of handling package in a way “pleasant for end users”.
+    When Debian says “pleasant for end users”, it actually means that. It has fewer but sufficient command options but in a more organized way. On top of that, it enables a few options by default that is actually helpful for the end users.
+    For example, you get to see the progress bar while installing or removing a program in apt.
+    apt also prompts you with the number of packages that can be upgraded when you update the repository database.
+    You can achieve the same with apt-get as well if you use additional command options. apt enables them by default and takes the pain away.
+
+    apt has a few commands of its own as well.
+
+        new apt command  | function of the command
+        ------------------------------------------
+        apt list         | Lists packages with criteria (installed, upgradable etc)
+        apt edit-sources | Edits sources list
+
+    One point to note here is that apt is under continuous development. So you may see a few new options added to the command in the future versions.
+    apt is the command that is being recommended by the Linux distributions. It provides the necessary option to manage the packages. Most important of all, it is easier to use with its fewer but easy to remember options.
+
+#---------------------------------
+# Reading compressed file without extracting ................ z commands provide alternatives of the regular commands that you use to deal with log files such as less, cat, grep etc. So you get zless, zcat, zgrep etc and you don’t even have to explicitly extract the compressed files
+
+
+# copy&paste in terminal ................... Select the text for copying and middle click (scroll button on the mouse) for paste
+
+
+# du -ah ..................... recursive ALL FILES sizes
+
+# grep -E .................. `grep -E "a|e"` is equals to `grep "a\|e"`
+# adb screen sharing ............ scrcpy
+# search for a file by its exact name (not *name*): .....................   locate -b '\domain-list.txt'
+# select multiple lines in terminal ; double click on the beggining line / word, press CTRL + SHIF + single click on the last word of desired selection
+
+
+anacron .........  anacron is a Linux facility used to run commands periodically with a frequency defined in days, weeks and months. Unlike its sister cron; it assumes that a system will not run continuously, therefore if a scheduled job is due when the system is off, it’s run once the machine is powered on. For more information about anacron and cron read: https://www.tecmint.com/cron-vs-anacron-schedule-jobs-using-anacron-on-linux/
+
+apropos ............ short man page
+
+at (schedule tasks to run in a future time) .............. sudo echo "shutdown -h now" | at -m 23:55 ............ 'atq' command is used to view jobs in at command queue ............ 'atrm' command is used to remove/deletes jobs (identified by their job number) from at command queue
+
+basename ................  It's helps to print the name of a file stripping of directories in the absolute path ............... basename /my/folder/my/subfolder/myfile.txt -> myfile.txt
+
+cksum .......... It's used to display the CRC checksum and byte count of an input file.
+
+cmp ............. It's  performs a byte-by-byte comparison of two files like this.
+
+comm ............. It's used to compare two sorted files line-by-line
+
+diff .......... It's used to compare two files line by line. It can also be used to find the difference between two directories in Linux.
+
+change host name .............. sudo hostname your_new_host_name
+
+killall ......... It's used to kill a process by its name.............. killall firefox
+
+lscpu ........... It's  displays system’s CPU architecture information (such as number of CPUs, threads, cores, sockets, and more)
+
+md5sum ........... It's used to compute and print the MD5 message digest of a file. If run without arguments, debsums checks every file on your system against the stock md5sum files
+
+nc -zv 192.168.253.2 5000 ................... checking if the port 5000 is open on the host 192.168.253.2
+
+nice -12 tar -czf backup.tar.bz2 /home/* ................. The command starts the process “tar command” setting the “nice” value to 12.
+
+openssl  ..............  The openssl is a command line tool for using the different cryptography operations of OpenSSL’s crypto library from the shell. The command below will create an archive of all files in the current directory and encrypt the contents of the archive file ................ tar -czf - * | openssl enc -e -aes256 -out backup.tar.gz
+
+pidof ................... pidof displays the process ID of a running program/command
+
+cut -d: -f1 < /etc/passwd
+
+use xargs to copy a file to multiple directories at once; in this example we are trying to copy the file. ................ echo ./Templates/ ./Documents/ | xargs -n 1 cp -v ./Downloads/SIC_Template.xlsx 
+
+delete all files within a directory except one or few files with a given extension................... find . -type f -not -name '*gz' -print0 | xargs -0 -I {} rm -v {}
+
+
+check comma count in each line of the file ................. awk -F ',' 'NF{print NF-1}' train.csv  | sort | uniq -c
+
+If you’ve a collection of files with “.html” extension and you want to rename all of them with “.php” extension, you can type the command below. ...................  rename 's/\.html$/\.php/' *.html
+
+
+
+rdiff-backup is a powerful local/remote incremental backup script written in Python. It works on any POSIX operating system such as Linux, Mac OS X. Note that for remote backups, you must install the same version of rdiff-backup on both the local and remote machines. Below is an example of a local backup command:......................  sudo rdiff-backup /etc /media/tecmint/Backup/server_etc.backup
+
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+
+
+trim leading and trailing whitespace from each line of some output .................. awk '{$1=$1;print}' ........... awk '{$1=$1};1'
+
+join multiple lines of file names into one with custom delimiter ............ ls -1 | paste -sd "," -
+
+do nothing when I close my laptop lid ................... 1- open /etc/systemd/logind.conf; If HandleLidSwitch is not set to ignore then change it ; Make sure it's not commented out; Restart the systemd daemon (be aware that this will log you off) sudo service systemd-logind restart
+
+round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.3f\n", $1) }'
+
+# skip / exclude first n 8 lines of the file .............. sed 1,8d file.txt
+
+# indent the output .......... command/script | sed 's/^/     /'
+
+# Run A Command For A Specific Time ...................... timeout <time-limit-interval> <command> ............. timeout 10s tail -f /var/log/pacman.log
+
+# 'source .bashrc' is equal to '. .bashrc' ............... 'source ~/.bash_profile' is equal to '. ~/.bash_profile'
+
+# Remove lines containing non-numeric entries  .......................... sed  '/[^[:digit:].+-]/d' file
+
+# join/merge multiple mp4/videos into one .......... mkvmerge -o outfile.mkv infile_01.mp4 \+ infile_02.mp4 \+ infile_03.mp4
+
+# push to a branch ............. git push -u origin main:your_branch_name
+
+# vifm is  a terminal-based file browser application
+
+# split one line into multiple lines ................. command | xargs -n 1 #https://stackoverflow.com/questions/36689275/bash-split-line-into-multiple-lines
+
+# If you use Ctrl+S in the terminal, your terminal ‘freezes’. This is coming from the legacy computing where there was no scope of scrolling back up. Hence, if there were lots of output lines, Ctrl+S was used for stopping the screen so that text on the screen could be read. You can unfreeze your terminal with Ctrl+Q. But again, avoid using Ctrl+S in the terminal.
+
+# in an nautilus open window, you can show hidden files by CTRL+H
+
+# Find which disk/partition current directory is on ................. findmnt --output target --noheadings --target . ....................... df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
+
+#Extract Audio From Video  ...........  ffmpeg -i input-video-file output-audio-file
+
+Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }' data.txt .............. $ awk '{ sum += $NF } END { print sum }' data.txt # NF is the last column
+# Check existence of input argument ....................... if [ 0 -eq 0 ]; then echo "No arguments supplied"; fi
+# Check disk health ........... sudo '/home/amir/github/Linux/hdsentinel.gz'
+
+# echo with sudo ........... echo 'deb blah ... blah' | sudo tee -a /etc/apt/sources.list > /dev/null
+# open ssh server ......... sudo apt-get install openssh-server; sudo systemctl enable ssh; sudo systemctl start ssh
+
+# you can install a deb file using apt too ........... sudo apt install ./my_file.deb
+
+# launch evince in presentation mode ......... evince -s  file.pdf
+
+# list all files and directories (to the end) .............. find
+
+###########
+#merge/join multiple pictures into one
+#https://askubuntu.com/questions/226054/how-do-i-join-two-images-together
+#  join images horizontally ............ convert +append *.png out.png 
+#  join images vertically .............  convert -append *.png out.png
+####### END
+
 

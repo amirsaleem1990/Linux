@@ -1,0 +1,64 @@
+#!/usr/bin/bash
+IFS=$'\n'
+if [[ -z $1 ]]; then
+	exit
+fi
+
+total_time=0
+total_size=0
+func() {
+	duration=$(ffprobe "$1" 2>&1 | grep Duration | cut -d: -f2-4 | cut -d, -f1 | sed 's/\ //g')
+
+	if [[ $duration != "" ]]; then
+		seconds=0
+		seconds=$(bc -l <<< $(echo $duration | cut -d: -f1 | sed 's/^0//g')*60*60 )
+		seconds=$(bc -l <<< $seconds+$(echo $duration | cut -d: -f2 | sed 's/^0//g')*60 )
+		seconds=$(bc -l <<< $seconds+$(echo $duration | cut -d: -f3 | sed 's/^0//g') )
+		seconds=$(printf "%.0f\n" $seconds)
+
+		total_time=$(($total_time+$seconds))
+
+		size=$(du -sh "$1" | cut -d$'\t' -f1)
+		
+		total_size=$(($total_size+$(du -s "$1"  | cut -d $'\t' -f1)))
+		
+		echo -e "$size\t$duration\t$1"
+
+	fi
+}
+
+convertsecs() {
+
+	((h=${1}/3600))
+	((m=(${1}%3600)/60))
+	((s=${1}%60))
+	printf "%02d:%02d:%02d\n" $h $m $s
+	}
+
+if [ $# -gt 1 ]; then 
+	for i in "$@"; do
+		func $i
+	done
+	
+	kb=$total_size
+	mb=$(bc -l <<< $kb/1000)
+	gb=$(bc -l <<< $mb/1000)
+
+	if [[ $(echo $mb'<'1 | bc -l) -eq 1 ]]  ; then
+		size_unit=" KB"
+		final_size=$kb
+	elif [[ $(echo $gb'<'1 | bc -l) -eq 1 ]]; then
+		size_unit=" MB"
+		final_size=$mb
+	else
+		size_unit=" GB"
+		final_size=$gb
+	fi
+
+	final_size=$(echo $final_size | awk '{ printf("%.3f\n", $1) }')
+	final_time=$(convertsecs $total_time)
+	echo -e "\n\nTotal Size: $final_size$size_unit\nTotal Time: $final_time\n"
+else
+	func "$1"
+fi
+

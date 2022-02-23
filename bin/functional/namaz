@@ -1,11 +1,58 @@
 #!/usr/bin/env ipython3
-from tabulate import tabulate
-from datetime import datetime
-import numpy as np
-from pprint import pprint
-import pandas as pd
 
-df = pd.read_csv("/home/amir/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+import warnings
+warnings.filterwarnings("ignore")
+
+import os
+import sys
+import time
+import getpass
+import numpy as np
+import pandas as pd
+from PIL import Image, ImageFont, ImageDraw
+from calendar import isleap
+from datetime import datetime
+import matplotlib.pyplot as plt
+
+
+def string_time_to_minutes(x):
+	h,m,_ = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
+
+def string_time_to_minutes_2(x):
+	h,m = x.split(":")
+	h = int(h[1]) if h.startswith("0") else int(h)
+	m = int(m[1]) if m.startswith("0") else int(m)
+	return h*60 + m
+
+def fun_(x):
+	try:
+		y = x.split(":")[1]
+	except:
+		pass
+	x = x.split(":")[0]
+	x = x if not x.startswith("0") else x[1:]
+	x = x if int(x) < 13 else str(int(x)-12)
+	x = x if len(x) == 2 else "0"+x
+	try:
+		return x + ":" + y
+	except:
+		return x 
+
+
+in_file = f'/home/{getpass.getuser()}/github/Linux/bin/functional/namaz.png'
+out_file_1 = f'/home/{getpass.getuser()}/.namaz_1.png'
+out_file_2 = f'/home/{getpass.getuser()}/.namaz_2.png'
+out_file_3 = f'/home/{getpass.getuser()}/.namaz_3.png'
+
+img = Image.open(in_file)
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype('FreeMono.ttf', 40)
+
+
+df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
 df.drop("Asr_1", axis=1, inplace=True)
 df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
 
@@ -13,56 +60,153 @@ d = str(datetime.now()).split()[0][5:].split("-")
 today = df[(df.Month == d[0].lstrip("0")) & (df.Date == d[1].lstrip("0"))].T
 
 
-def fun_(x):
-    try:
-        y = x.split(":")[1]
-    except:
-        pass
-    x = x.split(":")[0]
-    x = x if not x.startswith("0") else x[1:]
-    x = x if int(x) < 13 else str(int(x)-12)
-    x = x if len(x) == 2 else "0"+x
-    try:
-        return x + ":" + y
-    except:
-        return x 
 
 tm = ":".join(str(datetime.now()).split()[1].split(".")[0].split(":")[:2])
 try:
 	current_prayer_time = today[2:].iloc[np.where(today[2:] > tm)[0][0]]
 except:
-	print("No Another Namaz today, Sleep! :p")
-	import sys
+	# print("No Another Namaz today, Sleep! :p")
+	y_ = 10
+
+	draw.text(
+		(680, y_), 
+		f"Current Time: {datetime.now().strftime('%I:%M:%S')}", 
+		fill='white', ##FFFFFF 
+		font=font
+		)
+
+	y_ = 120
+
+	today = today.iloc[2:]
+	for namaz, time in today.iterrows(): 
+		# row = i[1]
+		to_print = "                           | {:<12}  {}  |  ".format(namaz, str(time.iloc[0]))
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='#FFFFFF', 
+			font=font
+		)
+		y_ += 40
+
+
+	draw.text(
+		(50, y_+10), 
+		"\n\n------------------ No Another Namaz today, Sleep! :p ------------------ \n", 
+		fill='#FFFFFF', 
+		font=font
+	)
+
+	img.save(out_file_1)
+	os.system(f"feh -F {out_file_1}")
+
 	sys.exit(0)
 
 X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
-print(tabulate(X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"}), headers='keys', tablefmt='psql'))
+d =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+#"""
+d['NextNamaz'] = ''
+d.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
 
-def remaining_time(current_time, last_time):
-    c1 = current_time.split(":")
-    l1 = last_time.split(":")
-    ch = int(c1[0] if len(c1[0]) == 2 else c1[0][1])
-    cm = int(c1[1] if len(c1[1]) == 2 else c1[1][1])
-    lh = int(l1[0] if len(l1[0]) == 2 else l1[0][1])
-    lm = int(l1[1] if len(l1[1]) == 2 else l1[1][1])
-    remainting_minutes = ((lh - ch) * 60) + (lm - cm)
-    rh = remainting_minutes // 60
-    remainting_minutes -= rh * 60
-    if len(str(rh)) == 1:
-        rh = "0" + str(rh)
-    if len(str(remainting_minutes)) == 1:
-        remainting_minutes = "0" + str(remainting_minutes)
-    print(f"Remaining Time for {current_prayer_time.name.upper()}: \n\nHours  : {rh}\nMinutes: {remainting_minutes}")
-print("\n"+"#"*30)
-remaining_time(tm, current_prayer_time.values[0])
-print("#"*30)
+
+d['Accurate_time'] = None
+d.loc[3:, 'Accurate_time'] = (pd.to_datetime(d.TIME[3:]) + pd.Timedelta(hours=12)).dt.time.astype(str).to_list()
+
+d.iloc[:3].Accurate_time = pd.to_datetime(d.iloc[:3].TIME).dt.time.astype(str).to_list()
 
 
 
-# minimum and maximux prayter times
-# def f(x):
-#     return pd.to_datetime(x, format='%H:%M').dt.time
-# df = pd.concat([df[["Month", "Date"]], 
-#            df[['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']].apply(f)], 
-#            axis=1)
-# print(tabulate(df.apply([min, max]), headers='keys', tablefmt='psql'))
+d['Time_in_minutes'] = d.Accurate_time.apply(string_time_to_minutes) 
+now_time = string_time_to_minutes(str(datetime.now()).split()[1].split(".")[0])
+d['TimeLeft'] = (d.Time_in_minutes - now_time).astype(str)
+
+d = d.drop(columns=['Accurate_time', 'Time_in_minutes'])
+
+d.loc[d.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
+
+
+d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
+
+d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
+
+
+
+
+
+
+df2 = df.copy()
+
+
+y_ = 10
+
+draw.text(
+	(680, y_), 
+	f"Current Time: {datetime.now().strftime('%I:%M:%S')}", 
+	fill='white', ##FFFFFF 
+	font=font
+	)
+
+y_ = 80
+
+draw.text(
+	(0, y_), 
+	"\n    {:<15}".format('Namaz') + "{:<8}".format('Time') + "{:<15}".format('NextNamaz') + "{:<18}".format('TimeLeft[mins]') + "{:<12}".format('TimeLeft[H:M:S]') + "\n   -------------------------------------------------------------------------\n", 
+	fill='white', 
+	font=font
+	)
+y_ += 120
+
+for i in d.iterrows(): 
+	row = i[1]
+	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row['TimeLeft[mins]'])} | {row['TimeLeft[H:M:S]']}"
+	if row.NextNamaz == "<=======>":
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='red', 
+			font=font
+		)
+	else:
+		draw.text(
+			(0, y_), 
+			to_print + "\n", 
+			fill='#FFFFFF', 
+			font=font
+		)
+		# print(to_print)
+	y_ += 40
+draw.text(
+	(50, y_+10), 
+	" -------------------------------------------------------------------------\n", 
+	fill='#FFFFFF', 
+	font=font
+)
+
+img.save(out_file_1)
+
+
+os.system(f"feh -F {out_file_1}")
+sys.exit()
+
+
+if not isleap(datetime.now().year):
+	df2 = df2[~(df2.Month.eq("2") & df2.Date.eq("29"))].reset_index(drop=True)	
+df2['Date'] = pd.to_datetime(str(datetime.now().year)  + "-" + df2.Month.apply(lambda x:"0" + x if len(x) == 1 else x) + "-" + df2.Date.apply(lambda x:"0" + x if len(x) == 1 else x) )      
+df2 = df2.sort_values("Date")
+
+#plt.rcParams['savefig.facecolor']='black'
+#plt.rcParams['axes.facecolor']='blue'
+
+plt.figure(figsize=(23, 6))  # make separate figure
+for e,i in enumerate(['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib','Isha'], start=1):
+	plt.subplot(2, 3, e)
+	x = df2.sort_values("Date").set_index("Date")[i]
+	ax = x.apply(string_time_to_minutes_2).plot(title=i)
+	plt.axvline(pd.Timestamp(str(datetime.now().date())),color='r')
+#plt.show()
+plt.savefig(out_file_2, bbox_inches='tight')
+
+com = f"convert -append {out_file_2} {out_file_1} {out_file_3}; feh -F {out_file_3}"
+os.system(com)
+
+

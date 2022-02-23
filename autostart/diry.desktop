@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=diry
-Exec=bash /home/amir/github/Amir-personal/diry/bash-script.sh
-Type=Application
-X-GNOME-Autostart-enabled=true

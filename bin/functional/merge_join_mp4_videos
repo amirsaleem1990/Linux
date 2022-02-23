@@ -1,0 +1,151 @@
+#!/usr/bin/bash
+
+rm -f /home/amir/.m
+rm -f /home/amir/.m2
+
+original_IFS=$IFS
+echo -e "\n1-Current mp4 files\n2-Recursive mp4 files"
+read option_
+
+echo 
+
+files_func(){
+	python3 <<< '
+import pandas as pd
+x = pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list()
+df = pd.DataFrame(x, columns=(["week", "video"] if ({len(i) for i in x} == {2}) else ["course", "week", "video"] )).dropna()
+
+course_exists=False
+if df.shape[1] == 3:
+	course_exists=True
+
+if course_exists:
+	try:
+	    df["course_numebr"] = df.course.astype(int)
+	except:
+	    df["course_numebr"] = (df.course.str.split("-").str[0]).astype(int)
+try:
+    df["week_numebr"] = df.week.astype(int)
+except:
+    df["week_numebr"] = (df.week.str.split("-").str[1]).astype(int)
+df["video_numebr"] = (df.video.str.split("-").str[0]).astype(int)
+if course_exists:
+	df = df.sort_values(["course_numebr", "week_numebr", "video_numebr"])
+	open("/home/amir/.m2", "w").write(" + ".join((df.course + "/" + df.week + "/" + df.video).to_list())+"\n")
+else:
+	df = df.sort_values(["week_numebr", "video_numebr"])
+	open("/home/amir/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
+'
+	}
+
+prepare_files_names() {
+	FS=$'\n'
+	if [[ $option_ -eq 1 ]]; then
+		x=$(for i in $(ls -1 *.mp4 *.webm *.mkv *.mov| sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+	else
+		if [[ $option_ -eq 2 ]]; then
+			orignial_duration=$(/amir_bin/video_duration 2 | grep -v ^$| tail -n1)
+			orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
+			for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
+				echo $i
+			done > /home/amir/.m
+			files_func
+			if [[ $? -eq 0 ]]; then
+				files_func_called_once=true
+			fi
+			test -f /home/amir/.m2
+			if [[ $? -ne 0 ]]; then
+				exit
+			fi
+			# x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
+
+			x=$(cat /home/amir/.m2)
+			
+			IFS=' \+'
+			for i in $x ; do 
+				echo $i
+			done
+			IFS=$original_IFS
+
+			echo -e "\nWe are going to merge above files in mentioned order, Are you agree? [y|n]"
+			read answer_
+			if [[ $answer_ != "y" ]]; then
+				echo -e "\nYou are not agree!\nAborting.........\n"
+				exit 2
+			fi
+		else
+			echo -e "!! WRONG INPUT, Your input should be 1 or 2\nAborting.....\n"
+			exit
+		fi
+	fi
+}
+
+merge_(){
+
+	mkvmerge -o "$output_file_name" $x >/dev/null 2>&1
+
+	if [[ $? -eq 0 ]] ; then
+
+		echo -e "\nBelow files merged into $output_file_name\n\n"
+
+		IFS=' \+'
+		for i in $x ; do 
+			# if [[ $i != $output_file_name ]] ; then
+			echo $i
+			# fi
+		done
+		IFS=$original_IFS
+
+	else
+
+		x=$(echo $x | sed 's/\ +/ /g')
+		# if [[ $option_ -eq 1 ]]; then
+		# 	x=$(ls *.mp4 | xargs)
+		# else
+		# 	x=$(find . -name "*.mp4" | sort -n | sed 's/\.\///g' | xargs)
+		# fi
+
+		melt $x -consumer avformat:"$output_file_name" acodec=libmp3lame vcodec=libx264
+
+		if [[ $? -eq 0 ]]; then
+
+			echo -e "\nBelow files merged into $output_file_name\n\n"
+
+			for i in $x ; do 
+				if [[ $i != "$output_file_name" ]] ; then
+					echo $i
+				fi
+			done
+		else
+			echo -e "\n\nAn Error occured\n\n"
+			exit
+		fi
+	fi
+}
+
+output_name(){
+
+	output_file_name=$(basename "$(pwd)-MERGED.mp4")
+
+	test -f "$output_file_name"
+		if [[ $? -eq 0 ]]; then
+			echo -e "\n\nThe file $output_file_name already exists, please proveide a name: "
+			read output_file_name
+		fi
+}
+files_func_called_once=false
+output_name
+prepare_files_names
+merge_
+
+
+one_file_duration=$(video_duration "$output_file_name" | head -n1 | sed 's/\t\{1,\}/,/g' | cut -d, -f2)
+on_file_size_mb=$(du -s -BM "$output_file_name" | cut -d 'M' -f1)
+
+echo -e "\n----------- Comparison -----------"
+echo "Combined duration: $orignial_duration"
+echo "One file duration: $one_file_duration"
+echo 
+echo "Combined size    : $orignal_size_mb M"
+echo "One file size    : $on_file_size_mb M"
+echo 

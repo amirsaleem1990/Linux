@@ -39,7 +39,7 @@ fi
 
 echo -e "\n****** Connecting to VPN *******"
 # /opt/sslvpn-plus/naclient/gui/naclient.sh &>/dev/null
-yes | naclient login -user  $Kashat_user -password $kashat_password -profile $kashat_profile &>/dev/null
+yes | naclient login -user  $Kashat_user -password "$kashat_password" -profile $kashat_profile &>/dev/null
 res=$?
 
 if [[ $res == 0 || $res == 1 ]]; then

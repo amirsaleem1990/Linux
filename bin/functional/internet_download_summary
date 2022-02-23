@@ -1,57 +1,140 @@
 #!/bin/bash
 
-sleep_time=$1
-if [[ $sleep_time == "" ]]; then
+file_=/home/amir/._amb
+
+recursive=false
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-s|--sleep_time)
+			sleep_time="$2"
+			;;
+		-e|--extention)
+			extention="$2"
+			;;
+		-h|--help)
+			echo -e "
+	Usage:
+
+	-s, --sleep_time ........ sleep time (in seconds). default is '60'
+	-e, --extention  ........ extention
+								default is 'mp4,mkv,webm'
+								You can pass multiple such as '--extention mp4,mkv,webm
+	-r  --recursive ......... if 'true' the script consider all subdirectories.
+	-h, --help  ............. help page
+	"
+	exit
+			;;
+		-r|--recursive)
+			recursive="$2"
+			;;
+		*)
+			echo -e "
+		***************************
+		* Error: Invalid argument.*
+		***************************
+			"
+			exit 1
+	esac
+	shift
+	shift
+done
+
+echo ""
+if [[ -z $sleep_time ]]; then
+	echo -e ">>> 'sleep_time' argument not passed, so default (60) is set.\n"
 	sleep_time=60
-	echo "You didn't give sleep_time as an argument, the defulat is 60 seconds"
 fi
 
-read -p "Enter file extention(eg: mp4, mp4 is default):  " extention
-if [[ $extention = "" ]]; then
-	extention=mp4 
+if [[ -z $extention ]]; then
+	echo -e ">>> 'extention' argument not passed, so default 'mp4,mkv,webm' is set.\n"
+	extention=mp4,mkv,webm
 fi
 
-SUM=`du -sh -BM | sed 's/M..//g'`
+
+
+SUM=`du -shL -BM | sed 's/M..//g'`
+
+
 
 IFS=$'\n'
-before_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
+# before_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
+# if [[ $( echo $extention | grep -o , ) ]]
+multiple_extentions=false
+if [[ $(echo $extention | grep -o , | wc -l ) -gt 0 ]] ; then
+	multiple_extentions=true
+fi
 
+before_files=0
+if $multiple_extentions; then
+	IFS=,
+	for e in $extention ; do 
+		if $recursive; then
+			before_files=$(bc <<< $before_files+$(find . -name "*.$e" 2>/dev/null| wc -l))
+		else
+			before_files=$(bc <<< $before_files+$(ls *.$e 2>/dev/null| wc -l))
+		fi
+	done
+else
+	if $recursive; then
+		before_files=$(find . -name "*.$extention" | wc -l)
+	else
+		before_files=$(ls *.$extention | wc -l)
+	fi
+fi
+total_increment=0
 c=0
 while :; do
-	current=`du -sh -BM | sed 's/M..//g'`
+	current=`du -shL -BM | sed 's/M..//g'`
 	if [[ $? != 0 ]]; then
 		sleep 1s
-		continue
+		# continue
 	fi
 	incremental=$(( $current - $SUM ))
+	total_increment=$(bc <<< $total_increment+$incremental)
 	SUM=$current
-	# m=0
-	# for i in `ls`; do
-	# 	[[ ${before_files[*]} =~ $i ]] && m=yes || m=no
-	# 	if [[ $m == "no" ]]; then
-	# 		let "m++"
-	# 	fi
-	# done
-	# echo "Time: `date +%H:%M` | IncremenalSize: $incremental | FullSize: $SUM | filesQty.: `find . -name "*.$extention" | wc -l `"
-	# new_filesQty=$(for i in `ls`; do 
-		# [[ ${before_files[*]} =~ $i ]] && echo yes || echo no
-	# done | grep no | grep -v 'part$' | grep -v 'ytdl$' | wc -l)
-	after_files=`ls | grep -v 'part$' | grep -v 'ytdl$' | wc -l`
-	# if [[ $c == 0 ]] ; then
-	echo "Time,IncremenalSize,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty" > /home/amir/._amb
-	# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ls *.part | wc -l`" >> /home/amir/._amb
-	echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files, `ps aux | grep youtube-dl | grep python3 | wc -l`" >> /home/amir/._amb
-	# else
-		# echo "`date +%H:%M`,$incremental,$SUM,$(( $after_files - $before_files )),$after_files" > /home/amir/._amb
-	# fi
+	# after_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
+
+	after_files=0
+	if $multiple_extentions; then
+		IFS=,
+		for e in $extention ; do 
+			if $recursive; then
+				after_files=$(bc <<< $after_files+$(find . -name "*.$e" 2>/dev/null | wc -l))
+			else
+				after_files=$(bc <<< $after_files+$(ls *.$e 2>/dev/null | wc -l))
+			fi
+		done
+	else
+		if $recursive; then
+			after_files=$(find . -name "*.$extention" | wc -l)
+		else
+			after_files=$(ls *.$extention | wc -l)
+		fi
+	fi
+
+	date=$(date +%H:%M)
+	IncremenalFilesQty=$(bc <<< $after_files-$before_files)
+	if $recursive; then
+		part_Qty=$(find . -name "*.part" 2>/dev/null| wc -l)
+	else
+		part_Qty=$(ls *.part 2>/dev/null| wc -l)
+	fi
+	current_partition=$(findmnt --output target --noheadings --target .) # df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
+	AvailibleDisk=$(df -hP "$current_partition" | sed 's/\ \{1,\}/,/g' | cut -d, -f4 | tail -n1)
+	echo "Time,IncremenalSize,TotalIncrement,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty,AvailibleDisk" > $file_
+	echo "$date,$incremental,$total_increment,$SUM,$IncremenalFilesQty,$after_files,$part_Qty,$AvailibleDisk" >> $file_
+
 	let "c++"
 	if [[ $c == 1 ]]; then
-		cat /home/amir/._amb | column -t -s, | grep --color "\|Time\|IncremenalSize\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty"
+		cat $file_ | column -t -s, | grep --color "\|Time\|IncremenalSize\|TotalIncrement\|FullSize\|IncremenalFilesQty\|AllFilesQty\|.part Qty\|AvailibleDisk"
 	else
-		cat /home/amir/._amb | column -t -s, | tail -1
+		cat $file_ | column -t -s, | tail -1
 	fi
 	if [[ $c == 25 ]]; then
 		c=0
 	fi
 	sleep $sleep_time
 done
+
+rm -f $file_

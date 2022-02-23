@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+cat /home/amir/github/Amir-personal/._mz_ | sudo -S -k swapoff -a
+

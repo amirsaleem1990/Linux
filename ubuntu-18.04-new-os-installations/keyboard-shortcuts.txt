@@ -25,7 +25,7 @@ current window screenshot and copy to clipboard
 ALT + S
 
 
-touchpad on off
+touch_on_off
 /amir_bin/touch_on_off
 shitft + ctrl + f9
 
@@ -37,4 +37,26 @@ CTRL+1
 Mn
 /usr/bin/xdotool key space
 shift+ctrl+m
+
+
+
+
+Night_light_modify shiny
+/amir_bin/Night_light_modify +
+CTRL + ALT + +
+
+
+Night_light_modify dark
+/amir_bin/Night_light_modify -
+CTRL + ALT + -
+
+
+night_light
+/amir_bin/night_light
+CTRL + ALT + N
+
+namaz
+/amir_bin/namaz
+SHIFT + CTRL + N
+
 

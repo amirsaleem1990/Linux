@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+from_=`gsettings get org.gnome.settings-daemon.plugins.color night-light-temperature | cut -d ' ' -f2`
+
+func(){
+    if [[ $1 == "-" ]]; then
+        echo "-"
+        if [[ $from_ -lt 1001 ]]; then
+            echo -e "\nNo more Dark from $from_\nExisting .....\n"
+            return 2
+        fi
+        echo "Going to more dark color ........." | grep --color=auto "\|dark"
+        to_=`echo $from_-200|bc`
+    elif [[ $1 == "+" ]]; then
+        echo "+"
+        if [[ $from_ -gt 4999 ]]; then
+            echo -e "\nNo more Shiny to $from_\nExisting .....\n"
+            return 2
+        fi
+        echo "Going to more shine color ........." | grep --color=auto "\|shine"
+        to_=`echo $from_+200|bc`
+    fi
+    echo -e "From: $from_\nTo  : $to_"
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature $to_
+}
+
+if [[ $1 == '' ]]; then
+    echo -e "\nNo argument -/+ passed\n\t- Dark\n\t+ Shine\nExiting ....\n"
+else
+    func $1
+fi

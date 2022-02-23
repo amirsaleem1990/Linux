@@ -17,16 +17,16 @@ os.chdir("/home/amir/github/")
 # 	           #  os.remove("git_files.txt")
 #             sys.exit()
 # os.remove("git_files.txt")
-exit_code = os.system("/home/amir/github/Linux/check_github_files_size.sh")
+exit_code = os.system("check_github_files_size.sh")
 if exit_code != 0:
 	import sys
 	sys.exit(2)
-not_to_commit_repos = ["lfd-projects", "Time-Left-for-Namaz-time-Android-app"]
+not_to_commit_repos = ["lfd-projects", "Time-Left-for-Namaz-time-Android-app", 'Fantasy_cricket_app_Django']
 if not_to_commit_repos:
 	print("************************************")
 for i in not_to_commit_repos:
 	print(f"<{i}> repository not commited nor pushed")
-
+print("\n\n")
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos]
 for repo in repos:   
@@ -34,7 +34,7 @@ for repo in repos:
         os.chdir(repo) # go to that local repo
         git_status = os.popen("git status").read() # read current status
         if '(use "git push" to publish your local commits)' in git_status:
-        	os.system("git push origin master || git push -u origin main")
+        	os.system("git push origin master || git push") # git push -u origin main
         elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
             aa = [i.strip() for i in git_status.splitlines()]
             print(f"**********{repo}**********")

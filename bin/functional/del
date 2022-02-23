@@ -7,15 +7,16 @@ NC='\033[0m' # No Color
 function print__ {
 	# $1 = type, $2 = file_name
 		# echo -en "${RED}$1:${NC} $2,  ${RED}SIZE: ${NC}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "
-		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`${NC}\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
+		size=`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`
+		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}$size${NC}\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
 }
 
-function file_folder {
+function file_folder { 
 	if test -f "$1" ; then 
-		type=FILE
-	elif test -d "$1" ; then
-		type=FOLDER
-	fi	
+		type_=FILE
+	elif test -d "$1"
+		then type_=FOLDER
+	fi;
 }
 
 myArray=( "$@" )
@@ -30,15 +31,27 @@ fi
 
 array_len="${#myArray[@]}"
 if [[ $array_len = 1 ]]; then
-	file_folder "${myArray[0]}"	
-	if [[ $type -eq "FOLDER" ]] ; then
-		files_in_folder_qty=`ls "${myArray[0]}" -a | wc -l`
-		if [[ $files_in_folder_qty == 2 ]]; then
-			DEL -rf "${myArray[0]}"
-		else
+	file_folder "${myArray[0]}"
+	if [[ $type_ == "" ]]; then
+		echo -e "\n<${myArray[0]}> \e[31mNOT FOUND !!!!!!\e[0m\nExiting .........\n"
+		exit
+	fi
+	if [[ $(stat -c '%U' "${myArray[0]}") == "root" ]];then
+		print__ $type_ "${myArray[0]}" | grep -v 'Are you really want to\|\[y\|n\]:'
+		echo -e "\nSorry, this file/directory owned by root .......... Skipping\n"
+	else	
+		if [[ $type_ -eq "FOLDER" ]] ; then
+			files_in_folder_qty=`ls "${myArray[0]}" -a | wc -l`
+			# if [[ $files_in_folder_qty == 2 ]]; then
+				# DEL -rf "${myArray[0]}"
+			# else
 			IFS= 
 			for i in {1..3}; do 
-				print__ $type "${myArray[0]}"
+				if [[ $i -eq 1 ]]; then
+					echo -e "\n--------------------"
+					tree "${myArray[0]}"
+				fi
+				print__ $type_ "${myArray[0]}"
 				read m
 				echo 
 				if [[ $m != "y" ]] ; then 
@@ -53,12 +66,17 @@ else
 		echo "********************************"
 		IFS=$'\n'
 		file_folder "$i"
-		print__ $type $i
-		read m
-		echo 
-		if [[ $m != "y" ]] ; then 
-			exit
+		if [[ $(stat -c '%U' $i ) == "root" ]];then
+			print__ $type_ $i | grep -v 'Are you really want to\|\[y\|n\]:'
+			echo -e "\nSorry, this file/directory owned by root .......... Skipping\n"
+		else
+			print__ $type_ $i
+			read m
+			echo 
+			if [[ $m != "y" ]] ; then 
+				exit
+			fi
+			DEL -rf $i
 		fi
-		DEL -rf $i
 	done
 fi

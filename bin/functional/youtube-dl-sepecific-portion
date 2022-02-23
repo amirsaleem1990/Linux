@@ -1,22 +1,64 @@
-#!/bin/bash
+#!/usr/bin/bash
 # https://unix.stackexchange.com/questions/230481/how-to-download-portion-of-video-with-youtube-dl-command
-url=$@
+# url=$@
 
-if [[ $url == "" ]]; then
-	read -p "Enter video URL: " url
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -u|--url)
+      url="$2"
+      ;;
+    -s|--start_time)
+      start_time="$2"
+      ;;
+    -e|end_time)
+	  end_time="$2"
+	  ;;
+    -h|--help)
+      echo -e "
+  Usage:
+  	youtube-dl-sepecific-portion -u my_url -s 00:00:00 -e 00:00:10
+  	# download first 10 seconds
+
+  -u, --url   .................. url of video
+  -s, --start_time ............. start time (HH:MM:SS)
+  -e, --end_time ............... end time (HH:MM:SS)
+  -h, --help  ............. help page
+  "
+  exit
+      ;;
+    *)
+      echo -e "
+    ***************************
+    * Error: Invalid argument.*
+    ***************************
+      "
+      exit 1
+  esac
+  shift
+  shift
+done
+[[ -z $url ]] || [[ -z $start_time ]] || [[ -z $end_time ]]
+if [[ $? -eq 0 ]]; then
+	echo -e "
+	Please provide ALL perameters
+	Aborting........
+	"
+	exit
 fi
 
 actual_url=`youtube-dl -g $url`
+if [[ $? -ne 0 ]]; then
+	exit
+fi
+# # read -p "Enter start time HH:MM:SS  " start_time
+# echo -e "Enter start time HH:MM:SS"
+# echo -n "-----------------"
+# read start_time
 
-# read -p "Enter start time HH:MM:SS  " start_time
-echo -e "Enter start time HH:MM:SS"
-echo -n "-----------------"
-read start_time
-
-# read -p "Enter end   time HH:MM:SS  " end_time
-echo -e "Enter end   time HH:MM:SS"
-echo -n "-----------------"
-read end_time
+# # read -p "Enter end   time HH:MM:SS  " end_time
+# echo -e "Enter end   time HH:MM:SS"
+# echo -n "-----------------"
+# read end_time
 
 
 youtube-dl --postprocessor-args "-ss $start_time.00 -to $end_time" $actual_url 

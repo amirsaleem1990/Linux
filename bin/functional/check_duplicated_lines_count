@@ -1,0 +1,21 @@
+#!/usr/bin/python3
+import sys
+import json
+from termcolor import colored
+try:
+	sys.argv[1]
+	lines = open(sys.argv[1], 'r').read().splitlines()
+except:
+	print("\nNo file passed\nAborting........\n\n")
+	sys.exit(1)
+lines_dict = {}
+for line in lines:
+	line = line.strip()
+	lines_dict[line] = lines_dict.get(line, 0) + 1
+# print(json.dumps(lines_dict, indent=4))
+for line in lines:
+	line_ = line.strip()
+	if lines_dict[line_] > 1:
+		print(colored("{:<4}".format(lines_dict[line_]), 'red'), '| ', line)
+	else:
+		print(        "{:<4}".format(lines_dict[line_])        , '| ', line)

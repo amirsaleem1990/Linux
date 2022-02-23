@@ -1,0 +1,121 @@
+#!/usr/bin/python3
+# https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
+import multiprocessing.dummy
+import subprocess
+import os
+import traceback
+import sys
+
+
+def download(url):
+	try:
+		if low_quality:
+			subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
+		else:
+			subprocess.check_call(['youtube-dl', '--no-playlist', url])
+		open("downloaded.txt", "a").write(url+"\n")
+	except:
+		e_ = traceback.format_exc()
+		print("\n\nERROR --------------------------------------------------")
+		print(f"url: {url}")
+		print(e_)
+		print("---------------------------------------------- Error END\n\n")
+		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
+
+def pool_func():
+	try:
+		downloaded = open("downloaded.txt", "r").read().splitlines()
+		urls_to_download = [i for i in urls_to_download if not i in downloaded]
+	except:
+		pass		
+	p = multiprocessing.dummy.Pool()
+	return p
+
+def exclude_func():
+	arr_exculded = []
+	for i in exclude.split("|"):
+		for url in urls_to_download:
+			if not i.lower().strip() in url:
+				arr_exculded.append(url)
+	return urls_to_download_exculded
+
+def Exit():
+	print(f"\n\nErrors saved as {error_file}\n\n")
+	after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+	downloaded_size= after - before
+	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
+	sys.exit(1)
+
+
+exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+get_input_from_user = False
+if os.path.exists(exclude_file):
+	e = open(exclude_file, 'r').read().strip()
+	if e:
+		user_inp = input("Are you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+		if user_inp.lower().strip() == 'yes':
+			exclude = e
+		else:
+			get_input_from_user=True
+	else:
+		get_input_from_user= True
+else:
+	get_input_from_user=True
+if get_input_from_user:
+	exclude = input("Words to exclude (if multiple separate them by '|')  ")
+	if exclude:
+		open(exclude_file, 'w').write(exclude)
+
+
+error_file = "/home/amir/.downloading_errors.txt"
+if os.path.exists(error_file):
+	os.remove(error_file)
+
+
+before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+
+
+low_quality = False
+ans = input("Are you need to download low quality videos? [yes|no]: ").strip().lower()
+if  ans == "yes":
+	if input("Are you sure? [yes|no]").lower().strip() == "yes":
+		low_quality = True
+
+try:
+	urls_to_download = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
+	urls_file_name = "mp4_links.txt"
+except:
+	try:
+		urls_file_name = sys.argv[1]
+	except:	
+		import readline
+		readline.parse_and_bind("tab: complete")
+		urls_file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
+	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+
+
+def main_func():
+	p = pool_func()
+	try:
+		p.map(download, urls_to_download)
+	except KeyboardInterrupt:
+		Exit()
+
+if exclude:
+	urls_to_download = exclude_func()
+main_func()
+
+while True:
+	part_files = [i for i in os.listdir() if i.endswith(".part")]
+	if not part_files:
+		Exit()
+	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+	part_files_str = ' '.join(part_files)
+	part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
+	if not part_files:
+		Exit()	
+	urls_to_download = part_files
+	if exclude:
+		urls_to_download = exclude_func()
+	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
+	main_func()

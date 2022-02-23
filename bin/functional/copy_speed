@@ -1,35 +1,93 @@
 #!/bin/bash
 
 convertsecs() {
- ((h=${1}/3600))
- ((m=(${1}%3600)/60))
- ((s=${1}%60))
- printf "%02d:%02d:%02d\n" $h $m $s
+	((h=${1}/3600))
+	((m=(${1}%3600)/60))
+	((s=${1}%60))
+	printf "%02d:%02d:%02d\n" $h $m $s
 }
-IFS=$'\n'
-read -e -p "Enter your File /Folder absolute path(with spaces as it is): " all_data_in_MB
-# all_data_in_MB=/media/500GB/320GB
-m=$(du -s $all_data_in_MB -BM)
-# m='42384M	/home/amir/g'
-m1=${m%[[:space:]]*}
-all_data_in_MB=$(echo $m1 | tr -dc '0-9')
 
-last=$(echo $(du -s -BM) | tr -dc '0-9')
-Average_array=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+	-p|--path)
+	  all_data_in_MB="$2"
+	  ;;
+	-s|--sleep_time)
+	  sleep_time="$2"
+	  ;;
+	-h|--help)
+	  echo -e "
+  Usage:
 
-read -p "Enter sleep time (in seconds) [default is 60 seconds]: " sleep_time
-if [[ $sleep_time = "" ]] ; then
+   -p, --path  ............. desired file / path
+   -s, --sleep_time ........ sleep time (in seconds) 
+                             default is '60'
+   -h, --help  ............. help page
+   "
+   exit
+	  ;;
+	*)
+	  echo -e "
+	***************************
+	* Error: Invalid argument.*
+	***************************
+	  "
+	  exit 1
+  esac
+  shift
+  shift
+done
+
+if [[ -z $sleep_time ]]; then
 	sleep_time=60
 fi
 
+if [[ -z $all_data_in_MB ]]; then
+	echo -e "
+'path' perameter is not passed\nAborting ....... \n\n
+	"
+	exit 1
+fi
+
+
+IFS=$'\n'
+# if [[ $1 == "" ]] ; then
+# 	read -e -p "Enter your File /Folder absolute path: " all_data_in_MB
+# else
+# 	all_data_in_MB=$1
+# fi
+
+# if [[ $2 == "" ]]; then
+# 	read -p "Enter sleep time (in seconds) [default is 60 seconds]: " sleep_time
+# else
+# 	sleep_time=$2
+# fi
+
+# if [[ $sleep_time = "" ]] ; then
+# 	sleep_time=60
+# fi
+
+
+# all_data_in_MB=/media/500GB/320GB
+m=$(du -sL $all_data_in_MB -BM)
+# m='42384M	/home/amir/g'
+
+m1=${m%[[:space:]]*}
+all_data_in_MB=$(echo $m1 | tr -dc '0-9')
+
+last=$(echo $(du -sL -BM) | tr -dc '0-9')
+Average_array=()
+
+
 while :
 	do 
-	current=$(echo $(du -s -BM) | tr -dc '0-9')
-	echo -n "TOTAL: $(du -sh), in last $sleep_time Sec:"
-	echo -n `expr $current - $last ` MB `   date +%H:%M:%S`
+	sleep $sleep_time
+	current=$(echo $(du -sL -BM) | tr -dc '0-9')
+	echo -n "TOTAL: $(du -shL | sed 's/[\t,.]//g ') | in last $sleep_time Secs: "
+	echo -n `expr $current - $last ` MB \| `   date +%H:%M:%S`
 	completed=$(echo "scale=2; $current/$all_data_in_MB" | bc)
 	completed=$(echo $completed | tr -dc '0-9')
-	echo -n "       " Completed $completed %
+	echo -n " | " Completed $completed %
 	curent_time=`date +%s`
 	average_speed=$(echo `expr $current - $last `)
 	Average_array+=("$average_speed")
@@ -47,6 +105,5 @@ while :
 	
 	Estimated_time=$(echo "$ab*$mean*$sleep_time" | bc)
 	Estimated_time=${Estimated_time%.*}
-	echo "    Estimated time: `convertsecs $Estimated_time`"
-	sleep $sleep_time
+	echo " | Remaining time: `convertsecs $Estimated_time`"
 done

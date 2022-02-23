@@ -1,11 +1,11 @@
 print("""
 Usage:
-	improt sys
+	import sys
 	sys.path += ['/amir_bin/']
-	type_casting.Type_casting(id(df)) # call it only, this function not return anything, but your <df> is now types casted.
+	import type_casting 
+	type_casting.Type_casting(id(df)) # call it only, this function not return anything, but your <df> is now type casted.
 """)
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import ctypes
 def Type_casting(df_id):
@@ -24,7 +24,7 @@ def Type_casting(df_id):
 
 		after = df.memory_usage(deep=True).sum()
 		
-		print("Reduced after <{:>9}> {} down casting : {:>5} %".format(down_cast, '', round((1-after/before)*100, 2)))
+		# print("Reduced after <{:>9}> {} down casting : {:>5} %".format(down_cast, '', round((1-after/before)*100, 2)))
 
 	df = ctypes.cast(df_id, ctypes.py_object).value
 	b = df.memory_usage(deep=True).sum()
@@ -36,15 +36,15 @@ def Type_casting(df_id):
 
 	a = df.memory_usage(deep=True).sum()
 	a_ = df.memory_usage(deep=True)
-	print(f"\n\nTotal Reduction: {round((1-a/b)*100, 2)} %\n\n")
-	print(f"Before : {round(b    / 1024 ** 2, 2) } MB")
-	print(f"After  : {round(a    / 1024 ** 2, 2) } MB")
-	print(f"Reduced: {round((b-a)/ 1024 ** 2, 2) } MB")
-	((a_ / b_).sort_values().reset_index(drop=True) // .1 * 10).plot(kind='hist',
-																	 grid=True,
-																	 figsize=(14,7));
-	# plt.xlabel("Reduction % ", size=14) #, color='red');
-	# plt.ylabel("Frequency"   , size=14) #, color='red');
-	# plt.title ("Reduction % plot", size=16, color='red');
+	# print(f"\n\nTotal Reduction: {round((1-a/b)*100, 2)} %\n")
+	# print(f"Before : {round(b    / 1024 ** 2, 2) } MB")
+	# print(f"After  : {round(a    / 1024 ** 2, 2) } MB")
+	# print(f"Reduced: {round((b-a)/ 1024 ** 2, 2) } MB")
+	# ((a_ / b_).sort_values().reset_index(drop=True) // .1 * 10).plot(kind='hist',
+	# 																 grid=True,
+	# 																 figsize=(14,7));
+	# # plt.xlabel("Reduction % ", size=14) #, color='red');
+	# # plt.ylabel("Frequency"   , size=14) #, color='red');
+	# # plt.title ("Reduction % plot", size=16, color='red');
 
 	# plt.show()

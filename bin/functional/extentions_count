@@ -1,0 +1,50 @@
+#!/usr/bin/bash
+file_1=/home/amir/.maxdepth_1
+file_2=/home/amir/.maxdepth_2
+file_3=/home/amir/.maxdepth_3
+
+if [[ -z $1 ]]; then
+    echo -e "\nArgument not passed, so this is the result of current directory only.\nFor all subdirectories give the perameter <2>\n\n"
+    Max_Depth=1
+else
+    if [[ $1 == 2 ]]; then
+        Max_Depth=$(IFS=$'\n'
+                    for i in $(find . -type f) ; do 
+                        echo "$i" | grep -o '/' | wc -l
+                    done |
+                    sort -n |
+                    tail -n1
+                    )
+    else
+        Max_Depth=1
+        cd $1
+        if [[ $? -ne 0 ]]; then
+            echo -e "\nThis is not a vlid direcotry\nAborting..."
+            exit 2
+        fi
+    fi
+fi
+
+find . -maxdepth $Max_Depth -type f -exec basename {} \; | 
+    grep '\.' |
+    grep -v '^\.'|
+    rev | 
+    cut -d. -f1 | 
+    grep -v \" | 
+    rev | 
+    sort | 
+    uniq -c | 
+    sed 's/^\ \{1,\}//g'| 
+    sort -k2 > $file_1
+echo "$(bc <<< `find . -maxdepth $Max_Depth -type d | wc -l`-1) FOLDERS" >> $file_1
+cat $file_1 | sort -k1 -nr > $file_2
+
+
+echo -e  "====== ===========Sorted.by.Extention=========== ====== ===========Sorted.by.Count===========
+Count Extention  Count Extention
+------ ----------------------------------------- ------ -------------------------------------" > $file_3
+paste -d " " $file_1 $file_2  >> $file_3
+cat $file_3 | column -t -s ' ' | grep --color "\|Count\|Extention\|Sorted\|by\|FOLDERS"
+
+
+/amir_bin/DEL -f "$file_1" "$file_2" "$file_3"

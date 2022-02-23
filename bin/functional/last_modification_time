@@ -1,0 +1,35 @@
+#!/bin/bash
+IFS=$'\n'
+echo 
+echo -e  "
+=========,===========,====,==============================\n
+Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
+=========,===========,====,==============================" >/tmp/amir/.sb1
+
+func(){
+	SEC=$(( `date +%s` - `stat -c %Y "$1"` ))
+	# x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) D,%H H,%M M,%S S')"`
+	x=`eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)):%H:%M:%S')"`
+	if [[ $(echo $x | grep '^[0-9]\:' | wc -l) -gt 0 ]]; then
+		x=0$x
+	fi
+	size=$(du -sh "$1" | cut -d $'\t' -f1)
+	echo "$SEC,$x,$size,$1"
+}
+
+if [ $# -eq 0 ]; then
+	for file in `ls -a | sed 's/@$//g; s/*$//g'`; do
+		func $file
+	done | sort -nr >>  /tmp/amir/.sb1
+else
+	for file in `ls "$@" | sed 's/@$//g; s/*$//g'`; do
+		func $file
+	done | sort -nr >>  /tmp/amir/.sb1
+fi
+
+echo -e  "
+=========,===========,====,==============================\n
+Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
+=========,===========,====,==============================" >>/tmp/amir/.sb1
+cat /tmp/amir/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|SIZE\|File Name' 
+echo

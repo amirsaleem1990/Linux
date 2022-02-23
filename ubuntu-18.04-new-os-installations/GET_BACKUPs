@@ -1,33 +1,11 @@
 browser bookmarks
 save ~/.ssh folder
 github last push
+gitlab las push
 dropbox push
 copy data
 copy data from another partitions (if exist)
-alias
-echo $PS1 > github/Linux/PS1
-save github/lfd-projects directory
-save ~/.config/autostart
-save /amir_bin/* to ~/github/Linux/bin/func*/
-	# run this script
-	/home/amir/github/Linux/bin/functional/compare_amir_bin_with_github_inodes 
-	
-	# ----------- OLD
-	# assuming k me ny /amir_bin/ me ~/github/Linux/bin/func*/ ki files ko copy nahi kya balky /amir_bin/ me srif hardlinks hen, is ka faida ye h k zaroorat k waqt agar me /amir_bin/ ki ksi script me changing karta hun to wo direct git me push ho saky gi, to backup lety waqt mujhy srif ye dekhna h k /amir_bin/ me wo kon c scripts hen jin ka inode ~/github/Linux/bin/func*/ wali script sy match nahi karta, or phir jo zyada munasib ho us ko ~/github/Linux/bin/func*/ me copy kar k git ko final push kar den. 
-	#neechy wali script ye identify kar rahi h k kin files ka inode dono folders me same NAHI h.
-	##-------------------------------------------------------
-	#IFS=$'\n'
-	#for file in `ls *` ; do 
-	#	here=`ls -i $file | sed 's/^ \{1,\}//g' | cut -d ' ' -f1`
-	#	there=`ls -i /home/amir/github/Linux/bin/functional/$file | sed 's/^ \{1,\}//g' | cut -d ' ' -f1`
-	#	if [[ $here -eq $there ]]; then
-	#		# echo "Same inode"
-	#		:
-	#	else
-	#		echo -e "\n========== $file ==========="
-	#		echo -e "inode ....... Here: $here\t\tThere: $there"
-	#		echo -e "file lines .. Here: `cat $file | wc -l `\t\tThere: `cat /home/amir/github/Linux/bin/functional/$file | wc -l `"
-	#		diff $file /home/amir/github/Linux/bin/functional/$file
-	#	fi
-	#done
-	##-------------------------------------------------------
+keyboard shortucts # Set_keyboard_shortcuts.py
+pip3 list > pip3_list
+apt list > apt_list
+

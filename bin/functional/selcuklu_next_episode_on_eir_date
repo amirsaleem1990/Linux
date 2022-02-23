@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from termcolor import colored
+print(colored("\n\n******** Selculuklu ********\n", 'red'))
 # from tabulate import tabulate
 # import pandas as pd
 # import requests
@@ -27,6 +28,9 @@ import sys
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+import calendar
+from datetime import date
+
 url = "https://www.tvmaze.com/shows/50131/uyanis-buyuk-selcuklu"
 print(f"\nThis information is collected from:  {url}\n\n")
 soup = BeautifulSoup(requests.get(url).text, "lxml")
@@ -38,12 +42,10 @@ print("next episode number:", next_episode_number)
 print("next eipsode date  :", next_eipsode_date)
 print("next eipsode day   :", next_eipsode_day)
 
-import calendar
 {month: index for index, month in enumerate(calendar.month_abbr) if month}[next_eipsode_date.split()[0]]
 next_eipsode_date = next_eipsode_date.replace(next_eipsode_date.split()[0], str({month: index for index, month in enumerate(calendar.month_abbr) if month}[next_eipsode_date.split()[0]]))
 next_eipsode_date = next_eipsode_date.replace(",", "")
 
-from datetime import date
 f = [int(i) for i in next_eipsode_date.split()]
 print(f"Countdown          : {(date(year = f[-1], month = f[0], day = f[1]) - date.today()).days} days")
 
@@ -126,15 +128,4 @@ if g:
 		print(f"\nBefore: {open(_last_file_name_, 'r').read()}")
 		open(_last_file_name_, 'w').write(str(next_episode-1))
 		print(  f"After : {open(_last_file_name_, 'r').read()} \n")
-print()
-
-
-print("""
-#############################################
-# agar video download kar len to            #
-# </home/amir/.selcul_last_downloaded.txt>  #
-# file ko update kar den                    #
-#############################################
-""")
-
 print()
