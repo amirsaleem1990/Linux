@@ -4,7 +4,7 @@ echo
 echo -e  "
 =========,===========,====,==============================\n
 Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
-=========,===========,====,==============================" >/tmp/amir/.sb1
+=========,===========,====,==============================" >/home/amir/.sb1
 
 func(){
 	SEC=$(( `date +%s` - `stat -c %Y "$1"` ))
@@ -20,16 +20,16 @@ func(){
 if [ $# -eq 0 ]; then
 	for file in `ls -a | sed 's/@$//g; s/*$//g'`; do
 		func $file
-	done | sort -nr >>  /tmp/amir/.sb1
+	done | sort -nr >>  /home/amir/.sb1
 else
 	for file in `ls "$@" | sed 's/@$//g; s/*$//g'`; do
 		func $file
-	done | sort -nr >>  /tmp/amir/.sb1
+	done | sort -nr >>  /home/amir/.sb1
 fi
 
 echo -e  "
 =========,===========,====,==============================\n
 Total_SEC,DD:HH:MM:SS,SIZE,File Name\n
-=========,===========,====,==============================" >>/tmp/amir/.sb1
-cat /tmp/amir/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|SIZE\|File Name' 
+=========,===========,====,==============================" >>/home/amir/.sb1
+cat /home/amir/.sb1 | column -t -s, | sed 's/^/     /' | grep --color=auto '\|=\|Total_SEC\|DD:HH:MM:SS\|SIZE\|File Name' 
 echo
