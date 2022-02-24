@@ -33,6 +33,9 @@ for repo in repos:
     if (not repo.startswith(".")) and (not "." in repo): # if that repo is not a hidden file <in linux hiddin files names starts with . dot
         os.chdir(repo) # go to that local repo
         git_status = os.popen("git status").read() # read current status
+
+        os.system("git branch -M master")
+
         if '(use "git push" to publish your local commits)' in git_status:
         	os.system("git push || git push origin master") # git push -u origin main
         elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
