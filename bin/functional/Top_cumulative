@@ -1,7 +1,7 @@
 #!/bin/bash
 /amir_bin/Top_cumulative_1st_part $1
-cat /tmp/amir/.AB.txt  | sed '/^$/d'    | grep --color=auto '\|CPU\|RAM\|MEM\|COMMAND\|(MB)\|='
+cat /home/amir/.AB.txt  | sed '/^$/d'    | grep --color=auto '\|CPU\|RAM\|MEM\|COMMAND\|(MB)\|='
 [[ $1 == "" ]] && echo -e "\n"
-cat /tmp/amir/.LMSF | grep --color=auto "\|Cpu\|Ram"
+cat /home/amir/.LMSF | grep --color=auto "\|Cpu\|Ram"
 [[ $1 == "" ]] && echo -e "\n"
 
