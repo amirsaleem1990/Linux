@@ -47,8 +47,9 @@ class Next_video:
 				com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
 		com += f"; if [[ $? -eq 0 ]] ; then echo {n} > {_file_name_}; fi"
 		print(f"\nDownload command:\n{com}\n\n\n")
-		os.system(com)
-		# open(_file_name_, 'w').write(str(n))
+		x = os.system(com)
+		if x == 0:
+			open(_file_name_, 'w').write(str(n))
 
 	def kurulus_osman(self):
 		print(colored("\n\n******** Kurulus usman ********\n", 'red'))
