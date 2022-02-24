@@ -37,7 +37,7 @@ for repo in repos:
         os.system("git branch -M master")
 
         if '(use "git push" to publish your local commits)' in git_status:
-        	os.system("git push || git push origin master") # git push -u origin main
+        	os.system("git push || git push -u origin master") # git push -u origin main
         elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
             aa = [i.strip() for i in git_status.splitlines()]
             print(f"**********{repo}**********")
