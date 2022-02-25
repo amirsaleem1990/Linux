@@ -126,34 +126,34 @@ class Next_video:
 				print("\n **** Full video NOT uploaded yet ****\n")
 				os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
 			else:
-				ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
-				if ans_ == "y":
-					for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+				# ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+				# if ans_ == "y":
+				for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+					try:
+						l = i['href']
+						if "ok.ru" in l: 
+							l = l.replace("videoembed", "video")
+							if not l.startswith("https:"):
+								l = "https:" + l
+							break
+					except:
+						pass
+				else:
+					for i in q.select("li"):
 						try:
-							l = i['href']
+							l = i['data-source']
 							if "ok.ru" in l: 
 								l = l.replace("videoembed", "video")
-								if not l.startswith("https:"):
-									l = "https:" + l
-								break
+								break 
 						except:
 							pass
 					else:
-						for i in q.select("li"):
-							try:
-								l = i['data-source']
-								if "ok.ru" in l: 
-									l = l.replace("videoembed", "video")
-									break 
-							except:
-								pass
-						else:
-							print("NO video url")
-							# exit()
-							return 
-						print(l)
+						print("NO video url")
+						# exit()
+						return 
 					print(l)
-					self.download_a_video(_file_name_, l, n)
+				print(l)
+				self.download_a_video(_file_name_, l, n)
 
 
 	def alp_arsalan_or_destan(self, name):
