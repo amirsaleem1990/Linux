@@ -9,4 +9,4 @@ for i in `ls /home/amir/github/`; do
 	cd /home/amir/github/$i
 	git status
 
-done
+done | grep --color=auto '\|nothing to commit, working tree clean'
