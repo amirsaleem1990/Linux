@@ -1740,3 +1740,5 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 
 # extract pages from pdf without loosing metadata ........... gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=1 -dLastPage=243 -sOutputFile=output.pdf input.pdf
+# fbreader is an .epub reader
+
