@@ -64,7 +64,7 @@ alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
 alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status | grep 'Active: inactive (dead)' | wc -l) -eq 0 ]] &&  sudo /usr/sbin/service qualys-cloud-agent  stop"
 # alias youtube-dl="while :; do /usr/local/bin/youtube-dl -t ; done"
 # alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
-
+alias vpn_g="echo https://www.vpnbook.com/; sudo openvpn --config /media/sdb2/.g/vpnbook-pl226-udp53.ovpn --auth-user-pass /media/sdb2/.g/pass_file.txt" 
 
 alias Latex="echo R | latex -output-format pdf resume.tex; evince resume.pdf"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
