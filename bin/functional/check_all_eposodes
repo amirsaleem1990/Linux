@@ -45,7 +45,7 @@ class Next_video:
 				os.system(f"youtube-dl -F {l}")
 				usr_inpt = input("\nSelect the quality: ")
 				com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
-		com += f"; if [[ $? -eq 0 ]] ; then echo {n} > {_file_name_}; fi"
+		# com += f"; if [[ $? -eq 0 ]] ; then echo {n} > {_file_name_}; fi"
 		print(f"\nDownload command:\n{com}\n\n\n")
 		x = os.system(com)
 		if x == 0:
