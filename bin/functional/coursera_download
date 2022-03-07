@@ -67,7 +67,7 @@ def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
 			browser.get(video)
 			time.sleep(30)
 			s = BeautifulSoup(browser.page_source, "lxml")
-			pattern = "mp4"
+			# pattern = "mp4"
 
 			extrected_urls = []
 			for i in s.select("a"):
@@ -266,9 +266,6 @@ if not course_name_received:
 	course_name = input("Enter course name, \nNote: Extract course name from course url, eg: <simple-past-tense> from <https://www.coursera.org/learn/simple-past-tense/home/week/1>\nNOTE: if multiple courses, use pipe | as delimeter\n\n").strip()
 	open(f"{base_dir}/.coursera_course_name.txt", 'w').write(course_name.strip())
 
-
-# email_address = "amirsaleem1990@hotmail.com"
-# pas = list(os.popen("echo 1 | /home/amir/.local/bin/ipython3 /home/amir/github/Amir-personal/PIN/pin2.py  2 coursera | tail -1 | sed 's/t./traders/'"))[0].strip()
 email_address = "hamzaamirr2014@gmail.com"
 ipython3_path = list(os.popen("which ipython3"))[0].strip()
 command = f"echo 2 | {ipython3_path} /home/amir/github/*/*/*in2.py  2 coursera | tail -1"
