@@ -10,7 +10,8 @@ echo -e "-----|-------|-------|----------------------------------\nPages|Size_KB
 get_pdf_info(){
 	check=`pdfinfo $1 2>/dev/null` #| grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
 	if [[ $? != 0 ]]; then 
-		continue
+		# continue
+		return 1
 	fi
 	pages=`pdfinfo $1 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
 	# echo "$pages,|$1" >> /home/amir/.shba
