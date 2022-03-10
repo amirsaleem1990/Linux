@@ -4,7 +4,7 @@ RED="\033[0;31m"
 normal="\033[0m"
 
 
-upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u
+upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|voltage\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u
 echo -e "\n\n--------------------------\n\n"
 upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
 
