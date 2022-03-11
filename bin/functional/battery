@@ -3,10 +3,17 @@
 RED="\033[0;31m"
 normal="\033[0m"
 
+Wh=$(upower -d | grep 'energy-full:' | head -n1 | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+V=$(upower -d | grep voltage | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+mah=$(echo "scale=0; $Wh*1000/$V" | bc -l)
 
 upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|voltage\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u
+echo "Mah:                 $mah Mah"
 echo -e "\n\n--------------------------\n\n"
 upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
+
+
+echo -e  "$(upower -d  | grep -E "energy:|voltage|energy-full:|energy-full-design:|energy-rate:|capacity:|TimeToEmpty:|time to full:|time to empty:|state|to\ full|percentage" | sort -u | sed 's/^    //g' | sed 's/:\ \{1,\}/,/g')\nDate,$(date +%D-%T)" | cut -d, -f2  | paste -sd "," >> /home/amir/github/Amir-personal/battery_record.csv
 
 echo -e "
 
