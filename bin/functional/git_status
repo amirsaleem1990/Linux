@@ -1,11 +1,15 @@
 #!/usr/bin/env ipython3
 from termcolor import colored
 import sys
+import os
+
 # print(colored("\n\n\tFor actual status for each repo run:", 'red'),
 # 	colored("""\n\t\tcd /home/amir/github/; for i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; cd ../ ; done\n""", 'green')) 
 
 
-import os
+if (list(os.popen('git_status_orignal  | grep -E -v "^$|^>>>>>>>>>>|^Your branch is up to date with|working tree clean|^On branch" | wc -l'))[0].strip())  == '0':
+	raise Exception("\nNo new commit\nAborting......\n\n")
+
 os.chdir("/home/amir/github")
 
 command="""
