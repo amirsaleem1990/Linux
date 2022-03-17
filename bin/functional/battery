@@ -3,17 +3,38 @@
 RED="\033[0;31m"
 normal="\033[0m"
 
-Wh=$(upower -d | grep 'energy-full:' | head -n1 | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
-V=$(upower -d | grep voltage | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+Wh=$(upower -d  | grep 'energy:' | head -n1 | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+V=$(upower -d  | grep voltage | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
 mah=$(echo "scale=0; $Wh*1000/$V" | bc -l)
 
-upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|voltage\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u
-echo "Mah:                 $mah Mah"
+echo ""
+upower -d  | grep "capacity\|energy-full-design:" | sed 's/^    //g' | sort -u
+
 echo -e "\n\n--------------------------\n\n"
-upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
 
+# upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u
+upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u | sed 's/\ //g' | sed 's/:/,/g' > lmx
+# upower -d  | grep -E "state|to\ full|percentage" | sed 's/^    //g' | sort -u
+upower -d  | grep -E "state|to\ full|percentage" | sort -u | sed 's/ //g' | sed 's/:/,/g' >> lmx
 
-echo -e  "$(upower -d  | grep -E "energy:|voltage|energy-full:|energy-full-design:|energy-rate:|capacity:|TimeToEmpty:|time to full:|time to empty:|state|to\ full|percentage" | sort -u | sed 's/^    //g' | sed 's/:\ \{1,\}/,/g')\nDate,$(date +%D-%T)" | cut -d, -f2  | paste -sd "," >> /home/amir/github/Amir-personal/battery_record.csv
+# echo "Mah:                 $mah Mah"
+echo "Mah,$mah" >> lmx
+
+sec_=$(upower -d  | grep updated | cut -d: -f2-5 | rev | cut -d' ' -f3-4 | rev | cut -d\( -f2 | head -n1)
+state_=$(upower -d | grep 'state' | sort -u | cut -d: -f2 | sed 's/\ //g')
+time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS")
+if [[ $state_ == "charging" ]]; then
+	echo -n "Charging-started-before,$time_" >> lmx
+else
+	echo -n "Unpluged-before,$time_" >> lmx
+fi
+echo -e "\n" >> lmx
+
+cat lmx  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g'
+
+# echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
+
+echo -e  "$(upower -d   | grep -E "energy:|voltage|energy-full:|energy-full-design:|energy-rate:|capacity:|TimeToEmpty:|time to full:|time to empty:|state|to\ full|percentage" | sort -u | sed 's/^    //g' | sed 's/:\ \{1,\}/,/g')\nDate,$(date +%D-%T)" | cut -d, -f2  | paste -sd "," >> /home/amir/github/Amir-personal/battery_record.csv
 
 echo -e "
 
@@ -22,10 +43,11 @@ ${RED}EnergyFull :${normal} Amount of energy (measured in Wh) in the power sourc
 ${RED}EnergyRate :${normal} Amount of energy being drained from the source, measured in W. If positive, the source is being discharged, if negative it's being charged.
 ${RED}TimeToEmpty:${normal} Number of seconds until the power source is considered empty.
 ${RED}TimeToFull :${normal} Number of seconds until the power source is considered full.
+${RED}Mah        :${normal} energy*1000/voltage
 "
 
 # echo key,value > /home/amir/.battery_1
-# upower -d /org/freedesktop/UPower/devices/battery_BAT0 | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u | sed 's/:\ \{1,\}/,/g' >> /home/amir/.battery_1
+# upower -d  | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u | sed 's/:\ \{1,\}/,/g' >> /home/amir/.battery_1
 # echo -e "\n\n"
 # python3 <<< '
 # import pandas as pd
@@ -42,6 +64,8 @@ ${RED}TimeToFull :${normal} Number of seconds until the power source is consider
 
 
 # echo -e "\n\n--------------------------\n\n"
-# upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage" | sed 's/^    //g'
+# upower -d | grep -E "state|to\ full|percentage" | sed 's/^    //g'
 
 # echo -e "\n\n"
+
+
