@@ -13,24 +13,24 @@ upower -d  | grep "capacity\|energy-full-design:" | sed 's/^    //g' | sort -u
 echo -e "\n\n--------------------------\n\n"
 
 # upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u
-upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u | sed 's/\ //g' | sed 's/:/,/g' > lmx
+upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sed 's/\ //g' | sed 's/:/,/g' | sort -u > /home/amir/.battery_n
 # upower -d  | grep -E "state|to\ full|percentage" | sed 's/^    //g' | sort -u
-upower -d  | grep -E "state|to\ full|percentage" | sort -u | sed 's/ //g' | sed 's/:/,/g' >> lmx
+upower -d  | grep -E "state|percentage" | sed 's/ //g' | sed 's/:/,/g' | sort -u >> /home/amir/.battery_n
 
 # echo "Mah:                 $mah Mah"
-echo "Mah,$mah" >> lmx
+echo "mAh,$mah" >> /home/amir/.battery_n
 
 sec_=$(upower -d  | grep updated | cut -d: -f2-5 | rev | cut -d' ' -f3-4 | rev | cut -d\( -f2 | head -n1)
 state_=$(upower -d | grep 'state' | sort -u | cut -d: -f2 | sed 's/\ //g')
 time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS")
 if [[ $state_ == "charging" ]]; then
-	echo -n "Charging-started-before,$time_" >> lmx
+	echo -n "Charging-started-before,$time_" >> /home/amir/.battery_n
 else
-	echo -n "Unpluged-before,$time_" >> lmx
+	echo -n "Unpluged-before,$time_" >> /home/amir/.battery_n
 fi
-echo -e "\n" >> lmx
+echo -e "\n" >> /home/amir/.battery_n
 
-cat lmx  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g'
+cat /home/amir/.battery_n  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g'
 
 # echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
 
@@ -43,7 +43,7 @@ ${RED}EnergyFull :${normal} Amount of energy (measured in Wh) in the power sourc
 ${RED}EnergyRate :${normal} Amount of energy being drained from the source, measured in W. If positive, the source is being discharged, if negative it's being charged.
 ${RED}TimeToEmpty:${normal} Number of seconds until the power source is considered empty.
 ${RED}TimeToFull :${normal} Number of seconds until the power source is considered full.
-${RED}Mah        :${normal} energy*1000/voltage
+${RED}mAh        :${normal} energy*1000/voltage
 "
 
 # echo key,value > /home/amir/.battery_1
