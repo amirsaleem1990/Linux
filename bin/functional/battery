@@ -21,8 +21,9 @@ upower -d  | grep -E "state|percentage" | sed 's/ //g' | sed 's/:/,/g' | sort -u
 echo "mAh,$mah" >> /home/amir/.battery_n
 
 sec_=$(upower -d  | grep updated | cut -d: -f2-5 | rev | cut -d' ' -f3-4 | rev | cut -d\( -f2 | head -n1)
+org_time=$(upower -d  | grep updated | cut -d: -f2-10 | sed 's/\ \ \{1,\}//g' | cut -d' ' -f1-6 | head -n1)
 state_=$(upower -d | grep 'state' | sort -u | cut -d: -f2 | sed 's/\ //g')
-time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS")
+time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS ($org_time)")
 if [[ $state_ == "charging" ]]; then
 	echo -n "Charging-started-before,$time_" >> /home/amir/.battery_n
 else
