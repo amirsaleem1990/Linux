@@ -255,3 +255,12 @@ kill_youtube() {
     fi
 }
 
+
+declare -f DEL
+DEL(){
+    echo -e "\nAre you need to proceed with the command < DEL $@ > ? yes|no "
+    read ans
+    if [[ $ans == "yes" ]]; then
+        /amir_bin/DEL "$@"
+    fi
+}
