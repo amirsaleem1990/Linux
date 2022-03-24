@@ -2,6 +2,9 @@
 # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
 # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
 # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
+RED="\033[0;31m"
+NORMAL="\033[0m"
+
 PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 alias Alias_backup='alias > _alias_temp ; diff _alias_temp github/Linux/alias  | grep ^\< | sed '\''s/^< //g'\'' > _alias_tempp; cat _alias_tempp >> github/Linux/alias; rm -f _alias_temp*'
@@ -121,6 +124,7 @@ poweroff() {
 
 declare -f rdfind
 rdfind(){
+
     if [[ `find . -maxdepth 1  -printf '%u:'  | cut -d: -f1` == 'root' ]]; then 
         echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
     else 
@@ -130,6 +134,10 @@ rdfind(){
             return 1
         fi 
         /usr/bin/rdfind .
+        if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
+            rm -f results.txt
+            echo -e "${RED}\n\nNo duplicate file\n\n${NORMAL}"
+        fi
     fi 
 }
 
