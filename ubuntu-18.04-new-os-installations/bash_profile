@@ -52,7 +52,7 @@ alias pin='i /home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
 alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
 alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
-alias rm='mv -t ~/.local/share/Trash/files'
+alias rm='yes y | mv -t ~/.local/share/Trash/files'
 alias sharjeel='bash ~/awesome-sharjeel-wifi-connect.wifi'
 # alias si='xclip -selection clipboard -t image/png -o >'
 alias sqlectron='/usr/Sqlectron-1.30.0/sqlectron'
@@ -272,3 +272,12 @@ DEL(){
         /amir_bin/DEL "$@"
     fi
 }
+
+# declare -f rm
+# rm() {
+    # mv "$@" ~/.local/share/Trash/files/
+    # if [[ $? -ne 0 ]] ; then 
+    #     DEL -rf "~/.local/share/Trash/file/$@"
+    # fi
+    # mv "$@" ~/.local/share/Trash/files
+# }
