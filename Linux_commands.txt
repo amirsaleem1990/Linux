@@ -1746,3 +1746,14 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # convert pdf to mobi ......... /home/amir/github/Linux/pdf-to-mobi.png
 
+
+# find only hidden files .......... find . -path '*/\.*'
+
+# extract images from pdf file ..........  mkdir -p images && pdftoppm -jpeg -r 150 my_file.pdf images/pg
+
+
+# Create a pdf file from multiple pictures ............. convert *.jpg -auto-orient
+# Convert multiple images to a pdf ..................... convert *.jpg -auto-orient
+
+# Crop an image ........... convert -gravity Center -crop 68x80%+0+0 my_file.jpg new_name.jpg
+
