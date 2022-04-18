@@ -31,7 +31,7 @@ else
 fi
 echo -e "\n" >> /home/amir/.battery_n
 
-cat /home/amir/.battery_n  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g'
+cat /home/amir/.battery_n  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage'
 
 # echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
 
