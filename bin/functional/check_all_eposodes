@@ -202,15 +202,18 @@ class Next_video:
 		self.download_a_video(_file_name_, link, last_vid_num+1)
 
 
+try:
+	user_input = sys.argv[1]
+except:
+	user_input = input("""
+	\t1- alparsalan
+	\t2- kurulust-osman
+	\t3- destan
+	\t4- barbarosa
+	\t5- All
 
-user_input = input("""
-\t1- alparsalan
-\t2- kurulust-osman
-\t3- destan
-\t4- barbarosa
-\t5- All
+	\t""")
 
-\t""")
 print()
 
 obj = Next_video()
