@@ -28,9 +28,13 @@ def LOGIN():
 	loginButton[0].click()
 
 	print("Successfully Logged in", "\n\n\n")
+	n = 0
 	if audit_every_course == "yes":
 		if "|" in course_name:
 			for course in course_name.split("|"):
+				if n == 0:
+					input("\nEnter any key to proceed\t")
+					n += 1
 				browser.get(f"https://www.coursera.org/learn/{course.strip()}")
 				input("\nPress any key after audit: ")
 		else:
