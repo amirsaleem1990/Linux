@@ -1,0 +1,235 @@
+#!/usr/bin/ipython3
+from bs4 import BeautifulSoup
+from datetime import timedelta
+from termcolor import colored
+import os
+import requests
+import sys
+import youtube_dl
+
+
+class Next_video:
+
+	def get_duration(self, vid_url):
+		ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
+		try:
+			with ydl:
+			    x = ydl.extract_info(vid_url, download=False)
+		except:
+			return
+		duration = str(timedelta(seconds=int(x['duration'])))
+		print(f"\n\nDuration:\nHH:MM:SS\n0{duration}\n\n")
+
+
+	def print_a_msg(self, n, last_vid, last_vid_num):
+		print("Last video page:", last_vid)
+		msg = " CONGRATULATIONS" if n > last_vid_num else "--- NO NEW VIDEO"
+		print("""\n\n#############################################################
+####-----------------""" + colored(msg, 'red') + """ -------------------####
+#############################################################\n""")
+
+
+	def download_a_video(self, _file_name_, l, n):
+		# ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+		# if ans_ == "y":
+		# 	open(_file_name_, 'w').write(str(n))
+		# ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+		# if ans_ == "y":
+		if int(list(os.popen(f"youtube-dl -F {l} 2>/dev/null| grep mpd-3 | wc -l"))[0].strip()) > 0:
+			com = f"youtube-dl -f mpd-3 --external-downloader aria2c {l}"
+		else:
+			if int(list(os.popen("youtube-dl -F https://ardirilisertugrul.net/episode/AlpArslan-Buyuk-Selcuklu-episode-13 2>/dev/null| grep ^18 | wc -l"))[0].strip()) > 0:
+				com = f"youtube-dl -f 18 --external-downloader aria2c {l}"	
+			else:
+				print("\n\n")
+				os.system(f"youtube-dl -F {l}")
+				usr_inpt = input("\nSelect the quality: ")
+				com = f"youtube-dl -f {usr_inpt} --external-downloader aria2c {l}"
+		# com += f"; if [[ $? -eq 0 ]] ; then echo {n} > {_file_name_}; fi"
+		print(f"\nDownload command:\n{com}\n\n\n")
+		x = os.system(com)
+		if x == 0:
+			open(_file_name_, 'w').write(str(n))
+
+	def kurulus_osman(self):
+		print(colored("\n\n******** Kurulus usman ********\n", 'red'))
+		_file_name_ = "/home/amir/github/Amir-personal/.kurulus_usman_last_downloaded.txt"
+		s = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=1").text, 'lxml')
+		n = 0
+		for i in s.select("button", {"class" : "btn btn-info"}):
+			i = i.text.strip().split()
+			if i and  i[-1].isnumeric():
+				i = int(i[-1])
+				if i > n:
+					n = i
+		last_vid_num = int(open(_file_name_, 'r').read().strip())
+		last_vid = f"https://ardirilisertugrul.net/Kurulus-Osman/1.php?id={last_vid_num}"
+
+		if last_vid_num+1 < n:	
+			inp_ = input(f"Last video downloaded is {last_vid_num}, and now the episode #{n} is ready to download, are you sure to download #{n} before the missing one? [y|n]   ")
+			if inp_.lower().strip() != 'y':
+				# sys.exit()
+				return
+
+		if n > last_vid_num:
+			q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Kurulus-Osman/1.php?id="+str(n)).text, 'lxml')
+			lst = []
+			for i in q.select("a"):
+			    try:
+			        if i['href'].startswith("https://ardirilisertugrul.net/Kurulus-Osman/Episode/"):
+			            lst.append(i['href'])
+			    except:
+			        pass
+			lst = list(set(lst))
+			latest_video = sorted(lst, key=lambda x:x.split("-")[-1])[-1]
+			q = BeautifulSoup(requests.get(latest_video).text, 'lxml')
+			for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+				try:
+					l = i['href']
+					if "ok.ru" in l: 
+						l = l.replace("videoembed", "video")
+						if not l.startswith("https:"):
+							l = 'https:' + l
+						break
+				except:
+					pass
+			else:
+				print("No new url found")
+				# sys.exit()
+				return 
+			if 'Next Part soon..' in q.text:
+				print("\n **** Full video NOT uploaded yet ****\n")
+				os.popen(f"firefox https://ardirilisertugrul.net/Kurulus-Osman/1.php?id=" + str(n))
+			else:
+				self.print_a_msg(n, last_vid, last_vid_num)
+			
+				self.get_duration(vid_url=l)
+
+				self.download_a_video(_file_name_, l, n)
+
+			print()
+
+
+	def barbarosa(self):
+		print(colored("\n\n******** Barbaros ********\n", 'red'))
+		_file_name_ = "/home/amir/github/Amir-personal/.Barbaros_last_downloaded.txt"
+		s = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/1.php?id=1").text, 'lxml')
+		n = max([int(i.text.strip("Episode ")) for i in s.select("button", {"class" : "btn btn-info"}) if i.text.startswith("Episode") ])
+		last_vid_num = int(open(_file_name_, 'r').read().strip())
+		last_vid = f"https://ardirilisertugrul.net/Barbaros/1.php?id={last_vid_num}"
+
+		self.print_a_msg(n, last_vid, last_vid_num)
+
+		if n > last_vid_num:
+			q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/Barbaroslar-Episode-"+str(n)).text, 'lxml')
+			if 'Next Part soon..' in q.text:
+				print("\n **** Full video NOT uploaded yet ****\n")
+				os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
+			else:
+				# ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+				# if ans_ == "y":
+				for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+					try:
+						l = i['href']
+						if "ok.ru" in l: 
+							l = l.replace("videoembed", "video")
+							if not l.startswith("https:"):
+								l = "https:" + l
+							break
+					except:
+						pass
+				else:
+					for i in q.select("li"):
+						try:
+							l = i['data-source']
+							if "ok.ru" in l: 
+								l = l.replace("videoembed", "video")
+								break 
+						except:
+							pass
+					else:
+						print("NO video url")
+						# exit()
+						return 
+					print(l)
+				print(l)
+				self.download_a_video(_file_name_, l, n)
+
+
+	def alp_arsalan_or_destan(self, name):
+		print(colored(f"\n\n******** {name} ********\n", 'red'))
+		if name == "alparsalan":
+			_file_name_ = "/home/amir/github/Amir-personal/.alp_arsalan_last_downloaded.txt"
+			end_of_url = "AlpArslan-Buyuk-Selcuklu"
+		elif name == "destan":
+			_file_name_ = "/home/amir/github/Amir-personal/.destan_last_downloaded.txt"
+			end_of_url = "Destan"
+
+		last_vid_num = int(open(_file_name_, 'r').read().strip())
+		last_video_url = f"https://ardirilisertugrul.net/episode/{end_of_url}-episode-" + str(last_vid_num)
+		next_video_url = f"https://ardirilisertugrul.net/episode/{end_of_url}-episode-" + str(last_vid_num + 1)
+		s = BeautifulSoup(requests.get(next_video_url).text, "lxml")
+		print("Last video:", last_video_url)
+		print("Next video:", next_video_url)
+
+
+		to_print = """\n\n
+		#############################################################
+		####------------------ {} -----------------####
+		#############################################################
+		\n"""
+
+		link = ''
+		x = s.find("div", {"class" : "WatchSection activee text-center"})
+		if x is None:
+			# sys.exit()
+			return
+		for i in s.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+		    try:
+		        if 'ok.ru' in i['href']:
+		            link = 'https:' + i['href']
+		    except:
+		        pass
+		if not link:
+			print(to_print.format("  NO NEW VIDEO  "))
+			# sys.exit()
+			return
+
+		print(to_print.format(" CONGRATULATIONS"))
+
+		self.get_duration(vid_url=link)
+
+		self.download_a_video(_file_name_, link, last_vid_num+1)
+
+
+try:
+	user_input = sys.argv[1]
+except:
+	user_input = input("""
+	\t1- alparsalan
+	\t2- kurulust-osman
+	\t3- destan
+	\t4- barbarosa
+	\t5- All
+
+	\t""")
+
+print()
+
+obj = Next_video()
+
+if   user_input == "1":
+	obj.alp_arsalan_or_destan("alparsalan")
+elif user_input == "2":
+	obj.kurulus_osman()
+elif user_input == "3":
+	obj.alp_arsalan_or_destan("destan")
+elif user_input == "4":
+	obj.barbarosa()
+elif user_input == "5":
+	obj.alp_arsalan_or_destan("alparsalan")
+	obj.kurulus_osman()
+	obj.alp_arsalan_or_destan("destan")
+	obj.barbarosa()
+else:
+	print("\nWRONG INPUT.\nAborting......\n")
