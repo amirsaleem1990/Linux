@@ -1,3 +1,11 @@
+print("We noticed that this method changes the data, for details open /home/amir/github/short-codes/Type_casting_changes_the_data.ipynb")
+import sys
+sys.exit()
+
+
+
+
+
 print("""
 Usage:
 	import sys
