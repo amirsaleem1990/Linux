@@ -1757,3 +1757,8 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # Crop an image ........... convert -gravity Center -crop 68x80%+0+0 my_file.jpg new_name.jpg
 
+# execute/run python code on github without downloading it .......... curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -
+
+
+# internet speed ........... cbm
+
