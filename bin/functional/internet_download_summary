@@ -56,6 +56,26 @@ fi
 SUM=`du -shL -BM | sed 's/M..//g'`
 
 
+func_1(){
+	IFS=,
+	for e in $1 ; do 
+		if $2; then
+			n_files=$(bc <<< $3+$(find . -iname "*.$e" 2>/dev/null| wc -l))
+		else
+			n_files=$(bc <<< $3+$(ls | grep -i .$e 2>/dev/null| wc -l))
+		fi
+	done
+	echo $n_files
+}
+
+func_2(){
+	if $1; then
+		n_files=$(find . -iname "*.$2" | wc -l)
+	else
+		n_files=$(ls | grep -i .$2 | wc -l)
+	fi
+	echo $n_files
+}
 
 IFS=$'\n'
 # before_files=`ls -I "*.part" -I "*.ytdl" | wc -l`
@@ -67,20 +87,9 @@ fi
 
 before_files=0
 if $multiple_extentions; then
-	IFS=,
-	for e in $extention ; do 
-		if $recursive; then
-			before_files=$(bc <<< $before_files+$(find . -name "*.$e" 2>/dev/null| wc -l))
-		else
-			before_files=$(bc <<< $before_files+$(ls *.$e 2>/dev/null| wc -l))
-		fi
-	done
+	before_files=$(func_1 $extention $recursive $before_files)
 else
-	if $recursive; then
-		before_files=$(find . -name "*.$extention" | wc -l)
-	else
-		before_files=$(ls *.$extention | wc -l)
-	fi
+	before_files=$(func_2 $recursive $extention)
 fi
 total_increment=0
 c=0
@@ -97,20 +106,9 @@ while :; do
 
 	after_files=0
 	if $multiple_extentions; then
-		IFS=,
-		for e in $extention ; do 
-			if $recursive; then
-				after_files=$(bc <<< $after_files+$(find . -name "*.$e" 2>/dev/null | wc -l))
-			else
-				after_files=$(bc <<< $after_files+$(ls *.$e 2>/dev/null | wc -l))
-			fi
-		done
+		after_files=$(func_1 $extention $recursive $after_files)
 	else
-		if $recursive; then
-			after_files=$(find . -name "*.$extention" | wc -l)
-		else
-			after_files=$(ls *.$extention | wc -l)
-		fi
+		after_files=$(func_2 $recursive $extention)
 	fi
 
 	date=$(date +%H:%M)
