@@ -1762,3 +1762,12 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 
 # internet speed ........... cbm
 
+# install pip packages from requirment.txt ............ pip3 install -r /path/to/requirements.txt
+
+# create virtual envoirment for specific python virsion ............... virtualenv myvenv --python=python3.7
+
+# package for listing version of packages used in a jupyter notebook ............. (after importing modules) print('\n'.join(f'{m.__name__}=={m.__version__}' for m in globals().values() if getattr(m, '__version__', None)))
+
+# Send a Process to Background and restore it .................. CTRL + Z ......... bg ........................ https://linuxhint.com/send-process-background-linux/
+
+
