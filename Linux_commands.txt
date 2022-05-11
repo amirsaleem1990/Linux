@@ -1771,3 +1771,5 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 # Send a Process to Background and restore it .................. CTRL + Z ......... bg ........................ https://linuxhint.com/send-process-background-linux/
 
 
+ffmpeg - replace audio in video ............... ffmpeg -i v.mp4 -i a.wav -c:v copy -map 0:v:0 -map 1:a:0 new.mp4
+
