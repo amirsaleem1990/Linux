@@ -12,7 +12,7 @@ if len(sys.argv) == 1:
 else:
     inp = sys.argv[1]
     if not inp in ["1", "2"]:
-        raise Exception("\n\nWrong option \{{inp}\}\nAborting..........\n")
+        raise Exception(f"\n\nWrong option \{{inp}\}\nAborting..........\n")
 
 
 
