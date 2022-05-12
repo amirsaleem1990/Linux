@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 import os
+import sys
 os.chdir("/home/amir/github/")
+if len(sys.argv) == 1:
+    inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Are you need to continue? [y|n] ")
+    if inp == "y":
+        inp = "0"
+        pass
+    else:
+        raise Exception("\nAborting.......\n")
+else:
+    inp = sys.argv[1]
+    if not inp in ["1", "2"]:
+        raise Exception("\n\nWrong option\nAborting..........\n")
+
+
+
 # # os.system("bash git_files.sh")
 # os.system('find . -name "*" > git_files.txt')
 # with open("git_files.txt", "r") as file:
@@ -17,7 +32,8 @@ os.chdir("/home/amir/github/")
 # 	           #  os.remove("git_files.txt")
 #             sys.exit()
 # os.remove("git_files.txt")
-exit_code = os.system("check_github_files_size.sh")
+com = f"check_github_files_size.sh {inp}"
+exit_code = os.system(com) # 0 for not execution, I don't need to run this command 
 if exit_code != 0:
 	import sys
 	sys.exit(2)
