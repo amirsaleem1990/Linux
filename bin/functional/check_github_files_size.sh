@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ -z $1 ]]; then
+	exit
+fi
+
 echo "
 #################################################################################
 # This script will loop over all local github repos, and find files that are    # 
@@ -8,6 +12,7 @@ echo "
 # as print out those details on terminal, and exit                              #
 ################################################################################# 
 "
+
 cd /home/amir/github/
 rm -f /home/amir/.GIT_FILES_GRATER_THAN_50_MB
 file_greater_than_one=0
