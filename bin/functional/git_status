@@ -152,6 +152,8 @@ for repo in repos:
 		new = open(only_new_files, 'r').read().splitlines()
 		if new:
 			for new_file in new:
+				if not os.path.exists(new_file):
+					continue
 				size_bytes = os.path.getsize(new_file)
 				size_mb = round(size_bytes / 1024 / 1024)
 				if size_mb > 48:
@@ -169,6 +171,8 @@ for repo in repos:
 		updated_files = open(only_updated_files, 'r').read().splitlines()
 		if updated_files:
 			for updated_file in updated_files:
+				if not os.path.exists(updated_file):
+					continue
 				size_bytes = os.path.getsize(updated_file)
 				size_mb = round(size_bytes / 1024 / 1024)
 				if size_mb > 48:
