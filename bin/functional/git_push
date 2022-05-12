@@ -2,18 +2,17 @@
 import os
 import sys
 os.chdir("/home/amir/github/")
-if len(sys.argv) == 1:
+if len(sys.argv) == 2:
+    inp = sys.argv[1]
+    if not inp == "1":
+        raise Exception(f"\n\nWrong option ({inp})\nAborting..........\n")
+else:
     inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Are you need to continue? [y|n] ")
     if inp == "y":
-        inp = "0"
+        inp = ""
         pass
     else:
         raise Exception("\nAborting.......\n")
-else:
-    inp = sys.argv[1]
-    if not inp in ["1", "0"]:
-        raise Exception(f"\n\nWrong option ({inp})\nAborting..........\n")
-
 
 
 # # os.system("bash git_files.sh")
