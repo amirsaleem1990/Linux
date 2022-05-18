@@ -47,6 +47,7 @@ x=-1
 main () {
 	let "n++"
 	current=$(ifstat -i wlp3s0 1s 1 | awk 'NR==3 {print $1}')
+	# current=$(ifstat -i wlxd037459bf2ea 1s 1 | awk 'NR==3 {print $1}')
 	current_=$(func $current 8)K
 
 	total=$(echo $current + $total|bc)
