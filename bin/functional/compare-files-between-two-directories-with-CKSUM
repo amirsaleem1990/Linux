@@ -9,8 +9,7 @@ fi
 find . -type f > /tmp/here_files
 find $there -type f > /tmp/there_files
 
-to_csv(){
-	python3 -c '
+echo '
 import hashlib
 import pandas as pd
 import os
@@ -29,8 +28,8 @@ df["file"] = df.full.str.split("/").str[-1]
 df2 = pd.DataFrame(df.full.apply(cksum).dropna().str.split(" ", 2).to_list(), columns=["chksum", "size_byte", "file_name"]).drop("file_name", axis=1)
 df = pd.concat([df, df2], axis=1)
 df.to_csv(file_name + ".csv", index=False)
-'
-}
+print(f"\nSaved data as {file_name}.csv")
+' > /tmp/script_2.py
 
 echo '
 from pandas import read_csv
@@ -69,10 +68,10 @@ else:
 ' > /tmp/script_1.py
 
 export f=/tmp/here_files
-to_csv
+python3 /tmp/script_2.py
 
 export f=/tmp/there_files
-to_csv
+python3 /tmp/script_2.py
 
 export there
 export here=$(pwd)
