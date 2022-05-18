@@ -282,7 +282,10 @@ DEL(){
     # mv "$@" ~/.local/share/Trash/files
 # }
 
-
+declare -f pylint_amir
+pylint_amir(){
+    pylint --msg-template='{msg_id}:{line:3d}:{column}:{msg}' "$1"  | grep "^[A-Za-z-]" | head -n -2 | sort -k1,4 -s
+}
 
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /media/sdb2/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /media/sdb2/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
