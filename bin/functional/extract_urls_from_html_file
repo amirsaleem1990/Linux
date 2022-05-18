@@ -1,0 +1,19 @@
+#!/bin/bash
+
+file_name="$1"
+if [[ -z $file_name ]]; then
+	read -p "Enter file name: " file_name
+fi
+
+export file_name
+
+echo '
+import os
+from bs4 import BeautifulSoup
+import re
+file_name=os.environ["file_name"]
+s = BeautifulSoup(open(file_name, "r").read(), "lxml")
+lst = [i["href"] for i in s.find_all("a", href=re.compile(""))]
+lst += [i["src"] for i in s.find_all("source", href=re.compile(""))]
+print(*lst, sep="\n")
+' | python3
