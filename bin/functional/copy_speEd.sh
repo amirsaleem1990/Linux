@@ -7,7 +7,9 @@ fi
 size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
 while :; do
 	current_size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
-	echo -e "$(date +%T)\t$current_size MB\t$(echo $current_size-$size|bc -l) MB\t$(find . 2>/dev/null| wc -l)"
+	echo -e "$(date +%T)\t$current_size MB\t$(echo $current_size-$size|bc -l) MB\t$(find . 2>/dev/null| wc -l)" | tee -a /home/amir/.copyt_speed.txt
 	size=$current_size
 	sleep $sleep_secs
 done
+
+eche -e "\nSee /home/amir/.copyt_speed.txt\n"
