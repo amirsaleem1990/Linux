@@ -1771,7 +1771,24 @@ Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }'
 # Send a Process to Background and restore it .................. CTRL + Z ......... bg ........................ https://linuxhint.com/send-process-background-linux/
 
 
-ffmpeg - replace audio in video ............... ffmpeg -i v.mp4 -i a.wav -c:v copy -map 0:v:0 -map 1:a:0 new.mp4
+# ffmpeg - replace audio in video ............... ffmpeg -i v.mp4 -i a.wav -c:v copy -map 0:v:0 -map 1:a:0 new.mp4
 
 # How to pass a Bash variable to Python? ............... export my_var=88; echo 'import os; print(os.environ["my_var"])' | python3
 
+# remove last n lines ............. head -n -2 file_name.txt
+
+
+######################################
+# Activate a virtualenv (without source Virtual-env/bin/activate every time)
+
+/path/to/your/virtual-env/bin/python3 your-script.py
+
+The simplest solution to run your script under virtualenv's interpreter is to :
+    replace the default shebang line with path to your virtualenv's interpreter like so at the beginning of the script:
+        #!/path/to/project/venv/bin/python
+    Make the script executable:
+        chmod u+x script.py
+    Run the script:
+        ./script.py
+
+#######################################
