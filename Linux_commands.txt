@@ -1792,3 +1792,13 @@ The simplest solution to run your script under virtualenv's interpreter is to :
         ./script.py
 
 #######################################
+
+
+>>>>>>>>>>>>>>> ARRAY
+distro=("redhat linux" "debian linux" "gentoo linux")
+echo "${distro[2]}"  #gentoo linux
+echo "${#distro[@]}" #lenght of the array
+len=${#distro[@]}; for (( i=0; i<$len; i++ )); do echo "${distro[$i]}" ; done # loop over array by index
+-------------------
+
+
