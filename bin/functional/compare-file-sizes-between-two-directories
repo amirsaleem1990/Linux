@@ -64,7 +64,7 @@ if x.sum():
 	if input() != 'yes':
 		print("\nSkipping .........")
 	else:
-		for file_to_remove in df[x].File.to_list():
+		for file_to_remove in to_remove_list: #df[x].File.to_list():
 			os.remove(file_to_remove)
 
 
