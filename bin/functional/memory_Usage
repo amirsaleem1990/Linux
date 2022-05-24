@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+get_info() {
+	ram=$(free -m | head -n2 | tail -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2-10)
+	swap=$(free -m | tail -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2-10)
+	ram_total=$(echo $ram | cut -d, -f1)
+	ram_used=$(echo $ram | cut -d, -f2)
+	swap_total=$(echo $swap | cut -d, -f1)
+	swap_used=$(echo $swap | cut -d, -f2)   
+}
+
+echo "RAM total: $ram_total" > /home/amir/.memory_usage_info
+echo "SWAP total: $swap_total" >> /home/amir/.memory_usage_info
+echo ram_used,swap_used,time >> /home/amir/.memory_usage_info
+
+while :; do
+	get_info
+	echo "$ram_used,$swap_used,$(date +%T)" | tee -a /home/amir/.memory_usage_info 
+	sleep 1s
+done
