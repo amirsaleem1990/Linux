@@ -7,7 +7,7 @@ else
 fi
 
 find . -type f > /tmp/here_files
-find $there -type f > /tmp/there_files
+find "$there" -type f > /tmp/there_files
 
 echo '
 import hashlib

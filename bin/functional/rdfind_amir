@@ -1,0 +1,196 @@
+#!/usr/bin/python3
+import sys
+from termcolor import colored
+import pickle
+import os
+import pandas as pd
+import time
+import hashlib
+start = time.time()
+
+files = sys.argv[1:]
+if not files:
+	files = list(map(str.strip, list(os.popen("IFS=$'\n'; find . -type f"))))
+
+def content_func(file_name: str):
+	return open(file_name, 'rb')
+
+def hash(file_name: str):
+	content = content_func(file_name)
+	return hashlib.sha224(content.read()).hexdigest()
+
+def create_df(list_of_lists: list):
+	return pd.DataFrame(lst, columns=["file", "first_byte", "last_bytes", 'lenght', 'bytes'])
+
+
+def summary(string: str):
+	print(string.format(df_lenght-df.shape[0], df.shape[0]))
+
+def first_byte(file_name):
+	content = content_func(file_name)
+	return content.read(1)
+
+def last_byte(file_name):
+	content = content_func(file_name)
+	return content.seek(-1, os.SEEK_END)
+
+def lenght(file_name):
+	content = content_func(file_name)
+	return len(content.read())
+
+
+import numpy as np
+hash = np.vectorize(hash)
+# summary = np.vectorize(summary)
+
+
+# os.stat(file).st_size() # return bytes
+
+error_files = []
+lst = []
+for file in files:
+	try:
+		lst.append([
+			file, 
+			first_byte(file), 
+			last_byte(file),
+			lenght(file),
+			os.stat(file).st_size
+		])
+	except Exception as e:
+		error_files.append([file, str(e)])
+pickle.dump(lst, open("/tmp/amir_md5_output", 'wb'))
+# lst = pickle.load(open("/tmp/amir_md5_output", 'rb'))
+df = create_df(lst).drop_duplicates()
+print(f"\n\nTotal files: {len(df)} files.")
+print(f"Total size is {df['bytes'].sum()} bytes or {round(df['bytes'].sum()/1024/1024/1024, 2)} GB")
+
+
+df_lenght = df.shape[0]
+df = df[df.lenght.duplicated(keep=False)]
+summary("Removed {} files due to unique sizes from list.\t{} files left.")
+
+df_lenght = df.shape[0]
+df = df[df.first_byte.duplicated(keep=False)]
+summary("Now eliminating candidates based on first bytes: removed {} files from list.\t{} files left.")
+
+df_lenght = df.shape[0]
+df = df[df.first_byte.duplicated(keep=False)]
+summary("Now eliminating candidates based on last bytes: removed {} files from list.\t{} files left.")
+
+df_lenght = df.shape[0]
+df['hash'] = df.file.apply(hash)
+df = df[df.hash.duplicated(keep=False)]
+summary("Now eliminating candidates based on sha1 checksum: removed {} files from list.\t{} files left.")
+
+df_lenght = df.shape[0]
+can_be_droped_mb = round((df['bytes'].sum() - df.drop_duplicates(subset=["hash"], keep='first')['bytes'].sum())/1024/1024)
+print(f"It seems like you have {df_lenght} files that are not unique\nTotally, {can_be_droped_mb} MB can be reduced.\nNow making results file results.csv\n")
+df.to_csv("/tmp/results.csv", index=False)
+
+end = time.time()
+print("Time consumed:", round(end-start))
+
+
+print("\nResults saved as /tmp/results.csv")
+# df = pd.read_csv("/tmp/results.csv")
+
+#----------------------------
+for_delete_size = 0
+def func_(val):
+	global for_delete_size
+	val = node[int(val)]
+	DELTE_IT.append(val)
+	for_delete_size += os.path.getsize(val)
+	print(f"************ <{val}> added to REMOVE list ************")
+
+DELTE_IT = []
+
+delete_items_qty = 0
+r = sorted(df.groupby("hash"), key=lambda x:x[1]['bytes'].max(), reverse=True)
+r = [i[1].iloc[:, 0].to_list() for i in r]
+
+
+
+for node in r:
+	try:
+		print("\n<<  ==========================================  >>")
+		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
+		print(f"Delete items Qty: {delete_items_qty} (among {df.hash.nunique()} unique files)\n")
+		for e,i in enumerate(node):
+			d = f'$(du -sh "{i}")'
+			com = f"""echo "{e}- {d}" """
+			os.system(com)
+		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		if input_ in ["o", "'o'"]:
+			for i in node:
+				com = f"gopen '{i}' 2>/dev/null"
+				os.system(com)
+			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		input_ = input_.replace(" ", "")
+		if "." in input_: # multi index
+			try:
+				inp = input_.split(".")
+				for input_ in inp:
+					delete_items_qty += 1
+					func_(input_)
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		else: # single index
+			try:
+				delete_items_qty += 1
+				func_(input_)
+			except: # skip
+				pass
+	except:
+		break
+
+if DELTE_IT:
+	print("\n\n\n----------------\nFiles to delete:")
+	# print(*DELTE_IT, sep="\n\t")
+	for n,i in enumerate(DELTE_IT):
+	    print(f"\t{n}- {i}")
+	#print('\n\t' + '\n\t'.join(DELTE_IT))
+	print(colored("\n\nWe are going to delete these files.", 'red'))
+	input_ = input("\n\tpress y to continue\n\tOR\n\tEnter index number to exclude file/s from deletion (if multiple use ',' as delimeter (eg:2,4,5): \n")
+	print("")
+	if input_ == 'y':
+		for i in DELTE_IT:
+			print(f"Removing {i} ..........")
+			os.remove(i)
+	else:
+		if "," in input_:
+			indexes = [int(i.strip()) for i in input_.split(",")]
+		else:
+			indexes = int(input_.strip())
+		D_ = []
+		excluded  = []
+		for n, i in enumerate(DELTE_IT):
+			if not n in indexes:
+				D_.append(i)
+			else:
+				excluded.append(i)
+		if D_:
+			print(f"\n\n============== Excluded files from deletion ==============")
+			print(*excluded, sep="\n")
+
+			print(f"\n\n============== Files to be deleted ==============")
+			print(*D_, sep="\n")
+			if input("\n\nAre you agree to deleted above mentions files? [y|n]\n") == "y":
+				for i in D_:
+					print(f"Removing {i} ..........")
+					os.remove(i)
+		else:
+			print("\nWRONG indexes!!\n")
+else:
+	print("\nYou didn't choose any file to delete\nExiting ........")
+print()
+
+
+
+# if error_files:
+# 	print("\n\n>>>>>>>>>>>>>>>>>>>>>>Errors")
+# 	for e in error_files:
+# 		print("-----------------------\n" + e[0])
+# 		print(e[1])
