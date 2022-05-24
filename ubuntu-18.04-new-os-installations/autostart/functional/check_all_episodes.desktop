@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=check_all_episodes
-Exec=/amir_bin/check_all_episodes
-Type=Application
-X-GNOME-Autostart-enabled=true
