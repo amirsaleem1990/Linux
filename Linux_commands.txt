@@ -1792,3 +1792,6 @@ The simplest solution to run your script under virtualenv's interpreter is to :
         ./script.py
 
 #######################################
+# Check partitions type:
+    sudo file -s /dev/{sd,nvme}*
+    lsblk -f
