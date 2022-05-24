@@ -45,6 +45,7 @@ alias lfd_jazz='nmcli d w c lfd_jazz password lfd@12345'
 alias ll='ls -latr'
 alias ls='ls --color=auto -F'
 alias mv='mv -i'
+alias J="python3 manage.py runserver"
 alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
 alias p='python3 -c '\''t=input(); print(eval(t))'\'''
 alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
@@ -93,7 +94,7 @@ Youtube_dl() {
     echo -e "\n\nThere are other `echo $(ps aux | grep youtube-dl | wc -l)-1|bc` youtube-dl downloading jobs running\n\n"
     while :; do
         echo -e "\n\n*************** New attempt ***************\n\n" 
-        /usr/local/bin/youtube-dl $1
+        $(which youtube-dl) $1
         if [[ $? -eq 0 ]] ; then 
             return 1
         fi
@@ -137,7 +138,11 @@ rdfind(){
         if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
             rm -f results.txt
             echo -e "${RED}\n\nNo duplicate file\n\n${NORMAL}"
+            return 0
         fi
+
+        /amir_bin/rdfind_analysis
+
     fi 
 }
 
@@ -266,7 +271,13 @@ kill_youtube() {
 
 declare -f DEL
 DEL(){
-    echo -e "\nAre you need to proceed with the command < DEL $@ > ? yes|no "
+    RED="\033[0;31m"
+    NC='\033[0m' 
+    echo -e "\nAre you need to Remove the following: [yes|no]"
+    echo -e "${RED}NOTE: This is the $(pwd) direcotry${NC}\n"
+    for i in "$@"; do
+        echo "$i"
+    done
     read ans
     if [[ $ans == "yes" ]]; then
         /amir_bin/DEL "$@"
@@ -286,6 +297,7 @@ declare -f pylint_amir
 pylint_amir(){
     pylint --msg-template='{msg_id}:{line:3d}:{column}:{msg}' "$1"  | grep "^[A-Za-z-]" | head -n -2 | sort -k1,4 -s
 }
+
 
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /media/sdb2/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /media/sdb2/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -317,37 +329,3 @@ alias vpn_g_27='echo https://www.vpnbook.com/; sudo openvpn --config /media/sdb2
 alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /media/sdb2/Downloads/VPNs/us2-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /media/sdb2/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /media/sdb2/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
