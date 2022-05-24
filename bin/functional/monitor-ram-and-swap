@@ -46,5 +46,5 @@ except KeyboardInterrupt:
     print("\n")
     pprint.pprint(dd.sort_values("Ram-Used[GB]",ascending=False))
 
-    print("\n\nWe saved usage files as /home/amir/memory_usage.csv\n\n")
-    dd.to_csv("/home/amir/memory_usage.csv")
+    print("\n\nWe saved usage files as /home/amir/.memory_usage.csv\n\n")
+    dd.to_csv("/home/amir/.memory_usage.csv")
