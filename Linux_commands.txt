@@ -1,0 +1,1810 @@
+# multitasking in one shell.
+# eg: when we start jupyter from terminal we can't use that terminal until we kill the jupyter, so instead of <jpyter-lab>  type  <jupyter-lab &> ............ now you can use that terminal for other command too.
+#  list all files, size mesure = MB ................... ls -l --block-size=M
+# remove not empty folder ................... rm -r folder_name/
+# Move a window to a different workspace .................... Super+Shift+Page Up ................ Super+Shift+Page Down
+---------------------------------
+# all 
+Go to /sys/class/net you can see list of folders here.
+find wireless interface. It has wireless folder. for example in my case is wlp10 you can check it using ls wlp10. if the folder's name different use that folder's name.
+sudo iwlist wlp1s0 scan | grep ESSID
+---------------------------------
+#####################
+Wildcards *
+#####################
+a*.txt
+# matches all file names that start with a lowercase letter a and end with .txt.
+---------------------------------
+# If you want files that start with an uppercase A or a lowercase a and end with .txt, use the expression
+[Aa]*.txt
+# This expression would match the following files:
+--------------------------------
+# You can use the star more than once — for example, with the expression a*v*.txt. This expression would match only one file in the example list of files:
+# among file: [a.txt, a_very_long_name.txt, A_FILE_NAME_WITH_UPPERCASE_LETTERS.txt]
+a_very_long_name.txt
+--------------------------------
+ls /usr/lib/l*z*.a
+# list of all files in path /user/lib/ that starts with <l> and contain <z> and fileExtention <.a>
+--------------------------------
+ls /usr/lib/l*[AFLz]*.a
+# list of all files in path /user/lib their names starts with <l>, and contains at least one of the <A, F, L, z] and ending with <.a>
+--------------------------------
+count all files with .py extention in current folder ................... ls *.py | wc
+# count all files in current folder ................... ls | wc
+# count all files in current folder and his childrens subfolders ................... find . | wc
+# count all files with .py extention in current folder and his childrens subfolders ................... find . -name "*.py" | wc
+# list all files with *.py in current folder and his chidrens subfolders. ................... find . -name "*.py"
+---------------------------------
+NOTE: If you deleted the file using the command line, the file has been permanently deleted. Files that have been permanently deleted can’t be recovered from the Trash.
+# unzip / extract zip file ................... unzip file.zip
+# unzip tar.gz file ................... tar xvzf file.tar.gz
+# unzip and remove bz2 file ................... bzip2 -d file.bz2
+# If you want to extract bz2 file and keep the original, run this command: ................... bzip2 -dk file.bz2
+---------------------------------
+How to search for text string on multiple files?
+find . -type f -print | sed 's/ /\\ /g' | xargs grep -i "my text string"
+[    What that does:
+    Find everything in the current directory or any of its children which is a regular file.
+
+    Convert spaces in filenames to escaped spaces so the grep won't fail.
+
+    xargs converts the line-separated list of items from the find into a space separated list for the grep.
+
+    grep -i is searching while ignoring capitalization for "my text string" 
+
+    Help stamp out MBR partition tables. Use GPT instead!
+https://ubuntuforums.org/showthread.php?t=1722145]
+---------------------------------
+create alias for terminal ................... alias p="ipython"
+# ab jab bhi terminal par <p> likh kar enter karun ga to ipython khul jay ga, magar ye srif isi session tak valid h, jesy hi terminal band ho ga ye alias bhi remove ho jay ga, ksi bhi alias ko perminently use karny k lye usy ~/.bashrc file me append karty hen.
+# To see all the aliases defined in the environment: ................... alias
+# To remove an alias, the unalias command is used, like so: ................... unalias alias_name
+---------------------------------
+# nautilus bookmark editing
+# first: open the file
+gio open .config/gtk-3.0/bookmarks
+# then edit this file
+---------------------------------
+# save text[currently in clipboard] in file ................... xclip -o > new_file_name.txt
+# Put the contents of the selection into a file. ................... xclip -t text/html index.html
+# save text to file ................... echo "my name is amir" > file_name.txt
+---------------------------------
+# save image[currently in clipboar] in file ....................... xclip -selection clipboard -t image/png -o > file.png
+# this command is vary big, hence hard to type every time, so we can create an alias of this command,
+alias si="xclip -selection clipboard -t image/png -o >"
+# now we type like thi: si image_15
+# save this alias from perminent use: echo 'alias si="xclip -selection clipboard -t image/png -o >"' >> ~/.bashrc && source ~/.bashrc
+---------------------------------
+# list of all files in current folder, with size and date, sorted by time, most early on top ................... ls -l  -S --sort=time -r
+# suspend ................... pm-suspend ................ sudo pm-suspend ....................systemctl suspend
+# hibernate ................... pm-hibernate ----------------- or: sudo pm-hibernate ................... or: systemctl hibernate
+# How Do I Put My Computer To Sleep After a Certain Amount Of Time? ...................... echo 'pm-suspend' | at now + 30 minutes ................ or: echo 'systemctl suspend' | at now + 30 minutes
+# pichly folder ki files list ................... ls ..
+# agly folder ki list ................... ls folder_name_in_current_directory
+# foxit alias ................... alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
+# close terminal shortcut ................... CTLR+D
+# zip folder <Sentiment140> to file <Sentiment140.zip> ................... zip -r Sentiment140.zip Sentiment140/
+# zip files ................... zip imtiaz-list.zip imtiaz-list.*
+# get file size ................... du -sh file or folder name
+---------------------------------
+#alias for rm remove
+#if you remove file or folder using terminal the removed file deleted perminantily, if we do mistake we can't restore our file, so we need alias, this alias move the file Trash folder.
+alias rm='mv -t ~/.local/share/Trash/files'
+---------------------------------
+# for count videos duration in particuler foler ................... for f in *.mp4; do ffmpeg -i "$f" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//  | tr -d "\n" && echo " $f"; done
+---------------------------------
+# read first n lines from file ................... head -5 R.r
+# read all file in terminal ................... cat file_name
+---------------------------------
+# my very usefull aliases:
+alias si='xclip -selection clipboard -t image/png -o >'
+alias foxit='/home/home/opt/foxitsoftware/foxitreader/FoxitReader'
+alias rm='mv -t /home/home/Desktop/Trash/'
+alias cc="gcc p1.c -o p1 && ./p1"
+alias jp="jupyter-notebook"
+alias copyfrom="xclip -sel cli <"
+alias copyto="xsel -b >"
+alias rm="rm -i"
+alias calc="gcalccmd" # terminal calculator
+
+#Note: these aliases should be writen in the end of file bashrc, opeh this file by (subl ~/.bashrc), and in the end of the file paste these lines, save file, exit, and then type on terminal (source ~/.bashrc)
+----------------------------
+# copy file contant to clipboard ................... xclip -sel cli < file_name
+NOTE: if you use (>) rather then (<) then all file contant will be removed. so give this command your attention.
+----------------------------
+# create a new file with cantant in clipboard. ................... xsel -b > some.txt
+# add lines to end of file ................... echo 'VNCSERVERS="1:root"' >> filename ................ echo "blablabla blablabla blablabla >> filename
+# copy file from another direcotry to currect directory ................... cp /blabla/blabla/bla.txt . # this <.> mean current directroy
+# ls for current and subdirectories ................... ls *
+-------------------------
+combine two commands whith && or ;
+let us say you need to creat a derctory <folder> and then go into that directory, usually we solve this problam by two commands in two lines, we can write these two commands in one line saparated by <&&>: so <mkdir folder> and then in next line <cd folder/>  is equal to: <mkdir folder && cd folder/> and same as: <mkdir folder ; cd folder/>
+--------------------------
+> remove everything in file and add current input. eg: ls > a.txt............  yahan agar a.txt exist nahi karti ho gi to ban jay gi or us me <ls> ka result save ho jay ga. or agar file exist karti ho gi to us ka sara contant delete ho jay ga or <ls> ka result us me save ho jay ga.
+
+>> append k lye >> use hota h. eg: ls >> b.txt ...............  yahan, agar b.txt exist karti ho gi to us k aakhir me <ls> ka result save ho jay ga, or agar nahi exist karti ho gi to new file ban jay gi jis me <ls> ka result save ho jay ga.
+create empty file: ............... > a.txt
+murge +1 files: ................... cat file_1.txt, file_2.txt... file_n.txt > new_file.txt................... now new_file.txt contain contant of all n files.
+--------------------------
+for creating a small text file, we should use cat.
+let us see we need to store one line text in file. usually we done this job by oppining the text editor, typing our line and save the file, we can do the same via cat. so:
+cat > file.txt
+# now want to type what we want to store, after typing we press CTRL+D. now we have file named file.txt contain text that we typed between <cat > file.txt> and <CTRL+D)
+--------------------------
+# cout file lines: ............... wc -l filename
+# go to folder in home directory ............... cd ~/Desktop/ .............. it is equal to cd /home/amir/Desktop/ 
+# google search query ............... firefox google.com/search?q="query you want"
+# only lines that contains specific text ............... cat file_name.txt | grep text_you_want_to_search
+# only files that contain (statistics) in these names ............... du -sh *statistics*
+# all files and files in folders only  ............... ls  */
+# only folder names not files ............... ls -d */
+# files sorted by extention, so .py first and .txt after  ............... ls | rev | sort | rev
+# second way:  ...............  ls -lX
+# zip 2 or more files ............... zip final.zip file1 file2 file_n
+
+### WIFI
+# refresh wifi list .......................... iwlist scan
+# connected wifi details ................... nmcli dev wifi
+# saved wifi connections:  ............... nmcli c
+# check available WiFi hotspots after refresh  ............... iwlist scan && nmcli d wifi list ............... 
+# To see list of interfaces ............... ifconfig -a
+# wifi - graphical interface in shell  ............... nmtui
+# turn on/off wifi  ............... <nmcli radio wifi on> or <nmcli networking on> ............... <nmcli radio wifi off> or <nmcli networking off>
+# all saved wifi ............... cd /etc/NetworkManager/system-connections && ls
+# if you want to see datails of any saved wifi here:  ............... sudo cat /etc/NetworkManager/system-connections/your_wifi_name | grep psk=
+# connect to saved wifi ............... nmcli connection up your_wifi_name ...............  nmcli -a c up your_wifi_name
+# open only first ten jpg files ................... gio open $(ls *.jpg | head)
+# only lines with particuler keyword in all .txt files ........................... cat $(find . -name *.txt) | grep amir
+# grep with one before and after with mached line ...................... cat $(find . -name *.py) | grep -B1 -A1  your-sub-string
+# dissconnect current wifi ................ nmcli con down wifi_name
+# connect to unknow wifi .................. nmcli device wifi connect <AP name> password <password> .... Note: if you connect to a network using this command the password will no show in wifi setting.
+# nmcli --ask connection up wi-fi
+
+
+
+# grep with more than one words .................. grep 'text1\|text2' github/Linux/linux_commands.txt
+# Search all text files with grep ............ grep 'word*' *.txt
+# Search all python files for 'wordA' or 'wordB' .................. grep 'wordA*'\''wordB' *.py ............ grep -E 'word1|word2' *.doc .............. grep -e string1 -e string2 *.pl ................ egrep "word1|word2" *.c
+# To just match words, add the -w option: ...................... grep -w 'warning\|error\|critical' /var/log/messages ........... Note: here we find for words, so if there an words matches then we get our result, we need 'warning' so if 'warnings' not appear in the result though 'warning' in 'warnings'.
+---------------------------------------------
+# grep commands https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/
+grep 'word1\|word2\|word3' /path/to/file
+# Search all text files ..................... grep 'word*' *.txt
+# Search all python files for 'wordA' or 'wordB' ..................... grep 'wordA*'\''wordB' *.py .....................grep -E 'word1|word2' *.doc ..................... grep -e string1 -e string2 *.pl .....................egrep "word1|word2" *.c
+# In this example, search warning, error, and critical words in a text log file called /var/log/messages, enter: ..................... grep 'warning\|error\|critical' /var/log/messages
+# To just match words, add the -w option: ..................... grep -w 'warning\|error\|critical' /var/log/messages
+# Use the egrep command and you can skip the above syntax to search three words: ..................... egrep -w 'warning|error|critical' /var/log/messages ..................... grep -e 'warning|error|critical' /var/log/messages
+# I recommend that you pass the -i (ignore case) and --color option as follows too: ..................... egrep -wi --color 'warning|error|critical' /var/log/messages
+# To search all *.conf files under /etc/, enter: ..................... egrep -wi --color 'foo|bar' /etc/*.conf
+# To search recursively (including sub-directories) listed, run: ..................... egrep -Rwi --color 'foo|bar' /etc/
+---------------------------------------------
+# while loop .................. while :; do sleep 3; ls newFolderForPictures/ | wc ; done .. explaination: sleep 3 seconds, then print files qty. in folder newFolderForPictures, do not stop this loop until any problums accur.
+ determine which process is monopolizing or eating the CPUs.  ..................... ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10 ------------------- ps -eo pcpu,pid,user,args | sort -r -k1 | less 
+# ls only folders size ............. du -sh $(ls -d */)
+# cpu usage ................................ nmon
+# multiple terminals in one screen ........................... tmux ............ CTRL+B SHIFT+% ............... CTRL+B D ...................... tmux new -s assig_a_name ................. tmux a -t assig_a_name ............... 
+# install .deb file from terminal ........... sudo dpkg -i example.deb ............ gdebi example.deb
+
+# unzip .tar file ....................... tar xvf file_name.tar
+# ls output to array and then slice this array , for learning by watching series of videos stored in HDD ............... array=($(ls -1)) ..... this is one time only, then : vlc ${array[0]} ........... change <0> for each video.
+# open muliple links in firefox saved in .txt file .................... firefox $(cat your_text_file_name.txt)
+# download package using pip with no installation ..................... pip download package_name
+# download package using apt-get with no installation .................... apt-get download PACKAGE && apt-cache depends -i PACKAGE | awk '/Depends:/ {print $2}' | xargs  apt-get download 
+# check dependencies ....................... apt-get -s install packagename ....................... apt-cache depends package-name ......................... dpkg -I your_package.deb
+# execute python command from terminal .................. python -c "print(5/6)"     
+# list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
+# list of recently installed packages ............................. zcat -f /var/log/dpkg.log* | grep "\ install\ " | sort
+# terminal commands history: history
+#  You can quickly run a command again by typing the number preceded by an exclamation mark ( ! ) character. For example, to run the command numbered 3 in the history list, you can type !3 and press the Enter key.
+# local host par kya chal raha h?: nmap localhost
+# Open current foler from terminal: nautilus .
+# create folder from terminal: mkdir foder_name .................. if you write a name without " " and use space in your folder name than ubuntu will create a folders eg: <mkdir amir noman hassan> create 3 folders and  <mkdir "amir noman hassan"> will create one folder
+# create txt file and open it in one command from terminal: subl file.txt .................  if sublime exist in your computer, else: gedit file_name
+# open picture in full mode ............ eog -f file_path
+# open file (almost for any file type): gio open file_path
+# run video on vlc without interface: cvlc video_file_name
+-------------------------------
+# tmux .... multiple terminals in one window
+start tmux ............ tmux
+
+add new split in bottom side .............. CTRL+B SHIFT+"
+add new split in right ................ CTRL+B SHIFT+%
+go to left side window .............. CTRL+B LEFT-ARROW
+go to right side window ............... CTRL+B RIGHT-ARROW
+go to upper window .................. CTRL+B UPPER+ARROW
+go to bottom window ................. CTRL+B BOTTOM+ARROW
+----------------------------------
+#ubuntu_folder_shortcut: press Ctrl + Shift + drag/drop the icon
+------------------------------------
+
+#shutdown: poweroff ............. or: shutdown -h no
+#current window screenshot and copy to clipboard: gnome-screenshot -w -c
+# selected area screenshot  and copy to clipboard: gnome-screenshot -a -c
+# create password protected zip file ................. zip --encrypt secure.zip your_file
+# zip -r output.zip input_folder/ ; zip --encrypt secure.zip output.zip
+# find all files except those have end with .py  .................. find . -not -name "*.py"
+# calculator using python and alias ........................................ alias p="python3 -c 't=input(); print(eval(t))'"
+# list all files except files with .txt or .pdf .......................... ls -I "*.txt" -I "*.pdf"
+# eject usb ............. first: sudo fdisk -l ,this will be return devices, select your device name eg: /dev/sdb1 (NOTE: this is require sudo, alternavily we use lsblk, this do the same but withoud need to sudo)......... second: sudo eject your_device_name
+# convert .mkv file to .mp4 .................. sudo ffmpeg -i *.mkv -codec copy output.mp4 
+# search in pdf ......................... pdfgrep -i -H -n data learning/ISLR/ISLR.pdf.......... <-i> ignore case, <-H> with file name, <-n> with page number .................... 
+# search in pdf ......................... find /path -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "your pattern"' \; <https://stackoverflow.com/questions/4643438/how-to-search-contents-of-multiple-pdf-files>
+# google search alias shortcut ........................alias g='read a; firefox google.com/search?q="$a"'
+# create directory and go inside it ...................... function mkcd() { mkdir $1; cd $1 ;}
+# kill process .................... pkill application_name
+# find file ................. locate "*.pdf" ............ if regex not specified then assume "*keyword*" 
+# locate file ......... is command sy sari files jin k name me <file> ho ga kahin bhi or ksi bhi case me wo sab aa jaen gi. .......................... it is equal to : find . -iname "*file*", but the latter is very very slow................ NOTE: The locate command is not perfect, however. Sometimes the results of locate can be overwhelming, giving you too much information. Also, locate uses a database that is usually only updated once a day, so if you just created a file a few minutes or a few hours ago, it might not appear in this list until the next day. It’s worth knowing the disadvantages of these basic commands so you can better decide when best to use each one.
+# last modified file or folder in particuler directory ............................ ls -t github/Linux/ | head -1
+# only files not folder ........................... ls -p | grep -v /
+# mute video without voice .......................... ffmpeg -i input.mp4 -vcodec copy -an output.mp4
+# mute audio from mp3 file from only specific portions ........................ ffmpeg -i *.mp3  -af "volume=enable='between(t,5,10)':volume=0, volume=enable='between(t,15,20)':volume=0" ok.mp3
+-------------------------
+# Bash Bang (!) Commands
+!top 		– execute the most recent command that starts with ‘top’ (e.g. !).
+!top:p 		– displays the command that !top would run (also adds it as the latest command in the command history).
+!$ 			– execute the last word of the previous command (same as Alt +., e.g. if last command is ‘cat tecmint.txt’, then !$ would try to run ‘tecmint.txt’).
+!$:p 		– displays the word that !$ would execute.
+!* 			– displays the last word of the previous command.
+!*:p 		– displays the last word that !* would substitute.
+!^ - first argument (after the program/built-in/script) from previous command
+!! - previous command (often pronounced "bang bang")
+!n - command number n from history
+!pattern - most recent command matching pattern
+!!:s/find/replace - last command, substitute find with replace
+
+---------------------------
+# create nested directories ...................... mkdir -p some/other/directories
+# to know pdf file pages qty ............................... pdfinfo file.pdf| grep 'Pages:'
+# battery status: upower -i /org/freedesktop/UPower/devices/battery_BAT0| grep -E "state|to\ full|percentage"
+# current date only: date '+%d-%m-%y' ........... date +%F
+# current time only: date +%I:%M%p
+# yesterday date: date -d "1 day ago" '+%Y-%m-%d'
+# last command in history starts with <emg> ............... !emg
+
+# ignore case in <find> ................. -iname, eg: find . -iname keyword.
+
+$ get previous command argument ant put into new command, eg: touch amir-saleem-file.txt. this is our first command, here <touch> is command, and <amir-saleem-file.txt> is an argument, if we need to use this argument in next line, thy typical way to use it by typing entire argument one more time, but there is shortcut which is <!$> or <ALT + .>, so in second line type: <subl !$> or <subl ALT + .>, both are equelent to: <subl amir-saleem-file.txt>
+# gnome-terminal in fixed size ....................... gnome-terminal --geometry 130x3+0+0 .............. gnome-terminal --geometry=widthxheight+Xposition+Yposition
+# open picture / image from coomand line in fixed size and place .............. feh image.png ..... pdf file laptop me read karny k lye  foxit-reader use karta hn, lamba time parhni hoti h to eyes ki protection k lye backgroud ko black and text ko green kar leta hn. magar  header ka color linux waly foxit me change nahi hota, to is lye ye kara k aik picture banai, jis ka address ye h (~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png), or 1 alias banaya h (alias pdf="(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &) ; exit"), jab is alias ko run karta hn to header ko black picture cover kar leti h. or masla hal :p ..................... pichly solution me kuch masla aa raha tha is lye 1 bash file (pdf) banai, or us ko /bin/ me copy kar dye or us ka mode change kar dye (chmod x+ pdf)
+
+# the output of <find> contain lots of <permission denied ......... > massages, to avoid these masseges use: < -readable> option, eg: <find . -readable -name "*.pdf"> instead of <find . -name "*.pdf">
+
+# <gopen> == <geo open>
+# for loop example: for i in *.txt ; do echo $i ; cat $i ; echo "
+> " ; done
+...... 
+# convert all .ipynb files to .py files ....................... for i in *.ipynb; do ipython nbconvert --to=python $i ; done
+# remove all file AND folders that contains in their names <ipy> AND <check> ................. rm -r -f $(find $(find . -iname "*ipy*") -name "*check*")
+# system monitor .............. gnome-system-monitor ..........
+......
+# split one large .xml file to multiple .xml files
+xml_split -l 1 *.xml
+......
+# find
+# Find a file or directory on the system using this command
+# Find a file myfile.txt in current directory and its subdirectories-----------------find . -name “myfile.txt”
+# Find all files in current directory that are larger than 1GB ..................... find . -size  +1G
+# Find all .doc files on the system that have been modified in the last 5 days.--------------find . –name “*.doc” –mtime -5
+# Find all .txt files on the system that were modified in last 15 minutes-----------------------find . –name “*.txt” –mmin -15
+# Find all files that contain a string “I am inside file”.------------find . -name "*" -exec grep -i -H "I am inside file" {} \;
+---------------
+# grep
+# This command is used to search all the lines in all files in a specified location containing a string.
+Search for a specific string “myname” in a file myfile.txt -----------------grep “myname” myfile.txt
+Search for a specific string “myname” with ignoring the case in a file myfile.txt -----------------grep -i “myname” myfile.txt
+Search for a specific string “myname” in a all files in current directory -----------------grep “myname” *
+Search for full word “myword” in a file myfile.txt -----------------grep -w “myword” myfile.txt
+Search a string “myname” in all files in all subdirectories recursively -----------------grep -r “myname” * ...........
+Search a string “myname” in all .sh files in all subdirectories recursively .............  grep --include="*.sh" -ri myname
+Search a string “myname” in all files (exluding binary files) in all subdirectories recursively .............  grep -rI myname
+---------------
+# chmod
+# The command for manipulating the file permissions For better security, the permissions for file in Linux OS are categorized into different groups, users and other sections. You have the option of controlling the permissions by assigning the users under the given divisions via the command of ‘chmod’. These permissions would help the users to write, read and execute the respective files. This option is very much handy when you have to run a script in order to install the package, which remains non executable in the default for security reasons. With the command of ‘chmod +x’ you could end up making the script executable over your Linux system.
+
+# Provide execute permission on a file myfile.txt to all users ----------------chmod +x myfile.txt
+# Provide read permission on a file myfile.txt to all users ----------------chmod +r myfile.txt
+# Provide full permissions (read/write/execute) on a file myfile.txt to yourself but everyone else has only read and execute ----------------chmod 755 myfile.txt
+# Provide full permissions (read/write/execute) on a file myfile.txt to everyone ----------------chmod 777 myfile.txt 
+
+
+
+
+
+# passwd --------------- change your password
+
+# kill / terminate process--------------- see list of currently running applications by <ps -al>, note <PID> number of application which you want to kill, and finally <kill -9 your_noted_PID_number>
+
+
+# all .ipynb files that contain <rpart> ------------------ find . -name *.ipynb | xargs grep -s "rpart"
+
+
+
+# get file name from user and using this name save picture (which is in the clipboard) ............ read v; si $v.png .......... Note: <si> here alias for copy screen shot to clipboard
+
+
+#===========================================================
+data scince csv file manupulation on bash
+# count file lines ---------------- wc -l adult.data
+# count file words ---------------- wc -w adult.data 
+# first 2 lines of file ---------------- head -n 2 adult.data 
+# header not exist in file, so we need to add header ----------------first: echo "col_1, col_2, col_3, col_n, " > header.csv .......... 2nd: cat header.csv adult.data > adult.csv
+# replace particuler text by onather ---------------- sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file> ............ eg: grep ", ?," adult.csv | wc -l ................. privious command tell us how many rows that contain at least one "?" ...... no we need to replace this "?" by empty string so: ................... sed "s/, ?,/,,/g" adult.csv >  adult.csv.
+# subset large file, we need 20 lines from 100 till 120 ---------------- head -n 120 adult.csv | tail -n 20 > adult_sample.csv
+# Finding duplicates with uniq ---------------- counts the number of duplicated lines---------------- sort adult.csv | uniq -d | wc -l
+# this takes the output of all lines with added repetition counts, sorts in reverse and outputs the first 3 duplicates ---------------- sort adult.csv | uniq -c | sort -r | head -n 3
+# only 2nd column ---------------- cut -d "," -f 2 adult.csv
+# uniques ant its counts in 2cnd column---------------- cut -d "," -f 2 adult.csv | sort | uniq -c
+# loop over all file names, replace each space (in file name) by under score ---------------- replace_source=' '; replace_target='_'; for filename in ./*.csv; do new_filename=${filename//$replace_source/$replace_target}; mv "$filename" "$new_filename"; done
+# https://www.datacamp.com/community/tutorials/shell-commands-data-scientist
+#===========================================================
+# ignore first line ............... cat filename | sed 1d > filename_without_first_line.............. application: mery pas kafi csv file thin, jin k header same thy, mujhy un sab ko 1 hi file banani thi, leking headar exclude kar k, to me ny pehly 1 new file banai jis me srif 1 header daal dya, or phir loop chala kar har file (exclude header) us new file me append kar dya ...................... for i in *.csv ; do cat $i | sed 1d >> ../all_data_in_one_file.csv; done
+
+# convert file chracter set .......... iconv -f ISO-8859-1 -t UTF-16//TRANSLIT input.txt -o output.csv
+
+
+# csv column qty ------------------ head -1 file.csv | sed 's/,/\t/g' | wc -w
+# split large file in small files .................. split -C size_you_want(like: 300K, 50M, 1G) --numeric-suffixes input_file output_prefix
+# string to binary ............. echo AB | perl -lpe '$_=unpack"B*"' 
+# binary to string ............ echo 0100000101000010 | perl -lpe '$_=pack"B*",$_'
+# binary to text ............... strings fileanme
+# ignore / exclude certien files /extentions from <ls> ................... ls -I "*.st*"
+# open file/app in fix sized window and fix location in screen ................. subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660" ............... sleep command to load file properly and then change its size and place, so we can not remove sleep from this command.
+unzip tar.xz file ........... tar xf file.tar.xz
+unable an application; suppose i need no one can use firefox; first i type <which firefox> this will return a directory where firefox application file is located, now it is /usr/bin/ , second: i am open the file <sudo gedit /usr/bin/firefox> and then add this line <exit> on top (after #!/bin/bash line), and save it. now if  some one try to open firefox via command line or GUI  nothing happen, becouse the file </usr/bin/firefox> when executes and execute first line (which is <exit> ) it is exit.
+# get input from user with prompt ................. read -p "Enter your Name: " variable_name 
+# open picture file [in kali linux] ................. eog picture_file_name
+# set application to defaul ..................... mimeopen -d your_file ......... and then chose option to set it default, next time you will be able to use: mimeopen your_file
+# general file openor for kali linux ................. xdg-open file_name
+# create bootable usb from command line ............... sudo dd if=iso_file_path of=/dev/sdd bs=4M
+webcam application ............. cheese
+# motherboard model ................ sudo dmidecode -t baseboard | grep -i 'Product'
+# protect folder / asking for root user ................. chmod 600  folder/
+copy from vim to another application .............. Position the cursor where you want to begin copying ............ Press v to select characters, or uppercase V to select whole lines ................. Move the cursor to the end of what you want to cut .............. press: "+y .............. now the text on your clipboard
+#conver .m4a to .mp3 ...................... ffmpeg -v 5 -y -i input.m4a -acodec libmp3lame -ac 2 -ab 192k output.mp3
+# connect to Linux_server using ssh ................ ssh server_user_name@ip .......... eg: ssh lfd-server@192.168.8.104
+# copy file from local to host ........................ scp b.txt lfd-server@192.168.8.114: ................................ this command will copy file from my computer to lfd-server on sepecified ip address at home dirctory  .................... scp pdf lfd-server@192.168.8.114:Desktop/pdff ................... this last command will copy at Destkop by name <pdff>
+# last modifided/created .ipynb file in whole system ....................... ls -lt $(find . -name "*.ipynb") | head
+# extract specifice range of pages from pdf file ................. pdftk input_file.pdf cat 12-15 output outfile_p12-15.pdf
+# pdf OCR .................... ocr file.pdf ................. ocr is bash file: https://github.com/amirsaleem1990/Linux/blob/master/ocr
+# replace dosts <.> in filename with <_>.................. a=a.b.c.d.pdf ; mv a.b.c.d.pdf "${a//\./_}"
+# git commit large file ...................... git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch large_file_name_with_path'
+
+Ctrl+U: This deletes the line from the beggining of the line to the position of the cursonr. # Possible made a mistake in typing the password? Instead of using backspace key all the way, simply use Ctrl+U and retype the password. You can discover plenty of other uses for these shortcuts. 
+Ctrl+K: This deletes the line from the position of the cursor to the end of the line.
+Ctrl+W: This deletes the word before the cursor only.
+
+# If you just want to see what the last cat command was, you can instead run: 
+!cat:p
+
+Another common problem is mistyping the command you want to run. Say you wanted to run nano, but accidentally typed nanp:
+nanp /path/to/a/document/buried/deep/in/the/filesystem
+Instead of retyping the whole thing, you could just run:
+^nanp^nano
+
+Expansions
+When you're working with variations of a file—like backups or different file types—it can get tedious typing out the same commands with small tweaks. Using the brace symbols ({}), you can easily perform batch operations on multiple versions of a file.
+Say you want to rename just part of a filename. Instead of typing out mv /path/to/file.txt /path/to/file.xml, you could just run:
+mv /path/to/file.{txt,xml}
+This runs the command with the same arguments, only with the parts inside the brace changed—the first part corresponding to the first argument, the second part corresponding to the second argument.
+
+
+The braces can also work when moving or creating multiple files at once. For example, if you wanted to create three numbered directories, you could just run:
+mkdir myfolder{1,2,3}
+This will create three folders: myfolder1, myfolder2, and myfolder3.4
+
+
+# .ts to .mp4 ................. ffmpeg -i file.ts -c:v libx264 file.mp4
+
+# open pdf file in linux default pdf viwer which is called (document viewer) ............... evince file.pdf
+# str slicing ................ a=$(ls *.part); echo "${a:52:1}" # print 1 element from variable a from index 52.
+# du output sorted by size (in MB) .............. du -sh -B M * | sort -nr
+# ignore case in ls ................. first type: shopt -s nocaseglob.............. within your current session of terminal you are ignoring CASE
+
+# chromium current open tabls urls ............... cat -e /home/amir/snap/chromium/849/.config/chromium/Default/'Current Session' | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u ............... https://askubuntu.com/questions/970546/location-of-the-urls-of-the-open-tabs-of-chromium-browser-in-ubuntu
+# a=$(ls /home/amir/.g| sort -rn| head -1); b=$(expr $a + 1); xsel -b > /home/amir/.g/$b
+# list only hidden files/folders ....................... ls -d .?*
+# dissable wifi. NOTE: aftter this you can\t use wifi until you restart ..................... sudo airmon-ng check kill
+# cron job for shutdown computer at 18:30 each day ............. open (as root) /etc/crontab, then add this line in the end <30 18   * * *   root    poweroff>
+# whereis ......... If you’re looking for a binary file, you can use the whereis command to locate it. This command returns not only the location of the binary but also its source and man page if they are available......... NOTE: the <which> command only returns the location of the binaries in the PATH variable.
+# apt package dependencies ................... apt-cache showpkg your_package_name
+# ls -R provides subdirectory names and the names of files within subdirectories
+# print text file(without empty lines) with line number ............... nl file_name ........... cat -b file_name 
+# print text file(with empty lines) with line number ............... cat -n file_name
+# starting from particuler line to the end ......................... tail -n+80 file_name ....... this will return all file except first 78 lines
+# replace every occurrence of mysql with MySQL and then save the new file to file_2.txt.....  sed s/mysql/MySQL/g file_1.txt > file_2.txt
+# If you wanted to replace only the first occurrence of the term mysql, you would leave out the trailing <g> command ......... sed s/mysql/MySQL/ file_1.txt > file_2.txt
+# If you wanted to replace only say third occurrence of the term mysql ......... sed s/mysql/MySQL/3 file_1.txt > file_2.txt
+# change IP ............. ifconfig interface new_ip_address ................ eg: ifconfig eth0 192.168.181.115
+# moniter which application using internet ............. sudo nethogs ............. sudo netstat -lantp | grep -i stab | awk -F/ '{print $2 $3}' | sort | uniq
+# baaz dafa esa hota h k aap ko <apt> sy package install karna hota h, jab aap <apt-get install package_name> run karty hen to koi result nahi aata, or system us package_name ko nahi pehchanta, to is ko hal karny ka pehla step ye h k ye run karen <apt-cache seach package_name>, agar is command k output me aap ka matooba package_name h, t wohi command chalaen <apt-get install package_name>, ab install ho jay ga.
+
+
+# string indexing ........... a=amirsaleem; echo ${a:1:9}
+
+
+# remove all history .................. HISTSIZE=0
+
+
+# if else condition ........... test $HOME = "/root"; if [ $? -eq 0 ]; then HOME=/root; fi ............ explaination: pehly test ho ga k <$HOME> equal to "/root" h ya nahi, agar True ho ga to <$?> me 0 store ho jay ga else 0, phir ham check kar rahy hen hen k <$?> equal to <0> h ya nahi(integer comparison> , agar <0> ho (yani $HOME equal to "/root" ho> to ham HOME ka new variable banaen gy.
+
+
+disk mount when system is start ................ me ny optical Drive ki jaga second HDD lagai hwi h, jb me system on karta hun to masla ye hota h k wo HDD automatic mount nahi hoti, pehly me usy mount karta hun phir usy use kar sakta hun , .......... SOLVED: go to <disk>, select your second HDD <in my case>, click on <additional partition options>, select <Mount options>, enable <User Session Defaults>, and check <Mount at system startup>.........
+
+
+#----------------------------------------
+# rotate video
+# Rotate 90 clockwise:
+ffmpeg -i in.mov -vf "transpose=1" out.mov
+
+# For the transpose parameter you can pass:
+# 0 = 90CounterCLockwise and Vertical Flip (default) 
+# 1 = 90Clockwise 
+# 2 = 90CounterClockwise 
+# 3 = 90Clockwise and Vertical Flip
+
+# Flip the input video horizontally.
+# For example to horizontally flip the video in input with `ffmpeg':
+ffmpeg -i in.avi -vf "hflip" out.avi
+#----------------------------------------
+
+
+# exit with 0 status <in bash script> ............. exit 0
+
+# get only unique files extentions .................. for f in *.*; do printf "%s\n" "${f##*.}"; done | sort -u
+
+
+# extract files from .ISO file ............... mkdir ISO ; sudo mount your_iso_file.iso ISO/; cd ISO ..........
+
+# solved (bash terminal display arabic in reverse order)
+
+# add these lines to ~/.bashrc file and source it 
+if ! [[ "$(ps -p $(ps -p $(echo $$) -o ppid=) -o comm=)" =~ 'bicon'* ]]; then
+  bicon.bin
+fi
+
+
+# git push count since yesterday ........... git rev-list HEAD --count --first-parent --since=$(date --date="1 day ago" +%F)
+
+# output of lsblk have a loot of unnecessary loog devices (Snap packages), to avoid them, use: lsblk -e 7
+
+# mount partition in <read only> mode ............... sudo mount -r /dev/sdb5 /media/500GB
+
+# format usb to ext4 type .................. sudo mkfs.ext4 /dev/sdc
+
+# nmcli d w c ZONG\ MBB-E5573-D164 password $(sudo cat /etc/NetworkManager/system-connections/ZONG\ MBB-E5573-D164 |  grep psk= | sed 's/psk=//g')
+
+# release swap memory .................... sudo swapoff -a ; sudo swapon -a
+# update only one package .................. apt-get install --only-upgrade <packagename>
+
+# top list process than consume some CPU for user <amir> ............. top -i -u amir
+
+# check your public ip address ............. curl ifconfig.me OR curl icanhazip.com OR curl ipecho.net/plain OR curl ident.me OR curl bot.whatismyipaddress.com OR curl https://diagnostic.opendns.com/myip OR curl http://checkip.amazonaws.com
+
+
+
+# stop service .............. sudo systemctl stop service_name
+zip files and remove orignals .................. zip -rm aa.zip *
+
+# only folders size .............. du -sh ./*/
+
+############################
+start and end time 
+start=`date +%s` 
+end=`date +%s`
+runtime=$((end-start))
+echo $runtime
+############################
+get only numbers .............. echo "I am 999 years old." | tr -dc '0-9'
+
+unrar .rar file in linux ............ unrar  e  file.rar .
+
+------------------------------
+# http://blog.chapagain.com.np/ubuntu-linux-increase-decrease-volume-from-command-line-keyboard-shortcut/
+CONTROLE VOLUME
+amixer is a command-line mixer for ALSA soundcard driver.
+Increase volume by 10% ------------     amixer set 'Master' 10%+
+Decrease volume by 10% ------------     amixer set 'Master' 10%-
+Set volume to 10%      ------------     amixer set 'Master' 10%
+Set volume to 80%      ------------     amixer set 'Master' 80%
+------------------------------
+
+# convert .txt file to .docx ............. libreoffice --convert-to docx file.txt
+
+# convert .txt file to .pdf .......................... lowriter --convert-to pdf file.txt
+
+# list only particuler extention files ...................... ls *.{png,txt}
+
+
+# create pdf from multiple pictures .................... pdfjoin --a4paper --fitpaper false --rotateoversize false *.png [Old version, NO LONGER WORK] .............. pdfunite $(ls file_{1,2,3,4}.pdf)  file_COMPLETE.pdf 
+
+# remove selected files .................... rm {17,18,19,20,21}*.mp4
+
+mv {115,215}FILE.csv ............. equal to: mv 115FILE.csv 215FILE.csv
+
+# history with date and time ...................... echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile ; source ~/.bash_profile
+
+# dark black theme add-on for firefox .................... https://addons.mozilla.org/en-US/firefox/addon/night-eye-dark-mode/
+
+
+# remove tailing commas .................. echo  $entry | sed 's/,*$//g'
+# download mp3 from youtube video ................. youtube-dl -x --audio-format mp3 https://youtu.be/H8YeFZXRnyg
+
+# me ny 1 file download ki, jo .gzip format me thi, me ny kafi kosh kari k us ko unzip kar lon, magar nahi hwi, phir me ny us file ki info dekhi (file file_name.gzip) to pata chala k wo (Apache Parquet) thi, or me ny usy python me ja kar pandas me read kar lya.
+
+cp file_1_very_large_name.rda to file_1_ver_large_name.zip ................. cp file_1_very_large_name.{rda,zip}
+
+# say you want to remove terminal history where you use command <rm> .................... history | grep -v -w rm > .bash_history ........ and then exit from current terminal, next open terminal, now all entries were <rm> present deleted.
+
+
+mv linear-regression-business-statlinear-regression-business-statistics/ .............. equal to : mv linear-regression-business-statistics{-syllabus-parsed.json,}
+
+# read file line by line in while loop .................. input="to_download.txt";  while IFS= read -r line; do   youtube-dl "$line"; done < "$input"
+
+--------------------------------------------------------
+replace all spaces in mp3 files names to <_>:
+OIFS="$IFS"
+# To tell it to only split the input on newlines, you need to do
+IFS=$'\n'
+for file in `find . -type f -name "*.mp3"`  
+do
+     mv $file `echo $file | sed 's/\ /_/g'`
+done
+IFS="$OIFS"# merger multiple mp3 in single mp3 file ................. cat *.mp3 > final.mp3
+# cut specific range from mp3 .................. sudo aptitude install poc-streamer; mp3cut -o output.mp3 -t 00:00:20+000-00:00:58+000 input.mp3 
+mv CID-575-GumnaamLaash-KpPK6dLJKMA.mp4 CID-575.mp4 same as :   mv CID-575{-GumnaamLaash-KpPK6dLJKMA,}.mp4
+replace every space in file name with <_> ................... mv Meri\ Qismat\ Jagane\ Ko\ Khuda\ Ka\ Naam\ Kafi\ Hai.mp3 `echo Meri\ Qismat\ Jagane\ Ko\ Khuda\ Ka\ Naam\ Kafi\ Hai.mp3 | sed 's/\ /_/g'`
+
+# Filling the disk with all zeros ...............  dd if=/dev/zero of=/dev/sdX bs=1M ............. If you are wiping your hard drive for security, you should populate it with random data rather than zeros (This is going to take even longer than the first example.) .................. dd if=/dev/urandom of=/dev/sdX bs=1M
+
+
+# zip all directories invidualy in current directory ............................ for i in `ls`; do zip -r `echo $i | sed 's/\///g'`.zip $i ; done
+
+# unique file sizes ....................... du -sh * | cut -d "K" -f 1 | uniq
+# current wifi name ....................... nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\' -f2 | sed 's/yes\://g'
+# string comparison .................... if [ "$wifi_name"  =   "H1-Zong" ] ;  then   echo amir; fi
+# move mobile\ nackup mobile\ backup ..................... equal to: mv mobile\ {n,b}ackup/
+
+# save ok output to <ok file> and errors to <out file> ..................... ./script.sh 1> ok 2> out
+# save both normal and errors outputs to <out file> ...................... ./script.sh >out 2>&1
+# get your entire push history ..................... git log --pretty=format:"%ad - %an: %s" | tail
+# get your entire push history (within range of dates) ..................... git log --pretty=format:"%ad - %an: %s" --after="2016-01-31" --until="2017-03-10" --author="John Doe"
+copy EPUB/1-file-name.pdf EPUB/2-file-namee.pdf EPUB/3-anotherfileName.pdf Newfolder ..... equal to : cp EPUB/{1*.pdf,2*.pdf,3*.pdf} Newfolder
+mv The-t{,h}ree-body-problem/ ............. equal to: mv The-tree-body-problem/ The-three-body-problem/
+# compare same file sizes in two diffrent directories .............................. IFS=$'\n'; for i in `ls -d */` ; do echo "`du -sh $i;  du -sh  /media/500GB/learning/COURSES/$i`" ; done
+
+# slecect column using awk ............... awk '{ print $1 }' foo
+# select multiple columns using awk ..................  awk '{ print $1, $3 }' foo
+# split the fiead by specifieng it , then select column/s ................... awk -F "|" '{ print $4 }' Notes.data
+# i have lot of csv files, each file have a specific year data, i need to rename file by its 3 value on second row ......................... for i in `ls *.csv` ; do mv $i `head $i  | tail -1 | cut -d "," -f 3`; done
+# sync ........................... rsync -av github/Books/ backup/
+# find all .txt files .................. ls **/*.txt ------------ equal to : find . -name "*.txt"
+# fine all .txt and .pdf files ..................... ls **/*.txt **/*.pdf
+pass .......... while :; do : ; pass # here <:> is == pass in python
+
+mv {working,Linux}/kali-linux-installation-guide.txt ------------ equal to : mv working/kali-linux-installation-guide.txt Linux/kali-linux-installation-guide.txt
+# sort numbers .................. sort -n (eg: du -s -BK * | cut -d "K" -f1 | uniq | sort -n)
+# change wifi-hotspot password ....................... nmcli connection modify Hotspot 802-11-wireless-security.key-mgmt wpa-psk 802-11-wireless-security.psk mypassword
+# create hotspot and connect to it ........................... nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123
+hotspot on and off .................... sudo ap-hotspot start ................ sudo ap-hotspot stop .................... sudo ap-hotspot configure
+
+# count single character in string ............... echo "referee" | tr -cd 'e' | wc -c (here we get 4, since 4 accours 4 times, but if we type <echo "referee" | tr -cd 'er' | wc -c>, we get 6, since r occurred twice and e occurred 4 times; 4=2=6)
+
+# count substring in long string ........................ grep -o "amir" <<< "amirsaleemarifmoosa" | wc -l
+# download youtube-dl specific quality video/s .................... youtube-dl -f 'bestvideo[height<=480]+bestaudio/best[height<=480]' -a LInk.txt ....................... https://askubuntu.com/questions/486297/how-to-select-video-quality-from-youtube-dl
+
+# float to integer ............... float=1.23; int=${float%.*}
+# replace two or more commas with one comma ................ sed 's/,\{2,\}/,/g'
+# replace 1 or more space with one comma ................ sed 's/\ \{1,\}/,/g'
+# zip folder .................... zip -r folder{.zip,/}
+# mv  {0*,1*,2*}.png folder ..................... equal to: mv 0*.png folder ; mv 1*.png folder ; mv 2*.png folder
+# to lower ................... echo "$a" | tr '[:upper:]' '[:lower:]'
+mv ../URDU/{clerical*,Tasawuf*,tashkeek*} ../URDU/folder  .................. equal to: mv ../URDU/clerical* ../URDU/folder ; mv ../URDU/Tasawuf* ../URDU/folder ; mv ../URDU/tashkeek* ../URDU/folder
+# change file owner
+chown new_user file
+
+# change file group
+chown new_user:new_group file
+# hidden files/folders to regular files/folders ................. for i in `ls -d .*?` ; do mv $i `echo $i | sed 's/.//'` ; done
+
+# exclude from ls ....................... ls --hide "*.rar" ..................... this will list all files exclude files that ends with .rar
+# unlimited history ..................... open ~/.bashrc ; assign -1 to HISTSIZE and assing -1 to HISTFILESIZE (both variables are exist, you have to change values.# add user .............. adduser new_user_name
+#  ls -R is equal to `find . -name "*"` ............ NOTE: in find we get all absolute link for each file, but is hard to understand the hirarcy, on the other hand in `ls -R` you get a result like `tree`, so no absolute paths, but easy to understand the structer of the directory.
+# ls -S ................... sort by size
+# see in what step you copy ................ cp -v some_source_file some_other_location
+# know what particuler command do ...................... whatis ........... eg: whatis cp
+# change owner and group in one line ...................... chown specific_user:group2 myfile
+#mplayer is a video player in linux
+# totem is ubuntu default video player
+# mpv is an ubuntu video player
+# split screen horisontaly .......... gTile(install it) ; and then SUPPER+ENTER(numberpad)
+# find empty folders ..................... find . -type d -empty
+# get video dimentions ................... ffmpeg -i Video.mkv 2>&1 | perl -lane 'print $1 if /(\d+x\d+)/'
+# get file creation date ............... ls -ltr | cut -c 31- | cut -c -6 | uniq
+# cut first N characters from string .............. echo "amirsaleem" | cut -c 5- .............
+# get first N characters from string .............. echo "aamirsaleemarif" | cut -c -5
+# get only files created after a date with ls .................. find . -maxdepth 1 -mtime -1 .............. Note that to find files modified before 24 hours ago, you have to use -mtime +1 instead of -mtime -1
+# see files names in zip file ............................ unzip -l phoneRawDataFile-28801180200957-1579799301447.zip
+# remove spaces ............. echo " amir saleem " | sed 's/ //g'
+# last modifieded file / folder date ............... ls -l  --time-style=long-iso | grep  raw_synced_data | sed 's/\ \{1,\}/,/g' | cut -d "," -f6,7
+# long time ................ ls -l --time-style=long-iso
+# rsync ....................... rsync -au 128.199.226.202:/home/amir/raw_synced_data/ raw_synced_data/
+# find file/s by name, and performt particuler operation on each of them ................. eg: find Movies/ -name '*.mp4' -exec mv {} ANOTHER_FOLDER/ \; .................. NOTE: the trailink <\;> is mandatory, it is indicates the end of <-exec>
+
+# remove all before first <#> ................ ls | grep -o '#.*'
+# remove all after first <#>  ................ echo $i | grep -o '.*#'
+# replace multiple characters with sed ..................... sed 's/%20/-/g; s/[][#-]//g'
+# integer comparison: -eq: is equal to ........ -ne: not equal to ............ -gt: greater than ........ -ge: greater than or equal to .......... -lt: less than .......... -le: les than or equal to .......... <: less than (whithin double parentheses, eg: (("$a" < "$b"))) .............. <=: less than or equal to (whithin double parentheses, eg: (("$a" <= "$b"))) .............. >: greater than (whithin double parentheses, eg: (("$a" > "$b"))) .............. >=: greater than (whithin double parentheses, eg: (("$a" >= "$b"))) 
+# sudo with password in one line (so you can write command with sudo in a script) .............. echo `cat p` | sudo -S -k nethogs
+# download pip package with its dependencies ............... pip3 download package_name
+# check / know you MAC (wifi) address ............. cat /sys/class/net/wlp3s0/address
+
+# NTFS error ............... sudo umount /dev/sdb1 ; sudo ntfsfix /dev/sdb1 ; sudo mount /dev/sdb1 /media/500GB/
+if you want to download only specific file from github, go to file in browser (github), press <Raw> button, and then copy the url of <Raw> file, now you can download it by wget <the url in the clipboard>
+# add ssh public key to another computer to automatic authentication ............ 1- ganarate public key on your local muchine (ssh-keygen) ; 2- copy new genareted key to server: ssh-copy-id -i ~/.ssh/new_ganared_key.pub user@host# find only ascii files ............ find . -type f -exec grep -Iq . {} \; -print
+
+# open settings ............... gnome-control-center
+# replace/cahange something in file ................. sed -i 's/saleem/SALEEM/g' file.txt
+# remove new line chrachters from file name .............. echo $file_name | sed ':a;N;$!ba;s/\n//g'
+# check running process .............. ps aux | grep sshd 
+# add file to existing zip ............... zip -u existing_zip.zip New-file
+# copy clipboard to variable ........... a=`xsel -ob`
+# copy variable/text to clipboard ........................ echo "copy this text to clipboard" | xclip -sel clip
+# locate: locate database me search kar k matching result deta h, or wo automatic once a day update hota h, tagar aap ny 1 file abhi thori dair pehly banai h to wo aap k locate search me apear nahi ho gi, to is k lye locate sy phely ye run kar len <sudo updatedb>, 1 or masla ye hota h k mery pas 2 HDD hen, to data wali HDD ki files db nahi bani hoti, to agarcha me database ko update kar bhi dun tab bhi data HDD ki files result me show nahi ho gi, is ko solve karny k lye data HDD ko mount kar k us me chaly jaen, phir wahan ye run karen <sudo updatedb -U `pwd`>, or phir database ko update kar den, ab locate me data HDD k result bhi show hon gy.
+
+# Run Bash script in background and exit terminal .............. nohup cmd & ............... https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
+
+# print pretty nice csv in terminal ............... cat FILE.csv | column -t -s,
+# if you want to login in remote server, execute one command and then exit, you can do it in one line ......... ssh 192.168.62.12 ./exemple_script.sh
+# remove_root_authentication_request_from_package .................. sudo setcap "cap_net_admin,cap_net_raw=ep" `which nethogs`
+# Keep processes running after SSH session disconnects ..........................  nohup long-running-process & ...................... https://unix.stackexchange.com/questions/479/keep-processes-running-after-ssh-session-disconnects
+# remove empty lines from file ................ sed '/^$/d' file.txt
+
+uniq -c | count each unique line how many times accured
+# Extract a file from a zip file .......... unzip file.zip file/you/want/to/extract/the_file.txt ........... Modify the_file.txt ............. Put it back: zip file.zip file/you/want/to/extract/the_file.txt 
+# bash find only non hidden files ................... find . -not -path '*/\.*' ............. So if you're looking for a file with some text in its name, and you want to skip hidden files and directories, run: find . -not -path '*/\.*' -type f -name '*some text*' ............. Explanation: The -path option runs checks a pattern against the entire path string. * is a wildcard, / is a directory separator, \. is a dot (it has to be escaped to avoid special meaning), and * is another wildcard. -not means don't select files that match this test. ..... I don't think that find is smart enough to avoid recursively searching hidden directories in the previous command, so if you need speed, use -prune instead, like this: find . -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*some text*' -print .................https://askubuntu.com/questions/266179/how-to-exclude-ignore-hidden-files-and-directories-in-a-wildcard-embedded-find
+# print completed file in terminal and color specific words ................ grep --color "^\|return" myfile.txt ............. https://unix.stackexchange.com/questions/57715/display-words-in-color
+# create multiple files/folders at once .......... touch touch file-{a..e}.txt ....... touch file-{1..4}.txt ......... touch {a..c}-{1..4}.txt
+# list files/directories only that have execution permition ......... ls -l | grep [d,-]..x
+
+# restart mysql server ........... /etc/init.d/mysql  restart
+
+# mysql databases location in system .......... /var/lib/mysql
+
+#-------------------------
+# redirect stderr and stdout to different files
+stderr = errors outpul
+stdout = normal outpul
+./script.sh >normal.txt  2>errors.log
+#-------------------------
+# sort by second column ............ sort -k2 -n your_file
+RED="\033[0;31m"
+normal="\033[0m"
+# sum float and int .......... sum=`echo "scale=3; $i + $sum" | bc`
+#-------------------------------------------
+# save sql password, so you have to type your password each time, if you need to skip this ; do:
+1- sudo cp /etc/mysql/my.cnf ./.my.cnf
+2- open ./.my.cnf
+3- type these line in the end:
+[client]
+password=type_you_password_here
+
+#swape rows in print, print lines in reverse orders, last become first and first become last one .........  echo -e "my\nname\nis\namir" | tac
+# to avoid <“System problem detected”> popup, do: sudo rm /var/crash/*
+# variable increment ........ count=5; let "count+=1" ............ another way: let "count++" ............... another way : ((count--)) ................. another way: let count ++ .................. CAUTION........... me 1 script chala raha tha (bash --version:  ) to us me loop me condition k andar encrement ho raha tha, to wahan srif <let "m++"> sahi chal raha tha, or <let "m+=1"> sahi nahi chal raha tha.
+
+check if two files are identical .......... cmp --silent $old $new || echo "files are different"
+#-----------------------
+zip file in tar:
+Following are 5 commonly used options – c, z, f, v, x
+
+    c = create a new tar file
+    v = verbose , display file to compress or uncompress
+    f = create the tar file with filename provided as the argument
+    z = use gzip to zip it
+    x = extract file
+
+tar -cvz My_csv.csv -f My_csv.tar
+# find .py files and copy each file to ~/abc ............ find . -name *.py | xargs -I{} cp -v {} ~/abc/
+# ganerate range using variable ............. for i in $(seq 1 $END); do echo $i; 
+# email to your address ........... echo "BODY" | mail -s "Subject"  amirsaleem1990@hotmail.com
+# logout ............... pkill -KILL -u `hostname`
+# How to change default crontab editor .................... export EDITOR=/bin/nano; export VISUAL=nano
+# list all *txt files except *3txt ............. ls ./*[!3]txt ........... ls *[^3]txt
+# remove all numbers ............ sed 's/[0-9]//g'
+
+# <unzip -l> return file size in bytes
+# ubuntu terminal me ls karny sy urdu/arabic names reverce me display hoty hen jin ko parrhan bohot hi mushkil hota h, is lye jahan arabic names hon wahan ye use karen ............ ls | fribidi
+# poora folder (recursively) copy karna hy magar srif .jpg files nothing else..... cp --parents `find -name \*.jpg*` ~/target_directory/
+# sum of column ......... <cmd> | paste -sd+ | bc .......... eg: cat All_FB_links_names_corrected.csv | cut -d, -f1 | sort | uniq -c | sed 's/^      //g' | grep -v ^1  | cut -d " "  -f1 | paste -sd+ | bc
+
+# compare floats ...... num1=3.17648E-22; num2=1.5; echo $num1'>'$num2 | bc -l; echo $num2'>'$num1 | bc -l
+
+# Change string char at index X .................... echo $theStr | sed s/./A/5 ............... First you pipe the output of $theStr to sed, which replaces the fifth character with A. ............... another style: theStr="${theStr:0:4}A${theStr:5}"
+
+# merge two files line by line ............... paste file1.txt file2.txt > fileresults.txt
+
+# round a number ........... printf "%.0f\n" 123.456 ............ echo 123.456 | awk '{print int($1)}' ................. for floar: echo 1.23 | awk '{print int($0)}' ............ for ciel: echo 1.23 | awk '{print ($0-int($0)>0)?int($0)+1:int($0)}' ................ 
+
+#--------------------------
+# diffrence between two dates
+last_done_date=`ls -tr /home/amir/Summary/ | tail -1 | sed 's/summary_atteched_files_//g' | cut -d_ -f1 | sed 's/-//g'`
+current_date=`date +%F | sed 's/-//g'`
+
+let DIFF=(`date +%s -d $current_date`-`date +%s -d $last_done_date`)/86400
+echo $DIFF
+#--------------------------
+# groupby and then count (same as pd.Series.value_counts() in pandas) .............. sort ip_addresses | uniq -c
+# replace multiple characters at once ............ echo "hamza&amir@saleem*arif(moosa)" | sed 's/[@&*()]/ /g' ................ hamza amir saleem arif moosa
+# trycatch ................ command1 || command2 <if command1 fails then command2 runs as follows> ................. command1 && command2 <command2 will run if command1 is successful>
+# simulate keyboard input ............... https://unix.stackexchange.com/questions/267704/command-to-simulate-keyboard-input ................. xdotool key <key> (eg: xdotool key ctrl+c) ............... To simulate pressing ctrl + c and then a Backspace: xdotool key ctrl+c BackSpace 
+# switch to next/previous application : https://askubuntu.com/questions/961082/command-to-switch-to-next-previous-application ............. list the windows being managed by the window manager: wmctrl -l ............. switch to the desktop containing Firefox, raise the window and give it focus: wmctrl -a firefox ............. 
+# check linux os installation date .............. dumpe2fs /dev/sda1 | grep 'Filesystem created:' .............. sudo tune2fs -l /dev/sda1 | grep -i Created
+
+
+# virtualbox ki linux sy host linux ssh sy connect ho sakti h.
+# ssh k lye user name `whoami` sy find karty hen
+
+#------------------------
+# cron
+# add cron job: crontab -e ; now add jobs, then exit
+# to list cron jobs : crontab -l
+
+# add directory to path ............... write this line into ~/.bashrc: PATH="/amir_bin/:$PATH" , and then run <source ~/.bashrc> ......... 
+# check os version ......... cat /etc/os-release
+# print two files side by side ................ diff -y   File_1.txt File_2.txt
+
+
+# How to copy Docker images from one host to another without using a repository
+# https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-using-a-repository
+You will need to save the Docker image as a tar file:
+> docker save -o <path and file_name for generated tar file> <image name>
+Then copy your image to a new system with regular file transfer tools such as cp, scp or rsync(preferred for big files). After that you will have to load the image into Docker:
+> docker load -i <path to image tar file>
+# open craontab in nano .............. EDITOR=nano crontab -e
+
+# check PID using command executed ......... pgrep script_name
+# check PIDs using package ................. pgrep -l python3
+
+
+# check script output using PID in /proc/ ................ tail -f /proc/$PID/fd/{0..3}*
+
+# jab alias and koi program 1 hi name k hoty hen, or ham wo command type karty hen to alias execute hota h
+
+# <eog> is default image viwer in ubuntu
+# logout ........... gnome-session-quit --no-prompt
+
+
+change tabl ........... CTRL+SHIFT+TAB   and CTRL+TAB
+
+# ksi packages ki help k lye ............ package_name --help  , help package_name  ,  man package_name   ,   info package_name
+
+ls -X ........ sort by extention
+
+
+# replace .html and all after it with .html ......... sed 's/html.*/html/'
+# find and then ls (long) .......... find . -name "*.html" -ls
+# change command line prompt .......... change PS1 variable, eg: PS1="This is a new prompt: "
+
+# ls hidden file for particuler direcotry/folder ...... ls -d github/.*
+#-----------------------
+Nested if else in one line, These two codes are does the same job:
+1- 
+			for re in 1 0 2 1; do 
+				if [[ $re == 0 ]]; then
+					echo -e "Disconnected VPN successfully"
+				else
+					if [[ $re == 1 ]] ; then
+						echo -e "Disconnected VPN successfully"
+					else
+						echo "d"
+					fi
+				fi
+			done
+2- 
+			for re in 1 0 2 1; do
+				[[ $re  == 0 || $re == 1 ]] && echo -e "Disconnected VPN successfully" || echo "d"
+			done
+#-----------------------
+
+# redirect stderr and stdout to a file .......... command > file 2>&1
+
+#-----------------------
+# I have a file like this:
+NODE_1_length_4014_cov_1.97676  1   1
+NODE_1_length_4014_cov_1.97676  2   1
+NODE_1_length_4014_cov_1.97676  3   1
+NODE_1_length_4014_cov_1.97676  4   1
+NODE_1_length_4014_cov_1.97676  5   1
+NODE_1_length_4014_cov_1.97676  6   1
+NODE_1_length_4014_cov_1.97676  7   1
+NODE_1_length_4014_cov_1.97676  8   1
+NODE_1_length_4014_cov_1.97676  9   1
+NODE_1_length_4014_cov_1.97676  10  1
+
+I want to split the first column into new columns based on the character '_', like this:
+1 4014 1.97676  1   1
+1 4014 1.97676  2   1
+1 4014 1.97676  3   1
+1 4014 1.97676  4   1
+1 4014 1.97676  5   1
+1 4014 1.97676  6   1
+1 4014 1.97676  7   1
+1 4014 1.97676  8   1
+1 4014 1.97676  9   1
+1 4014 1.97676  10  1
+
+ANS: 
+> awk -F'_' '{print , ,,,}' infile
+1 4014 1.97676  1   1  
+1 4014 1.97676  2   1  
+1 4014 1.97676  3   1  
+1 4014 1.97676  4   1  
+1 4014 1.97676  5   1  
+1 4014 1.97676  6   1  
+1 4014 1.97676  7   1  
+1 4014 1.97676  8   1  
+1 4014 1.97676  9   1  
+1 4014 1.97676  10  1
+#-----------------------
+du with hidden files ............. du -sch .[!.]* * 
+# unzip .7z files ............. 7za e zip_file_name.7z
+
+# update pip package ........... pip3 install -U youtube-dl
+# grep ........... search "cpu" or "ram" in all files in current directory .......... grep -i -e cpu -e ram -r .  ..................... which is equelent to: grep -i "cpu\|ram" -r . 
+# Find all files under the /tmp directory that are newer than an already existing file and give a detailed listing ................. find /tmp -newer /tmp/tstfile -ls ................ where it is assumed you will substitute the name of an existing file for /tmp/tstfile.
+# Find all subdirectories under the /etc directory: ..................... find /etc -type d
+# Find all files/folder that  ends with cfg ........... locate -r "cfg$" 
+# The tac command (cat spelled backwards) prints the lines of a file in reverse order. Each line remains the same, but the order of lines is inverted. The syntax of tac is exactly the same as for cat
+# Append a file to the end of an existing file .............. cat file >> existingfile 
+# write / append in file ............. wirte (cat > file_name) OR (cat >> file_name) ..... wirte lines you want and then press Ctrl-D
+# sed -e command <filename> ..................... Specify editing commands at the command line, operate on file and put the output on standard out (e.g. the terminal)
+# sed -f scriptfile <filename> .................. Specify a scriptfile containing sed commands, operate on file and put output on standard out
+# sed 1,3s/pattern/replace_string/g file ........ Substitute all string occurrences in a range of lines
+
+# awk 'command'  file	............ Specify a command directly at the command line
+# awk -f scriptfile file ........... Specify a file that contains the script to be executed
+# awk '{ print $0 }' /etc/passwd ... Print entire file
+# awk -F: '{ print $1 }' /etc/passwd ... Print first field (column) of every line, separated by a space
+# awk -F: '{ print $1 $7 }' /etc/passwd ..... Print first and seventh field of every line
+
+# sort -k 3 <filename> ..... Sort the lines by the 3rd field on each line instead of the beginning
+
+# remove duplicate entries from multiple files at once, use the following command: ............... sort file1 file2 | uniq > file3 ........... sort -u file1 file2 > file3
+# colbind all csv files delimetid with <,>................. paste -d, *.csv
+# <join> the enhanced version of <paste>. it first check weather the files share common feilds, such as nume or phone numbers, and then join the lines in two files based on common field.
+# split ................. split large file by size/lines. by default is split file by 1000 lines.
+# grep [0-9] <filename> ...........  Print the lines that contain the numbers 0 through 9
+# grep -C 3 [pattern] <filename> ... Print context of lines (specified number of lines above and below the pattern) for matching the pattern; here, the number of lines is specified as 3
+# tee ................ tee takes the output from any command, and, while sending it to standard output, it also saves it to a file. In other words, it "tees" the output stream from the command: one stream is displayed on the standard output and the other is saved to a file.
+# if in multiple (equivalent) ways .......... if [[ -f file.c ]] ; then ... ; fi ..........if [-f file.c] ;then...;fi ............ if test -f file.c ; then ... ; fi ............... The first form with double brackets is preferred over the second form with single brackets, which is now considered deprecated. ........... The test form is also deprecated for the same reason and it is more clumsy as well. However, it is common to see these older conditional forms in many legacy scripts.
+
+# if [ $VAR == "" ] ..... will produce a syntax error if VAR is empty, so you have to do: ....... if [ "$VAR" == "" ]
+
+
+# make && make modules_install && make install ................. The &&s (ANDs) say stop as soon as one of the commands fails
+# [[ -f /etc/foo.conf ]] || echo ’default config’ >/etc/foo.conf ........... he ||’ (ORs) says stop as soon as one of the commands succeeds.
+
+[[ $STRING == mystring ]] && echo mystring is "$STRING" ..... is equivalent to ............. if [[ $STRING == mystring ]] ; then echo mystring is "$STRING"; fi
+
+# Arithmetic Comparisons ................ -eq, -ne, -gt, -ge, -lt, -le
+# decrement/increment ............. variable=$(($variable - 1 )) ............. variable=$(expr $variable - 1)
+#--------------------
+# case 
+#!/bin/sh
+echo "Do you want to destroy your entire file system?"
+read response
+case "$response" in
+   "yes")              echo "I hope you know what you are doing!" ;;
+   "no" )              echo "You have some comon sense!" ;;
+   "y" | "Y" | "YES" ) echo "I hope you know what you are doing!" ;
+                       echo ’I am going to type: " rm -rf /"’;;
+   "n" | "N" | "NO" )  echo "You have some comon sense!" ;;
+   *   )               echo "You have to give an answer!" ;;
+esac
+exit 0
+#--------------------
+# find . -name "*.o" -exec rm {} ’;’ ............... equivalent to ............. find . -name "*.o" | xargs rm
+# There is <until> loop, which is same as while (in syntax and working (as my understanding))
+#-----------------------
+# function
+function fun_foobar(){
+   statements
+}
+
+OR
+function fun_foobar{
+   statements
+} # This syntax will work fine in bash scripts, but is not designed for the original Bourne shell, sh.
+  # In the case where a function name is used which collides with an alias, this method will still work.
+In most cases, use of the function keyword is not often used in new scripts.
+#-----------------------END
+
+# function me jo variable define hota h wo gloabl me chala jata h.
+# find with du ............. du -sh `find . -name "*.sh"` ............... find . -name "*sh" | xargs du -sh ................ find . -name "*sh" -exec du -sh {} \;
+#-----------------
+Network devices are somewhat different, but almost everything else works just as a file. Even network devices use a file paradigm when you work with what are known as sockets. One important point is that in most cases, Linux does not care about file extensions, whatever follows the dot sign. It doesn't assume that if it's .jpg, it's an image, for instance. It actually looks at the file and determines that. There are a few exceptions to this. Sometimes, compilers look at the extension and decide whether it's a C++ file, whether it's a Fortran file, or whatever, so it knows how to compile it. But that can always be overwritten, even though it's a default. So, that's just a little bit about how Linux deals with different file types. 
+-------------
+chmod uo+x,g-w a_file ................  to give the owner and world execute permission, and remove the group write permission ............ where u stands for user (owner), o stands for other (world), and g stands for group.......... This kind of syntax can be difficult to type and remember, so one often uses a shorthand which lets you set all the permissions in one step. This is done with a simple algorithm, and a single digit suffices to specify all three permission bits for each entity. This digit is the sum of: 4 if read permission is desired. 2 if write permission is desired. 1 if execute permission is desired. ..... Thus, 7 means read/write/execute, 6 means read/write, and 5 means read/execute.
+# You can change owner and groupd at the same time: ............ chown user.group a_file ............. chown user:group a_file
+# chwon can take an -R option, which stands for recursive.
+#------------ 
+# change default files permition  using umask
+# checek current umask ........ umask
+# umask u=r,g-w,o=rw ........ user will read only, group will write only, and others will read and write
+# see '/home/amir/github/Linux/What is Umask and How To Setup Default umask Under Linux_ - nixCraft.html'
+
+# skip last line ............. sed '$ d'
+#------------------------------------------------
+# https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/
+# check if variable is empty/defined
+[ ! -z "$var" ] || echo "Empty"
+[ ! -z "$var" ] && echo "Not empty" || echo "Empty"
+ 
+[[ ! -z "$var" ]] || echo "Empty"
+[[ ! -z "$var" ]] && echo "Not empty" || echo "Empty"
+#------------------------------------------------# show OS related details ......... lsb_release -a
+
+# make all hidden files/directories to normal (non-hidden) files/directories ......... for i in `ls -a | sed 1d | sed 1d`; do mv $i `echo $i | sed s:^.::g` ;done
+
+# <nohup COMMAND &> is lye use hota k agar aap logout bhi kar len tab bhi aap ka program chalta rahy, isi kam k lye <screen> bhi use hota h. <scrren> type kar k enter karen, existing terminal clear ho jay ga, ab is terminal par apni script run karun eg: ./MYSCRIPT ... ab CTRL press karty hwy A press karen, or phir in dono ko chor kar k D press karen. aap dubara apni purany terminal par wapis aa jaen gy (jahan <screen> command run karny sy pehly thy). ab agar aap ny dupara usi terminal par jana h jahan aap ny apni script chalai h to <screen -r> karen. agar multiple screens hen to <screen -r> aap ko list dy dy ga k ye screens availible hen, aap un me sy koi 1 select kar ky us me enter ho jaen. screen ko khatam karny k lye ya to parent terminal par screen -d screen_id likhen, ya us screen me jar ka <exit> kar den. agar aap ny screen exit kar di to us ki command destroy ho jay gi. in conclusion: screen >> ./SCRIPT.py >> CTRL+A+D ..... ab me apni orignal terminal par hun, agar me is terminal sy exist kar deta hun, or server sy mera connetion khatam bhi ho jata tab bhi screen/s server par exist karen gi.
+
+# copy text selected area ........... agar hamar pas terminal khula hwa h or us me ye content h:
+-rwxrwxr-x 2 amir amir  1410 Dec 26 23:13  copy_speed*
+-rwxrwxr-x 2 amir amir   485 Dec 26 23:13  connect_to_wifi*
+-rwxrwxr-x 2 amir amir  1678 Dec 26 23:13  connected_devices_info*
+-rwxrwxr-x 2 amir amir   847 Dec 26 23:13 'compere file sizes between two directories.sh'*
+-rwxrwxr-x 2 amir amir  1169 Dec 26 23:13  check_uniqe_file_extentions*
+-rwxrwxr-x 2 amir amir   976 Dec 26 23:13  battery*
+-rwxrwxr-x 2 amir amir   923 Dec 28 11:31  Connect_to_Kashet_server*
+-rwxrwxr-x 2 amir amir  1031 Dec 30 18:59  kurulus_usman_next_episode_on_eir_date*
+-rwxrwxr-x 2 amir amir  2347 Dec 31 14:46  git_status*
+lrwxrwxrwx 1 root root    57 Jan  4 11:33  naclient_reconnect -> /home/amir/github/Linux/bin/functional/naclient_reconnect*
+
+or hamen srif user group tak ka sara data lena h, (yani k har line me group k bad ka koi data nahi chahye CTRL daba kar rakhen or particuler area select kar k copy kar den.
+# Kill detached screen session ......................... screen -X -S [session # you want to kill] quit
+
+# find files by users vivek and wendy ............. find / -user vivek -o -user wendy
+# convert seconds to day, hours, minutes, secons .................. eval "echo "
+# convert seconds to day, hours, minutes, secons .................. eval "echo "
+
+# convert seconds to day, hours, minutes, secons .................. eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
+
+# check if library is installed ......... which ffmpeg > /dev/null || { echo "Install ffmpeg, with 'sudo apt-get install ffmpeg'" >&2; exit 1; }
+
+# unique owners of files and directories .............. find  .  -printf "%u\n" | sort | uniq -c
+
+# find for multiple extentions ........... find . -regextype posix-egrep -regex ".*\.(aac|m4a)$" .............. find . -name "*.aac" -or -name "*.m4a" ..........  find . \( -name \*.py -o -name  \*.ipynb \) ............... ALL return the same value
+# convert webm to mp4 ............... ffmpeg -i video.webm -crf 26 video.mp4
+get only specific range of lines ................. sed -n '16224,16482p;16483q' filename > newfile ................. https://stackoverflow.com/questions/83329/how-can-i-extract-a-predetermined-range-of-lines-from-a-text-file-on-unix
+# another pdf reader .............. okular
+
+# convert epoch seconds to date time ............ date -d  @1612762179
+
+# calculator ......... echo 40/2+401 | bc ........... echo "scale=3;  90/2.6 " | bc ........... or more simple: bc <<< 5*7 ........ bc << 5*7 ........ bc <<< "scale=4;  2/66" ............. if you need long float output just use <-l> option, eg: bc -l <<< 4/7 #.57142857142857142857 
+# find all unique owners of files/folders ............ find /data/raw_synced_data/ -printf "%u\n" | sort -u
+# get length of variable ........... myvar="my name"; size=${#myvar}; echo $size
+
+# sort ps by cpu ........ ps --sort=-pcpu
+
+# date -d '2021-03-09 08:10' +'%s' ......... Convert datetime to epoch seconds
+
+# google chrome bookmarks .......... /home/amir/.config/google-chrome/Default/Bookmarks
+
+# recover lost data ............ photorec
+# get pixels (width and height) of an image ............ identify -format '%w %h' img.png ; identify -format '%w %h' img.png ; identify img.png
+# Input/output error ................ 1 folder delete nahi ho raha tha (Input/output error), me ny as a root logoin ho kar bhi try kya magar wo delete nahi hwa, phir me ny <sudo nautilus .> kya, or phir us directory ko mouse sy click kar k delete ka button dabaya to wo delete ho gai
+
+
+get ipv-4 address ......... ip -4 addr ......... # <inet> means ipv4 address
+get ipv-6 address ......... ip -6 addr ......... # <inet6> means ipv6 address
+
+
+
+#extract rar files to folder .............. rar x archive.rar path/to/extract/to
+
+# extract zip file ................. /home/amir/github/Linux/'command line - Having trouble uncompressing a few files.html'
+
+# Get autocompletion when invoking a “read” inside a Bash script .............. read -e -p "Your prompt:" var_name
+# bash read input autocomplete ................. read -e -p "Your prompt:" var_name
+
+save a frame as a jpeg file every 5 seconds  ............ mplayer -vo jpeg -sstep 5 file.avi
+get epoch time for give date and time .............. date --date '2017-08-17 04:00:01' +%s    # "1502938801" 
+# recersive grep .................... find in all subdirectories (maximum depth) ............. grep -r YOUR_PATTERN
+# problem: mkdir: cannot create directory ‘blabla’: Read-only file system .................... solution: sudo mount -o remount,rw '/media/amir/320GB'
+
+#---------------------
+# merge multiple lines into one line 
+>>> cat input.txt 
+# I came
+# I saw
+# I conquered!
+
+Join Without a Delimiter and With a Single Character Delimiter:
+	>>> readarray -t ARRAY < input.txt; IFS=''; echo "${ARRAY[*]}")
+	# I cameI sawI conquered!
+Join With a Multiple Character Delimiter:
+	>>> readarray -t ARRAY < input.txt;  printf -v TXT  "%s; " "${ARRAY[@]}"; echo ${TXT%; }
+	# I came; I saw; I conquered!
+Join Without a Delimiter:
+	>>> tr -d '\n' < input.txt 
+	# I cameI sawI conquered!
+Join With a Single Character Delimiter:
+	>>> tr '\n' ',' < input.txt | sed 's/,$/\n/'
+	# I came,I saw,I conquered!
+Join Without a Delimiter and With a Single Character Delimiter:
+	>>> paste -sd '' input.txt 
+	# I cameI sawI conquered!
+
+	>>> paste -sd ',' input.txt
+	# I came,I saw,I conquered!
+Join With a Multiple Character Delimiter:
+	>>> paste -sd "@#" input.txt
+	# came@I saw#I conquered!
+The sed Command:
+	>>> sed ':a; N; $!ba; s/\n//g' input.txt 
+	# I cameI sawI conquered!
+	
+	>>> sed ':a; N; $!ba; s/\n/,/g' input.txt 
+	# I came,I saw,I conquered!
+	
+	>>> sed ':a; N; $!ba; s/\n/; /g' input.txt 
+	# I came; I saw; I conquered!
+
+The awk Command:
+	>>> awk -v d="" '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I cameI sawI conquered!
+
+	>>> awk -v d="," '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I came,I saw,I conquered!
+
+	>>> awk -v d="; " '{s=(NR==1?s:s d)$0}END{print s}' input.txt
+	#I came; I saw; I conquered!
+
+#------------ END
+
+# # Create array in loop from number of arguments ............ args=(); for i in "$@"; do args+=("$i"); done ............ alternative: args=("$@") ............. now access any value of the arry by its index (statrtin from 0, to -1 ..... echo "${args[0]}"; echo "${args[-1]}"; echo "${args[@]}"
+
+#----------------
+#How to convert Python code to executable file?
+pip3 install pyinstaller
+pyinstaller myscript.py
+# PyInstaller should create a dist folder where your executable file is and all other files that need to be included in your distribution.
+# for further details check /home/amir/github/Linux/Using-PyInstaller-PyInstaller-4.3-documentation.html
+# https://pyinstaller.readthedocs.io/en/stable/usage.html
+#-------------END
+
+# ---------------
+# convert .py to .pyc
+python3 -m compileall -b <pythonic-project-name>
+python3 -m compileall .  
+python3 -m compileall MY_script.py
+# ------------END
+
+# search of unique owners of files and directories .................. find <path> -printf "%u\n" | sort -u .................... find <path> -printf "%u\n" | gawk '1{u[$0]=1;} END{ for (x in u){print x;}}'
+
+# exclude/remove all non-numeric | keep only numeric ............ echo "Â10.41.89.50-._ " | tr -cd '[:alnum:]'  
+
+# Colors missing when calling grep through script .......... To preserve the colouring, add the --color=auto flag to the grep command inside the script (eg. cat file | grep --color=auto '\|RAM\|CPU')
+
+#-----------------------
+# get firefox bookmarks ............... 
+sqlite3 /home/amir/.mozilla/firefox/65oyq9jg.default-release/places.sqlite "
+	select moz_places.url, moz_bookmarks.title
+	from moz_places, moz_bookmarks
+	where moz_bookmarks.fk = moz_places.id
+	and moz_bookmarks.type = 1
+	and length(moz_bookmarks.title) > 0
+	order by moz_bookmarks.dateAdded"
+#--------------------END
+
+
+echo $(cat file_name) ............ concatenate multiple lines of output to one line 
+turn on  bluetooth ................ rfkill unblock bluetooth
+turn off bluetooth ................ rfkill block bluetooth
+
+
+query local sqlite file ........... sqlite3 my_db.sqlite "select * from my_table where hour=6;"
+
+get string variable length ........... echo ${#var_name}
+
+<<<<<<< HEAD
+
+
+
+
+# https://www.youtube.com/playlist?list=PLzMcBGfZo4-nUIIMsz040W_X-03QH5c5h
+netstat -a ................ list all listening ports for TCP and UDP connections.
+netstat -at ............... list all TCP port connections.
+netstat -l ................ list all active ports.
+netstat -u ................ list all UDP port connections.
+
+
+curl URL ............................................ sends get   request to the URL
+curl -X POST URL .................................... sends posrt request to the URL 
+curl -X POST --data "p1=value_1&p2=value_2" URL ..... sends posrt request to the URL with perameters
+curl -X POST --d p1=value_1 -d p2=value_2   URL...... sends posrt request to the URL with perameters
+curl -I URL  ........................................ get header
+curl --header "key:value" -X POST  .................. send cutom header with post request 
+
+
+
+on server:
+	chmod a+rwx,u-x,g-rwx,o-rwx ~/.ssh/authoriezed_keys
+	OR
+	chmod 600 authoriezed_keys
+
+	chmod a+rwx,g-rwx,o-rwx ~/.ssh
+	OR
+	chmod 700 ~/.ssh
+
+to access server from your computer copy your rsa.pub to server at ~/.ssh/authoriezed_keys
+
+passphrase:
+	jab ham rsa key ganerate karty hen to hamary sy <Enter passphrase> mangta hy, agar ham is me apni taraf sy koi bhi phrase dal den (eg: 12MYphrase34), to jab ye ganerated public key ksi server par jay gi, or me us server ko connect karun ga, to pehly to wo keys match kary ga k us k pas jo public key h us ki private key mery system par h ya nahi, agar h to ab second phase ye ho ga k wo mery sy ye phrase (12MYphrase34) mangy ga, agar me ny nahi dya to connection nahi ho ga.
+	ye phrase is lye hota h k agar aap ki public and private keys ksi k hath lag bhi jayen tab bhi wo server ko connect na kar saky.
+
+
+Envoirment variables:
+	env .................. see all Envoirment variables.
+	printenv env_variable_name ...... print Envoirment variable value ........... eg: printenv HOME
+		OR
+		echo $env_variable_name ..... eg: echo $HOME
+	set Envoirment variable:
+		for current session only:
+			export my_env_var=my_value
+		perminently (only for this user):
+			echo -e "\nexport my_env_var=my_value\n" >> ~/.bashrc; source ~/.bashrc
+		perminently (globaly, for all users)
+			echo -e "\nexport global_env_var=global_value\n" >> /etc/environment; source /etc/environment
+	remove Envoirment variable:
+		for current session only:
+			unset my_env_var
+		perminently (only for this user):
+			remove it from ~/.bashrc and then source the file
+		perminently (globaly, for all users):
+			remove it from /etc/environment and then source the file
+
+
+nano:
+	copy:
+		1- jahan sy copy karna start karna h wahan par curson ly jayen.
+		2- press CTRL+6
+		3- select needed portion
+		4- press ATL+6
+	cut:
+		do first 3 steps as in <copy section above>
+		4- press CTRL+K
+	paste:
+		press CTRL+U
+
+
+vim:
+	i      - go into insert mode:
+	Esc    - go back to command mode:
+	:wq    - (in command mode) save and quit
+	:q!    - (in command mode) quit without saving
+	v      - (in command mode) go into heilight mode
+	y      - (in heilight mode) copy heilighted portion
+	p      - (in command mode) paste
+	d      - (in heilight mode) delete heilighted portion
+	u      - undo
+	CTRL+r - redo
+	w      - (in insert mode) go to next word
+	b      - (in insert mode) go to back work
+	0	   - (in insert mode) go to beggining of the line
+	SHIFT+4- (in insert mode) go to end       of the line
+
+
+sudo <s(uper)u(ser)do>:
+	stands for: super user do
+	if you are in sudo group you have access to sudo commands.
+
+
+grep:
+	grep a.  file.txt ............ a followed by anything, so ignore lines with only <one a withoud leading and tailing space>
+	grap a.a file.txt ............ a followed by anything and then again a
+	grep [a,b].a file.txt ........ anything statrts with a or b,, then anyting and then a
+	grep -o abc file.txt ......... show only matching patterns, not entire lines
+	grep -r hello /home/amir ..... search hello in all /home/amir/sub_direcoties !!!!!!!!!!!!!!!!!!!!!!! VERY IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!
+	
+chomd +x file.txt ................... give execution permition to user,group and all
+chmod -r file.txt ................... remove reading permition to user,group and all
+functions:
+	func_1(){
+		echo "function called!"
+	}
+
+	func_1 # call the function
+
+
+	func_2(){
+		echo "Argument#1: $1, Argument#2: $2, Argument#3: $3"
+	}
+	func_2 amir              # Argument#1: amir, Argument#2: , Argument#3:
+	func_2 hamza amir        # Argument#1: hamza, Argument#2: amir, Argument#3:
+	func_2 hamza amir saleem # Argument#1: hamza, Argument#2: amir, Argument#3: saleem
+
+
+variables cannot have:
+	- Exclamation points
+	- spaces
+	- statrt with numbers
+
+
+
+if, elif and else:
+	if [[ $x = "amir" ]]; then
+		# do something
+	elif [[ $x = "danish" ]]; then # !!!!!!!!!!!!!!!!!!!!!!! VERY IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!
+		# do something
+	else
+		# do something
+	fi
+
+
+Cron job Vs crontab:
+	crontab:
+		specific to each user.
+		Every user on the system has one.
+	cron job:
+		it is a command that is scheduled to run at specific time.
+		cron job is managed by crontab
+
+crontab:
+	min(0-59), hour(0-23), day-of-month(1-31), month(1-12), day-of-week(0-6)<0 for sunday, and 7 is also sunday>
+	*/1     *  * *   *   command # execute <command> every 1 minute
+	*   */1    * *   *   command # execute <command> every one hour
+	0   */4    * *   *   command # execute <command> every 4   hours
+	*/15    *  * *   *   command # execute <command> every 15 minutes
+	15      *  * *   *   command # execute <command> at 15 minutes (ye 1 din me 24 times chaly gi, har ghanty me 15 minutes par)
+	5,10,15 *  * *   *   command # execute <command> at 5,10,15 minute (ye command har ghanty me 3 time chaly gi, 5th, 10th and 15th minutes for each hour)
+	0       *  * *   *   command # execute <command> at every hour (0th minute)
+	0       0  * *   *   command # execute <command> at every day (0th minute and 0th hour)
+	0		5  * *   *   command # execute <command> at every day at 05:00 AM
+	30      10 1 */3 *   command # execute <command> at every 3 months on the 1st at 10:30 AM
+	0       0  * *   1-5 command # execute <command> at every monday to friday at 00:00 AM
+	@daily               command # execute <command> at every day midnight # the default setting for <@daily> is midnight, so at default it is the same as (@midnight)
+	@midnight            command # execute <command> at every day midnight
+	@reboot              command # execute <command> at every reboot 
+	@weekly              command # execute <command> at every 
+	@annually            command # execute <command> at every 
+	@yearly              command # execute <command> at every 
+	@hourly              command # execute <command> at every 
+	@monthly             command # execute <command> at every 
+
+
+uptime (uptime for the system):
+	>>> uptime 
+	# 14:57:11 up 18:46,  1 user,  load average: 1.52, 1.39, 1.24
+
+wall:
+	broadcast a massage to all currently logged in users
+	wall "hello users"
+
+	wall  displays a message, or the contents of a file, or otherwise its standard input, on the terminals of all currently logged in users.  The command will wrap lines that are longer than 79 characters.  Short lines  are whitespace  padded  to have 79 characters.  The command will always put a carriage return and new line at the end of each line.
+
+	Only the superuser can write on the terminals of users who have chosen to deny messages or are using  a  program which automatically denies messages.
+
+	Reading from a file is refused when the invoker is not superuser and the program is set-user-ID or set-group-ID.
+
+
+wirte user_name:
+	write to specific user:
+		write user_name # and hit Enter
+		no every line you type will show at user_name terminal
+
+mesg:
+	mesg y .......... enable  wrrte  
+	mesg n .......... desable write # no one cat <write> to you
+
+who ...................... list alll loged-in users
+
+shutdown:
+	shutdown -h now ................... shutdown immediatly
+	shutdown -h +10 ................... shutdown after 10 minutes
+	shutdown -r now ................... restart immediatly
+	
+
+rdfind . .................. find duplicated files
+get perameters in script ........... /home/amir/github/Linux/'Use Command Line Arguments(Perameters) in a Bash Script.sh'
+=======
+kill 121,323,2323 ................ kill multiple PIDs at once
+service --status-all (note: + mean running services, and - means stoped services )............. list all services 
+
+ssh multiple commands single line ......... ssh user_name@ip "./first_script; ./second_script; ls -ltr"
+
+>>>>>>> e3740279319983ab20f2142cf1e4f1b8b510bd64
+#  loop over arguments from terminal .............. for var in "$@"; do echo "$var" ; done
+
+# get last character from string ...................... echo "${var_name: -1}"
+
+iterate over arguments in script .............. for var in "$@"; do echo "$var"; done
+
+chage ................ change user password expiry information
+chage -l amir ........ show amir user password expiry information
+
+
+# find with long command ............. find . -name "*.mp4"  -exec bash -c  'for f; do du -sh  "" ; done' _ {} \;
+
+read .txt file withing zip file (withoud unzipping) ................. unzip -p zip.zip file.txt 
+
+# erase complete drive (not a partition) ............. sudo shred -v -n1 -z /dev/sdX (replace <sdX> with your device name)
+
+# bash modulo if ..................... if ! ((n % 4)); then echo "$n divisible by 4."; fi .................. if [ $(( $a % 4 )) -eq 0 ]; then ..................... if [[ $(( $1 % 4 )) == 0 ]]; then ................. ((a%4)) && echo "$a is not divisible by 4" || echo "$a is divisible by 4" 
+
+# Convert seconds to hours, minutes, seconds ......................... date -d@$57024 -u +%H:%M:%S
+
+# How to download package not install it with apt-get command? .................. sudo apt-get install --download-only package_name ............. This will download pppoe and any dependencies you need, and place them in /var/cache/apt/archives. That way a subsequent apt-get install pppoe will be able to complete without any extra downloads.
+
+
+#-----------------
+Check if a Bash array contains a value 
+if [[ " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array contains value
+fi
+
+if [[ ! " ${array[@]} " =~ " ${value} " ]]; then
+    # whatever you want to do when array doesn't contain value
+fi
+
+Note that in cases where the value you are searching for is one of the words in an array element with spaces, it will give false positives. For example
+
+array=("Jack Brown")
+value="Jack"
+
+he regex will see "Jack" as being in the array even though it isn't. So you'll have to change IFS and the separator characters on your regex if you want still to use this solution, like this
+
+IFS=$'\t'
+array=("Jack Brown\tJack Smith")
+unset IFS
+value="Jack"
+
+if [[ "\t${array[@]}\t" =~ "\t${value}\t" ]]; then
+    echo "true"
+else
+    echo "false"
+fi
+
+# False
+
+Obviously this can also be used as a test statement, allowing it to be expressed as a one-liner
+[[ " ${array[@]} " =~ " ${value} " ]] && echo "true" || echo "false"
+
+Second solution:
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+A test run of that function could look like:
+
+>>> array=("something to search for" "a string" "test2000")
+>>> containsElement "a string" "${array[@]}"
+>>> echo $?
+0
+>>> containsElement "blaha" "${array[@]}"
+>>> echo $?
+1
+
+Third solution:
+printf '%s\n' "${myarray[@]}" | grep -P '^mypattern$'
+
+Explanation
+
+The printf statement prints each element of the array on a separate line.
+
+The grep statement uses the special characters ^ and $ to find a line that contains exactly the pattern given as mypattern (no more, no less).
+
+Usage
+
+To put this into an if ... then statement:
+
+if printf '%s\n' "${myarray[@]}" | grep -q -P '^mypattern$'; then
+    # ...
+fi
+
+I added a -q flag to the grep expression so that it won't print matches; it will just treat the existence of a match as "true."
+
+
+fourth solution:
+inarray=$(echo ${haystack[@]} | grep -o "needle" | wc -w)
+
+non zero value indicates a match was found.
+
+... actually, to solve the problem mentioned with it not working with needle1 and needle2, if you only want an exact match, nothing more, nothing less, just add a w after the -o for a whole word match
+
+inarray=$(echo ${haystack[@]} | grep -ow "needle" | wc -w)
+
+
+
+# unrar to some_destination ............... unrar e my_file.rar my/desired/destination/
+
+# python -m http.server 9000 .............. run http-server 
+#Create python virutal envoirment ................. python3 -m venv /path/to/new/virtual/environment
+
+#---------------------
+# List open Firefox tabs from the command line?
+https://superuser.com/questions/269443/list-open-firefox-tabs-from-the-command-line
+I recommend using https://github.com/balta2ar/brotab for this purpose:
+
+>>> pip3 install brotab
+>>> brotab install
+
+Install the web extension as well: https://addons.mozilla.org/en-US/firefox/addon/brotab/
+
+Restart Firefox, and you can run brotab commands such as:
+
+>>> brotab list
+#---------------------
+
+# disable internet for a user on a system ................. sudo iptables -A OUTPUT -m owner --uid-owner {USERNAME} -j REJECT
+
+
+# control android from linux .......... scrcpy
+
+ports in use ............. sudo lsof -i -P -n | grep LISTEN
+# print stderr only, not stdout ................... cmd > /dev/null ............. cmd 2>&1 > /dev/null
+# check if video is completely downloaded .............. if [[ 1 -gt 0 ]] ;then echo MY_VIDEO_NAME is not complete; else echo MY_VIDEO_NAME is complete ; fi
+# append lines in file ................. cat >> my/file/path.txt << eof .......... jab tak ksi new line me srif <eof> nahi likha jay ga, ham apni lines likh sakty hen, jesy hi <eof> likh kar enter karen gy to input terminate ho jay ga, or is line sy pehly ka sara contant my/file/path.txt me APPEND ho jay ga.
+
+write stdout & stderr to different files ............... cmd 1> output 2> error
+
+stdout & stderr to one file  ........... cmd &> streams
+
+It's recommended to use $(command) instead of `command`
+
+ARP (Address Resolution Protocol) is a protocol that maps IP network addresses of a network neighbor with the hardware (MAC) addresses in an IPv4 network. You can use it as below to find all alive hosts on a network: .............. sudo arp-scan --interface=wlp3s0 --localnet  
+
+
+# remove punctuation .......... echo 'olj;adf79329s;jfa(&*&^#@_(!_*)(' | sed s/[`\!\@\#$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g
+
+# see full terminal output using `screen`  .............. ctrl+a followed by [, followed by the up and down arrows.
+
+
+# .bashrc me jo alias ham define karty hen un ka code dekhly k lye ham terminal sy (alias alias_name) type karty hen, magar .bashrc jo functions defined hoty hen un ka code dekhny k lye ye kaam nahi karta, is kaam k lye ham function k uper ye line likhty hen ................ declare -f your_function_name ............. phir terminal par ja kar (type your_function_name) likhen.
+
+# copy folder with hidden files ............ cp -r path/to/existing/folder a/new/path ............. NOTE: omit slashed from both paths
+
+bluetooth ............ Identify your computer bluetooth: hcitool dev ............ Scan available devices : hcitool -i hci0 scan ................. bluetoothctl ................ paired-devices ............... connect XX:XX:XX:XX:XX:XX
+
+
+#--------------------------------------------------------
+# open image file 
+x-www-browser : in browser
+display       : imagemagic
+feh           :
+eog           : a default GNOME image viewer
+
+
+>>> mimeopen --help
+Usage:
+    mimeopen [options] [-] files
+
+Options:
+    -a, --ask
+        Do not execute the default application but ask which application to
+        run. This does not change the default application.
+
+    -d, --ask-default
+        Let the user choose a new default program for given files.
+
+    -n, --no-ask
+        Don't ask the user which program to use. Choose the default program
+        or the first program known to handle the file mimetype. This does
+        not set the default application.
+
+    -M, --magic-only
+        Do not check for extensions, globs or inode type, only look at the
+        content of the file. This is particularly useful if for some reason
+        you don't trust the name or the extension a file has.
+
+    --database=mimedir:mimedir:...
+        Force the program to look in these directories for the shared
+        mime-info database. The directories specified by the basedir
+        specification are ignored.
+
+    -D, --debug
+        Print debug information about how the mimetype was determined.
+
+    -h, --help
+    -u, --usage
+        Print a help message and exits.
+
+    -v, --version
+        Print the version of the program and exit.
+#--------------------------------------------------------
+
+#---------------------------------
+Ubuntu is derived from Debian Linux. Debian uses the dpkg packaging system. A packaging system is a way to provide programs and applications for installation. This way, you don’t have to build a program from the source code.
+
+APT (Advanced Package Tool) is the command line tool to interact with this packaging system. There are already dpkg commands to manage it, but apt is a more user-friendly way to handle packages.
+
+There are two main tools around APT: apt-get and apt-cache. apt-get is for installing, upgrading, and cleaning packages, while apt-cache command is used for finding new packages. 
+
+apt-get basically works on a database of available packages. If you don’t update this database, the system won’t know if there are newer packages available or not.
+
+Once you have updated the package database, you can upgrade the installed packages. The most convenient way is to upgrade all the packages that have updates available. You can use the command below for this purpose:
+    sudo apt-get upgrade
+To upgrade only a specific program, use the command below:
+    sudo apt-get upgrade <package_name>
+There is another way to perform a complete upgrade, by using the command below:
+    sudo apt-get dist-upgrade
+    But you should avoid using this command.
+
+Difference between upgrade and dist-upgrade
+    The command apt-get upgrade is very obedient. It never tries to remove any packages or tries to install a new package on its own.
+    The command apt-get dist-upgrade, on the other hand, is proactive. It looks for dependencies with the newer version of the package being installed and it tries to install new packages or remove an existing ones on its own.
+    It sounds like dist-upgrade is more powerful and intelligent, doesn’t it? But there is a risk with it.
+    See, it has a “smart” conflict resolution system. It will attempt to upgrade the most important packages, at the expense of the less important ones. This may lead to the removal of some packages, which you might not want. This is the main reason why dist-upgrade should be avoided on production machines.
+
+What is the difference between apt-get update and apt-get upgrade?
+    apt-get update ONLY updates the database of available packages
+    and 'apt-get upgrade' upgrades the installed packages to the newer version.    
+
+apt-cache:
+    command to search for packages
+    apt-cache search <search term>
+    you don’t need to know the exact name of the package. It searches in package names and their short descriptions, and shows result based on that.
+    If you just want to search the apt packages with specific package names, you can use the command below:
+        apt-cache pkgnames <search_term>
+        This gives you the list of all the packages starting with your search term.
+    Once you know the exact package name, you can get more information about it, such as version, dependencies, etc., by using the command below:
+        apt-cache showpkg <package_name>
+
+install multiple packages:
+    sudo apt-get install <package_1> <package_2> <package_3>
+
+What if you run install on an already installed package?
+    Suppose you already have a package installed, but you used the install command for it anyway. apt-get will actually look into the database, and if a newer version is available, it will upgrade the installed package to the newer one. So no harm is done by using this command — unless you don’t want the package to be upgraded.
+    
+    Suppose for some reason you want to install a package but don’t want to upgrade it if it is already installed. It sounds weird, but you may have reasons to do that.
+        For that case, you can use the no-upgrade flag in the following manner:
+        sudo apt-get install <package_name> --no-upgrade
+    How to only upgrade a package, not install it:
+        In case you want to upgrade a package provided it’s already installed, but don’t want to install it if it’s not, you can do that with the following command:
+            sudo apt-get install <package_name> --only-upgrade
+Another way of uninstalling packages is to use purge. The command is used in the following manner:
+    sudo apt-get purge <package_name>
+
+    What is the difference between apt-get remove and apt-get purge?
+        apt-get remove just removes the binaries of a package. It doesn’t touch the configuration files
+        apt-get purge removes everything related to a package, including the configuration files
+
+        So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+        Purge is particularly useful when you have messed up with the configuration of a program, when you want to completely erase its traces from the system and start afresh.
+
+        Most of the time, a simple remove is more than enough for uninstalling a package.
+
+
+Clear apt cache:
+    You can use the command below to clear apt cache (locally saved retrieved package files):
+        sudo apt-get clean
+    
+    Another way is to use autoclean. Unlike the above clean command, autoclean only removes those retrieved package files that have a newer version now, and so won’t be used anymore.
+        sudo apt-get autoclean
+
+    Another way to free up disk space is to use autoremove. It removes libraries and packages that were installed automatically to satisfy the dependencies of another installed package. If that package is removed, these automatically installed packages are useless in the system. This command removes such packages.
+        sudo apt-get autoremove
+
+    This is a command-line way of cleaning a Linux system. If you prefer a GUI, here are some CCleaner alternatives for Linux which you can use on Ubuntu and Ubuntu-based Linux distributions.
+
+
+So if you have “removed” a particular piece of software and then install it again, your system will have the same configuration files. Of course, you will be asked to override the existing configuration files when you install it again.
+
+Difference Between apt and apt-get Explained
+    The reality is that the first stable version of apt was released in the year 2014
+    Debian, mother Linux of distributions like Ubuntu, Linux Mint, elementary OS etc, has a robust packaging system and every component and application is built into a package that is installed on your system. Debian uses a set of tools called Advanced Packaging Tool (APT) to manage this packaging system. Don’t confuse it with the command apt, it’s not the same.
+    There are various tools that interact with APT and allow you to install, remove and manage packages in Debian based Linux distributions. apt-get is one such command-line tool which is widely popular. Another popular tool is Aptitude with both GUI and command-line options.
+    You see, these commands are way too low level and they have so many functionalities which are perhaps never used by an average Linux user. On the other hand, the most commonly used package management commands are scattered across apt-get and apt-cache.
+    The apt commands have been introduced to solve this problem. apt consists some of the most widely used features from apt-get and apt-cache leaving aside obscure and seldom used features. It can also manage apt.conf file.
+    With apt, you don’t have to fiddle your way from apt-get commands to apt-cache. apt is more structured and provides you with necessary options needed to manage packages.
+    Bottom line: apt=most common used command options from apt-get and apt-cache.
+    So with apt, you get all the necessary tools in one place. You won’t be lost under tons of command options. The main aim of apt is to provide an efficient way of handling package in a way “pleasant for end users”.
+    When Debian says “pleasant for end users”, it actually means that. It has fewer but sufficient command options but in a more organized way. On top of that, it enables a few options by default that is actually helpful for the end users.
+    For example, you get to see the progress bar while installing or removing a program in apt.
+    apt also prompts you with the number of packages that can be upgraded when you update the repository database.
+    You can achieve the same with apt-get as well if you use additional command options. apt enables them by default and takes the pain away.
+
+    apt has a few commands of its own as well.
+
+        new apt command  | function of the command
+        ------------------------------------------
+        apt list         | Lists packages with criteria (installed, upgradable etc)
+        apt edit-sources | Edits sources list
+
+    One point to note here is that apt is under continuous development. So you may see a few new options added to the command in the future versions.
+    apt is the command that is being recommended by the Linux distributions. It provides the necessary option to manage the packages. Most important of all, it is easier to use with its fewer but easy to remember options.
+
+#---------------------------------
+# Reading compressed file without extracting ................ z commands provide alternatives of the regular commands that you use to deal with log files such as less, cat, grep etc. So you get zless, zcat, zgrep etc and you don’t even have to explicitly extract the compressed files
+
+
+# copy&paste in terminal ................... Select the text for copying and middle click (scroll button on the mouse) for paste
+
+
+# du -ah ..................... recursive ALL FILES sizes
+
+# grep -E .................. `grep -E "a|e"` is equals to `grep "a\|e"`
+# adb screen sharing ............ scrcpy
+# search for a file by its exact name (not *name*): .....................   locate -b '\domain-list.txt'
+# select multiple lines in terminal ; double click on the beggining line / word, press CTRL + SHIF + single click on the last word of desired selection
+
+
+anacron .........  anacron is a Linux facility used to run commands periodically with a frequency defined in days, weeks and months. Unlike its sister cron; it assumes that a system will not run continuously, therefore if a scheduled job is due when the system is off, it’s run once the machine is powered on. For more information about anacron and cron read: https://www.tecmint.com/cron-vs-anacron-schedule-jobs-using-anacron-on-linux/
+
+apropos ............ short man page
+
+at (schedule tasks to run in a future time) .............. sudo echo "shutdown -h now" | at -m 23:55 ............ 'atq' command is used to view jobs in at command queue ............ 'atrm' command is used to remove/deletes jobs (identified by their job number) from at command queue
+
+basename ................  It's helps to print the name of a file stripping of directories in the absolute path ............... basename /my/folder/my/subfolder/myfile.txt -> myfile.txt
+
+cksum .......... It's used to display the CRC checksum and byte count of an input file.
+
+cmp ............. It's  performs a byte-by-byte comparison of two files like this.
+
+comm ............. It's used to compare two sorted files line-by-line
+
+diff .......... It's used to compare two files line by line. It can also be used to find the difference between two directories in Linux.
+
+change host name .............. sudo hostname your_new_host_name
+
+killall ......... It's used to kill a process by its name.............. killall firefox
+
+lscpu ........... It's  displays system’s CPU architecture information (such as number of CPUs, threads, cores, sockets, and more)
+
+md5sum ........... It's used to compute and print the MD5 message digest of a file. If run without arguments, debsums checks every file on your system against the stock md5sum files
+
+nc -zv 192.168.253.2 5000 ................... checking if the port 5000 is open on the host 192.168.253.2
+
+nice -12 tar -czf backup.tar.bz2 /home/* ................. The command starts the process “tar command” setting the “nice” value to 12.
+
+openssl  ..............  The openssl is a command line tool for using the different cryptography operations of OpenSSL’s crypto library from the shell. The command below will create an archive of all files in the current directory and encrypt the contents of the archive file ................ tar -czf - * | openssl enc -e -aes256 -out backup.tar.gz
+
+pidof ................... pidof displays the process ID of a running program/command
+
+cut -d: -f1 < /etc/passwd
+
+use xargs to copy a file to multiple directories at once; in this example we are trying to copy the file. ................ echo ./Templates/ ./Documents/ | xargs -n 1 cp -v ./Downloads/SIC_Template.xlsx 
+
+delete all files within a directory except one or few files with a given extension................... find . -type f -not -name '*gz' -print0 | xargs -0 -I {} rm -v {}
+
+
+check comma count in each line of the file ................. awk -F ',' 'NF{print NF-1}' train.csv  | sort | uniq -c
+
+If you’ve a collection of files with “.html” extension and you want to rename all of them with “.php” extension, you can type the command below. ...................  rename 's/\.html$/\.php/' *.html
+
+
+
+rdiff-backup is a powerful local/remote incremental backup script written in Python. It works on any POSIX operating system such as Linux, Mac OS X. Note that for remote backups, you must install the same version of rdiff-backup on both the local and remote machines. Below is an example of a local backup command:......................  sudo rdiff-backup /etc /media/tecmint/Backup/server_etc.backup
+
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+
+
+trim leading and trailing whitespace from each line of some output .................. awk '{$1=$1;print}' ........... awk '{$1=$1};1'
+
+join multiple lines of file names into one with custom delimiter ............ ls -1 | paste -sd "," -
+
+do nothing when I close my laptop lid ................... 1- open /etc/systemd/logind.conf; If HandleLidSwitch is not set to ignore then change it ; Make sure it's not commented out; Restart the systemd daemon (be aware that this will log you off) sudo service systemd-logind restart
+
+round to 3 decimal number ................ bc -l <<< $x/$y | awk '{ printf("%11.3f\n", $1) }'
+
+# skip / exclude first n 8 lines of the file .............. sed 1,8d file.txt
+
+# indent the output .......... command/script | sed 's/^/     /'
+
+# Run A Command For A Specific Time ...................... timeout <time-limit-interval> <command> ............. timeout 10s tail -f /var/log/pacman.log
+
+# 'source .bashrc' is equal to '. .bashrc' ............... 'source ~/.bash_profile' is equal to '. ~/.bash_profile'
+
+# Remove lines containing non-numeric entries  .......................... sed  '/[^[:digit:].+-]/d' file
+
+# join/merge multiple mp4/videos into one .......... mkvmerge -o outfile.mkv infile_01.mp4 \+ infile_02.mp4 \+ infile_03.mp4
+
+# push to a branch ............. git push -u origin main:your_branch_name
+
+# vifm is  a terminal-based file browser application
+
+# split one line into multiple lines ................. command | xargs -n 1 #https://stackoverflow.com/questions/36689275/bash-split-line-into-multiple-lines
+
+# If you use Ctrl+S in the terminal, your terminal ‘freezes’. This is coming from the legacy computing where there was no scope of scrolling back up. Hence, if there were lots of output lines, Ctrl+S was used for stopping the screen so that text on the screen could be read. You can unfreeze your terminal with Ctrl+Q. But again, avoid using Ctrl+S in the terminal.
+
+# in an nautilus open window, you can show hidden files by CTRL+H
+
+# Find which disk/partition current directory is on ................. findmnt --output target --noheadings --target . ....................... df -P . | sed -n '$s/[^%]*%[[:blank:]]*//p'
+
+#Extract Audio From Video  ...........  ffmpeg -i input-video-file output-audio-file
+
+Summing a column with awk .............. $ awk '{ sum += $1 } END { print sum }' data.txt .............. $ awk '{ sum += $NF } END { print sum }' data.txt # NF is the last column
+# Check existence of input argument ....................... if [ 0 -eq 0 ]; then echo "No arguments supplied"; fi
+# Check disk health ........... sudo '/home/amir/github/Linux/hdsentinel.gz'
+
+# echo with sudo ........... echo 'deb blah ... blah' | sudo tee -a /etc/apt/sources.list > /dev/null
+# open ssh server ......... sudo apt-get install openssh-server; sudo systemctl enable ssh; sudo systemctl start ssh
+
+# you can install a deb file using apt too ........... sudo apt install ./my_file.deb
+
+# launch evince in presentation mode ......... evince -s  file.pdf
+
+# list all files and directories (to the end) .............. find
+
+###########
+#merge/join multiple pictures into one
+#https://askubuntu.com/questions/226054/how-do-i-join-two-images-together
+#  join images horizontally ............ convert +append *.png out.png 
+#  join images vertically .............  convert -append *.png out.png
+####### END
+
+
+# extract pages from pdf without loosing metadata ........... gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=1 -dLastPage=243 -sOutputFile=output.pdf input.pdf
+# fbreader is an .epub reader
+
+# Monitor the size of current folder ............ watch 'du -hs; ls | wc -l;extentions_count'
+
+# convert pdf to mobi ......... /home/amir/github/Linux/pdf-to-mobi.png
+
+
+# find only hidden files .......... find . -path '*/\.*'
+
+# extract images from pdf file ..........  mkdir -p images && pdftoppm -jpeg -r 150 my_file.pdf images/pg
+
+
+# Create a pdf file from multiple pictures ............. convert *.jpg -auto-orient
+# Convert multiple images to a pdf ..................... convert *.jpg -auto-orient
+
+# Crop an image ........... convert -gravity Center -crop 68x80%+0+0 my_file.jpg new_name.jpg
+
+# execute/run python code on github without downloading it .......... curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -
+
+
+# internet speed ........... cbm
+
+# install pip packages from requirment.txt ............ pip3 install -r /path/to/requirements.txt
+
+# create virtual envoirment for specific python virsion ............... virtualenv myvenv --python=python3.7
+
+# package for listing version of packages used in a jupyter notebook ............. (after importing modules) print('\n'.join(f'{m.__name__}=={m.__version__}' for m in globals().values() if getattr(m, '__version__', None)))
+
+# Send a Process to Background and restore it .................. CTRL + Z ......... bg ........................ https://linuxhint.com/send-process-background-linux/
+
+
+# ffmpeg - replace audio in video ............... ffmpeg -i v.mp4 -i a.wav -c:v copy -map 0:v:0 -map 1:a:0 new.mp4
+
+# How to pass a Bash variable to Python? ............... export my_var=88; echo 'import os; print(os.environ["my_var"])' | python3
+
+# remove last n lines ............. head -n -2 file_name.txt
+
+
+######################################
+# Activate a virtualenv (without source Virtual-env/bin/activate every time)
+
+/path/to/your/virtual-env/bin/python3 your-script.py
+
+The simplest solution to run your script under virtualenv's interpreter is to :
+    replace the default shebang line with path to your virtualenv's interpreter like so at the beginning of the script:
+        #!/path/to/project/venv/bin/python
+    Make the script executable:
+        chmod u+x script.py
+    Run the script:
+        ./script.py
+
+#######################################
+<<<<<<< HEAD
+# Check partitions type:
+    sudo file -s /dev/{sd,nvme}*
+    lsblk -f
+=======
+
+
+>>>>>>>>>>>>>>> ARRAY
+distro=("redhat linux" "debian linux" "gentoo linux")
+echo "${distro[2]}"  #gentoo linux
+echo "${#distro[@]}" #lenght of the array
+len=${#distro[@]}; for (( i=0; i<$len; i++ )); do echo "${distro[$i]}" ; done # loop over array by index
+-------------------
+
+
+>>>>>>> 7bbc96b8e24d8edb7fefdbe902af5bba005465c2
