@@ -27,21 +27,21 @@ echo
 fi
 }
 
-echo 'Speed|Total|Avg|Time|Downloaded' >  '/home/amir/.speed_hist.csv'
+echo 'Speed|Total|Avg|Time|current_time|Downloaded' >  '/home/amir/.speed_hist.csv'
 
 plot() {
 	echo '
 import pandas as pd
 import matplotlib.pyplot as plt
 df = pd.read_csv("/home/amir/.speed_hist.csv", sep="|", index_col=None)
-# df.columns = "Speed|Total|Avg|Time|Downloaded".split("|")
-series = df.Speed.str.strip("Speed:").str.strip().str.strip("K").astype(float)
-series.plot()
-plt.axhline(series.mean(), color="red");
-plt.axhline(series.quantile(0.25), color="green");
-plt.axhline(series.quantile(0.75), color="green");
+df.Speed = df.Speed.str.strip("Speed:").str.strip().str.strip("K").astype(float)
+d,h,m,s = [i.zfill(2) for i in df.Time.iloc[-1].strip().split(":")]
+df.set_index("current_time").Speed.plot(title=f"DD:HH:MM:SS\n  {d}:{h}:{m}:{s}")
+plt.axhline(df.Speed.mean(), color="red");
+plt.axhline(df.Speed.quantile(0.25), color="green");
+plt.axhline(df.Speed.quantile(0.75), color="green");
 plt.show()
-	' | python3
+' | python3
 }
 x=-1
 main () {
@@ -67,12 +67,15 @@ main () {
 
 	downloaded_size_mb_=$(func $downloaded_size_mb 6)
 	downloaded_size_gb_=$(func $downloaded_size_gb 6)
+
+	current_time=$(date +%T)
+
 	let "x++"
 	if [[ $(( $x % 20 )) == 0 ]]; then
 		x=0
-		echo -e "--Speed--|--Total--|----Avg-----|----Time----|----Downloaded----" | grep --color=auto '\|Speed\|Total\|Avg\|Time\|Downloaded\|-\||'
+		echo -e "--Speed--|--Total--|----Avg-----|----Time----|current_time|----Downloaded----" | grep --color=auto '\|current_time\|Speed\|Total\|Avg\|Time\|Downloaded\|-\||'
 	fi
-	echo -e "$current_ | $total_ | $avg_ | $time_ | $downloaded_size_mb_ M, $downloaded_size_gb_ G" | tee -a /home/amir/.speed_hist.csv
+	echo -e "$current_ | $total_ | $avg_ | $time_ | $current_time   | $downloaded_size_mb_ M, $downloaded_size_gb_ G" | tee -a /home/amir/.speed_hist.csv
 }
 
 control_c() {
@@ -86,4 +89,3 @@ while true ; do
    main
    sleep $secs_to_sleep
 done
-
