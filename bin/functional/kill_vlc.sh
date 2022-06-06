@@ -1,2 +1,2 @@
 #!/bin/bash
-pkill vlc
+pkill -9 vlc
