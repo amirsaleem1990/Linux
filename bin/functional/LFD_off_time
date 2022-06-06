@@ -2,7 +2,6 @@
 RED="\033[0;31m"
 normal="\033[0m"
 
-
 file_name=/home/amir/.todays_first_login_time
 
 last=`cat $file_name`
