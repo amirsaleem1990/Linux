@@ -87,6 +87,29 @@ paste_to_files() {
 	echo "$1" >> ~/.AB_cpu.txt
 	echo "$1" >> ~/.AB_ram.txt
 }
+func_3(){
+	_total_=`echo $1 | cut -d, -f1`
+	_used_=`echo $1 | cut -d, -f2`
+	_used_perc_=`echo "scale=3; $_used_/$_total_" | bc`
+	_used_perc_=`echo "$_used_perc_ * 100" | bc`
+	_used_perc_=${_used_perc_%.*}
+}
+
+func_4(){
+	# echo -n Ram\ \:\ 
+	f=`echo "$1""$3"`
+
+	# echo -n  "$ram_used_perc %   "
+	f=`echo "$f""$2 %   "`
+
+	for i in $(seq 1 `echo "$2 / 2"     | bc`); do
+		# echo -n "-"
+		f=`echo "$f""-"`
+	done
+	f=`echo "$f""\n"`
+	# echo 	
+}
+
 func_2(){
 	n=""
 	if [[ `echo $cpu_total'<'10 | bc -l` == 1 ]] ; then 
@@ -97,10 +120,8 @@ func_2(){
 	f="\n\n****************************************************************\n"
 	
 	# echo -n  "Cpu : $cpu_total $n%   "
-	f=`echo "$f""Cpu : $cpu_total $n%   "`
+	f=`echo "$f""Cpu  : $cpu_total $n%   "`
 
-
-	
 	for i in $(seq 1 `echo "$cpu_total / 2" | bc`); do 
 		# echo -n "-"
 		f=`echo "$f""-"`
@@ -110,52 +131,38 @@ func_2(){
 	# echo
 
 	ram=`free | head -2 | tail -1 | sed 's/^Mem: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
-	ram_total=`echo $ram | cut -d, -f1`
-	ram_used=`echo $ram | cut -d, -f2`
-	ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
-	ram_used_perc=`echo "$ram_used_perc * 100" | bc`
-	ram_used_perc=${ram_used_perc%.*}
+	func_3 $ram
+	ram_total=$_total_
+	ram_used=$_used_
+	ram_used_perc=$_used_perc_
+	# ram_total=`echo $ram | cut -d, -f1`
+	# ram_used=`echo $ram | cut -d, -f2`
+	# ram_used_perc=`echo "scale=3; $ram_used/$ram_total" | bc`
+	# ram_used_perc=`echo "$ram_used_perc * 100" | bc`
+	# ram_used_perc=${ram_used_perc%.*}
 
 	swap=`free  | tail -1 | sed 's/^Swap: //g' | sed 's/ \{2,\}/,/g' | sed 's/^,//g'`
 	if [[ $swap != "0,0,0" ]] ; then
-		swap_total=`echo $swap | cut -d, -f1`
-		swap_used=`echo $swap | cut -d, -f2`
-		swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
-		swap_used_perc=`echo "$swap_used_perc * 100" | bc`
-		swap_used_perc=${swap_used_perc%.*}
+		func_3 $swap
+		swap_total=$_total_
+		swap_used=$_used_
+		swap_used_perc=$_used_perc_
+		# swap_total=`echo $swap | cut -d, -f1`
+		# swap_used=`echo $swap | cut -d, -f2`
+		# swap_used_perc=`echo "scale=3; $swap_used/$swap_total" | bc`
+		# swap_used_perc=`echo "$swap_used_perc * 100" | bc`
+		# swap_used_perc=${swap_used_perc%.*} # float to integer
 	fi
-	
-	# echo -n Ram\ \:\ 
-	f=`echo "$f""Ram : "`
 
-	# echo -n  "$ram_used_perc %   "
-	f=`echo "$f""$ram_used_perc %   "`
+	func_4 $f $ram_used_perc "Ram : "
 
-	for i in $(seq 1 `echo "$ram_used_perc / 2"     | bc`); do
-		# echo -n "-"
-		f=`echo "$f""-"`
-	done
-	f=`echo "$f""\n"`
-	# echo 
-
-	if [[ $swap_used_perc -eq "" ]] ; then
+	if [[ $swap_used_perc == "" ]] ; then
 		:
 	else
-		if [[ $swap != "0,0,0" ]] ; then
+		if [[ $swap == "0,0,0" ]] ; then
 			:
 		else
-			# echo -n Swap\:\ 
-			f=`echo "$f""Swap:"`
-
-			# echo -n  "$swap_used_perc %   "
-			f=`echo "$f""$swap_used_perc %   "`
-
-			for i in $(seq 1 `echo "$swap_used_perc / 2"     | bc`); do
-				# echo -n "-"
-				f=`echo "$f""-"`
-			done
-			# echo 
-			f=`echo "$f""\n\n"`
+			func_4 $f $ram_used_perc "Swap: "
 		fi
 	fi
 
@@ -165,13 +172,13 @@ func_2(){
 
 	echo $f
 }
-fun() {
+	fun() {
 	# echo '' >> ~/.AB.txt
 	paste_to_files ''
-	
+
 	# echo "<<<,CPU,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_cpu.txt
 	# echo "<<<,MEM,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_ram.txt
-	
+
 	echo "=======,===,===,======= CPU ============================" >> ~/.AB_cpu.txt
 	echo "=======,===,===,======= RAM ============================" >> ~/.AB_ram.txt
 
@@ -207,13 +214,13 @@ fun() {
 	# echo
 	#--------------------------------------------------------
 
-	rm -f ~/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
-	
-}
+	/usr/bin/rm -f ~/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
+
+	}
 fun
 cat ~/.AB_cpu.txt | cut -d, -f2-4 > ~/.AB_cpu_temp.txt
 yes | mv ~/.AB_cpu_temp.txt ~/.AB_cpu.txt
-paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > .AB.txt
+paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > ~/.AB.txt
 
 # cat .AB.txt  | sed '/^$/d'
 # echo -e "$f" | sed '/^$/d'
