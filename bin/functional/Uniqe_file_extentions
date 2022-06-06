@@ -91,7 +91,9 @@ paste -d '|\t' /home/amir/.Unique_extentions_df{1,2}_2 | sed 's/|/\t\t|\t/g' | g
 # # a=`ls | cut -d "_" -f1 | wc -l`
 # # for i in `ls | cut -d "_" -f1 | head -$(( $a -1))` ; do
 # # 	cd $i*
-# # 	for f in *.*; do printf "%s\n" "${f##*.}" | sort -u ; done | sort -u  >> /home/amir/.ab.txt
+# # 	for f in *.*; do
+# #			printf "%s\n" "${f##*.}" | sort -u
+# #		done | sort -u  >> /home/amir/.ab.txt
 # # 	cd ../
 # # done
 # # cat /home/amir/.ab.txt | sort -u
