@@ -1,9 +1,9 @@
 #!/bin/bash
 p=$(pwd)
-complete_path=$1;
-if [[ complete_path -eq "" ]]; then
+complete_path=$1
+if [[ $complete_path -eq "" ]]; then
 	echo -e "\nPlease enter full .java file path"
-	read complete_path;
+	read complete_path
 fi
 
 file_name=`echo $complete_path | rev  | cut -d "/" -f1 | rev`
