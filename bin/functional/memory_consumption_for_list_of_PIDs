@@ -1,11 +1,11 @@
 #!/usr/bin/env ipython3
 import os
 
-print("if PID.txt exists at /home/amir then the script will read PIDs from this file\n")
+print("if /home/amir/PID.txt exists, the script will read PIDs from that file\n")
+
 try:
-	with open("/home/amir/PID.txt", "r") as file:
-		lst = file.read().splitlines()
-		lst = [int(i) for i in lst]
+	lst = open("/home/amir/PID.txt", "r").read().splitlines()
+	lst = [int(i) for i in lst]
 	if lst:
 		print("This is /home/amir/PID.txt file")
 		for i in lst:
@@ -13,8 +13,7 @@ try:
 except:
 	PID_file_name = input("Enter absolute path for PIDs file <should be .txt file>\n**Enter <q> for enter PIDs manually**\n")
 	if PID_file_name != "q":
-		with open(PID_file_name, "r") as file:
-			lst = file.read().splitlines()
+		lst = open(PID_file_name, "r").read().splitlines()
 		lst = [int(i) for i in lst]
 try:
 	lst
