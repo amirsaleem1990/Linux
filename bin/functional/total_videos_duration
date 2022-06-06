@@ -3,20 +3,20 @@ echo "**************************************************************************
 echo -e "This package will find mkv, mp4 and webm (case ignoring) files in current directory (all subfloders/childrens) and give you a total HOURS:MINUTES:SECONDS to View all those videos.\n\nParameters: 1 perameter (optinal) (video name) dy sakty hen, agar wo den gy to us video sy pehly ki sari vodeos ignore kar dy ga. ye feature specially course videso k lye add kya h, taky jab is script ko wo video name dya jay jo me ab dekh raha hun, to wo pehly wali sari videos ko ignore kar dy, or mujhy batay k ab kitni dair ki videos baqi hen"
 echo "***********************************************************************************"
 
+
 func_(){
 	duration=`ffmpeg -i "$video" 2>&1 | grep Duration | cut -d " " -f 4 | sed s/,//`
-	h=`echo $duration | cut -d ":" -f 1 | sed 's/^0//g'`
-	m=`echo $duration | cut -d ":" -f 2 | sed 's/^0//g'`
-	s=`echo $duration | cut -d ":" -f 3 | sed 's/^0//g' | awk '{print int($0)}'`
-	if [[ $h > 0 ]] ; then
-		hours=$(( $hours + $h ))
-	fi
-	if [[ $m > 0 ]]; then
-		mins=$(( $mins + $m ))
-	fi
-	if [[ $s > 0 ]]; then
-		secs=$(( $secs + $s))
-	fi
+	original_IFS=$IFS
+	IFS=\: 
+	read -r -a array <<< "$duration"
+
+	h=`echo "$array[0]" | sed 's/^0//g'`
+	h=`echo "$array[1]" | sed 's/^0//g'`
+	s=`echo "$array[2]" | sed 's/^0//g' | awk '{print int($0)}'`
+	[[ $h > 0 ]] || hours=$(( $hours + $h ))
+	[[ $m > 0 ]] || mins=$(( $mins + $m ))
+	[[ $s > 0 ]] || secs=$(( $secs + $s ))
+	IFS=$original_IFS
 }
 
 hours=0
