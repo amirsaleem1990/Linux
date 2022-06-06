@@ -20,7 +20,8 @@ def save_locals_to_disk(dict__, base_dir):
 	dict__ = {k : v for k,v in dict__.items() if not k in ['In', 'Out', 'exit', 'quit', 'locals_'] and (not '__' in k)  and (not k.startswith("_")) }
 
 	if dict__ == {}:
-		print("You dont supply any argument, please type \nsave_locals_to_disk({i : (id(eval(i)), type(eval(i))) for i in dir()}, os.getcwd())\n")
+		print("You dont supply any argument, please type \nsave_locals_to_disk"
+			"({i : (id(eval(i)), type(eval(i))) for i in dir()}, os.getcwd())\n")
 		return None
 	
 	locals = {k : v[0] for k, v in dict__.items() if str(v[1]).strip('"<class ').strip(">").strip("'") not in ["method", "function", "module"]}
