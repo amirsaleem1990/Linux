@@ -1,6 +1,6 @@
 #!/usr/bin/bash
+/usr/bin/rm -f /home/amir/.Rdfind_amir_file.csv 2>/dev/null
 IFS=$'\n'
-rm -f /home/amir/.Rdfind_amir_file.csv 2>/dev/null
 for file in $(find . -type f); do
   echo "$file,$(du -s -k $file | cut -d$'\t' -f1),'$(cksum $file | cut -d. -f 1)'" >> /home/amir/.Rdfind_amir_file.csv
 done
