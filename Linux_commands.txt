@@ -1791,8 +1791,6 @@ The simplest solution to run your script under virtualenv's interpreter is to :
     Run the script:
         ./script.py
 
-#######################################
-<<<<<<< HEAD
 # Check partitions type:
     sudo file -s /dev/{sd,nvme}*
     lsblk -f
@@ -1806,5 +1804,101 @@ echo "${#distro[@]}" #lenght of the array
 len=${#distro[@]}; for (( i=0; i<$len; i++ )); do echo "${distro[$i]}" ; done # loop over array by index
 -------------------
 
+################################## get option from terminal
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -u|--url)
+      url="$2"
+      ;;
+    -s|--start_time)
+      start_time="$2"
+      ;;
+    -e|end_time)
+      end_time="$2"
+      ;;
+    -h|--help)
+      echo -e "
+  Usage:
+    youtube-dl-sepecific-portion -u my_url -s 00:00:00 -e 00:00:10
+    # download first 10 seconds
 
->>>>>>> 7bbc96b8e24d8edb7fefdbe902af5bba005465c2
+  -u, --url   .................. url of video
+  -s, --start_time ............. start time (HH:MM:SS)
+  -e, --end_time ............... end time (HH:MM:SS)
+  -h, --help  ............. help page
+  "
+  exit
+      ;;
+    *)
+      echo -e "
+    ***************************
+    * Error: Invalid argument.*
+    ***************************
+      "
+      exit 1
+  esac
+  shift
+  shift
+done
+
+[[ -z $url ]] || [[ -z $start_time ]] || [[ -z $end_time ]]
+if [[ $? -eq 0 ]]; then
+    echo -e "
+    Please provide ALL perameters
+    Aborting........
+    "
+    exit
+fi
+#######################################################END
+
+# check video incompleteness .............. ffmpeg -v error -sseof -60 -i $video_name -f null -
+
+# duration of video ............ ffmpeg -i $1  2>&1 | grep Duration | cut -d " " -f 4 | sed s/,// 
+
+# list only symoblic links ............. ls -l | grep ^l
+
+# remove punctuations ............... cat file_name sed s/[\`\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]$\//g
+
+# red color print echo .............. echo -e "\n\e[1m\e[31mRED_COLORED_TEXT\e[22m\e[39m\nNORMAL_TEXT"
+
+# split string and store to array ...........   IFS=\: ; read -r -a my_array <<< "$my_string"
+
+# if condition in one line ............ [[ $my_var > 0 ]] || x=$(( $x + $y ))
+
+####################convert seconds to hours, minutes and seconds ........... 
+convertsecs() {
+    ((h=${1}/3600))
+    ((m=(${1}%3600)/60))
+    ((s=${1}%60))
+    printf "%02d:%02d:%02d\n" $h $m $s
+}
+ANOTHER way:
+    eval "echo $(date -ud "@$SEC" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')"
+##########################END
+
+######## COLOR
+RED="\033[0;31m"
+normal="\033[0m"
+echo -e "${RED}RED colored text${normal}normal text"
+######### #END
+
+slicing | get subset of string ......... a=amirsaleem; echo "${a:0:3}"# ami
+
+float to integer .............. echo 4654654.065464 | awk '{print int($1)}' # 4654654
+
+
+$$ is the process ID (PID) of the script itself.
+$BASHPID is the process ID of the current instance of Bash. This is not the same as the $$ variable, but it often gives the same result.
+
+
+
+keep limited decimal numbers ............ echo  4.654687 awk '{ printf("%.1f\n", $1) }' # 4.6
+
+# check if variable is exists .............. if [[ -z $counter ]] ; then do_something; fi
+
+# skip range of lines ............. cat abc_file.txt | sed 3,9 # remove 3rd to 9th line.
+
+# add a  value to existing variable ............... x=4; let "x+=5" # now x is 9
+
+
+# get file names that contains a spefic word ............... grep -l word_to_searh *.ipynb
