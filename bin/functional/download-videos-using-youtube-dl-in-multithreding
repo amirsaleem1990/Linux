@@ -32,12 +32,12 @@ def pool_func():
 	return p
 
 def exclude_func():
-	arr_exculded = []
-	for i in exclude.split("|"):
+	te_be_removed = []
+	for key_word in exclude.split("|"):
 		for url in urls_to_download:
-			if not i.lower().strip() in url:
-				arr_exculded.append(url)
-	return urls_to_download_exculded
+			if key_word.lower().strip() in url:
+				te_be_removed.append(url)
+	return [i for i in urls_to_download if not i in te_be_removed]
 
 def Exit():
 	print(f"\n\nErrors saved as {error_file}\n\n")
