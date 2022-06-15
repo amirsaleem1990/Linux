@@ -1902,3 +1902,5 @@ keep limited decimal numbers ............ echo  4.654687 awk '{ printf("%.1f\n",
 
 
 # get file names that contains a spefic word ............... grep -l word_to_searh *.ipynb
+# check error in python script BEFORE executing it ................  pylint --errors-only script.py
+
