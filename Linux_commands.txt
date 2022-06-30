@@ -1904,3 +1904,9 @@ keep limited decimal numbers ............ echo  4.654687 awk '{ printf("%.1f\n",
 # get file names that contains a spefic word ............... grep -l word_to_searh *.ipynb
 # check error in python script BEFORE executing it ................  pylint --errors-only script.py
 
+
+Stop pip from failing on single package when installing with requirements.txt ................. cat requirements.txt | xargs -n 1 pip3 install
+
+
+# read file line by line ................. while read line; do echo ""; done < data-sample.csv 
+
