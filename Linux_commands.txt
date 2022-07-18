@@ -1910,3 +1910,5 @@ Stop pip from failing on single package when installing with requirements.txt ..
 
 # read file line by line ................. while read line; do echo ""; done < data-sample.csv 
 
+# record you terminal .................... script ............... do what you want ........... exit ............. cat typescript
+
