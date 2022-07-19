@@ -1,4 +1,6 @@
 #!/bin/bash
+/usr/bin/rm /tmp/git_files_to_commit_or_push 2>/dev/null
+
 IFS=$'\n'
 for i in `ls /home/amir/github/`; do 
 	if [[ $i == "lfd-projects" ]] ; then 
@@ -8,6 +10,17 @@ for i in `ls /home/amir/github/`; do
 	echo "......................................................... $i"
 	cd /home/amir/github/$i
 	
+	git status | grep 'nothing to commit, working tree clean'
+	if [[ $? != 0 ]]; then
+		echo "$i" >> /tmp/git_files_to_commit_or_push
+	fi
+
 	git status
 
 done | grep --color=auto '\|nothing to commit, working tree clean'
+
+
+
+echo -e "\n\nFollowing repositories needs to be committed/pushed\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+cat /tmp/git_files_to_commit_or_push
+echo -e "\n"
