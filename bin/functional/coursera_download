@@ -273,7 +273,11 @@ if not course_name_received:
 email_address = "hamzaamirr2014@gmail.com"
 ipython3_path = list(os.popen("which ipython3"))[0].strip()
 command = f"echo 2 | {ipython3_path} /home/amir/github/*/*/*in2.py  2 coursera | tail -1"
-pas = list(os.popen(command))[0].strip()
+
+# pas = list(os.popen(command))[0].strip()
+os.system(command)
+import clipboard
+pas = clipboard.paste()
 
 login_url = "https://www.coursera.org/?authMode=login"
 
