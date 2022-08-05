@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=LFD mail
+Exec=https://mail.google.com/mail/u/1/
+Type=Application
+X-GNOME-Autostart-enabled=true
