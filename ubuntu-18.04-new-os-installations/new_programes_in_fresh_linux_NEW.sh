@@ -83,7 +83,7 @@ func_ "snap install chromium"
 
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
 func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
-func_ "apt install sublime-text"
+func_ "apt install sublime-text -y"
 if [[ $? -ne 0 ]]; then 
 	func_ "snap install --classic sublime-text"
 fi
@@ -95,7 +95,7 @@ if [[ $? -ne 0 ]]; then
 	if [[ $? -ne 0 ]] ;then
 		add-apt-repository ppa:rock-core/qt4
 		add-apt-repository ppa:gezakovacs/ppa
-		apt-get update -y
+		apt update -y
 		apt --fix-broken install -y
 		apt install libqtgui4 -y
 		apt autoremove -y
@@ -103,9 +103,11 @@ if [[ $? -ne 0 ]]; then
 fi
 rm -r dukto*.deb
 
-apt-get install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
+apt install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
 if [[ $? -ne 0 ]]; then 
-	func_ "apt install r-cran-littler"
+	func_ "apt install r-cran-littler -y"
+fi
+
 if [[ $? -ne 0 ]]; then 
 	read -p "Install R manually, and then pres any key: "; 
 	firefox https://cloud.r-project.org/
@@ -190,4 +192,4 @@ echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --appen
 
 
 #lated
-apt-get install texlive-lang-cyrillic texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-latex-base libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev -y
+apt install texlive-lang-cyrillic texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-latex-base libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev -y
