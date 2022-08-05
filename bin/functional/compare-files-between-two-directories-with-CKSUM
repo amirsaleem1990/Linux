@@ -9,73 +9,29 @@ fi
 find . -type f > /tmp/here_files
 find "$there" -type f > /tmp/there_files
 
-echo '
-import hashlib
-import pandas as pd
-import os
-from IPython.display import display
-def cksum(file_name):
-	import os
-	command = f"cksum {file_name} 2>/dev/null"
-	x = list(os.popen(command))
-	if not x:
-		return None
-	return x[0]
-file_name = os.environ["f"]
-f = open(file_name, "r").read().splitlines()
-df = pd.DataFrame({"full" : f})
-df["file"] = df.full.str.split("/").str[-1]
-df2 = pd.DataFrame(df.full.apply(cksum).dropna().str.split(" ", 2).to_list(), columns=["chksum", "size_byte", "file_name"]).drop("file_name", axis=1)
-df = pd.concat([df, df2], axis=1)
-df.to_csv(file_name + ".csv", index=False)
-print(f"\nSaved data as {file_name}.csv")
-' > /tmp/script_2.py
 
-echo '
-from pandas import read_csv
-import os
-from termcolor import colored
-here = read_csv("/tmp/here_files.csv")
-there = read_csv("/tmp/there_files.csv")
-merged = here.merge(there, on=["chksum", "size_byte"], how="inner", suffixes=("_here", "_there"))[["chksum", "size_byte", "file_here", "file_there", "full_here", "full_there"]]
-merged.to_csv("/tmp/merged.csv", index=False)
-user_input = input(f"""{len(merged)} files are identical in both directories ({int(merged.size_byte.sum()/1024/1024)} MB), which one you need to REMOVE?\n\t1-{os.environ["here"]}\n\t2-{os.environ["there"]}\n\t""")
+# echo '
 
-def func_3(files):
-	removed_qty = 0
-	filed_to_remove_qty = 0
-	print(*files, sep="\n")
-	print(colored("We are going to REMOVE above mentioned files, ARE YOU NEED TO PROCEED? [yes|no]", "red"), end="\t")
-	inp = input("")
-	if inp == "yes":
-		for file_to_remove in files:
-			try:
-				os.remove(file_to_remove)
-				removed_qty += 1
-			except:
-				print(f"Filed to remove {file_to_remove}")
-				filed_to_remove_qty += 1
-		print(f"\nRemoved: {removed_qty}\nFiled to remove: {filed_to_remove_qty}\n")
+# ' > /tmp/script_2.py
+# /amir_bin/compare_scripts.py
 
-if user_input == "1":
-	files = merged.full_here.sort_values().to_list()
-	func_3(files)
-elif user_input == "2":
-	files = merged.full_there.sort_values().to_list()
-	func_3(files)
-else:
-	raise Exception ("Wrong input\nAborting.........")
-' > /tmp/script_1.py
 
-export f=/tmp/here_files
-python3 /tmp/script_2.py
+# echo '
+# ' > /tmp/script_1.py
+# /amir_bin/compare_function_2.py
 
-export f=/tmp/there_files
-python3 /tmp/script_2.py
+# export f=/tmp/here_files
+# python3 /tmp/script_2.py
+python3 /amir_bin/compare_function_1.py /tmp/here_files
+
+# export f=/tmp/there_files
+# python3 /tmp/script_2.py
+python3 /amir_bin/compare_function_1.py /tmp/there_files
+
 
 export there
 export here=$(pwd)
 
-python3 /tmp/script_1.py
-
+# python3 /tmp/script_1.py
+python3 /amir_bin/compare_function_2.py
 
