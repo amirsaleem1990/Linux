@@ -1087,7 +1087,7 @@ python3 -m compileall MY_script.py
 # Colors missing when calling grep through script .......... To preserve the colouring, add the --color=auto flag to the grep command inside the script (eg. cat file | grep --color=auto '\|RAM\|CPU')
 
 #-----------------------
-# get firefox bookmarks ............... 
+# get firefox bookmarks ...............     
 sqlite3 /home/amir/.mozilla/firefox/65oyq9jg.default-release/places.sqlite "
 	select moz_places.url, moz_bookmarks.title
 	from moz_places, moz_bookmarks
@@ -1911,4 +1911,6 @@ Stop pip from failing on single package when installing with requirements.txt ..
 # read file line by line ................. while read line; do echo ""; done < data-sample.csv 
 
 # record you terminal .................... script ............... do what you want ........... exit ............. cat typescript
+
+# pip list all versions of a package that's available ................. pip3 install pip-versions; pip-versions list your_package_name_goes_here
 
