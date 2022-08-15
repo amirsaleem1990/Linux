@@ -1,6 +1,1 @@
-export SSHPASS=YOUR_PASSWORD
-sshpass -e sftp -oBatchMode=no -b - host_name@IP << !
-   cd /home/finca/
-   ls
-   bye
-!
+drwxr-xr-x 1 owner group         8192 Aug 13 14:16 device
