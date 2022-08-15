@@ -8,4 +8,5 @@ copy data from another partitions (if exist)
 keyboard shortucts # Set_keyboard_shortcuts.py
 pip3 list > pip3_list
 apt list > apt_list
+save wifi passwords
 
