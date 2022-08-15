@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 
 
 def string_time_to_minutes(x):
+	if x is None or (x == "None"):
+		return 0
 	h,m,_ = x.split(":")
 	h = int(h[1]) if h.startswith("0") else int(h)
 	m = int(m[1]) if m.startswith("0") else int(m)
