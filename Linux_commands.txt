@@ -1914,3 +1914,5 @@ Stop pip from failing on single package when installing with requirements.txt ..
 
 # pip list all versions of a package that's available ................. pip3 install pip-versions; pip-versions list your_package_name_goes_here
 
+# Download files from your mobile using ftp ............... wget -r ftp://192.168.43.23:1271/device/DCIM/* --ftp-user=pc --ftp-password=312023
+
