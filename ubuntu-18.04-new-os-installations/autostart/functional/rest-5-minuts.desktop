@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=rest-5-minuts
-Exec=bash /home/amir/github/working/rest5minuts.sh
+Exec=bash /home/amir/github/working/rest5minuts.sh ; /amir_bin/namaz
 Type=Application
 X-GNOME-Autostart-enabled=true
