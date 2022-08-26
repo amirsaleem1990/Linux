@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Skype for Linux
 Comment=Skype Internet Telephony
-Exec=/usr/bin/skypeforlinux
+Exec=#/usr/bin/skypeforlinux
 Icon=skypeforlinux
 Terminal=false
 Type=Application
