@@ -1,12 +1,14 @@
 browser bookmarks
 save ~/.ssh folder
 github last push
-gitlab las push
+copy github folder # there are lots of large files that are not pushed, so we need to copy files that are in .gitignore file.
+gitlab last push
 dropbox last push
 copy data
 copy data from another partitions (if exist)
 keyboard shortucts # Set_keyboard_shortcuts.py
 pip3 list > pip3_list
 apt list > apt_list
-save wifi passwords
+save wifi passwords # sudo grep psk\= /etc/NetworkManager/system-connections/* | rev | cut -d/ -f1 | rev > wifi_password
+
 
