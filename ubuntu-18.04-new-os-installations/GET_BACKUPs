@@ -10,5 +10,7 @@ keyboard shortucts # Set_keyboard_shortcuts.py
 pip3 list > pip3_list
 apt list > apt_list
 save wifi passwords # sudo grep psk\= /etc/NetworkManager/system-connections/* | rev | cut -d/ -f1 | rev > wifi_password
+create requirments.txt for all virtual_envoirments
+vscode extentions
 
 
