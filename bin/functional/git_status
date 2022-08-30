@@ -209,7 +209,7 @@ for repo in repos:
 if q > 0:
 	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
 	if ans == "y":
-		os.system("git_push")
+		os.system("git_push 1")
 
 os.remove(only_new_files)
 os.remove(only_updated_files)
