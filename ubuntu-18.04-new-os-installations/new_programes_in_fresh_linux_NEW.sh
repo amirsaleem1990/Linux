@@ -193,6 +193,7 @@ echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --appen
 
 #lated
 apt install texlive-lang-cyrillic texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-latex-base libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev -y
+apt install libfontconfig1-dev libharfbuzz-dev libclang-dev  libpq5
 
 
-\
+
