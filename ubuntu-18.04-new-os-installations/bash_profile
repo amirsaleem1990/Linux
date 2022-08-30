@@ -36,9 +36,9 @@ alias hotspot='nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot
 alias i='ipython3'
 alias jazz='nmcli d w c Jazz-LTE-438A password 34969900'
 alias jazz_3='nmcli d w c Jazz-LTE-33ED password 78384606'
-# alias jl='jupyter-lab'
-alias jl='jupyter-lab --browser=chromium'
+alias jl='jupyter-lab'
 alias jn='jupyter-notebook'
+alias jp='jupyter-notebook'
 alias l='ls -CF'
 alias la='ls -A'
 alias lfd_jazz='nmcli d w c lfd_jazz password lfd@12345'
@@ -49,7 +49,7 @@ alias J="python3 manage.py runserver"
 alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
 alias p='python3 -c '\''t=input(); print(eval(t))'\'''
 alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
-alias pin='i /home/amir/github/Amir-personal/PIN/pin2.py'
+alias pin='python3 /home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
 alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
 alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
@@ -70,7 +70,7 @@ alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status | grep 'Acti
 # alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
 alias vpn_g="echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/Programs/VPN/vpnbook-pl226-udp53.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt" 
 alias symbolic_links="ls -l | grep ^l"
-alias Latex="echo R | latex -output-format pdf resume.tex; evince resume.pdf"
+alias Latex="cd github/Amir-personal/Resume/Latex-resume/; echo R | latex -output-format pdf amir-saleem-data-science-resume.tex; if [[ $? -eq 0 ]] ; then evince amir-saleem-data-science-resume.pdf; fi"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
 
 
