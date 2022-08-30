@@ -1916,3 +1916,7 @@ Stop pip from failing on single package when installing with requirements.txt ..
 
 # Download files from your mobile using ftp ............... wget -r ftp://192.168.43.23:1271/device/DCIM/* --ftp-user=pc --ftp-password=312023
 
+
+# check is file is in .gitignore ................. cd MY_REPO; git check-ignore  my/big/file/path.txt ; if [[ $? -eq 0 ]] ; then echo "this file is in .gitignore"; else "this file is NOT in .gitignore"; fi
+
+
