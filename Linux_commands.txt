@@ -1920,3 +1920,5 @@ Stop pip from failing on single package when installing with requirements.txt ..
 # check is file is in .gitignore ................. cd MY_REPO; git check-ignore  my/big/file/path.txt ; if [[ $? -eq 0 ]] ; then echo "this file is in .gitignore"; else "this file is NOT in .gitignore"; fi
 
 
+# create mysql user ........... CREATE USER 'amir'@'localhost' IDENTIFIED BY 'my_password_no_1'; GRANT ALL PRIVILEGES ON *.* TO 'amir'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;
+
