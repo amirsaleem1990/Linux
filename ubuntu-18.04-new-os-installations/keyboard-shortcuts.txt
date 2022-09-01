@@ -60,3 +60,7 @@ namaz
 SHIFT + CTRL + N
 
 
+align_pandas_code
+/amir_bin/align_pandas_code
+ALT + e
+
