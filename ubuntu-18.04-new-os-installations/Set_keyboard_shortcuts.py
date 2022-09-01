@@ -57,7 +57,8 @@ lst = [
 ['Night_light_modify shiny',  '/amir_bin/Night_light_modify +' ,     '<Primary><Alt>equal' ], # CTRL + ALT + =
 ['Night_light_modify dark',   '/amir_bin/Night_light_modify -' ,     '<Primary><Alt>minus' ], # CTRL + ATL + -
 ['night_light',               '/amir_bin/night_light',               '<Control><Alt>n'     ], # CTRL + ALT + n
-['namaz',                     '/amir_bin/namaz',                     '<Shift><Control>n'   ]  # SHIFT + CTRL + n
+['namaz',                     '/amir_bin/namaz',                     '<Shift><Control>n'   ], # SHIFT + CTRL + n
+['align_pandas_code',         '/amir_bin/align_pandas_code',         '<Alt>e'              ]  # ALT + e
 ]
 
 for i in lst:
