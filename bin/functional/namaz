@@ -187,8 +187,9 @@ draw.text(
 img.save(out_file_1)
 
 
-os.system(f"feh -F {out_file_1}")
-sys.exit()
+if len(sys.argv) == 1:
+	os.system(f"feh -F {out_file_1}")
+	sys.exit()
 
 
 if not isleap(datetime.now().year):
