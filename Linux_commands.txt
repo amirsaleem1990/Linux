@@ -1922,3 +1922,4 @@ Stop pip from failing on single package when installing with requirements.txt ..
 
 # create mysql user ........... CREATE USER 'amir'@'localhost' IDENTIFIED BY 'my_password_no_1'; GRANT ALL PRIVILEGES ON *.* TO 'amir'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;
 
+# convert jupyter notebook .ipynb to pdf ............... dataframe_image --to=pdf --table-conversion="matplotlib" "time_table.ipynb" ............... NOTE: 'dataframe_image' is a python library
