@@ -13,4 +13,5 @@ save wifi passwords # sudo grep psk\= /etc/NetworkManager/system-connections/* |
 create requirments.txt for all virtual_envoirments
 vscode extentions
 /media/sdb2/LINUX_BACKUP ko remove kar k us me fresh copy of /home/amir/ (with hidden files) daal do
+Create requirments.txt for each of your virtual envoirments
 
