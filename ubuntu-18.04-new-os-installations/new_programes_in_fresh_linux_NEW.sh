@@ -1,8 +1,11 @@
-# !/bin/bash
-mkdir -p /home/amir/.local/share/Trash/files
+#!/usr/bin/bash 
+
 
 echo "If you execute this script with please enter any key to proceed, else terminate this script and execute it with sudo"
 read ans
+
+mkdir -p /home/amir/.local/share/Trash/files
+chown amir.amir /home/amir/.local/share/Trash/files -R
 
 echo -e "\n\nRedirected to /home/amir/results.txT\n\n"
 func_(){
@@ -91,7 +94,7 @@ fi
 func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
 dpkg -i dukto*
 if [[ $? -ne 0 ]]; then
-	func_ "apt -f install"
+	func_ "apt -f install -y"
 	if [[ $? -ne 0 ]] ;then
 		add-apt-repository ppa:rock-core/qt4
 		add-apt-repository ppa:gezakovacs/ppa
@@ -151,6 +154,7 @@ func_ "pip3 install statsmodels"
 # rstudio
 latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
 
+echo -e "\nGetting latest rstudio download link  ....,,,,,,,"
 latest_rstudio_download_link=$(python3 <<< "
 from bs4 import BeautifulSoup
 import requests
@@ -163,11 +167,15 @@ for i in soup.select('a'):
     except:
         pass
 ")
+
+echo -e "\nDownload latest rstudio  ....,,,,,,,"
 curl $latest_rstudio_download_link > "rstudio-$latest_rstudio_version.deb"
 # func_ "gdebi -n rstudio*.deb"
+
+echo -e "\nInstalling rstudio ....,,,,,,,"
 dpkg -i rstudio*.deb >> /home/amir/results.txT
 if [[ $? -ne 0 ]]; then
-	apt -f install
+	apt -f install -y
 	func_ "dpkg -i rstudio*.deb"
 fi
 
