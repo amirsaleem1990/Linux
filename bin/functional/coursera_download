@@ -1,256 +1,8 @@
 #!/home/amir/github/virtual_envs/coursera_download_venv/bin/python3
 
-audit_every_course = input("Are you need to audit every course? [yes|no]")
 
-def LOGIN():
-	print("Attempting to Login   ")
-
-	browser = webdriver.Firefox(executable_path = "geckodriver")
-
-	browser.get(login_url)
-
-	time.sleep(3)
-	email = browser.find_elements_by_css_selector("input[data-e2e=login-email-input]")
-	email[0].send_keys(email_address)
-
-	time.sleep(3)
-	password = browser.find_elements_by_css_selector("input[data-e2e=login-password-input]")
-	password[0].send_keys(pas)
-
-	time.sleep(3)
-	loginButton = browser.find_elements_by_css_selector("button[data-e2e=login-form-submit-button]")
-	loginButton[0].click()
-
-	print("Successfully Logged in", "\n\n\n")
-	n = 0
-	if audit_every_course == "yes":
-		if "|" in course_name:
-			for course in course_name.split("|"):
-				if n == 0:
-					input("\nEnter any key to proceed\t")
-					n += 1
-				browser.get(f"https://www.coursera.org/learn/{course.strip()}")
-				input("\nPress any key after audit: ")
-		else:
-			browser.get(f"https://www.coursera.org/learn/{course_name.strip()}")
-			input("\nPress any key after audit: ")
-
-	return browser
-	
-
-def download_a_single_video(course_name, week_, vids_download_urls, video_url, vids, week):
-	if not os.path.exists(f"{course_name}/{week_}"):
-		os.mkdir(f"{course_name}/{week_}")
-		open(f"{course_name}/LINK", 'w').write(f"https://www.coursera.org/learn/{course_name}\n")
-	try:
-		download_url = vids_download_urls[video_url][0]
-		vid_name = f"{week_}/{vids[week].index(video_url)+1}-{video_url.split('/')[-1]}"
-		print(f"\n>>> Downloading .... {vid_name}")
-		com = f"youtube-dl '{download_url}' -o {course_name}/{vid_name}.mp4"
-		os.system(com)
-	except:
-		erorr_ = traceback.format_exc()
-		print("\n\n==========================================================")
-		print(f"!!!!!! Error in  {video_url}")
-		print(erorr_)
-
-def download(vids, vids_download_urls, course_name):             
-	for week, videos_urls in vids.items():
-		week_ = f"Week-{week}"
-		for video_url in videos_urls:
-			download_a_single_video(course_name, week_, vids_download_urls, video_url, vids, week)
-
-
-def get_a_video_link_from_soup_object(soup):
-	extrected_urls = []
-	for i in soup.select("a"):
-		try:
-			l = i['href']
-			if '.mp4' in l:
-				extrected_urls.append(i['href']) 
-		except:
-			pass
-
-	for i in soup.select("source"):
-		try:
-			l = i['src']
-			if '.mp4' in l:
-				extrected_urls.append(i['src']) 
-		except:
-			pass
-	return extrected_urls
-
-def save_vids_download_urls_into_disk(vids_download_urls, base_dir):
-	if len(vids_download_urls):
-		print(f"\n\nVideos downlonload links saved as {base_dir}/vids_download_urls.pkl")
-		pickle.dump(vids_download_urls, open(f"{base_dir}/vids_download_urls.pkl", 'wb'))
-		print(json.dumps(vids_download_urls, indent=4))
-		print()
-	else:
-		print("\n\nOOOHHH, No download url")
-
-def fetch_video_urls(vids,browser,base_dir,vids_download_urls):
-	for k,v in vids.items():
-		print(f"...................................... {k} ......................................")
-		for video in v:
-			print(">>>>>>>>>> Fatching video url of " + video)
-			browser.get(video)
-			time.sleep(30)
-			s = BeautifulSoup(browser.page_source, "lxml")
-			# pattern = "mp4"
-
-			extrected_urls = get_a_video_link_from_soup_object(s)
-
-			if extrected_urls:
-				vids_download_urls[video] = extrected_urls
-			else:
-				print(f"No download link for the video : {video}")
-
-	save_vids_download_urls_into_disk(vids_download_urls, base_dir)
-
-	return (vids_download_urls, browser)
-
-
-def save_links_in_disk(course_name, starting_week, extrected_urls):
-	open(f"{course_name}/Week_{starting_week}-supplement.txt", 'w').write(
-		"\n".join(
-			[i for i in extrected_urls if f"{course_name}/supplement" in i]
-			)
-		)
-	open(f"{course_name}/Week_{starting_week}-exam.txt", 'w').write(
-		"\n".join(
-			[i for i in extrected_urls if f"{course_name}/exam" in i]
-			)
-		)
-	open(f"{course_name}/Week_{starting_week}-ungradedLab.txt", 'w').write(
-		"\n".join(
-			[i for i in extrected_urls if f"{course_name}/ungradedLab" in i]
-			)
-		)
-	open(f"{course_name}/Week_{starting_week}-all_links.txt", 'w').write(
-		"\n".join(
-			extrected_urls
-			)
-		)
-
-def fetch_video_page_urls(vids,starting_week,course_name,browser,base_dir):
-	URL = f"https://www.coursera.org/learn/{course_name}/home/week/"
-	while True:
-
-		url = URL + str(starting_week)
-
-		browser.get(url)
-
-		time.sleep(30)
-
-		if (starting_week != 1) and (browser.current_url.split("/")[-1] == '1'):
-				break
-
-		extrected_urls = []
-		s = BeautifulSoup(browser.page_source, "lxml")
-
-		pattern = course_name.strip()+"/lecture|/supplement|/exam|/ungradedLab"
-
-		x2= s.find_all('a', href=re.compile(pattern))
-		extrected_urls += [i['href'] for i in x2]
-
-		x2= s.find_all('source', href=re.compile(pattern))
-		extrected_urls += [i['src'] for i in x2]
-
-		save_links_in_disk(course_name, starting_week, extrected_urls)
-
-		extrected_urls = [i for i in extrected_urls if f"{course_name}/lecture" in i]
-
-		vids[starting_week] = extrected_urls
-		print(f"\nWeek #{starting_week} has {len(vids[starting_week])} videos")
-
-		starting_week += 1
-
-	for k, v in vids.items():
-		vids[k] = ['https://www.coursera.org' + i for i in v]
-
-	len_vids = sum([len(v) for k,v in vids.items()])
-	if len_vids:
-		print(f"\n\nVides urls saved as {base_dir}/vids.pkl")
-		print(json.dumps(vids, indent=4))
-		print()
-	else:
-		print("\n\nOOOHHH, No url")
-
-	pickle.dump(vids, open(f"{base_dir}/vids.pkl", 'wb'))
-	return browser
-
-def func(course_name, browser=None):
-	global logged_in
-
-	resume = False
-	print(f"\n\n\n********************************** Starting <{course_name}> course ********************************** ")
-	if not os.path.exists(course_name):
-		os.mkdir(course_name)
-	else:
-		starting_week = int(input("Enter starting week: ").strip())
-		resume = True
-
-	vids_download_urls_is_provided = False
-	vids_pkl_is_provided           = False
-
-	try:
-		res = (sys.argv[1].strip() == 'vids.pkl')
-		vids_pkl_is_provided = res
-	except:
-		pass
-
-	try:
-		res = (sys.argv[1].strip() == 'vids_download_urls.pkl')
-		vids_download_urls_is_provided = res
-		if res:
-			vids_pkl_is_provided = res
-	except:
-		pass
-
-	if not vids_download_urls_is_provided:
-		if not logged_in:
-			browser = LOGIN()
-			logged_in = True
-			input("\nPress any key after captcha..........\n")
-
-	if vids_pkl_is_provided:
-		vids = pickle.load(open(f"{base_dir}/vids.pkl", 'rb'))	
-	if vids_download_urls_is_provided:
-		vids_download_urls = pickle.load(open(f"{base_dir}/vids_download_urls.pkl", 'rb'))
-
-	else:
-		vids = {}
-		if not resume:
-			starting_week = 1
-		browser = fetch_video_page_urls(
-			vids = vids, 
-			starting_week = starting_week,
-			course_name   = course_name,
-			browser       = browser,
-			base_dir      = base_dir
-			)
-		vids_download_urls, browser = fetch_video_urls(
-			vids               = pickle.load(open(f"{base_dir}/vids.pkl", 'rb')),
-			browser            = browser,
-			base_dir           = base_dir,
-			vids_download_urls = {}
-			)
-
-	download(
-		vids               = vids,
-		vids_download_urls = vids_download_urls,
-		course_name        = course_name
-		)
-
-	try:
-		return browser
-	except:
-		return None
-
-
+import clipboard
 import traceback
-import sys
 import json
 import pickle
 from selenium import webdriver
@@ -258,51 +10,304 @@ import time
 from bs4 import BeautifulSoup
 import re
 import os
-import sys
+
+class download_coursera_course:
+	def __init__(self, audit_every_course, vids_download_urls_is_provided, vids_pkl_is_provided, login_sleep_time=3):
+		self.browser = None
+		self.vids_download_urls = dict()
+		self.BASE_DIR = "/home/amir"
+		self.logged_in = False
+		self.resume = False
+		self.vids = {}
+		self.LOGIN_URL = "https://www.coursera.org/?authMode=login"
+		self.EMAIL_ADRESS = "hamzaamirr2014@gmail.com"
+
+		self.audit_every_course = audit_every_course
+		self.vids_download_urls_is_provided = vids_download_urls_is_provided
+		self.vids_pkl_is_provided = vids_pkl_is_provided
+		self.login_sleep_time = login_sleep_time
 
 
-base_dir="/home/amir"
+	def login(self):
+		print("Attempting to Login   ")
 
-course_name_received = False
-if os.path.exists(f"{base_dir}/.coursera_course_name.txt"):
-	course_name = open(f"{base_dir}/.coursera_course_name.txt", 'r').read().strip()
-	if input(f"Are you need to resue last course name, which is <{course_name}> [y|n]: ") == "y":
-		course_name_received = True
-	else:
-		pass
-if not course_name_received:
-	course_name = input("Enter course name, \nNote: Extract course name from course url, eg: <simple-past-tense> from <https://www.coursera.org/learn/simple-past-tense/home/week/1>\nNOTE: if multiple courses, use pipe | as delimeter\n\n").strip()
-	open(f"{base_dir}/.coursera_course_name.txt", 'w').write(course_name.strip())
+		self.browser = webdriver.Firefox(executable_path = "geckodriver")
+		self.browser.get(self.LOGIN_URL)
 
-email_address = "hamzaamirr2014@gmail.com"
-ipython3_path = list(os.popen("which ipython3"))[0].strip()
-command = f"echo 2 | {ipython3_path} /home/amir/github/*/*/*in2.py  2 coursera | tail -1"
+		time.sleep(self.login_sleep_time)
+		email = self.browser.find_elements_by_css_selector("input[data-e2e=login-email-input]")
+		email[0].send_keys(self.EMAIL_ADRESS)
+
+		time.sleep(self.login_sleep_time)
+		password = self.browser.find_elements_by_css_selector("input[data-e2e=login-password-input]")
+		password[0].send_keys(self.get_pass())
+
+		time.sleep(self.login_sleep_time)
+		loginButton = self.browser.find_elements_by_css_selector("button[data-e2e=login-form-submit-button]")
+		loginButton[0].click()
+
+		print("Successfully Logged in", "\n\n\n")
+		n = 0
+		if self.audit_every_course == "yes":
+			if "|" in self.course_name:
+				for course in self.course_name.split("|"):
+					if n == 0:
+						input("\nEnter any key to proceed\t")
+						n += 1
+					self.browser.get(f"https://www.coursera.org/learn/{course.strip()}")
+					input("\nPress any key after audit: ")
+			else:
+				self.browser.get(f"https://www.coursera.org/learn/{self.course_name.strip()}")
+				input("\nPress any key after audit: ")
+	
+
+	def download_a_single_video(self, week_, video_url, week):
+		if not os.path.exists(f"{self.course_name}/{week_}"):
+			os.mkdir(f"{self.course_name}/{week_}")
+			open(f"{self.course_name}/LINK", 'w').write(f"https://www.coursera.org/learn/{self.course_name}\n")
+		try:
+			download_url = self.vids_download_urls[video_url][0]
+			vid_name = f"{week_}/{self.vids[week].index(video_url)+1}-{video_url.split('/')[-1]}"
+			print(f"\n>>> Downloading .... {vid_name}")
+			com = f"youtube-dl '{download_url}' -o {self.course_name}/{vid_name}.mp4"
+			os.system(com)
+		except:
+			erorr_ = traceback.format_exc()
+			print("\n\n==========================================================")
+			print(f"!!!!!! Error in  {video_url}")
+			print(erorr_)
+
+	def download(self):             
+		for week, videos_urls in self.vids.items():
+			week_ = f"Week-{week}"
+			for video_url in videos_urls:
+				self.download_a_single_video(week_, video_url, week)
 
 
-os.system(command)
-import clipboard
-pas = clipboard.paste()
+	def get_a_video_link_from_soup_object(self, soup):
+		extrected_urls = []
+		for i in soup.select("a"):
+			try:
+				l = i['href']
+				if '.mp4' in l:
+					extrected_urls.append(i['href']) 
+			except:
+				pass
 
-login_url = "https://www.coursera.org/?authMode=login"
+		for i in soup.select("source"):
+			try:
+				l = i['src']
+				if '.mp4' in l:
+					extrected_urls.append(i['src']) 
+			except:
+				pass
+		return extrected_urls
+
+	def save_vids_download_urls_into_disk(self):
+		if len(self.vids_download_urls):
+			print(f"\n\nVideos downlonload links saved as {self.BASE_DIR}/vids_download_urls.pkl")
+			pickle.dump(self.vids_download_urls, open(f"{self.BASE_DIR}/vids_download_urls.pkl", 'wb'))
+			print(json.dumps(self.vids_download_urls, indent=4))
+			print()
+		else:
+			print("\n\nOOOHHH, No download url")
+
+	def fetch_video_urls(self):
+		for k,v in self.vids.items():
+			print(f"...................................... {k} ......................................")
+			for video in v:
+				print(">>>>>>>>>> Fatching video url of " + video)
+				self.browser.get(video)
+				time.sleep(30)
+				s = BeautifulSoup(self.browser.page_source, "lxml")
+				# pattern = "mp4"
+
+				extrected_urls = self.get_a_video_link_from_soup_object(s)
+
+				if extrected_urls:
+					self.vids_download_urls[video] = extrected_urls
+				else:
+					print(f"No download link for the video : {video}")
+
+		self.save_vids_download_urls_into_disk()
 
 
-logged_in = False
 
-
-if "|" in course_name:
-	# total_weeks_dict = {}
-	for c in course_name.split("|"):
-		course = c.strip()
-		if not logged_in:
-			browser = None
-		browser = func(
-			course_name = course, 
-			browser     = browser
+	def save_links_in_disk(self, extrected_urls):
+		open(f"{self.course_name}/Week_{self.starting_week}-supplement.txt", 'w').write(
+			"\n".join(
+				[i for i in extrected_urls if f"{self.course_name}/supplement" in i]
+				)
 			)
-else:
-	func(
-		course_name = course_name.strip(), 
-		)
+		open(f"{self.course_name}/Week_{self.starting_week}-exam.txt", 'w').write(
+			"\n".join(
+				[i for i in extrected_urls if f"{self.course_name}/exam" in i]
+				)
+			)
+		open(f"{self.course_name}/Week_{self.starting_week}-ungradedLab.txt", 'w').write(
+			"\n".join(
+				[i for i in extrected_urls if f"{self.course_name}/ungradedLab" in i]
+				)
+			)
+		open(f"{self.course_name}/Week_{self.starting_week}-all_links.txt", 'w').write(
+			"\n".join(
+				extrected_urls
+				)
+			)
+
+	def save_vids_into_disk(self):
+		len_vids = sum([len(v) for k,v in self.vids.items()])
+		if len_vids:
+			print(f"\n\nVides urls saved as {self.BASE_DIR}/vids.pkl")
+			print(json.dumps(self.vids, indent=4))
+			print()
+		else:
+			print("\n\nOOOHHH, No url")
+
+		pickle.dump(self.vids, open(f"{self.BASE_DIR}/vids.pkl", 'wb'))
+
+
+	def get_link_of_a_video(self):
+		extrected_urls = []
+		s = BeautifulSoup(self.browser.page_source, "lxml")
+
+		pattern = self.course_name.strip()+"/lecture|/supplement|/exam|/ungradedLab"
+
+		x2= s.find_all('a', href=re.compile(pattern))
+		extrected_urls += [i['href'] for i in x2]
+
+		x2= s.find_all('source', href=re.compile(pattern))
+		extrected_urls += [i['src'] for i in x2]
+
+		self.save_links_in_disk(extrected_urls)
+
+		return [i for i in extrected_urls if f"{self.course_name}/lecture" in i]
 
 
 
+	def fetch_video_page_urls(self):
+
+		while True:
+
+			URL = f"https://www.coursera.org/learn/{self.course_name}/home/week/"
+
+			url = URL + str(self.starting_week)
+
+			self.browser.get(url)
+
+			time.sleep(30)
+
+			if (self.starting_week != 1) and (self.browser.current_url.split("/")[-1] == '1'):
+					break
+
+			extrected_urls = self.get_link_of_a_video()
+
+			self.vids[self.starting_week] = extrected_urls
+
+			print(f"\nWeek #{self.starting_week} has {len(self.vids[self.starting_week])} videos")
+
+			self.starting_week += 1
+
+		for k, v in self.vids.items():
+			self.vids[k] = ['https://www.coursera.org' + i for i in v]
+		
+		self.save_vids_into_disk()
+
+	def gather_all_video_page_urls(self):
+		if not self.resume:
+			self.starting_week = 1
+		self.fetch_video_page_urls()
+
+	def gather_all_video_download_url(self):
+		self.vids= pickle.load(open(f"{self.BASE_DIR}/vids.pkl", 'rb'))
+		self.fetch_video_urls()
+		self.download()
+
+	def preapare_all_video_page_urls(self):
+		if self.vids_pkl_is_provided:
+			print("\nSince 'vids_pkl_is_provided' == True, we load 'vids' from f'{self.BASE_DIR}/vids.pkl'")
+			self.vids = pickle.load(open(f"{self.BASE_DIR}/vids.pkl", 'rb'))
+		else:
+			self.gather_all_video_page_urls() # This will build a self.vids_download_urls from scratch.
+
+	def preapare_all_video_download_urls(self):
+		if self.vids_download_urls_is_provided:
+			print("\nSince 'preapare_all_video_download_urls' == True, we load 'vids_download_urls' from f'{self.BASE_DIR}/vids_download_urls.pkl'")
+			self.vids_download_urls = pickle.load(open(f"{self.BASE_DIR}/vids_download_urls.pkl", 'rb'))
+			self.vids = pickle.load(open(f"{self.BASE_DIR}/vids.pkl", 'rb'))
+		else:
+			self.preapare_all_video_page_urls() # This will create self.vids
+			self.fetch_video_urls() # This will create a self.vids_download_urls from scratch.
+
+
+	def login_if_necessary(self):
+		if (not self.vids_download_urls_is_provided) or (not self.vids_pkl_is_provided):
+			if not self.logged_in:
+				self.login()
+				self.logged_in = True
+				input("\nPress any key after captcha..........\n")
+
+	def get_course_name(self):
+		course_name_received = False
+		if os.path.exists(f"{self.BASE_DIR}/.coursera_course_name.txt"):
+			self.course_name = open(f"{self.BASE_DIR}/.coursera_course_name.txt", 'r').read().strip()
+			if input(f"Are you need to resue last course name, which is <{self.course_name}> [y|n]: ") == "y":
+				course_name_received = True
+			else:
+				pass
+		if not course_name_received:
+			self.course_name = input("Enter course name, \nNote: Extract course name from course url, eg: <simple-past-tense> from <https://www.coursera.org/learn/simple-past-tense/home/week/1>\nNOTE: if multiple courses, use pipe | as delimeter\n\n").strip()
+			open(f"{self.BASE_DIR}/.coursera_course_name.txt", 'w').write(self.course_name.strip())
+
+	def download_a_course(self):
+
+		print(f"\n\n\n********************************** Starting <{self.course_name}> course ********************************** ")
+		if not os.path.exists(self.course_name):
+			os.mkdir(self.course_name)
+		else:
+			self.starting_week = int(input("Enter starting week: ").strip())
+			self.resume = True
+
+		self.login_if_necessary()
+
+		self.preapare_all_video_download_urls()
+
+		self.download()
+
+	def get_pass(self):
+		os.system(f"echo 2 | {list(os.popen('which ipython3'))[0].strip()} /home/amir/github/*/*/*in2.py  2 coursera | tail -1")
+		return clipboard.paste()
+		
+
+	def main(self):
+		self.get_course_name()
+
+		all_course_names = list(map(str.strip, self.course_name.split("|")))
+		for c in all_course_names:
+			self.course_name = c
+			self.download_a_course()
+
+
+
+audit_every_course = input("Enter True/False for audit_every_course: ") == "True"
+vids_download_urls_is_provided = input("Enter True/False for vids_download_urls_is_provided: ") == "True"
+vids_pkl_is_provided = input("Enter True/False for vids_pkl_is_provided: ") == "True"
+
+print()
+for i,val in zip(["audit_every_course","vids_download_urls_is_provided","vids_pkl_is_provided"],[audit_every_course,vids_download_urls_is_provided,vids_pkl_is_provided]):
+	print(i, " : ", val)
+
+print()
+if vids_download_urls_is_provided and (not vids_pkl_is_provided):
+	print("!! NOTE: You have entered 'vids_download_urls_is_provided'=True, and 'vids_pkl_is_provided'=False, This is not going to work, We change 'vids_pkl_is_provided' to True.")
+print()
+
+input("\nAre you need to proceed? Press any key to proceed.\n")
+
+obj = download_coursera_course(
+	audit_every_course = audit_every_course,
+	vids_download_urls_is_provided= vids_download_urls_is_provided,
+	vids_pkl_is_provided = vids_pkl_is_provided
+	)
+
+obj.main()
