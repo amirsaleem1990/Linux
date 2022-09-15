@@ -207,7 +207,7 @@ si(){
             file_name=$(max $(ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d'))
             let "file_name++"
         fi
-        echo -e "\nYou don't provided a file name, so we saved it as <$file_name.png>\n"
+        echo -e "\nYou didn't provide a file name, so we are saving it as <$file_name.png>\n"
     fi
 
     test -f "$file_name"
@@ -299,6 +299,12 @@ pylint_amir(){
 }
 
 
+declare -f pylint_only_errors
+pylint_only_errors(){
+    pylint --errors-only "$1"
+}
+
+
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -329,3 +335,4 @@ alias vpn_g_27='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+
