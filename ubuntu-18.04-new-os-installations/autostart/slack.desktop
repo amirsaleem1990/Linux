@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=LFD mail
+Exec=firefox https://app.slack.com/client/T9RV2K22H/D010GSKST3N
+Type=Application
+X-GNOME-Autostart-enabled=true
