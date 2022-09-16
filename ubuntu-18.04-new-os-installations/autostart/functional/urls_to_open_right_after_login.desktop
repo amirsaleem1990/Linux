@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Outlook
+Exec=/home/amir/.config/autostart/urls_to_open_right_after_login.sh
+Type=Application
+X-GNOME-Autostart-enabled=true
