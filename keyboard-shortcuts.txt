@@ -27,3 +27,5 @@ CTRL+XX – Move between start of command line and current cursor position (and 
 CTRL+Y –  Retrieves last item that you deleted or cut.
 CTRL+Z – Stops the current command.
 CTRL+[ – Equivalent to ESC key.
+POWER + SHIFT + PAGE-UP/DOWN – move a window to another workspace
+
