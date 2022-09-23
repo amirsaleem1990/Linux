@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Stack overflow
-Exec=firefox https://stackoverflow.com/questions/tagged/pandas+python
-Type=Application
-X-GNOME-Autostart-enabled=true
