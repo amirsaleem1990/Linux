@@ -34,6 +34,8 @@ def get_size_of_directory(folder_name):
 
 if folder_mode:
 	report = []
+	same_size = []
+	different_size = []
 	here_folders  = [i for i in os.listdir()      if os.path.isdir(i)]
 	there_folders = [i for i in os.listdir(there) if os.path.isdir(there+i)]
 	# here_sizes = list(map(get_size_of_directory, here_folders))
@@ -52,6 +54,10 @@ if folder_mode:
 			here_bytes = get_size_of_directory(i)
 			there_bytes = get_size_of_directory(there+i)
 			d = pd.DataFrame({"bytes" : [here_bytes, there_bytes]}, index=["here", "there"]).assign(kb=lambda x:round(x.bytes / 1024), mb=lambda x:round(x.kb/1024, 1), gb=lambda x:round(x.mb/1024, 2)).assign(same=lambda x: x.bytes.nunique() == 1)
+			if d['same'].all():
+				same_size.append(f"{str(d.mb.iloc[0]).ljust(10)}MB\t{i}")
+			else:
+				different_size.append(i)
 			print(d)
 	else:
 		report.append("No 'Common' files")
@@ -75,6 +81,21 @@ if folder_mode:
 	if report:
 		print("\n\n")
 		print(*report, sep="\n")
+
+	if same_size:
+		print("\n\n>>>>>>>>>>>>>>>SAME SIZE:\n")
+		print("\n".join(same_size))
+		print("\n\n")
+
+	print("\n\n>>>>>>>>>>>>>>>DIFFERENT SIZE:")
+	if different_size:
+		print("\n".join(different_size))
+		print("\n\n")
+	else:
+		print("No file\n")
+
+
+
 
 else:
 
