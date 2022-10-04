@@ -1,0 +1,52 @@
+#!/usr/bin/bash
+if [[ -z $1 ]]; then
+	read -p "Enter THERE location: " there
+else
+	there="$1"
+fi
+
+/usr/bin/rm /tmp/here_but_not_there.txt  2> /dev/null
+/usr/bin/rm /tmp/here_but_not_there_error_in_delition.txt 2> /dev/null
+total_size_kb=0
+
+IFS=$'\n'
+for folder in $(find . -maxdepth 1 -type d); do
+	folder=$(basename "$folder")
+	test -e "$there$folder"
+	if [[ $? -ne 0 ]]; then # folder doesn't exists THERE
+		size=$(du -sh "$folder" 2>/dev/null)
+		if [[ $? -eq 0 ]]; then
+			let "total_size_kb+=$(du -sk "$folder" | cut -d$'\t' -f1)"
+			echo "$size" >> /tmp/here_but_not_there.txt
+		fi
+	fi
+done
+
+test -e /tmp/here_but_not_there.txt
+if [[ $? -ne 0 ]]; then
+	echo -e "All folders that are HERE exists THERE\n"
+	exit
+fi
+cat /tmp/here_but_not_there.txt | sort -h
+echo -e "
+
+>>>>>Total size:
+ KB: $total_size_kb
+ MB: $(echo $total_size_kb/1024|bc -l)
+ GB: $(echo $total_size_kb/1024/1024|bc -l)
+
+>>>>> Total folders: $(cat /tmp/here_but_not_there.txt | wc -l)
+
+"
+
+read -p "Are you ready to remove these folders? [yes|no] " answer
+if [[ $answer == "yes" ]]; then
+	cat /tmp/here_but_not_there.txt | cut -d$'\t' -f2-30 > /tmp/here_but_not_there_ONLY_FOLDERS_NAMES.txt
+	IFS=$'\n'
+	for folder in $(cat /tmp/here_but_not_there_ONLY_FOLDERS_NAMES.txt); do
+		/usr/bin/rm -r "$folder" 2>/dev/null
+		if [[ $? -ne 0 ]]; then
+			echo "$folder" >> /tmp/here_but_not_there_error_in_delition.txt
+		fi
+	done
+fi
