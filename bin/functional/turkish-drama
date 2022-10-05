@@ -11,6 +11,8 @@ class turkis_dramas:
         self.alp_url = "https://ardirilisertugrul.net/series/AlpArslan-Buyuk-Selcuklu-series"
         self.barbarosa_url = "https://ardirilisertugrul.net/Barbaros/home.php"
         self.destan_url = "https://ardirilisertugrul.net/series/Destan-series"
+        self.jalaluddin = "https://ardirilisertugrul.net/series/Mendirman-Jaloliddin-series"
+
         self.file_name = "/home/amir/github/Amir-personal/turkish_daramas_last_viewed.pkl"
 
     def load_last_viwed_episode_numbers(self):
@@ -33,6 +35,7 @@ class turkis_dramas:
         self.last_viwed_versions["ALP"] = int(input("What is last episode you watched for 'ALP'?"))
         self.last_viwed_versions["BARBAROSA"] = int(input("What is last episode you watched for 'BARBAROSA'?"))
         self.last_viwed_versions["DESTAN"] = int(input("What is last episode you watched for 'DESTAN'?"))
+        self.last_viwed_versions["JALALUDDIN"] = int(input("What is last episode you watched for 'JALALUDDIN'?"))
 
         pickle.dump(self.last_viwed_versions, open(self.file_name, 'wb'))
 
@@ -48,6 +51,8 @@ class turkis_dramas:
             print("https://ardirilisertugrul.net/Barbaros/Barbaroslar-Episode-" + str(latest_episode_number))
         elif drama_name == "DESTAN":
             print("https://ardirilisertugrul.net/episode/Destan-episode-" + str(latest_episode_number))
+        elif drama_name == "JALALUDDIN":
+            print("https://ardirilisertugrul.net/episode/Mendirman-Jaloliddin-episode-" + str(latest_episode_number))
 
     def dump(self, drama_name, latest_episode_number): 
         self.last_viwed_versions[drama_name] = latest_episode_number
@@ -55,7 +60,7 @@ class turkis_dramas:
     def main(self):
         new_dramas = []
         self.load_last_viwed_episode_numbers()
-        for url, drama_name in zip([self.kurlus_url, self.alp_url, self.barbarosa_url, self.destan_url], ["KURULUS", "ALP", "BARBAROSA", "DESTAN"]):
+        for url, drama_name in zip([self.kurlus_url, self.alp_url, self.barbarosa_url, self.destan_url, self.jalaluddin], ["KURULUS", "ALP", "BARBAROSA", "DESTAN", "JALALUDDIN"]):
             latest_episode_number = self.get_latest_episode_number(url)
             if latest_episode_number > self.get_last_viewed_episode(drama_name):
                 new_dramas.append(drama_name, latest_episode_number)
