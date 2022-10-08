@@ -43,9 +43,9 @@ prepare_files_names() {
 	if [[ $option_ -eq 1 ]]; then
 		x=$(for i in $(ls -1 *.mp4 *.webm *.mkv *.mov| sort -n) ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 	else
+		orignial_duration=$(/amir_bin/video_duration 2 | grep -v ^$| tail -n1)
+		orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
 		if [[ $option_ -eq 2 ]]; then
-			orignial_duration=$(/amir_bin/video_duration 2 | grep -v ^$| tail -n1)
-			orignal_size_mb=$(du -sc -B M $(find . -name "*.mp4" -o -name "*.mkv" -o -name "*.webm" -o -name "*.mov") | tail -n1 | cut -d'M' -f1)
 			for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
 				echo $i
 			done > /home/amir/.m
