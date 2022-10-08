@@ -52,12 +52,12 @@ for repo in repos:
         os.system("git branch -M master")
 
         if '(use "git push" to publish your local commits)' in git_status:
-        	os.system("git push || git push -u origin master") # git push -u origin main
+        	os.system("git push || git push -u origin main") # git push -u origin master
         elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
             aa = [i.strip() for i in git_status.splitlines()]
             print(f"**********{repo}**********")
             for i in aa:
 	            if i and i.startswith("Untracked files") or i.startswith("Changes not staged for commit"):
-	            	os.system("git add . ; git commit -m 'updated'; git push -u origin master") # || git push -u origin main
+	            	os.system("git add . ; git commit -m 'updated'; git push -u origin main") # || git push -u origin master
             print("\n\n")
         os.chdir("..")
