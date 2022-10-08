@@ -63,7 +63,7 @@ class turkis_dramas:
         for url, drama_name in zip([self.kurlus_url, self.alp_url, self.barbarosa_url, self.destan_url, self.jalaluddin], ["KURULUS", "ALP", "BARBAROSA", "DESTAN", "JALALUDDIN"]):
             latest_episode_number = self.get_latest_episode_number(url)
             if latest_episode_number > self.get_last_viewed_episode(drama_name):
-                new_dramas.append(drama_name, latest_episode_number)
+                new_dramas.append(drama_name)
                 self.dump(drama_name, latest_episode_number)
                 self.print_new_video_url(drama_name, latest_episode_number)
         if new_dramas:
