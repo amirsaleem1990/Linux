@@ -3,16 +3,16 @@ import os
 import sys
 os.chdir("/home/amir/github/")
 if len(sys.argv) == 2:
-    inp = sys.argv[1]
-    if not inp == "1":
-        raise Exception(f"\n\nWrong option ({inp})\nAborting..........\n")
+	inp = sys.argv[1]
+	if not inp == "1":
+		raise Exception(f"\n\nWrong option ({inp})\nAborting..........\n")
 else:
-    inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Are you need to continue? [y|n] ")
-    if inp == "y":
-        inp = ""
-        pass
-    else:
-        raise Exception("\nAborting.......\n")
+	inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Are you need to continue? [y|n] ")
+	if inp == "y":
+		inp = ""
+		pass
+	else:
+		raise Exception("\nAborting.......\n")
 
 
 # # os.system("bash git_files.sh")
@@ -45,25 +45,26 @@ print("\n\n")
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos]
 for repo in repos:   
-    if (not repo.startswith(".")) and (not "." in repo): # if that repo is not a hidden file <in linux hiddin files names starts with . dot
-        os.chdir(repo) # go to that local repo
-        git_status = os.popen("git status").read() # read current status
+	if (not repo.startswith(".")) and (not "." in repo): # if that repo is not a hidden file <in linux hiddin files names starts with . dot
+		os.chdir(repo) # go to that local repo
+		git_status = os.popen("git status").read() # read current status
 
-        os.system("git branch -M master")
+		os.system("git branch -M master")
 
-        if '(use "git push" to publish your local commits)' in git_status:
-            if repo in ["Linux"]:
-                os.system("git push || git push -u origin master") 
-            else:    
-            	os.system("git push || git push -u origin main")
-        elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
-            aa = [i.strip() for i in git_status.splitlines()]
-            print(f"**********{repo}**********")
-            for i in aa:
-	            if i and i.startswith("Untracked files") or i.startswith("Changes not staged for commit"):
-                    if repo in ["Linux"]:
-                        os.system("git add . ; git commit -m 'updated'; git push -u origin master")
-                    else:
-    	            	os.system("git add . ; git commit -m 'updated'; git push -u origin main")
-            print("\n\n")
-        os.chdir("..")
+		if '(use "git push" to publish your local commits)' in git_status:
+			if repo in ["Linux"]:
+				os.system("git push || git push -u origin master") 
+			else:    
+				os.system("git push || git push -u origin main")
+		elif "Untracked files" in git_status or "Changes not staged for commit" in git_status:
+			aa = [i.strip() for i in git_status.splitlines()]
+			print(f"**********{repo}**********")
+			for i in aa:
+				if i and i.startswith("Untracked files") or i.startswith("Changes not staged for commit"):
+					if repo in ["Linux"]:
+						os.system("git add . ; git commit -m 'updated'; git push -u origin master")
+					else:
+						os.system("git add . ; git commit -m 'updated'; git push -u origin main")
+			print("\n\n")
+		os.chdir("..")
+		
