@@ -1,6 +1,6 @@
 #!/home/amir/github/virtual_envs/coursera_download_venv/bin/python3
 
-
+import shutil
 import clipboard
 import traceback
 import json
@@ -21,6 +21,7 @@ class download_coursera_course:
 		self.vids = {}
 		self.LOGIN_URL = "https://www.coursera.org/?authMode=login"
 		self.EMAIL_ADRESS = "hamzaamirr2014@gmail.com"
+		
 
 		self.audit_every_course = audit_every_course
 		self.vids_download_urls_is_provided = vids_download_urls_is_provided
@@ -47,19 +48,17 @@ class download_coursera_course:
 		loginButton[0].click()
 
 		print("Successfully Logged in", "\n\n\n")
-		n = 0
-		if self.audit_every_course == "yes":
-			if "|" in self.course_name:
-				for course in self.course_name.split("|"):
-					if n == 0:
-						input("\nEnter any key to proceed\t")
-						n += 1
-					self.browser.get(f"https://www.coursera.org/learn/{course.strip()}")
-					input("\nPress any key after audit: ")
-			else:
-				self.browser.get(f"https://www.coursera.org/learn/{self.course_name.strip()}")
-				input("\nPress any key after audit: ")
-	
+
+	def do_audit_for_all_courses(self):
+		if self.audit_every_course:
+			n = 1
+			for course in self.all_course_names:
+				if n == 1:
+					input("\nEnter any key to proceed\t")
+				n += 1
+				self.browser.get(f"https://www.coursera.org/learn/{course.strip()}")
+				print(">>>> Course#", n)
+				input("\nPress any key after audit: ")	
 
 	def download_a_single_video(self, week_, video_url, week):
 		if not os.path.exists(f"{self.course_name}/{week_}"):
@@ -116,9 +115,16 @@ class download_coursera_course:
 		for k,v in self.vids.items():
 			print(f"...................................... {k} ......................................")
 			for video in v:
+				if video.count("https") == 2:
+					video = "https"+video.split("https")[2]
+
 				print(">>>>>>>>>> Fatching video url of " + video)
-				self.browser.get(video)
-				time.sleep(30)
+				try:
+					self.browser.get(video)
+					time.sleep(30)
+				except:
+					print(">>>>> ERROR -------- in fatching video url of " + video)
+					continue
 				s = BeautifulSoup(self.browser.page_source, "lxml")
 				# pattern = "mp4"
 
@@ -209,7 +215,10 @@ class download_coursera_course:
 			self.starting_week += 1
 
 		for k, v in self.vids.items():
-			self.vids[k] = ['https://www.coursera.org' + i for i in v]
+			self.vids[k] = [
+				i if i.startswith("https") else 'https://www.coursera.org' + i
+				for i in v
+			]
 		
 		self.save_vids_into_disk()
 
@@ -225,7 +234,7 @@ class download_coursera_course:
 
 	def preapare_all_video_page_urls(self):
 		if self.vids_pkl_is_provided:
-			print("\nSince 'vids_pkl_is_provided' == True, we load 'vids' from f'{self.BASE_DIR}/vids.pkl'")
+			print(f"\nSince 'vids_pkl_is_provided' == True, we load 'vids' from f'{self.BASE_DIR}/vids.pkl'")
 			self.vids = pickle.load(open(f"{self.BASE_DIR}/vids.pkl", 'rb'))
 		else:
 			self.gather_all_video_page_urls() # This will build a self.vids_download_urls from scratch.
@@ -244,6 +253,7 @@ class download_coursera_course:
 		if (not self.vids_download_urls_is_provided) or (not self.vids_pkl_is_provided):
 			if not self.logged_in:
 				self.login()
+				self.do_audit_for_all_courses()
 				self.logged_in = True
 				input("\nPress any key after captcha..........\n")
 
@@ -274,6 +284,9 @@ class download_coursera_course:
 
 		self.download()
 
+		shutil.copyfile(f"{self.BASE_DIR}/vids.pkl", f"{self.course_name}/vids.pkl")
+
+
 	def get_pass(self):
 		os.system(f"echo 2 | {list(os.popen('which ipython3'))[0].strip()} /home/amir/github/*/*/*in2.py  2 coursera | tail -1")
 		return clipboard.paste()
@@ -282,16 +295,21 @@ class download_coursera_course:
 	def main(self):
 		self.get_course_name()
 
-		all_course_names = list(map(str.strip, self.course_name.split("|")))
-		for c in all_course_names:
+		self.all_course_names = list(map(str.strip, self.course_name.split("|")))
+		
+		for c in self.all_course_names:
 			self.course_name = c
 			self.download_a_course()
 
 
 
 audit_every_course = input("Enter True/False for audit_every_course: ") == "True"
-vids_download_urls_is_provided = input("Enter True/False for vids_download_urls_is_provided: ") == "True"
-vids_pkl_is_provided = input("Enter True/False for vids_pkl_is_provided: ") == "True"
+if audit_every_course:
+	vids_download_urls_is_provided = False
+	vids_pkl_is_provided = False
+else:
+	vids_download_urls_is_provided = input("Enter True/False for vids_download_urls_is_provided: ") == "True"
+	vids_pkl_is_provided = input("Enter True/False for vids_pkl_is_provided: ") == "True"
 
 print()
 for i,val in zip(["audit_every_course","vids_download_urls_is_provided","vids_pkl_is_provided"],[audit_every_course,vids_download_urls_is_provided,vids_pkl_is_provided]):
