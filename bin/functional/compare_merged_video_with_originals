@@ -1,0 +1,65 @@
+#!/usr/bin/bash
+RED='\033[0;31m'
+normal="\033[0m"
+
+echo -e "\n\n*********************************************************************************************" 
+pwd
+
+if [[ $(ls *.mp4 | wc -l) -lt 2 ]]; then
+	echo -e "!!!!!!!!!!!!!!!! Less then two .mp4 files, Aborting .............."
+	exit 1
+fi
+
+get_size_(){
+	echo -n `du -sk $1  | sed 's/\t/ /g' | cut -d' ' -f1`
+}
+
+get_duration(){
+	duration1=$(echo -n `ffmpeg -i $1  2>&1 | grep Duration | cut -d " " -f 4 | sed s/,// `)
+	hours=$(echo $duration1 | cut -d: -f1)
+	minutes=$(echo $duration1 | cut -d: -f2)
+	seconds=$(echo $duration1 | cut -d: -f3)
+	total_seconds=$(echo "$hours*60*60+$minutes*60+$seconds"|bc -l)
+	echo $total_seconds
+}
+
+get_information(){
+	seconds=`get_duration $1`
+	if [[ $? -eq 0 ]]; then
+		size_kb=$(echo "`get_size_ $1`+$size_kb"|bc -l)
+		time_secs=$(echo "$time_secs+$seconds"|bc -l)
+	else
+		return 0
+	fi
+}
+
+time_secs=0
+size_kb=0
+for original_file in $(ls *.mp4 | grep -v "\-MERGED.mp4" ); do
+	get_information "$original_file"
+done
+original_files_time=$(/amir_bin/convertsecs "$time_secs")
+original_files_size=$size_kb
+
+
+time_secs=0
+size_kb=0
+get_information $(ls *-MERGED.mp4)
+merged_file_time=$(/amir_bin/convertsecs "$time_secs")
+merged_file_size=$size_kb
+
+echo -en "\nTIME: "
+if [[ $original_files_time == $merged_file_time ]]; then
+	echo -e "${RED}SAME${normal}"
+else
+	echo -e "${RED}DIFFERENT${normal}"
+fi
+
+echo -en "SIZE: "
+if [[ $original_files_size == $merged_file_size ]]; then
+	echo -e "${RED}SAME${normal}"
+else
+	echo -e "${RED}DIFFERENT${normal}"
+fi
+
+echo -e " ,Size(KB),Time\nOriginal,$original_files_size,$original_files_time\nMerged,$merged_file_size,$merged_file_time" | column -t -s,
