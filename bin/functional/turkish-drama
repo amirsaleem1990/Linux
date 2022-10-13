@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import pickle
 import os
+import youtube_dl
+from get_soup_object_using_selenium import extract_urls_from_soup_object
 
 class turkis_dramas:
     
@@ -57,6 +59,50 @@ class turkis_dramas:
     def dump(self, drama_name, latest_episode_number): 
         self.last_viwed_versions[drama_name] = latest_episode_number
         pickle.dump(self.last_viwed_versions, open(self.file_name, 'wb'))
+
+    def historicales(self):
+
+        def vid_duration(url):
+            x = (
+                youtube_dl
+                .YoutubeDL({'outtmpl': '%(id)s.%(ext)s', 'noplaylist' : True})
+                .extract_info(url, download=False) # We just want to extract the info
+            )
+            video_seconds = x['duration'] # seconds
+            video_hours = video_seconds / 60 / 60
+            if video_hours > 1:
+                print("New videw")
+                print(url)
+            else:
+                print("Trailer")
+
+        kurlus_url = "https://historicales.com/kurulus-osman-episode-"
+        alp_url = "https://historicales.com/alparslan-buyuk-selcuklu-episode-"
+        barbarosa_url = "https://historicales.com/barbaroslar-episode-"
+        destan_url = "https://historicales.com/destan-episode-"
+        jalaluddin = "https://historicales.com/bozkir-arslani-celaleddin-episode-"
+
+        for _url, drama_name in zip(
+            [barbarosa_url,destan_url,jalaluddin,alp_url,kurlus_url], 
+            ["BARBAROSA", "DESTAN", "JALALUDDIN", "ALP", "KURULUS"]
+        ):
+            print("\n>>>>", drama_name, end="\t")
+            url = _url + str(self.last_viwed_versions[drama_name]+1)
+            s = BeautifulSoup(requests.get(url).text, "lxml")
+            if 'Error 404' in str(s):
+                print("No new video or trailer")
+                continue
+
+            downloadable_urls = None
+            try:
+                downloadable_urls = list(set([i.replace("?autoplay=1", "") for i in extract_urls_from_soup_object(s) if i.startswith("//ok.ru")]))
+            except:
+                pass
+            if downloadable_urls is not None:
+                downloadable_urls = ["https:" + i for i in downloadable_urls]
+            for i in downloadable_urls:
+                vid_duration(i)
+
     def main(self):
         new_dramas = []
         self.load_last_viwed_episode_numbers()
@@ -71,6 +117,8 @@ class turkis_dramas:
             print("\n".join(new_dramas))
         else:
             print("\nNO NEW DRAMA")
+
+        print("\n\n\n>>>>>>>>>>>>>>>> historicales <<<<<<<<<<<<<<<<<<")
+        self.historicales()
         
-obj = turkis_dramas()
-obj.main()
+turkis_dramas().main()
