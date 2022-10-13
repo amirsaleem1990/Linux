@@ -285,6 +285,7 @@ class download_coursera_course:
 		self.download()
 
 		shutil.copyfile(f"{self.BASE_DIR}/vids.pkl", f"{self.course_name}/vids.pkl")
+		shutil.copyfile(f"{self.BASE_DIR}/vids_download_urls.pkl", f"{self.course_name}/vids_download_urls.pkl")
 
 
 	def get_pass(self):
