@@ -81,6 +81,11 @@ def extract_urls_from_soup_object(s):
 			lst.append(i['src']) 
 		except: 
 			pass
+	for i in s.select("iframe"):
+		try: 
+			lst.append(i['src']) 
+		except: 
+			pass
 	return list(set(lst))
 
 
