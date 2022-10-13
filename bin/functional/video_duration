@@ -106,5 +106,10 @@ for i in f:
 open("/home/amir/.duration", "w").write(str(int(total_secs)))
 ' | python3
 echo -e "\nDD:HH:MM:SS"
-eval "echo $(date -ud "@$(cat /home/amir/.duration)" +'$((%s/3600/24)):%H:%M:%S')"
+x=$(eval "echo $(date -ud "@$(cat /home/amir/.duration)" +'$((%s/3600/24)):%H:%M:%S')")
+first_value=$(echo $x | cut -d: -f1)
+if [[ ${#first_value} -eq 1 ]] ; then
+	x=0$x
+fi
+echo $x
 echo 
