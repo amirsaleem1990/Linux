@@ -117,6 +117,7 @@ delete_items_qty = 0
 
 for node in r:
 	try:
+		node = sorted(node)
 		print("\n<<  ==========================================  >>")
 		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
 		print(f"Delete items Qty: {delete_items_qty} (among {df[0].sum()} unique files)\n")
@@ -124,14 +125,23 @@ for node in r:
 			d = f'$(du -sh "{i}")'
 			com = f"""echo "{e}- {d}" """
 			os.system(com)
-		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip range (e.g. 1..7)\n\t- Skip (press any key):\n")
 		if input_ in ["o", "'o'"]:
 			for i in node:
 				com = f"gopen '{i}' 2>/dev/null"
 				os.system(com)
 			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
 		input_ = input_.replace(" ", "")
-		if "." in input_: # multi index
+		if ".." in input_: # range index:
+			try:
+				inp = input_.strip().split("..") # ['3', '9']
+				for input_ in range(int(inp[0]), int(inp[1])+1):
+					delete_items_qty += 1
+					func_(str(input_))
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		elif "." in input_: # multi index
 			try:
 				inp = input_.split(".")
 				for input_ in inp:
