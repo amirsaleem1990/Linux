@@ -1932,3 +1932,11 @@ Stop pip from failing on single package when installing with requirements.txt ..
 # convert html to pdf ........... wkhtmltopdf file.html file.pdf
 
 
+# remainder .......... expr 7 % 3
+
+# printing fixed width strings .............. one=1 four=4444 six=666666 nine=999999990; printf '%-10s %-10s '%-10s %-10s' 
+
+   
+
+extract all key frames from a video clip ................. ffmpeg -skip_frame nokey -i Week-1-MERGED.mp4 -vsync 0 -r 30 -f image2 thumbnails-%02d.jpeg
+
