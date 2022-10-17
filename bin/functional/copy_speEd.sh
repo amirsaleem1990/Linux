@@ -5,14 +5,21 @@ else
 	sleep_secs=$1
 fi
 size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
-
+RED='\033[0;31m'
+normal="\033[0m"
 /usr/bin/rm -f /home/amir/.copyt_speed.txt
 /usr/bin/rm -rf /tmp/multipage_pdf.pdf
 
+n=0
+
 main(){
 	current_size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
-	echo -e "$(date +%T)\t$current_size MB\t$(echo $current_size-$size|bc -l) MB\t$(find . 2>/dev/null| wc -l)" | tee -a /home/amir/.copyt_speed.txt
+	time=$(date +%T)
+	current_files=$(find . 2>/dev/null| wc -l)
+	incremental_size=$(echo "$current_size-$size"|bc -l)
+	echo -e "$(date +%T)\t$current_size MB\t$(echo $current_size-$size|bc -l) MB\t$(find . 2>/dev/null| wc -l)" >> /home/amir/.copyt_speed.txt
 	size=$current_size
+	printf '%-10s %-10s %-10s %-10s\n' $time $current_size $incremental_size $current_files
 }
 
 plot(){
@@ -62,6 +69,12 @@ control_c() {
 trap control_c SIGINT
 
 while true ; do 
+   remainder=$(expr $n % 13)
+   if [[ $remainder -eq 0 ]]; then
+   	echo -e "${RED}TIME       TOTAL(MB)  INCRNT(MB) TotalFilesQty.${normal}"
+   fi
+   let "n++"
+
    main
    sleep $sleep_secs
 done
