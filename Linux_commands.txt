@@ -1940,3 +1940,17 @@ Stop pip from failing on single package when installing with requirements.txt ..
 
 extract all key frames from a video clip ................. ffmpeg -skip_frame nokey -i Week-1-MERGED.mp4 -vsync 0 -r 30 -f image2 thumbnails-%02d.jpeg
 
+
+# last modification date of a file .............. date -r file.txt # Thu 08 Sep 2022 06:45:40 PM PKT 
+
+
+# merge lines column vise from different files ............  paste first_name.txt last_name.txt yob.txt
+
+
+
+# list all files/direcoties in recesive mode ..............  ls -R
+
+
+
+# tar -tf tar_file_name.tar ................ list all the files and directories in your tar.
+
