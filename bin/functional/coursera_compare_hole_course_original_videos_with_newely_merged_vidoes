@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+IFS=$'\n'
+main_directory=$(pwd)
+for week_directory in $(find . -type d -name "Week-*"); do 
+	cd "$week_directory"
+	compare_merged_video_with_originals
+	cd "$main_directory"
+done
