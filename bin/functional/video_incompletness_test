@@ -8,7 +8,7 @@ if [[ $myArray == "" ]] ; then
 	done
 fi
 for video_name in "${myArray[@]}"; do
-	if [[ `ffmpeg -v error -sseof -60 -i $video_name -f null - 2>&1 > /dev/null | wc -l` -gt 0 ]] ; then
+	if [[ `ffmpeg -v error -sseof -60 -i "$video_name" -f null - 2>&1 > /dev/null | wc -l` -gt 0 ]] ; then
 		echo ">>> OK        , $video_name"
 	else
 		echo ">>> INCOMPLETE, $video_name"
