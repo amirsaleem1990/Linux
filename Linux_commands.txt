@@ -1954,3 +1954,4 @@ extract all key frames from a video clip ................. ffmpeg -skip_frame no
 
 # tar -tf tar_file_name.tar ................ list all the files and directories in your tar.
 
+# intialize/create/define an array ............. myArray=("cat" "dog" "mouse" "frog)
