@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+there="$1"
+if [[ -z $1 ]]; then
+	read -p "Enter THERE path: " there
+fi
+
+
+IFS=$'\n'
+DEL -rf $(
+	for i in $(ls -a "$there"); do 
+		test -e ~/"$i"
+		if [[ $? -ne 0 ]] ; then 
+			echo "$i"
+		fi
+	done
+	)
