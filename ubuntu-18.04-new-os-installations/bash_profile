@@ -105,22 +105,8 @@ declare -f poweroff
 poweroff() {
 
     /amir_bin/battery
-
-    read -p "Are you punched out? [yes|no]: " ans
     cp -rv  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
-    if [[ $ans == "yes" ]] ; then 
-        /sbin/poweroff
-    elif [[ $ans == "no" ]]; then 
-        /home/amir/H/manually_login_on_hrm_tool.py 1
-        if [[ $? -eq 0 ]] ;then 
-            sleep 4s
-            /sbin/poweroff
-        else 
-            echo -e "\n\nAn error occured\n\n"
-        fi
-    else 
-        echo -e "\n\nError: wrong input,\nExiting .........\n"
-    fi
+    /sbin/poweroff
 }
 
 declare -f rdfind
