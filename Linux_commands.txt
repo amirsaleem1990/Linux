@@ -1955,3 +1955,5 @@ extract all key frames from a video clip ................. ffmpeg -skip_frame no
 # tar -tf tar_file_name.tar ................ list all the files and directories in your tar.
 
 # intialize/create/define an array ............. myArray=("cat" "dog" "mouse" "frog)
+# compare two floating point numbers ............ res=$(echo "$num1 > $num2" |bc -l); res will be 0 if the condition is true, else 1
+
