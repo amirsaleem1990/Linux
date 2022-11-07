@@ -1,0 +1,98 @@
+#!/usr/bin/bash
+if [[ -z "$1" ]]; then 
+    read -p "Enter THERE path: " there
+else
+    there="$1"
+fi
+
+
+
+get_type() {
+    if [[ -d "$1" ]]; then
+        type=directory
+    else
+        type=file
+    fi
+}
+
+get_size_in_kb() {
+    test -e "$i"
+    if [[ $? -eq 0 ]]; then
+        x=$(du -s "$1" | cut -d$'\t' -f1)
+        echo $x
+    else
+        ehco "NOT FOUND"
+    fi
+}
+
+
+get_appropiate_unit_for_size(){
+    abs_value="${1/#-}"
+    kbs_in_GB=$(echo "1000*1000"|bc -l)
+    kbs_in_MB=$(echo "1000"|bc -l)
+    if [[ $abs_value -gt $kbs_in_GB ]]; then
+        x=$(echo "scale=2; $1/$kbs_in_GB"|bc -l)\ GB
+    else
+        if [[ $abs_value -gt $mbs_in_MB ]]; then
+            x=$(echo "scale=2; $1/$kbs_in_MB"|bc -l)\ MB
+        else
+            x="$1 KB"
+        fi
+    fi
+}
+
+
+here=$(pwd)
+file_name="/tmp/lkjs"
+/usr/bin/rm $file_name
+# echo "Name,Type,There,Here,Difference" > "$file_name"
+echo "Name,Type,There,Here" > "$file_name"
+
+IFS=$'\n'
+for i in $(ls "$here"); do
+    get_type "$i"
+    size_here_kb=$(get_size_in_kb "$i")
+    size_there_kb=$(get_size_in_kb "$there/$i")
+
+    # if [[ $size_there_kb != "NOT FOUND" ]]; then
+    #     diff_size_kb=$(echo $size_here_kb - $size_there_kb|bc -l)
+    # else
+    #     diff_size_kb="NOT FOUND"
+    # fi
+
+    # get_appropiate_unit_for_size $size_there_kb
+    # size_there="$x"
+
+    # get_appropiate_unit_for_size $size_here_kb
+    # size_here="$x"
+
+    # get_appropiate_unit_for_size $diff_size_kb
+    # diff_size="$x"    
+
+    # echo "$i,$type,$size_there,$size_here,$diff_size" >> "$file_name"
+    
+    echo "$i,$type,$size_there_kb,$size_here_kb" >> "$file_name"
+done
+
+
+# cat "$file_name" | grep -v ,0\ [KMG]B$ | (sed -u 1q; sort -t"," -k5 -n) | column -t -s,
+
+python3 <<< '
+import pandas as pd
+df = pd.read_csv("/tmp/lkjs")
+df["Difference"] = df.There - df.Here
+df = df[df.Difference.ne(0)]
+df = df.loc[df.Difference.abs().sort_values(ascending=False).index.to_list()].reset_index(drop=True)
+def func(val):
+    if str(val) == "nan":
+        return None
+    kbs_in_GB=1000*1000
+    kbs_in_MB=1000
+    if abs(val) > kbs_in_GB:
+        return f"{round(val/kbs_in_GB,1)} G"
+    if abs(val) > kbs_in_MB:
+        return f"{round(val/kbs_in_MB,1)} M"
+    return f"{val} K"
+df[["There", "Here", "Difference"]] = df[["There", "Here", "Difference"]].applymap(func)
+print(df.to_string())
+'
