@@ -290,6 +290,51 @@ pylint_only_errors(){
     pylint --errors-only "$1"
 }
 
+declare -f change_PS1
+change_PS1(){
+    PS1="$PS1\n>>> "
+    export "$PS1"
+}
+
+declare -f swap_off
+swap_off() {
+    cat /home/amir/github/*/._mz_ | sudo -S -k swapoff -a
+}
+
+
+declare -f ADB
+ADB() {
+    adb tcpip 5555
+    read -p "Enter any key after allow in mobile: "
+    adb connect `adb shell ifconfig wlan0 | grep 192 | cut -d: -f2 | cut -d ' ' -f1`:5555
+}
+
+
+declare -f Chrome_all_tabs
+Chrome_all_tabs() {
+    IFS=$'\n'
+    cat -e `locate Current\ Session | grep chrom | sed 's/\ /\\ /g'` | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u
+}
+
+declare -f extentions_for_given_file_names
+extentions_for_given_file_names() {
+    IFS=$'\n'
+    for i in "$@"; do
+        basename "$i"
+    done | rev | cut -d. -f1 | rev | sort | uniq -c | sort -n
+}
+
+
+declare -f check_duplicated_lines_count_bash
+check_duplicated_lines_count_bash() {
+    if [[ -z $1 ]]; then
+        echo -e "No file passed\nAborting ....... \n"
+        return 1
+    fi
+    duplicated_lines="|$(sort  "$1" | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | cut -d, -f2-10 | awk '{$1=$1};1' | paste -sd '\|' | sed 's/|//')"
+    grep -E  --color=auto "$duplicated_lines"  "$1"
+}
+
 
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -322,3 +367,4 @@ alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 
+change_PS1
