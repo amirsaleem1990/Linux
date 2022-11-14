@@ -52,7 +52,7 @@ for repo in repos:
 		os.system("git branch -M master")
 
 		if '(use "git push" to publish your local commits)' in git_status:
-			if repo in ["Linux"]:
+			if repo in ["Linux", "LFD_projects_6"]:
 				os.system("git push || git push -u origin master") 
 			else:    
 				os.system("git push || git push -u origin main")
