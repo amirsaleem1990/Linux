@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+IFS=$'\n'
+for i in "$@"; do
+	basename "$i"
+done | rev | cut -d. -f1 | rev | sort | uniq -c | sort -n
