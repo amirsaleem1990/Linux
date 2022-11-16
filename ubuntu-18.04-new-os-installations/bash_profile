@@ -368,3 +368,6 @@ alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 
 change_PS1
+
+
+alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
