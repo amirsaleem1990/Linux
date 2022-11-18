@@ -71,6 +71,7 @@ alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status | grep 'Acti
 alias vpn_g="echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/Programs/VPN/vpnbook-pl226-udp53.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt" 
 alias symbolic_links="ls -l | grep ^l"
 alias Latex="cd github/Amir-personal/Resume/Latex-resume/; echo R | latex -output-format pdf amir-saleem-data-science-resume.tex; if [[ $? -eq 0 ]] ; then evince amir-saleem-data-science-resume.pdf; fi"
+alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
 
 
@@ -336,6 +337,28 @@ check_duplicated_lines_count_bash() {
 }
 
 
+declare -f todays_first_computer_on_time
+todays_first_computer_on_time() {
+    current_date="/home/amir/.$(date +%d-%m-%y)"
+    test -e "$current_date"
+    if [[ $? -ne 0 ]]; then
+        current_time=$(date +%s)
+        echo "$current_time" > "$current_date"
+    fi
+}
+
+
+declare -f time_since_first_login_today
+time_since_first_login_today() {
+    current_date="/home/amir/.$(date +%d-%m-%y)"
+    first_login_time=$(cat "$current_date")
+    current_time=$(date +%s)
+    time_pased="$((current_time-first_login_time))"
+    convertsecs $time_pased
+}
+
+
+
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -367,7 +390,21 @@ alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 
+
+
 change_PS1
+export -f todays_first_computer_on_time
+time_since_first_login_today
 
 
-alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
+
+
+
+
+
+
+
+
+
+
+
