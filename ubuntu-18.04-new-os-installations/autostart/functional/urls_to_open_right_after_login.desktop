@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=urls_to_open_right_after_login
-Exec=sh -c "urls=$(cat /home/amir/github/Amir-personal/urls_to_open_right_after_login.txt | xargs ); firefox $urls"
+Exec=sh -c "urls=$(cat /home/amir/github/Amir-personal/urls_to_open_right_after_login.txt | grep -v ^# | xargs ); firefox $urls"
 Type=Application
 X-GNOME-Autostart-enabled=true
