@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=android-studio
+Exec=android-studio
+Type=Application
+X-GNOME-Autostart-enabled=true
+
