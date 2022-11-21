@@ -107,7 +107,13 @@ poweroff() {
 
     /amir_bin/battery
     cp -rv  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups /home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`
-    /sbin/poweroff
+    echo -e "\n\nHave you puched out? [yes|no] " 
+    read ans
+    if [[ $ans == "yes" ]] ; then
+        /sbin/poweroff
+    else
+        android-studio
+    fi
 }
 
 declare -f rdfind
@@ -352,6 +358,7 @@ declare -f time_since_first_login_today
 time_since_first_login_today() {
     current_date="/home/amir/.$(date +%d-%m-%y)"
     first_login_time=$(cat "$current_date")
+    echo -e "\nHH:MM:SS\n$(date -d@$(cat $current_date ) +%T):\tTodays first log-in time"
     current_time=$(date +%s)
     time_pased="$((current_time-first_login_time))"
     convertsecs $time_pased
@@ -394,7 +401,30 @@ alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 
 change_PS1
 export -f todays_first_computer_on_time
+todays_first_computer_on_time
 time_since_first_login_today
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
