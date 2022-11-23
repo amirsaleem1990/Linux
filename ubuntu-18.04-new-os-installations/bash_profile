@@ -300,7 +300,7 @@ pylint_only_errors(){
 declare -f change_PS1
 change_PS1(){
     PS1="$PS1\n>>> "
-    export "$PS1"
+    export "$PS1" 2>/dev/null
 }
 
 declare -f swap_off
@@ -400,41 +400,5 @@ alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 
 
 change_PS1
-export -f todays_first_computer_on_time
 todays_first_computer_on_time
 time_since_first_login_today
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
