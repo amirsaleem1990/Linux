@@ -1959,3 +1959,5 @@ extract all key frames from a video clip ................. ffmpeg -skip_frame no
 
 # restart network manager ............ sudo systemctl restart network-manager.service
 
+# call a function defined in .bashrc/.bash_profilefrom the shell ................ echo "export -f my_function_name" >> ~/.bash_profile
+
