@@ -402,3 +402,6 @@ alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/
 change_PS1
 todays_first_computer_on_time
 time_since_first_login_today
+
+export -f todays_first_computer_on_time
+export -f extentions_for_given_file_names
