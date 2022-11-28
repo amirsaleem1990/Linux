@@ -3,6 +3,8 @@
 import warnings
 warnings.filterwarnings("ignore")
 
+import datetime as dt
+import matplotlib as mpl
 import os
 import sys
 import time
@@ -201,12 +203,20 @@ df2 = df2.sort_values("Date")
 #plt.rcParams['axes.facecolor']='blue'
 
 plt.figure(figsize=(23, 6))  # make separate figure
+
 for e,i in enumerate(['Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib','Isha'], start=1):
-	plt.subplot(2, 3, e)
 	x = df2.sort_values("Date").set_index("Date")[i]
-	ax = x.apply(string_time_to_minutes_2).plot(title=i)
+	time_num_list = np.array(list(map(
+		lambda x: mpl.dates.date2num(datetime.strptime(x, '%Y-%m-%d %H:%M')),
+		x.to_frame().reset_index().astype(str).apply(" ".join, axis=1).values
+		)))
+	time_num_list = time_num_list % 1
+	ax = plt.subplot(2, 3, e)
+	ax.plot_date(x.index.to_list(), time_num_list)
+	ax.set_title(i)
+	ax.yaxis_date()
 	plt.axvline(pd.Timestamp(str(datetime.now().date())),color='r')
-#plt.show()
+	plt.axhline(time_num_list[x.index.get_loc(str(datetime.now().date()))],color='r')
 plt.savefig(out_file_2, bbox_inches='tight')
 
 com = f"convert -append {out_file_2} {out_file_1} {out_file_3}; feh -F {out_file_3}"
