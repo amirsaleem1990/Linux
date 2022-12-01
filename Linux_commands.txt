@@ -1961,3 +1961,7 @@ extract all key frames from a video clip ................. ffmpeg -skip_frame no
 
 # call a function defined in .bashrc/.bash_profilefrom the shell ................ echo "export -f my_function_name" >> ~/.bash_profile
 
+# Q: I want to visit someone's fb profile, and see all posts, I have to keep pressing DOWN button until it reaches the end, It's there a work around? A: Yes, 1- Open a terminal. 2- write 'while :; do for i in {1..30}; do xdotool click 5; done ; sleep 1s; done' ; 3- open the fb page. 4- wait, 5- Here you go.
+
+# How to zip directory with encryption for file names? ................ 7z a -p -mhe=on Directory.7z /path/to/directory
+
