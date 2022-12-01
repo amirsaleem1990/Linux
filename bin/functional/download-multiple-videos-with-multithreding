@@ -105,17 +105,21 @@ if exclude:
 	urls_to_download = exclude_func()
 main_func()
 
+n=0
 while True:
 	part_files = [i for i in os.listdir() if i.endswith(".part")]
 	if not part_files:
 		Exit()
-	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
-	part_files_str = ' '.join(part_files)
-	part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
-	if not part_files:
-		Exit()	
-	urls_to_download = part_files
-	if exclude:
-		urls_to_download = exclude_func()
+	# urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+	# part_files_str = ' '.join(part_files)
+	# part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
+	# if not part_files:
+	# 	Exit()	
+	# urls_to_download = part_files
+	# if exclude:
+		# urls_to_download = exclude_func()
 	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
 	main_func()
+	n += 1
+	if n > 20:
+		break
