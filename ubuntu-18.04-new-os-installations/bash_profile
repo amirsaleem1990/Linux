@@ -366,6 +366,26 @@ time_since_first_login_today() {
 
 
 
+declare -f internet_speed
+internet_speed() {
+    ifstat -i wlp3s0
+}
+
+
+
+declare -f convertsecs
+convertsecs() {
+    integet=${1%.*}
+    ((y=${integet}/31536000))
+    ((d=${integet}%31536000/86400))
+    ((h=${integet}%86400/3600))
+    ((m=(${integet}%3600)/60))
+    ((s=${integet}%60))
+    x=$(printf "%02d:%02d:%02d:%02d:%02d" $y $d $h $m $s)
+    # echo -e "YY:DD:HH:MM:SS\n$x" | column -t -s\:
+    echo "$x"
+}
+
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -407,3 +427,9 @@ export -f todays_first_computer_on_time
 export -f extentions_for_given_file_names
 export -f si
 export -f max
+export -f internet_speed
+export -f convertsecs
+
+
+export RED="\033[0;31m"
+export NORMAL="\033[0m"
