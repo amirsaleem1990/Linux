@@ -27,11 +27,11 @@ def pool_func():
 		downloaded = open("downloaded.txt", "r").read().splitlines()
 		urls_to_download = [i for i in urls_to_download if not i in downloaded]
 	except:
-		pass		
+		pass        
 	p = multiprocessing.dummy.Pool()
 	return p
 
-def exclude_func():
+def exclude_func(urls_to_download):
 	te_be_removed = []
 	for key_word in exclude.split("|"):
 		for url in urls_to_download:
@@ -46,6 +46,78 @@ def Exit():
 	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
 	sys.exit(1)
 
+
+def main_func():
+	p = pool_func()
+	try:
+		p.map(download, urls_to_download)
+	except KeyboardInterrupt:
+		Exit()
+
+
+def get_incompleted_videos_urls(urls_file_name):
+	# urls = open(urls_file_name, 'r').read().splitlines()
+	# incomplete_files = " ".join([i  for i in os.listdir() if i.endswith("ytdl") or i.endswith("part")])
+	# x = list(map(lambda x: x.split("/")[-1], urls))
+	# x2 = []
+	# for i in x:
+	# 	if '.com_-_' in i:
+	# 		x2.append(i.split(".com_-_")[1].replace("_", " "))
+	# 	else:
+	# 		x2.append(i.replace("_", " "))
+	# x = [urls[e] for e, url in enumerate(x2) if url in incomplete_files and (urls[e]) and (not urls[e].startswith("#"))]
+	# if x:
+	# 	return x
+	# return
+
+
+	# all_urls_str = open(urls_file_name, 'r').read()
+	# all_urls_list = all_urls_str.splitlines()
+	# remove_these_values = set(map(lambda x: "/".join(x.split("/")[:-1]), all_urls_str.splitlines()))
+	# for i in remove_these_values:
+	#     all_urls_str = all_urls_str.replace(i+"/", "")
+	# all_urls_str = ["-".join(i.split("-")[:-3])  for i in all_urls_str.splitlines()]
+	# names = "\n".join(os.listdir()).lower().replace(" ", "-")
+	# f_urls = [all_urls_list[e] for e, i in enumerate(all_urls_str) if i in names]
+	# if f_urls:
+	# 	return f_urls
+	# return 
+
+	u = list(map(str.strip, list(os.popen("ls | grep .mp4.part$ | sed 's/.mp4.part//g' | rev | cut -d- -f1 | rev"))))
+	x = open(urls_file_name, 'r').read().splitlines()
+	r = []
+	for i in u:
+	    for ii in x:
+	        if i in ii:
+	            r.append(ii)
+	if r:
+		return r
+	return
+
+
+
+def get_urls_to_download(exclude):
+	global urls_file_name
+	try:
+		urls_to_download = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
+		urls_file_name = "mp4_links.txt"
+	except:
+		try:
+			urls_file_name = sys.argv[1]
+		except: 
+			import readline
+			readline.parse_and_bind("tab: complete")
+			urls_file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
+		urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+
+
+	if exclude:
+		urls_to_download = exclude_func(urls_to_download)
+	
+	return urls_to_download
+
+
+urls_file_name = ""
 
 exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
 get_input_from_user = False
@@ -81,28 +153,15 @@ if  ans == "yes":
 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
 		low_quality = True
 
-try:
-	urls_to_download = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
-	urls_file_name = "mp4_links.txt"
-except:
-	try:
-		urls_file_name = sys.argv[1]
-	except:	
-		import readline
-		readline.parse_and_bind("tab: complete")
-		urls_file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
-	urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
 
 
-def main_func():
-	p = pool_func()
-	try:
-		p.map(download, urls_to_download)
-	except KeyboardInterrupt:
-		Exit()
+urls_to_download = get_urls_to_download(exclude)
 
-if exclude:
-	urls_to_download = exclude_func()
+
+x = get_incompleted_videos_urls(urls_file_name)
+if not x is None:
+	urls_to_download = x
+
 main_func()
 
 n=0
@@ -114,10 +173,20 @@ while True:
 	# part_files_str = ' '.join(part_files)
 	# part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
 	# if not part_files:
-	# 	Exit()	
+	#   Exit()  
 	# urls_to_download = part_files
 	# if exclude:
 		# urls_to_download = exclude_func()
+
+	x = get_incompleted_videos_urls(urls_file_name)
+	if not x is None:
+		urls_to_download = x
+	else:
+		urls_to_download = get_urls_to_download(exclude)
+
+	if n > 5:
+		urls_to_download = get_urls_to_download(exclude)
+
 	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
 	main_func()
 	n += 1
