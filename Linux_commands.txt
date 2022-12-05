@@ -717,7 +717,7 @@ tar -cvz My_csv.csv -f My_csv.tar
 # poora folder (recursively) copy karna hy magar srif .jpg files nothing else..... cp --parents `find -name \*.jpg*` ~/target_directory/
 # sum of column ......... <cmd> | paste -sd+ | bc .......... eg: cat All_FB_links_names_corrected.csv | cut -d, -f1 | sort | uniq -c | sed 's/^      //g' | grep -v ^1  | cut -d " "  -f1 | paste -sd+ | bc
 
-# compare floats ...... num1=3.17648E-22; num2=1.5; echo $num1'>'$num2 | bc -l; echo $num2'>'$num1 | bc -l
+# compare floats ...... num1=3.17648E-22; num2=1.5; echo $num1'>'$num2 | bc -l; echo $num2'>'$num1 | bc -l .............. if [[ $(bc -l <<< "$my_var < 1000000") ]]; then ......... ; fi
 
 # Change string char at index X .................... echo $theStr | sed s/./A/5 ............... First you pipe the output of $theStr to sed, which replaces the fifth character with A. ............... another style: theStr="${theStr:0:4}A${theStr:5}"
 
