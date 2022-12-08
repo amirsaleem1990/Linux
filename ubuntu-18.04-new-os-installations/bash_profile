@@ -279,11 +279,11 @@ DEL(){
 
 # declare -f rm
 # rm() {
-    # mv "$@" ~/.local/share/Trash/files/
-    # if [[ $? -ne 0 ]] ; then 
-    #     DEL -rf "~/.local/share/Trash/file/$@"
-    # fi
-    # mv "$@" ~/.local/share/Trash/files
+#     mv -f "$@" ~/.local/share/Trash/files/
+#     if [[ $? -ne 0 ]] ; then 
+#         /usr/bin/rm -rf "~/.local/share/Trash/file/$@"
+#     fi
+#     mv "$@" ~/.local/share/Trash/files
 # }
 
 declare -f pylint_amir
@@ -423,7 +423,6 @@ change_PS1
 todays_first_computer_on_time
 time_since_first_login_today
 
-export -f todays_first_computer_on_time
 export -f extentions_for_given_file_names
 export -f si
 export -f max
@@ -433,3 +432,4 @@ export -f convertsecs
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
+
