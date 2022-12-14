@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import os
 from get_soup_object_using_selenium import get_soup_object_using_selenium
 import pandas as pd
 user_input = input("Enter your keyword: ")
