@@ -65,7 +65,7 @@ alias wl='nmcli d w r; sleep 10; nmcli d w l'
 alias z='ls *.mp4 -1'
 alias zong2='nmcli d w c ZONG\ MBB-E5573-2592 password 78624687'
 alias zongd='nmcli d w c ZONG\ MBB-E5573-D164 password 34886114'
-alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status | grep 'Active: inactive (dead)' | wc -l) -eq 0 ]] &&  sudo /usr/sbin/service qualys-cloud-agent  stop"
+alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status 2>/dev/null| grep 'Active: inactive (dead)' | wc -l) -eq 0 ]] &&  sudo /usr/sbin/service qualys-cloud-agent  stop"
 # alias youtube-dl="while :; do /usr/local/bin/youtube-dl -t ; done"
 # alias j="for i in `ps aux | grep manage | grep -v color=auto | grep manage.py | sed 's/\ \{1,\}/,/g' | cut -d, -f2`; do kill $i ; done; python manage.py  runserver &  sleep 1s; firefox http://127.0.0.1:8000/"
 alias vpn_g="echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/Programs/VPN/vpnbook-pl226-udp53.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt" 
@@ -73,7 +73,7 @@ alias symbolic_links="ls -l | grep ^l"
 alias Latex="cd github/Amir-personal/Resume/Latex-resume/; echo R | latex -output-format pdf amir-saleem-data-science-resume.tex; if [[ $? -eq 0 ]] ; then evince amir-saleem-data-science-resume.pdf; fi"
 alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
-
+alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 
 
 PATH=$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids
@@ -386,6 +386,12 @@ convertsecs() {
     echo "$x"
 }
 
+
+declare -f free_space_on_current_partition
+free_space_on_current_partition(){
+    df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
+}
+
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -428,7 +434,7 @@ export -f si
 export -f max
 export -f internet_speed
 export -f convertsecs
-
+export -f free_space_on_current_partition
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
