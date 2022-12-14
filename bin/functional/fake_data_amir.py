@@ -122,8 +122,19 @@ class my_fake_ganerator:
 		self.df.columns.name = None
 		self.write_to_disk()
 
+import sys
+if len(sys.argv) == 1:
+	n_rows = 10
+	print("\n\bSince you haven't passed the number for n_rows perameter, we are going to use the default '10'.\n\n")
+else:
+	n_rows = sys.argv[1]
+	try:
+		n_rows = int(n_rows)
+	except:
+		raise Execption("Wrong input. The input should be integer value")
+
 self = my_fake_ganerator(
-	n_rows=10, 
+	n_rows=n_rows, 
 	int_=True, 
 	float_=True,
 	string_=True,
