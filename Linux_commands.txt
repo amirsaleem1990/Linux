@@ -1965,3 +1965,9 @@ extract all key frames from a video clip ................. ffmpeg -skip_frame no
 
 # How to zip directory with encryption for file names? ................ 7z a -p -mhe=on Directory.7z /path/to/directory
 
+
+Grep characters before and after match ................. echo "some123_string_and_another" | grep -o -P '.{0,3}string.{0,4}' ..................... grep -E -o ".{0,5}test_pattern.{0,5}" test.txt 
+
+
+# Current directory partition ............. df -P . | sed -n '40/[^%]*%[[:blank:]]*//p' #/media/sdb2 ............. df -P . | sed -n '40/[[:blank:]].*//p' #/dev/sda3 ........... findmnt --target . ............... df . -H 
+
