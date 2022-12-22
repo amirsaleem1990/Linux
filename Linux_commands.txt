@@ -1971,3 +1971,12 @@ Grep characters before and after match ................. echo "some123_string_an
 
 # Current directory partition ............. df -P . | sed -n '40/[^%]*%[[:blank:]]*//p' #/media/sdb2 ............. df -P . | sed -n '40/[[:blank:]].*//p' #/dev/sda3 ........... findmnt --target . ............... df . -H 
 
+
+# datetime to epoch ........... date -d '12/16/2022 09:40:00' +"%s"
+
+
+# vscode virtual envoirment ............. github/working/jupyternotebook/Creating and Using Virtual Environment on Jupyter Notebook with Python _ by Cornellius Yudha Wijaya _ Towards Data Science(https__towardsdatascience.com_creating-and-using-virtual-environ….html
+
+
+
+
