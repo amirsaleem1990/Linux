@@ -8,6 +8,8 @@ import sys
 
 
 def download(url):
+	if url[0] == "#":
+		return
 	try:
 		if low_quality:
 			subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
