@@ -372,7 +372,6 @@ internet_speed() {
 }
 
 
-
 declare -f convertsecs
 convertsecs() {
     integet=${1%.*}
@@ -391,6 +390,44 @@ declare -f free_space_on_current_partition
 free_space_on_current_partition(){
     df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
 }
+
+
+declare -f pickle_show_head
+pickle_show_head() {
+x="import pandas as pd; print(pd.read_pickle('"$1"').head())"
+echo "$x" | python3
+}
+
+
+declare -f pickle_show_nrows
+pickle_show_nrows() {
+x="import pandas as pd; print(pd.read_pickle('"$1"').shape[0])"
+echo "$x" | python3
+}
+
+
+declare -f pickle_show_content
+pickle_show_content() {
+x="import pickle; print(pickle.load(open('"$1"', 'rb')))"
+echo "$x" | python3
+}
+
+
+declare -f pickle_read_dataframe_and_go_in_inpython
+pickle_read_dataframe_and_go_in_inpython() {
+    python_code="import pandas as pd; df = pd.read_pickle('"$1"'); "
+    echo "$python_code" > /tmp/python_code
+    echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
+    ipython3 -i  /tmp/python_code
+}
+
+
+declare -f pickle_list_columns_names
+pickle_list_columns_names() {
+    python_code="import pandas as pd; print(*pd.read_pickle('"$1"').columns.to_list(), sep='\n')"
+    echo $python_code | python3
+}
+
 
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -435,7 +472,13 @@ export -f max
 export -f internet_speed
 export -f convertsecs
 export -f free_space_on_current_partition
+export -f pickle_show_head
+export -f pickle_show_nrows
+export -f pickle_show_content
+export -f pickle_read_dataframe_and_go_in_inpython
+export -f pickle_list_columns_names
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
+
 
