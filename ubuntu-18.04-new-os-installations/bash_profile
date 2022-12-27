@@ -76,7 +76,7 @@ alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/gith
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 
 
-PATH=$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids
+PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
 bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
@@ -480,5 +480,3 @@ export -f pickle_list_columns_names
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
-
-
