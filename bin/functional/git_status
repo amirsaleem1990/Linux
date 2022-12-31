@@ -3,52 +3,12 @@ from termcolor import colored
 import sys
 import os
 
-# print(colored("\n\n\tFor actual status for each repo run:", 'red'),
-# 	colored("""\n\t\tcd /home/amir/github/; for i in `ls /home/amir/github/ -a | grep -v  '^\.'`; do if [[ $i == "lfd-projects/" ]] ; then continue ; fi ; echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $i" ; cd $i ; git status; cd ../ ; done\n""", 'green')) 
-
-
 if (list(os.popen('git_status_orignal  | grep -E -v "^$|^>>>>>>>>>>|^Your branch is up to date with|working tree clean|^On branch" | wc -l'))[0].strip())  == '0':
 	raise Exception("\nNo new commit\nAborting......\n\n")
 
 os.chdir("/home/amir/github")
 
-# command="""
-# IFS=$'\n'
-# find . -size +49M -exec du -sh {} \; | grep -v ".pack$\|ames_data_for_NER.zip\|files_for_downlode.zip" | sort -h > /home/amir/.amda_amir
-# if [ `cat /home/amir/.amda_amir | wc -l` -gt 0 ] ; then 
-# 	cat /home/amir/.amda_amir
-# fi
-# """.strip()
-# f = list(os.popen(command))
-# os.remove("/home/amir/.amda_amir")
 
-# #-----
-# to_remove = []
-# for F in f:
-# 	repo_name, *_, big_file_name = F.split("\t")[1].strip().replace("./", "").split("/")
-# 	gitignore_file = "/home/amir/github/" + repo_name + "/.gitignore"
-# 	if os.path.exists(gitignore_file):
-# 		gitignore = open(gitignore_file, 'r').read().splitlines()
-# 		if gitignore:
-# 			for gitignore_entry in gitignore:
-# 				if big_file_name in gitignore_entry:
-# 					to_remove.append(F)
-# 					break
-
-# f = [i for i in f if not i in to_remove]
-# #-----
-# if f:
-# 	print("\n\n")
-# 	print(colored("""
-# -------------- Filese Larger then 49 MB --------------
-# NOTE: files > 49 are not allowd. either remove this/these file/s or move it/these to another directory
-# 	""".strip(), "red"))
-# 	f = [i.replace("\t.", "\tgithub" ).strip() for i in f]
-# 	for i in f:
-# 		print(colored(i, 'green'))
-# 	print("\n\n")
-# 	if input("If you included this/these file/s in .gitignore you can proceed.\nAre you need to proceed [y|n]?  ").strip().lower() != 'y':
-# 		sys.exit()
 if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
 aa = True
@@ -61,79 +21,6 @@ if not_to_commit_repos:
 
 repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if (not repo in not_to_commit_repos) and not (repo.startswith(".")) and (os.path.isdir(repo))]
-
-# r = ["Your branch is up to date with 'origin/master'.\n", '\n', 'Changes not staged for commit:\n', '  (use "git add <file>..." to update what will be committed)\n', '  (use "git checkout -- <file>..." to discard changes in working directory)\n', 'no changes added to commit (use "git add" and/or "git commit -a")\n']
-# d_ = {"To be pushed" : [],
-	   # "To be commit" : []}
-# for i in repos:
-# 	os.chdir(f"/home/amir/github/{i}")
-# 	a = list(os.popen("git status"))
-# 	a = [i.strip() for i in '||'.join(a).replace("\n", "").replace("\t", '').split('||') if i]
-# 	if '(use "git push" to publish your local commits)' in ''.join(a):
-# 		d_['To be pushed'].append(i)
-# 	if '(use "git add <file>..." to update what will be committed)' in ''.join(a) or ('(use "git add <file>..." to include in what will be committed)' in ''.join(a)) :
-# 		d_['To be commit'].append(i)
-# 		if '(use "git add <file>..." to include in what will be committed)' in ''.join(a):
-# 			d_['To be pushed'].append(i)
-# 	else:
-# 		lst = True
-# 	os.chdir("../")
-
-# for i in d_['To be pushed']:
-# 	if i in d_['To be commit']:
-# 		d_['To be pushed'].remove(i)
-# break_ = True
-
-
-# if d_['To be pushed'] and (not d_['To be commit']):
-# 	print("")
-# 	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
-# 	if ans == "y":
-# 		os.system("git_push")
-
-# else:
-# 	for k,v in d_.items():
-# 		if not v:
-# 			continue
-# 		print(colored(f">>>>>>> {k} <<<<<<<<<", 'red'))
-# 		for val in set(v):
-# 			#print(k, ": >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
-# 			print("   ", val)
-# 			break_ = False
-# 		print()
-# 	if break_:
-# 		print("\nNothing to Add or Push")
-# 		import sys
-# 		sys.exit(0)
-# 	print()
-
-# to_be_commit = d_['To be commit']
-# for i in to_be_commit:
-# 	os.chdir(f"/home/amir/github/{i}")
-# 	os.system("git status > /home/amir/.x")
-# 	status = [i.strip() for i in open("/home/amir/.x", 'r').read().splitlines() if i ]
-# 	if 'Untracked files:' in status:
-# 		q = status[status.index('Untracked files:'):]
-# 		for zz in q:
-# 		    for ii in ['Untracked files', 'git add', 'git commit']:
-# 		        if  ii in zz:
-# 		            break
-# 		    else:
-# 		        com = f'git add {zz}; git commit -m "new"'
-# 		        os.system(com)
-# 	if ('(use "git add <file>...' in ''.join(status)) and ('(use "git restore <file>' in ''.join(status)):
-# 		q = [i.lstrip('modified:').lstrip() for i in status if i.startswith("modified")]       
-# 		for qm in q:
-# 			print(f"\n\n_____________________________ {i}/{qm} ___________________________________________")
-# 			# com = f"git diff {qm}"
-# 			com = f"git diff --color {qm}  > /home/amir/.x ; cat /home/amir/.x" # <--color> presever coloring
-# 			os.system(com)
-
-# 			commit = input("Enter your commit: ")
-# 			com = f'git add {qm}; git commit -m "{commit}"'
-# 			print(com)
-# 			os.system(com)
-# 			print("\n\n\n-------------------------------------------------------")
 
 
 only_new_files     = "/home/amir/.only_new_files"
@@ -184,19 +71,11 @@ for repo in repos:
 				os.system(com)
 
 				commit = input("\nEnter your commit: ")
+				if commit == "":
+					continue
 				com = f"""git add '{updated_file}'; git commit -m "{commit}" """
 				os.system(com)
 				print("\n\n\n-------------------------------------------------------")
-		# else:
-			# try:
-			# 	if int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip()) > 0:
-			# 		ans = input("\n\nSab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
-			# 		if ans == "y":
-			# 			os.system("git_push")
-			# 			sys.exit()
-			# 			print("--------")
-			# except:
-			# 	pass	
 
 q = 0
 for repo in repos:
