@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+
+# youtube-dl --version # 2021.12.17
+
 import sys
 import os
 from termcolor import colored
