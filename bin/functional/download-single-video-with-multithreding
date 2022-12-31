@@ -12,6 +12,7 @@
 #                                                   supports aria2c,avconv,axel,c url,ffmpeg,httpie,wget
 # --external-downloader-args "-x 16 -s 16 -k 1M"  :  Give these arguments to the external downloader
 
+# youtube-dl --version # 2021.12.17
 
 if [[ -z $1 ]]; then
 	read -p "Enter links file name: " links_file
