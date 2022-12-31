@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
+
+# youtube-dl --version # 2021.12.17
+
 import multiprocessing.dummy
 import subprocess
 import os
