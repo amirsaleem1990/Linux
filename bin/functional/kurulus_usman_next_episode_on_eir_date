@@ -1,4 +1,7 @@
 #!/usr/bin/ipython3
+
+# youtube-dl --version # 2021.12.17
+
 from termcolor import colored
 print(colored("\n\n******** Kurulus usman ********\n", 'red'))
 import os
