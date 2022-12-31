@@ -7,6 +7,9 @@
 # #   3- end point      (total time you want to download), eg: 00:10:00.00, this means (download only 10 seconds)    #
 # ####################################################################################################################
 # "
+
+# youtube-dl --version # 2021.12.17
+
 while [ $# -gt 0 ]; do
   case "$1" in
     -u|--url)
