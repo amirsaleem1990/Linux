@@ -19,23 +19,6 @@ align() {
 }
 
 
-size_in_proper_units (){
-	# Assumption: This function will get an input in KBs
-	x=$(echo $1'>'1000000 | bc -l)
-	if [[ $x -eq 1 ]]; then
-		r=$(echo "scale=3; $1/1000000" | bc -l)
-		echo "$r G"
-	else
-		x=$(echo $1'>'1000 | bc -l)
-		if [[ $x -eq 1 ]]; then
-			r=$(echo "scale=1; $1/1000" | bc -l)
-			echo "$r M"
-		else
-			echo "$1 K"
-		fi
-	fi
-
-}
 
 float_to_int() {
 	int=${1%.*}
