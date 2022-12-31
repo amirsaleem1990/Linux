@@ -1,5 +1,7 @@
 #!/home/amir/github/virtual_envs/coursera_download_venv/bin/python3
 
+# youtube-dl --version # 2021.12.17
+
 import shutil
 import clipboard
 import traceback
