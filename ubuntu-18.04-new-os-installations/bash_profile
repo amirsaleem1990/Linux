@@ -484,6 +484,21 @@ size_in_proper_units (){
 }
 
 
+declare -f pickle_to_csv
+pickle_to_csv() {
+    read -p "Enter csv file name: " csv_file_name
+
+    while : ; do 
+        test -e "$csv_file_name"
+        if [[ $? -ne 0 ]]; then
+            break
+        fi 
+    done
+    
+    x="from pandas import read_pickle; read_pickle(open('"$1"', 'rb')).to_csv('"$csv_file_name"')"
+    echo "$x" | python3
+}
+
 alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -534,6 +549,7 @@ export -f pickle_read_dataframe_and_go_in_inpython
 export -f pickle_list_columns_names
 export -f download_speed_stream
 export -f size_in_proper_units
+export -f pickle_to_csv
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
@@ -546,5 +562,8 @@ export CYAN='\033[01;36m'
 export WHITE='\033[01;37m'
 export BOLD='\033[1m'
 export UNDERLINE='\033[4m'
+
+
+
 
 
