@@ -435,6 +435,7 @@ download_speed_stream(){
     avg_speed=1
     start_time=$(date +%s)
     echo -e '\n\n\n\n\n\n\n\n\n\n\n\n\n'
+    wifi_chip_name=$(ifconfig  | grep ^wlp | cut -d: -f1)
     while :; do 
         # echo -e "\n\n-------------------"
         sleep 1s
@@ -442,7 +443,11 @@ download_speed_stream(){
         time_passed_sec=$((current_time-start_time))
         time_passed=$(convertsecs $time_passed_sec)
 
-        download_speed=$(ifstat -i wlp3s0 1s 1 | awk 'NR==3 {print $1}')
+        download_speed=$(ifstat -i "$wifi_chip_name" 1s 1 | awk 'NR==3 {print $1}')
+        if [[ "$download_speed" == "n/a" ]] ; then
+            sleep 1s
+            continue
+        fi
         # if [[ $download_speed>1 ]]; then
         #     download_speed=${download_speed%.*}
         # fi
