@@ -24,8 +24,8 @@ class download_coursera_course:
 		self.LOGIN_URL = "https://www.coursera.org/?authMode=login"
 		
 
-		# self.EMAIL_ADRESS = "hamzaamirr2014@gmail.com" ################################################################################????
-		self.EMAIL_ADRESS = "amirsaleem1990@hotmail.com" ################################################################################????
+		self.EMAIL_ADRESS = "hamzaamirr2014@gmail.com" ################################################################################????
+		# self.EMAIL_ADRESS = "amirsaleem1990@hotmail.com" ################################################################################????
 		
 		if self.EMAIL_ADRESS != "hamzaamirr2014@gmail.com":
 			if input("The email address is not 'hamzaamirr2014@gmail.com' Are you need to proceed? [y|n] ") != "y":
