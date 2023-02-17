@@ -48,7 +48,7 @@ alias mv='mv -i'
 alias J="python3 manage.py runserver"
 alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
 alias p='python3 -c '\''t=input(); print(eval(t))'\'''
-alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
+# alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
 alias pin='python3 /home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
 alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
@@ -286,10 +286,10 @@ DEL(){
 #     mv "$@" ~/.local/share/Trash/files
 # }
 
-declare -f pylint_amir
-pylint_amir(){
-    pylint --msg-template='{msg_id}:{line:3d}:{column}:{msg}' "$1"  | grep "^[A-Za-z-]" | head -n -2 | sort -k1,4 -s
-}
+# declare -f pylint_amir
+# pylint_amir(){
+#     pylint --msg-template='{msg_id}:{line:3d}:{column}:{msg}' "$1"  | grep "^[A-Za-z-]" | head -n -2 | sort -k1,4 -s
+# }
 
 
 declare -f pylint_only_errors
@@ -488,6 +488,10 @@ size_in_proper_units (){
 
 }
 
+declare -f pdf
+pdf() {
+    feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &
+}
 
 declare -f pickle_to_csv
 pickle_to_csv() {
@@ -555,6 +559,7 @@ export -f pickle_list_columns_names
 export -f download_speed_stream
 export -f size_in_proper_units
 export -f pickle_to_csv
+export -f pdf
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
