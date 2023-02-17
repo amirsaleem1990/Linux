@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo arp-scan --interface=wlp3s0 --localnet
+#sudo arp-scan --interface=wlp3s0 --localnet
+sudo arp-scan --interface=wlp0s20f3 --localnet
 ####################################################################################
 # echo "
 # ***************************************************************************
