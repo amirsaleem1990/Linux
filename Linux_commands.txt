@@ -1980,3 +1980,8 @@ Grep characters before and after match ................. echo "some123_string_an
 
 
 
+# generate a random number within the range of 10 to 40 ............ echo $[ $RANDOM % 40 + 10 ]
+
+# crop mp3 audio file ............... ffmpeg -i input.mp3 -ss [start_time] -t [duration] -c copy output.mp3 # start_time: 00:00:30, duration: 00:01:30 # start from 30 seconds and crop 1 minute and 30 second audio
+
+# run / open mp3 audio file on terminal without gui application .............. mpv --volume=500 file.mp3
