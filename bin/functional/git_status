@@ -7,7 +7,9 @@ if (list(os.popen('git_status_orignal  | grep -E -v "^$|^>>>>>>>>>>|^Your branch
 	raise Exception("\nNo new commit\nAborting......\n\n")
 
 os.chdir("/home/amir/github")
-
+files_to_remove = list(map(str.strip, os.popen("find . -name geckodriver.log 2>/dev/null")))
+for f_t_r in files_to_remove:
+	os.remove(f_t_r)
 
 if "git_files.txt" in os.listdir():
 	os.system("rm git_files.txt")
