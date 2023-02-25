@@ -1985,3 +1985,6 @@ Grep characters before and after match ................. echo "some123_string_an
 # crop mp3 audio file ............... ffmpeg -i input.mp3 -ss [start_time] -t [duration] -c copy output.mp3 # start_time: 00:00:30, duration: 00:01:30 # start from 30 seconds and crop 1 minute and 30 second audio
 
 # run / open mp3 audio file on terminal without gui application .............. mpv --volume=500 file.mp3
+
+# change ip address ...........  sudo ifconfig interface NEW_IP_ADDRESS ......... sudo ifconfig wlp0s20f3 192.168.0.100
+
