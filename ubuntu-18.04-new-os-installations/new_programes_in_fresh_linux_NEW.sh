@@ -75,13 +75,14 @@ func_ "apt install -y libssl-dev"
 func_ "apt install -y jupyter-client"
 func_ "apt install -y gparted"
 func_ "apt install -y youtube-dl"
+func_ "apt install -y googler"
 
 
 
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
-func_ "snap install googler"
+# func_ "snap install googler"
 func_ "snap install chromium"
 
 func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
@@ -91,20 +92,20 @@ if [[ $? -ne 0 ]]; then
 	func_ "snap install --classic sublime-text"
 fi
 
-func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
-dpkg -i dukto*
-if [[ $? -ne 0 ]]; then
-	func_ "apt -f install -y"
-	if [[ $? -ne 0 ]] ;then
-		add-apt-repository ppa:rock-core/qt4
-		add-apt-repository ppa:gezakovacs/ppa
-		apt update -y
-		apt --fix-broken install -y
-		apt install libqtgui4 -y
-		apt autoremove -y
-	fi
-fi
-rm -r dukto*.deb
+# func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
+# dpkg -i dukto*
+# if [[ $? -ne 0 ]]; then
+# 	func_ "apt -f install -y"
+# 	if [[ $? -ne 0 ]] ;then
+# 		add-apt-repository ppa:rock-core/qt4
+# 		add-apt-repository ppa:gezakovacs/ppa
+# 		apt update -y
+# 		apt --fix-broken install -y
+# 		apt install libqtgui4 -y
+# 		apt autoremove -y
+# 	fi
+# fi
+# rm -r dukto*.deb
 
 apt install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
 if [[ $? -ne 0 ]]; then 
