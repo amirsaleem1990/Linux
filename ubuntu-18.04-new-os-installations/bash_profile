@@ -74,6 +74,8 @@ alias Latex="cd github/Amir-personal/Resume/Latex-resume/; echo R | latex -outpu
 alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
+alias android-studio="/home/amir/Downloads/android-studio/bin/studio.sh"
+
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
@@ -508,36 +510,99 @@ pickle_to_csv() {
     echo "$x" | python3
 }
 
-alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_4='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_5='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_6='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_7='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_8='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/de4-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_9='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/de4-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_10='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/de4-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_11='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/de4-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_12='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_13='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_14='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_15='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_16='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_17='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_18='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_19='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_20='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_21='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_22='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_23='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_24='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_25='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_26='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_27='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_4='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_5='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_6='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_7='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca222-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_8='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/de4-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_9='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/de4-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_10='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/de4-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_11='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/de4-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_12='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_13='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_14='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr1-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_15='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_16='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_17='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_18='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/fr8-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_19='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_20='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_21='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_22='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/pl226-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_23='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_24='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_25='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_26='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us1-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_27='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-tcp443.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-tcp80.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+# alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPNs/us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_1=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca198-tcp443.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_2=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca198-tcp80.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_3=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca222-tcp443.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_4=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca222-tcp80.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_5=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-de4-tcp443.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_6=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-de4-tcp80.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_7=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr1-tcp443.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_8=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr1-tcp80.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_9=' echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr8-tcp443.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_10='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr8-tcp80.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_11='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-pl226-tcp443.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_12='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-pl226-tcp80.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_13='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us1-tcp443.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_14='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us1-tcp80.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_15='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us2-tcp443.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_16='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us2-tcp80.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_17='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca198-udp25000.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_18='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca198-udp53.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_19='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca222-udp25000.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_20='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-ca222-udp53.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_21='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-de4-udp25000.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_22='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-de4-udp53.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_23='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr1-udp25000.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_24='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr1-udp53.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_25='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr8-udp25000.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_26='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-fr8-udp53.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_27='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-pl226-udp25000.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_28='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-pl226-udp53.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_29='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us1-udp25000.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_30='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us1-udp53.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_31='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us2-udp25000.ovpn   --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias vpn_g_32='echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/VPN2s/vpnbook-us2-udp53.ovpn      --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
