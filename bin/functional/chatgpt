@@ -1,0 +1,55 @@
+#!/home/amir/github/virtual_envs/venv-gpt3/bin/python3
+
+# https://medium.com/@alexandre.tkint/revolutionize-your-chatbot-game-with-the-chat-gpt-api-and-python-get-started-in-just-3-minutes-8b588dacf48f
+
+import openai
+
+openai.api_key = "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"
+
+# Set the model and prompt
+model_engine = "text-davinci-003"
+
+inp = input(
+	# "\tPlease feel welcome to check out my page, http://amirsaleem1990.github.io/ to discover more about me.\n\n"
+	"\t1-Explain the following sentence\n"
+	"\t2-Rephrase\n"
+	"\t3-Cover latter\n"
+	"\t4-Genral query\n"
+	"\t5-Is the following sentence correct?\n"
+	"\t6-Translate Urdu to English.\n"
+	"\n\n\t"
+	)
+# prompt
+prompt = input("Enter your query: ")
+if inp == "1":
+	prompt = f"""Explain the following sentence in five different ways: {prompt}"""
+elif inp == "2":
+	prompt = f"""Rephrase the following sentence in five different ways: {prompt}"""
+elif inp == "3":
+	prompt = f"""Write me five different cover latter for the following Upwork's project: {prompt}"""
+elif inp == "4":
+	prompt = prompt
+elif inp == "5":
+	prompt = f"Is the following sentence correct? \"{prompt}\""
+elif inp == "6":
+	prompt = f"Translate the following URDU to English in five different ways: \"{prompt}\""
+
+print(f"\nYour Query: {prompt}")
+
+# Set the maximum number of tokens to generate in the response
+max_tokens = 2024
+
+# Generate a response
+completion = openai.Completion.create(
+	engine=model_engine,
+	prompt=prompt,
+	max_tokens=max_tokens,
+	temperature=0.5,
+	top_p=1,
+	frequency_penalty=0,
+	presence_penalty=0
+)
+
+# Print the response
+print(completion.choices[0].text)
+
