@@ -497,8 +497,8 @@ pdf() {
 
 declare -f pickle_to_csv
 pickle_to_csv() {
-    read -p "Enter csv file name: " csv_file_name
-
+    # read -p "Enter csv file name: " csv_file_name
+    csv_file_name="$1.csv"
     while : ; do 
         test -e "$csv_file_name"
         if [[ $? -ne 0 ]]; then
