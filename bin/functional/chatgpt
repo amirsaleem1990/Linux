@@ -3,8 +3,9 @@
 # https://medium.com/@alexandre.tkint/revolutionize-your-chatbot-game-with-the-chat-gpt-api-and-python-get-started-in-just-3-minutes-8b588dacf48f
 
 import openai
+import os
+openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
 
-openai.api_key = "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"
 
 # Set the model and prompt
 model_engine = "text-davinci-003"
