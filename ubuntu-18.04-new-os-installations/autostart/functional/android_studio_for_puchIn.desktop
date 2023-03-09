@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=android-studio
-Exec=android-studio
+Exec=/home/amir/Downloads/android-studio/bin/studio.sh
 Type=Application
 X-GNOME-Autostart-enabled=true
 
