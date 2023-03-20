@@ -1,5 +1,0 @@
-python3 -m venv sample_environment
-source sample_environment/bin/activate
-deactivate
-
-
