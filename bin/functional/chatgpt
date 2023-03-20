@@ -18,6 +18,7 @@ inp = input(
 	"\t4-Genral query\n"
 	"\t5-Is the following sentence correct?\n"
 	"\t6-Translate Urdu to English.\n"
+	"\t7- Correct grammar mistakes.\n"
 	"\n\n\t"
 	)
 # prompt
@@ -34,6 +35,8 @@ elif inp == "5":
 	prompt = f"Is the following sentence correct? \"{prompt}\""
 elif inp == "6":
 	prompt = f"Translate the following URDU to English in five different ways: \"{prompt}\""
+elif inp == "7":
+	prompt = f"Correct the grammar mistakes in the following sentence and explain the mistakes:: \"{prompt}\""
 
 print(f"\nYour Query: {prompt}")
 
