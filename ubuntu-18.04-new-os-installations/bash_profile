@@ -510,6 +510,14 @@ pickle_to_csv() {
     echo "$x" | python3
 }
 
+
+declare -f beep
+beep() {
+    #play -n synth 1.0 sine 1000
+    play -n synth 0.5 sine 500
+}
+
+
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -625,6 +633,7 @@ export -f download_speed_stream
 export -f size_in_proper_units
 export -f pickle_to_csv
 export -f pdf
+export -f beep
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
