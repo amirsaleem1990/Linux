@@ -75,7 +75,7 @@ alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/gith
 #alias Latex="echo R | latex -output-format pdf resume.tex"
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 alias android-studio="/home/amir/Downloads/android-studio/bin/studio.sh"
-
+alias gpt3="/amir_bin/chatgpt"
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
