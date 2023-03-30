@@ -4,23 +4,30 @@
 
 import openai
 import os
+import sys
 openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
 
 
 # Set the model and prompt
 model_engine = "text-davinci-003"
 
-inp = input(
-	# "\tPlease feel welcome to check out my page, http://amirsaleem1990.github.io/ to discover more about me.\n\n"
-	"\t1-Explain the following sentence\n"
-	"\t2-Rephrase\n"
-	"\t3-Cover latter\n"
-	"\t4-Genral query\n"
-	"\t5-Is the following sentence correct?\n"
-	"\t6-Translate Urdu to English.\n"
-	"\t7- Correct grammar mistakes.\n"
-	"\n\n\t"
-	)
+if len(sys.argv) > 1:
+	inp = sys.argv[1]
+else:
+	inp = input(
+		# "\tPlease feel welcome to check out my page, http://amirsaleem1990.github.io/ to discover more about me.\n\n"
+		"\t1- Explain the following sentence\n"
+		"\t2- Rephrase\n"
+		"\t3- Cover latter\n"
+		"\t4- Genral query\n"
+		"\t5- Is the following sentence correct?\n"
+		"\t6- Translate Urdu to English.\n"
+		"\t7- Correct grammar mistakes.\n"
+		"\t8- Short Reply.\n"
+		"\t9- Long Reply.\n"
+		"\n\n\t"
+		)
+
 # prompt
 prompt = input("Enter your query: ")
 if inp == "1":
@@ -37,6 +44,10 @@ elif inp == "6":
 	prompt = f"Translate the following URDU to English in five different ways: \"{prompt}\""
 elif inp == "7":
 	prompt = f"Correct the grammar mistakes in the following sentence and explain the mistakes:: \"{prompt}\""
+elif inp == "8":
+	prompt = "Give me five short replies for the following: \"{prompt}\""
+elif inp == "9":  
+	prompt = "Give me five long replies for the following: \"{prompt}\""  
 
 print(f"\nYour Query: {prompt}")
 
