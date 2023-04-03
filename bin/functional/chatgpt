@@ -1,12 +1,12 @@
 #!/home/amir/github/virtual_envs/venv-gpt3/bin/python3
 
 # https://medium.com/@alexandre.tkint/revolutionize-your-chatbot-game-with-the-chat-gpt-api-and-python-get-started-in-just-3-minutes-8b588dacf48f
+# https://beta.openai.com/account/api-keys
 
 import openai
 import os
 import sys
 openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
-
 
 # Set the model and prompt
 model_engine = "text-davinci-003"
@@ -25,6 +25,7 @@ else:
 		"\t7- Correct grammar mistakes.\n"
 		"\t8- Short Reply.\n"
 		"\t9- Long Reply.\n"
+		"\t10- CL\n"
 		"\n\n\t"
 		)
 
@@ -45,9 +46,20 @@ elif inp == "6":
 elif inp == "7":
 	prompt = f"Correct the grammar mistakes in the following sentence and explain the mistakes:: \"{prompt}\""
 elif inp == "8":
-	prompt = "Give me five short replies for the following: \"{prompt}\""
+	prompt = f"Give me five short replies for the following: \"{prompt}\""
 elif inp == "9":  
-	prompt = "Give me five long replies for the following: \"{prompt}\""  
+	prompt = f"Give me five long replies for the following: \"{prompt}\""  
+elif inp == "10":
+	file_name = "/tmp/jd.txt"
+	open(file_name, 'w').write("Paste the DJ here, and save the file.")
+	os.system(f"subl {file_name}")
+	input(f"Enter any key after saving the JD. into {file_name}: ")
+	prompt = ("Write a cover later for the following job considering the following resume: \n"
+		      "Job description: \n"
+		      f"{open(file_name, 'r').read()}\n"
+		      "Resume: \n"
+		      f"{open('/home/amir/RES/res.txt').read()}\n"
+		      )
 
 print(f"\nYour Query: {prompt}")
 
