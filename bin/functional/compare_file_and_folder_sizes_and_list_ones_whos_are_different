@@ -18,10 +18,10 @@ get_type() {
 get_size_in_kb() {
     test -e "$i"
     if [[ $? -eq 0 ]]; then
-        x=$(du -s "$1" | cut -d$'\t' -f1)
+        x=$(du -s "$1" 2>/dev/null| cut -d$'\t' -f1)
         echo $x
     else
-        ehco "NOT FOUND"
+        echo "NOT FOUND"
     fi
 }
 
@@ -70,7 +70,6 @@ for i in $(ls "$here"); do
     # diff_size="$x"    
 
     # echo "$i,$type,$size_there,$size_here,$diff_size" >> "$file_name"
-    
     echo "$i,$type,$size_there_kb,$size_here_kb" >> "$file_name"
 done
 
