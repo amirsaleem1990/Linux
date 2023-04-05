@@ -443,11 +443,14 @@ download_speed_stream(){
     total=1
     avg_speed=1
     start_time=$(date +%s)
+    n=0
+    sleep 1s
     echo -e '\n\n\n\n\n\n\n\n\n\n\n\n\n'
     wifi_chip_name=$(ifconfig  | grep ^wlp | cut -d: -f1)
     while :; do 
+        let "n+=1"
         # echo -e "\n\n-------------------"
-        sleep 1s
+        # sleep 1s
         current_time=$(date +%s)
         time_passed_sec=$((current_time-start_time))
         time_passed=$(convertsecs $time_passed_sec)
@@ -462,10 +465,11 @@ download_speed_stream(){
         # fi
 
         total=$(echo "$total+$download_speed"|bc -l)
-        total_int=${total%.*}
-        total_int=$(size_in_proper_units $total_int)
+        # total_int=${total%.*}
+        # total_int=$(size_in_proper_units $total_int)
 
-        avg_speed=$(echo "scale=1; $total/$time_passed_sec"|bc -l)
+        # avg_speed=$(echo "scale=1; $total/$time_passed_sec"|bc -l)
+        avg_speed=$(echo "scale=1; $total/$n"|bc -l)
         # avg_speed_int=${avg_speed%.*}
         # avg_speed_int=$(size_in_proper_units $avg_speed_int)
 
@@ -474,7 +478,8 @@ download_speed_stream(){
         # echo "$(banner $download_speed)" #8
         toilet -f smmono12 $download_speed #11
         echo -e "YY:DD:HH:MM:SS\n$time_passed"
-        echo -e "Total: $total_int\t Avg: $avg_speed"
+        # echo -e "Total: $total_int\t Avg: $avg_speed"
+        echo -e "Avg: $avg_speed"
     done
 }
 
