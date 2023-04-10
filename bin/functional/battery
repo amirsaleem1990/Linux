@@ -3,6 +3,8 @@
 RED="\033[0;31m"
 normal="\033[0m"
 
+battery_file=/tmp/battery_n
+
 Wh=$(upower -d  | grep 'energy:' | head -n1 | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
 V=$(upower -d  | grep voltage | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
 mah=$(echo "scale=0; $Wh*1000/$V" | bc -l)
@@ -13,27 +15,27 @@ upower -d  | grep "capacity\|energy-full-design:" | sed 's/^    //g' | sort -u
 echo -e "\n\n--------------------------\n\n"
 
 # upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u
-upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sed 's/\ //g' | sed 's/:/,/g' | sort -u > /home/amir/.battery_n
+upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sed 's/\ //g' | sed 's/:/,/g' | sort -u > $battery_file
 # upower -d  | grep -E "state|to\ full|percentage" | sed 's/^    //g' | sort -u
-upower -d  | grep -E "state|percentage" | sed 's/ //g' | sed 's/:/,/g' | sort -u >> /home/amir/.battery_n
+upower -d  | grep -E "state|percentage" | sed 's/ //g' | sed 's/:/,/g' | sort -u >> $battery_file
 
 # echo "Mah:                 $mah Mah"
-echo "mAh,$mah" >> /home/amir/.battery_n
+echo "mAh,$mah" >> $battery_file
 
 sec_=$(upower -d  | grep updated | cut -d: -f2-5 | rev | cut -d' ' -f3-4 | rev | cut -d\( -f2 | head -n1)
 org_time=$(upower -d  | grep updated | cut -d: -f2-10 | sed 's/\ \ \{1,\}//g' | cut -d' ' -f1-6 | head -n1)
 state_=$(upower -d | grep 'state' | sort -u | cut -d: -f2 | sed 's/\ //g')
 time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS ($org_time)")
 if [[ $state_ == "charging" ]]; then
-	echo -n "Charging-started-before,$time_" >> /home/amir/.battery_n
+	echo -n "Charging-started-before,$time_" >> $battery_file
 else
-	echo -n "Unpluged-before,$time_" >> /home/amir/.battery_n
+	echo -n "Unpluged-before,$time_" >> $battery_file
 fi
-echo -e "\n" >> /home/amir/.battery_n
+echo -e "\n" >> $battery_file
 
-sed -i 's/minutes/ minutes/g' /home/amir/.battery_n
+sed -i 's/minutes/ minutes/g' $battery_file
 
-cat /home/amir/.battery_n  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage\|timetoempty\|timetofull'
+cat $battery_file  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage\|timetoempty\|timetofull'
 
 # echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
 
