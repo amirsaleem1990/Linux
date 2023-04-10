@@ -5,7 +5,7 @@ import sys
 import os
 from termcolor import colored
 
-_file__ = '/home/amir/.qmi'
+_file__ = '/tmp/.qmi'
 if os.path.exists(_file__):
 	os.remove(_file__)
 
