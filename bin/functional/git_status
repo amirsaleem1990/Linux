@@ -69,7 +69,7 @@ for repo in repos:
 					continue
 				os.system("clear")
 				print(f"\n\n============================== {repo}/{updated_file} ==============================\n")
-				com = f"git diff --color '{updated_file}'  > /home/amir/.x ; cat /home/amir/.x" # <--color> presever coloring
+				com = f"git diff --color '{updated_file}'  > /tmp/git_diff ; cat /tmp/git_diff" # <--color> presever coloring
 				os.system(com)
 
 				commit = input("\nEnter your commit: ")
