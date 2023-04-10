@@ -21,8 +21,8 @@ if [[ $parameter -eq 1 ]] ; then
 		echo -n  "$extention," >> /home/amir/.xm2
 		for file in `ls *.$extention`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
-		done | paste -sd+ | bc > /home/amir/.xm1
-		f=$( echo `cat /home/amir/.xm1` | bc )
+		done | paste -sd+ | bc > /tmp/xm1
+		f=$( echo `cat /tmp/xm1` | bc )
 		echo "$f,`ls *.$extention | wc -l`" >> /home/amir/.xm2
 	done
 else
@@ -40,8 +40,8 @@ else
 		echo -n  "$extention," >> /home/amir/.xm2
 		for file in `find . -name "*$extention"`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
-		done | paste -sd+ | bc > /home/amir/.xm1
-		echo "`cat /home/amir/.xm1`,`find . -name "*$extention" | wc -l`" >> /home/amir/.xm2
+		done | paste -sd+ | bc > /tmp/xm1
+		echo "`cat /tmp/xm1`,`find . -name "*$extention" | wc -l`" >> /home/amir/.xm2
 	done
 fi
 if [[ $no_extention -eq $files_count ]]; then
