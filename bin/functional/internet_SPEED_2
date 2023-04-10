@@ -60,11 +60,9 @@ print_results(){
 
 }
 
-
-
 main() {
 	while :; do
-		download_and_upload=$(ifstat -i wlp3s0 1s 1 | tail -n1 | sed 's/^\ \{1,\}//g' | sed 's/\ \{1,\}/,/g')
+		download_and_upload=$(ifstat -i $wifi 1s 1 | tail -n1 | sed 's/^\ \{1,\}//g' | sed 's/\ \{1,\}/,/g')
 		current_download=$(echo $download_and_upload|cut -d, -f1)
 		current_upload=$(echo $download_and_upload|cut -d, -f2)
 		current_time=$(date +%s)
@@ -87,10 +85,19 @@ main() {
 
 }
 
+
 total_download=0
 total_upload=0
 start_time=$(date +%s)
 nx=0
+
+ifconfig | grep ^wlp| cut -d: -f1 | grep wlp3s0
+if [[ $? -eq 0 ]]; then
+	wifi=wlp3s0
+else
+	wifi=$(ifconfig | grep ^wlp| cut -d: -f1)
+fi
+
 
 v9="Space Left "
 v8="Current Time       "
