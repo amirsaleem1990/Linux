@@ -62,7 +62,10 @@ elif inp == "10":
 		      )
 
 print(f"\nYour Query: {prompt}")
-
+import clipboard
+clipboard.copy(prompt)
+print(f"\nThe query is copied to clipboard...")
+exit()
 # Set the maximum number of tokens to generate in the response
 max_tokens = 2024
 
