@@ -407,6 +407,11 @@ x="import pandas as pd; print(pd.read_pickle('"$1"').head())"
 echo "$x" | python3
 }
 
+declare -f pickle_print_lenght
+pickle_print_lenght() {
+x="import pickle; print(len(pickle.load(open('"$1"', 'rb'))))"
+echo "$x" | python3
+}
 
 declare -f pickle_show_nrows
 pickle_show_nrows() {
