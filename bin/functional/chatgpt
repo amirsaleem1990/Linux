@@ -1,15 +1,15 @@
-#!/home/amir/github/virtual_envs/venv-gpt3/bin/python3
+#!/usr/bin/python3
 
 # https://medium.com/@alexandre.tkint/revolutionize-your-chatbot-game-with-the-chat-gpt-api-and-python-get-started-in-just-3-minutes-8b588dacf48f
 # https://beta.openai.com/account/api-keys
 
-import openai
+# import openai
 import os
 import sys
-openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
+# openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
 
 # Set the model and prompt
-model_engine = "text-davinci-003"
+# model_engine = "text-davinci-003"
 
 if len(sys.argv) > 1:
 	inp = sys.argv[1]
@@ -18,7 +18,7 @@ else:
 		# "\tPlease feel welcome to check out my page, http://amirsaleem1990.github.io/ to discover more about me.\n\n"
 		"\t1- Explain the following sentence\n"
 		"\t2- Rephrase\n"
-		"\t3- Cover latter\n"
+		# "\t3- Cover latter\n"
 		"\t4- Genral query\n"
 		"\t5- Is the following sentence correct?\n"
 		"\t6- Translate Urdu to English.\n"
