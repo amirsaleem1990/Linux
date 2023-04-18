@@ -113,7 +113,7 @@ poweroff() {
         echo -e "\nThe folder `/home/amir/.firefox_backups/` is not exist, please create it first..."
         reaturn 1
     fi
-    directory="/home/amir/.firefox_backups/`date +%D_%T | sed "s/\//-/g"`"
+    directory="/home/amir/.firefox_backups/`date +%d-%M-%y_%T | sed "s/\//-/g"`"
     cp -rv  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
     lz4jsoncat $(locate recovery.jsonlz4 | grep -v _) | jq -r '.windows[].tabs[].entries[-1].url' > "$directory/OPNED_URLS.txt"
     echo -e "\n\nHave you puched out? [yes|no] " 
