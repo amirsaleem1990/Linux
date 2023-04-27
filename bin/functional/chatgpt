@@ -18,7 +18,7 @@ else:
 		# "\tPlease feel welcome to check out my page, http://amirsaleem1990.github.io/ to discover more about me.\n\n"
 		"\t1- Explain the following sentence\n"
 		"\t2- Rephrase\n"
-		# "\t3- Cover latter\n"
+		"\t3- UCL\n"
 		"\t4- Genral query\n"
 		"\t5- Is the following sentence correct?\n"
 		"\t6- Translate Urdu to English.\n"
@@ -35,8 +35,8 @@ if inp == "1":
 	prompt = f"""Explain the following sentence in five different ways: {prompt}"""
 elif inp == "2":
 	prompt = f"""Rephrase the following sentence in five different ways: {prompt}"""
-elif inp == "3":
-	prompt = f"""Write me five different cover latter for the following Upwork's project: {prompt}"""
+# elif inp == "3":
+# 	prompt = f"""Write me five different cover latters for the following Upwork's project: {prompt}"""
 elif inp == "4":
 	prompt = prompt
 elif inp == "5":
@@ -49,17 +49,29 @@ elif inp == "8":
 	prompt = f"Give me five short replies for the following: \"{prompt}\""
 elif inp == "9":  
 	prompt = f"Give me five long replies for the following: \"{prompt}\""  
-elif inp == "10":
+elif inp in ["10", "3"]:
 	file_name = "/tmp/jd.txt"
 	open(file_name, 'w').write("Paste the DJ here, and save the file.")
 	os.system(f"subl {file_name}")
 	input(f"Enter any key after saving the JD. into {file_name}: ")
-	prompt = ("Write a cover later for the following job considering the following resume: \n"
-		      "Job description: \n"
-		      f"{open(file_name, 'r').read()}\n"
-		      "Resume: \n"
-		      f"{open('/home/amir/RES/res.txt').read()}\n"
-		      )
+	jd = open(file_name, 'r').read()
+	resume = open('/home/amir/RES/res.txt').read()
+	string = (
+		"\nJob description: \n"
+		f"\"{jd}\n\""
+		"\nResume: \n"
+		f"\"{resume}\n\""
+	)
+	if inp == "10":
+		prompt = (
+			"Write a cover later for the following job considering the following resume: \n" + string
+		)
+	else:
+		resume = "\n".join(resume.splitlines()[:[n for n, i in enumerate(resume.splitlines()) if 'Certifications' in i][0]])
+		prompt = (
+			"Write a short and convincing cover later for the following Upwork job considering the following resume. Note: Dont mention the resume, I am not goint to attach it with the application, meke short and to-the-point, and don't mentions irrelevant details: \n" + string
+		)
+
 
 print(f"\nYour Query: {prompt}")
 import clipboard
