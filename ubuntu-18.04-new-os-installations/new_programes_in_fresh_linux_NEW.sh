@@ -21,6 +21,8 @@ func_(){
 # @install.packages("caret", repos=repo)
 # @install.packages("swirl", repos=repo)
 
+# Enable the battery percentage display next to the battery icon in the top-right corner of the screen
+func_ "gsettings set org.gnome.desktop.interface show-battery-percentage true"
 func_ "apt -y update"
 func_ "apt -y upgrade"
 
