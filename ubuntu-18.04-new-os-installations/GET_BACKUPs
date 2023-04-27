@@ -6,12 +6,15 @@ gitlab last push
 dropbox last push
 copy data
 copy data from another partitions (if exist)
-keyboard shortucts # Set_keyboard_shortcuts.py
-pip3 list > pip3_list
-apt list > apt_list
-save wifi passwords # sudo grep psk\= /etc/NetworkManager/system-connections/* | rev | cut -d/ -f1 | rev > wifi_password
+copy data that is exist in /home/ other than 'amir' directory
+keyboard shortucts | Copy them into  Set_keyboard_shortcuts.py
 create requirments.txt for all virtual_envoirments
 vscode extentions
 /media/sdb2/LINUX_BACKUP ko remove kar k us me fresh copy of /home/amir/ (with hidden files) daal do
 Create requirments.txt for each of your virtual envoirments
+opened but unsaved sublime/Vscode windows
+work-banch connection strings
 
+pip3 list > pip3_list
+apt list > apt_list
+save wifi passwords # sudo grep psk\= /etc/NetworkManager/system-connections/* | rev | cut -d/ -f1 | rev > wifi_password
