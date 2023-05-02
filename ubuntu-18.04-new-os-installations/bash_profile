@@ -534,6 +534,43 @@ beep() {
     play -n synth 0.5 sine 500
 }
 
+declare -f merge_subtitles_with_a_video
+merge_subtitles_with_a_video(){
+    while [ $# -gt 0 ]; do
+        # echo "$1"
+        case "$1" in
+            -v|--video_file_name)
+              video_file_name="$2"
+              ;;
+            -s|--subtitles_file_name)
+              subtitles_file_name="$2"
+              ;;
+            -o|--output_file_name)
+              output_file_name="$2"
+              ;;
+            -h|--help)
+              echo -e "
+        Usage:
+            -v, --video_file_name ---------------- Video's path
+            -s, --subtitles_file_name ------------ Subtitle's path
+            -o, --output_file_name --------------- Output's path
+            -h, --help --------------------------- help page
+           "
+           # return
+              ;;
+            *)
+              echo -e "
+            ***************************
+            * Error: Invalid argument.*
+            ***************************
+              "
+              return 
+        esac
+        shift
+        shift
+    done
+    ffmpeg -i "$video_file_name" -i "$subtitles_file_name" -c copy -c:s mov_text -metadata:s:s:0 language=eng "$output_file_name"
+}
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -651,6 +688,7 @@ export -f size_in_proper_units
 export -f pickle_to_csv
 export -f pdf
 export -f beep
+export -f merge_subtitles_with_a_video
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
