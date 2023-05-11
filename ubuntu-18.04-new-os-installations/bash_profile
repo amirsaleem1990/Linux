@@ -79,6 +79,7 @@ alias gpt3="/amir_bin/chatgpt"
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
+PATH="$PATH:/usr/bin/pip3"
 export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
 bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
@@ -570,6 +571,42 @@ merge_subtitles_with_a_video(){
         shift
     done
     ffmpeg -i "$video_file_name" -i "$subtitles_file_name" -c copy -c:s mov_text -metadata:s:s:0 language=eng "$output_file_name"
+}
+
+
+
+type -f create_a_swap_file
+create_a_swap_file(){
+    read -p "Enter a swap file's full name: " swap_file_name
+    read -p "How big swap file do you want to create? Enter in GBs: " gbs
+    # # Get free GBs available at /media/sdb2 partion
+    # free_gb=$(df -BG  /media/sdb2/ | awk '{print $4}' | tail -n1 | sed 's/G//g')
+
+    # if [[ $free_gb < 21 ]]; then
+    #     echo -e "\nThere is less then 21GB available at /media/sdb2\nExisting......\n"
+    #     return
+    # fi
+
+    # Create a 20GB file
+    # dd if=/dev/zero of=/media/sdb2/swapfile.img bs=1G count=20
+    sudo dd if=/dev/zero of="$swap_file_name" bs=1G count=$gbs
+
+    # change permitions
+    # sudo chmod 0600 /media/sdb2/swapfile.img
+    sudo chmod 0600 "$swap_file_name"
+
+    # # Add an entry to fstab file
+    # # echo -e "\n/media/sdb2/swapfile.img swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
+    # echo -e "\"n/$swap_file_name swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
+
+    # make a swap
+    # sudo mkswap /media/sdb2/swapfile.img
+    sudo mkswap "$swap_file_name"
+
+
+    # On the swap
+    # sudo swapon  /media/sdb2/swapfile.img
+    sudo swapon  "$swap_file_name"
 }
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
