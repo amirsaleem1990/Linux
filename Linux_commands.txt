@@ -1995,3 +1995,9 @@ Grep characters before and after match ................. echo "some123_string_an
 # disable screenshot sound ......... gsettings set org.gnome.desktop.sound event-sounds false
 
 
+# find files that are modified or created from 17:51 ............. find /path/to/directory -type f -newermt "2023-05-11 17:51:00"
+# Current directory's partition name ........... df --output=source . | tail -n 1
+# find files that are modified or created in last 10 minutes ............ find /path/to/directory -type f -mmin -10
+# join multiple lines with hyphen ....... lines=$(cat file.txt); joined=$(echo "$lines" | tr '\n' '-'); echo "$joined"
+
+
