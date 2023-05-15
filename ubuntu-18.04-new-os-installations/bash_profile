@@ -21,7 +21,8 @@ alias calc='gcalccmd'
 alias copyfrom='xclip -sel cli <'
 # alias copyto='xsel -b >'
 alias cpu_info='cat /proc/cpuinfo | grep '\''model name'\'' | uniq ; echo -en '\''Cores           : 8\n'\'''
-alias current_wifi_name='echo yes:Jazz-LTE-438A | sed '\''s/yes://g'\'''
+# alias current_wifi_name='echo yes:Jazz-LTE-438A | sed '\''s/yes://g'\'''
+alias current_wifi_name='nmcli d w l | grep ^*'
 alias d='du -sh -B M * | sort -nr'
 alias dropbox_sync='~/.dropbox-dist/dropboxd'
 alias eclipse='/home/amir/eclipse/java-2020-03/eclipse/eclipse'
@@ -466,6 +467,7 @@ download_speed_stream(){
             sleep 1s
             continue
         fi
+        # download_speed=${download_speed%.*}
         # if [[ $download_speed>1 ]]; then
         #     download_speed=${download_speed%.*}
         # fi
@@ -575,7 +577,7 @@ merge_subtitles_with_a_video(){
 
 
 
-type -f create_a_swap_file
+declare -f create_a_swap_file
 create_a_swap_file(){
     read -p "Enter a swap file's full name: " swap_file_name
     read -p "How big swap file do you want to create? Enter in GBs: " gbs
@@ -608,6 +610,8 @@ create_a_swap_file(){
     # sudo swapon  /media/sdb2/swapfile.img
     sudo swapon  "$swap_file_name"
 }
+
+
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
