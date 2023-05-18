@@ -19,7 +19,7 @@ def remove_identical_columns(df) -> list:
 	# x = df.astype(str).apply(lambda col: hash(tuple(col))).rename("hash").rename_axis("col").reset_index()
 	hash_dict = {}
 	for col_name in df.columns.to_list():
-	    hash_dict[col_name] = hash(tuple(df[col_name].astype(str)))
+		hash_dict[col_name] = hash(tuple(df[col_name].astype(str)))
 	x = pd.Series(hash_dict).rename("hash").rename_axis("col").reset_index()
 	duplicated_hashs = x.hash.value_counts().where(lambda x: x>=2).dropna().index.to_list()
 
@@ -319,3 +319,14 @@ def train_all_models(
 	
 	best_models_summary['Model'] = best_models_summary['Model'].replace(models_names_maping)
 	pickle.dump(best_models_summary, open("best_models_summary_updated.pkl", 'wb'))
+
+
+def confusion_metrix_plot(actual, predicted, title="", normalize=None):
+	import matplotlib.pyplot as plt
+	import numpy
+	from sklearn import metrics
+	confusion_matrix = metrics.confusion_matrix(actual,predicted, normalize=normalize)
+	cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+	cm_display.plot()
+	plt.title(title)
+	plt.show() 
