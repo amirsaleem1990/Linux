@@ -31,8 +31,10 @@ only_updated_files = "/home/amir/.only_updated_files"
 print("\n\n")
 
 for repo in repos:
-	os.chdir(f"/home/amir/github/{repo}")
-
+	try:
+		os.chdir(f"/home/amir/github/{repo}")
+	except:
+		continue
 	# only new files:
 	if os.path.exists(only_new_files):
 		os.remove(only_new_files)
