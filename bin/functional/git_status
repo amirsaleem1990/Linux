@@ -83,7 +83,10 @@ for repo in repos:
 
 q = 0
 for repo in repos:
-	os.chdir(f"/home/amir/github/{repo}")
+	try:
+		os.chdir(f"/home/amir/github/{repo}")
+	except:
+		continue
 	try:
 		q += int(list(os.popen("git status | grep '(use \"git push\"' | wc -l"))[0].strip())
 	except:
