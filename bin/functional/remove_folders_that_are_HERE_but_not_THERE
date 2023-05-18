@@ -44,7 +44,7 @@ if [[ $answer == "yes" ]]; then
 	cat /tmp/here_but_not_there.txt | cut -d$'\t' -f2-30 > /tmp/here_but_not_there_ONLY_FOLDERS_NAMES.txt
 	IFS=$'\n'
 	for folder in $(cat /tmp/here_but_not_there_ONLY_FOLDERS_NAMES.txt); do
-		/usr/bin/rm -r "$folder" 2>/dev/null
+		/usr/bin/rm -rf "$folder" 2>/dev/null
 		if [[ $? -ne 0 ]]; then
 			echo "$folder" >> /tmp/here_but_not_there_error_in_delition.txt
 		fi
