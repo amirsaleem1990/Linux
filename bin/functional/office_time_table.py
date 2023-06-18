@@ -1,4 +1,4 @@
-#!/home/amir/github/virtual_envs/time_table_venv/bin/ipython3
+#!/home/virtual_envs/time_table_venv/bin/ipython3
 import pandas as pd
 import numpy as np
 import datetime
