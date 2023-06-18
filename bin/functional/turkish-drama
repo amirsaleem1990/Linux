@@ -1,4 +1,4 @@
-#!/home/amir/github/virtual_envs/turkish_drama_venv/bin/python3
+#!/home/virtual_envs/turkish_drama_venv/bin/python3
 import requests
 from bs4 import BeautifulSoup
 import pickle
