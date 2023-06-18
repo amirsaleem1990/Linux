@@ -330,3 +330,50 @@ def confusion_metrix_plot(actual, predicted, title="", normalize=None):
 	cm_display.plot()
 	plt.title(title)
 	plt.show() 
+
+
+
+def convert_units(from_unit, value, rounded_to=3):
+    """
+    >>> convert_units('gb', value=0.00009999)
+    '99.99 KB'
+    >>> convert_units('by', value=999900)
+    '999.9 KB'
+    >>> convert_units('gb', value=0.099)
+    '99.0 MB'
+    """
+    units = {
+        'by': 1, # bytes
+        'kb': 1000,
+        'mb': 1000_000,
+        'gb': 1000_000_000,
+    }
+    if not from_unit.lower() in units:
+        return "Invalid unit"
+    total_bytes = value * units[from_unit.lower()]
+    if total_bytes < 1000:
+        return f"{total_bytes} B"
+    elif total_bytes < 1000_000:
+        return f"{round(total_bytes/1000, rounded_to)} KB"
+    elif total_bytes < 1000_000_000:
+        return f"{round(total_bytes/1000_000, rounded_to)} MB"
+    else:
+        return f"{round(total_bytes/1000_000_000, rounded_to)} GB"
+
+
+
+
+def connect_to_mysql_db(user, passw, host, database=None, port=3306):
+	import sqlalchemy
+	if database is None:
+		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}?charset=utf8')
+	else:
+		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}/{database}?charset=utf8')
+	conn = conn.connect()
+	return conn
+
+
+
+def fuzzy_matching(val_1: str, val_2: str):
+	from fuzzywuzzy import fuzz
+	return fuzz.ratio(val_1, val_2)
