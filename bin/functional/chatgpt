@@ -6,6 +6,8 @@
 # import openai
 import os
 import sys
+import clipboard
+
 # openai.api_key = open(list(os.popen("ls /home/amir/gi*/A*/chat-gpt-key"))[0].strip(), 'r').read().strip()
 
 # Set the model and prompt
@@ -29,8 +31,8 @@ else:
 		"\n\n\t"
 		)
 
-# prompt
-prompt = input("Enter your query: ")
+# prompt = input("Enter your query: ")
+prompt = clipboard.paste()
 if inp == "1":
 	prompt = f"""Explain the following sentence in five different ways: {prompt}"""
 elif inp == "2":
@@ -74,9 +76,9 @@ elif inp in ["10", "3"]:
 
 
 print(f"\nYour Query: {prompt}")
-import clipboard
 clipboard.copy(prompt)
 print(f"\nThe query is copied to clipboard...")
+os.system("firefox 'https://chat.openai.com/c/7269cd67-962b-4be2-99c6-cefe28041c95'")
 exit()
 # Set the maximum number of tokens to generate in the response
 max_tokens = 2024
@@ -94,4 +96,5 @@ completion = openai.Completion.create(
 
 # Print the response
 print(completion.choices[0].text)
+
 
