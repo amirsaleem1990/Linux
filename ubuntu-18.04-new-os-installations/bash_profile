@@ -72,7 +72,7 @@ alias stop_qualys="[[ $(/usr/sbin/service qualys-cloud-agent status 2>/dev/null|
 alias vpn_g="echo https://www.vpnbook.com/; sudo openvpn --config /home/amir/Downloads/Programs/VPN/vpnbook-pl226-udp53.ovpn --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt" 
 alias symbolic_links="ls -l | grep ^l"
 alias Latex="cd github/Amir-personal/Resume/Latex-resume/; echo R | latex -output-format pdf amir-saleem-data-science-resume.tex; if [[ $? -eq 0 ]] ; then evince amir-saleem-data-science-resume.pdf; fi"
-alias jango="/home/amir/github/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
+alias jango="/home/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_projects_6/36-EDA_tool/audo_eda_modeling_app/manage.py runserver"
 #alias Latex="echo R | latex -output-format pdf resume.tex"
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 alias android-studio="/home/amir/Downloads/android-studio/bin/studio.sh"
@@ -82,7 +82,7 @@ alias gpt3="/amir_bin/chatgpt"
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
 export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
-bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
+# bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 # commit <HISTSIZE> in .bashrc
 HISTSIZE=1000000
@@ -134,7 +134,7 @@ rdfind(){
         echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
     else 
         free_space_in_current_directory=$(df -BM | grep `df -P . | sed -n '$s/[[:blank:]].*//p'` | sed 's/ \{1,\}/,/g' | cut -d, -f4  | cut -dM -f1)
-        if [[ $free_space_in_current_directory -lt 1000 ]]; then
+        if [[ $free_space_in_current_directory -lt 100 ]]; then
             echo -e "\nSorry, There is only $free_space_in_current_directory MB left in current partition\nExitting ........\n\n"
             return 1
         fi 
@@ -346,11 +346,22 @@ extentions_for_given_file_names() {
 declare -f check_duplicated_lines_count_bash
 check_duplicated_lines_count_bash() {
     if [[ -z $1 ]]; then
-        echo -e "No file passed\nAborting ....... \n"
+        echo -e "No lines passed\nAborting ....... \n"
         return 1
     fi
     duplicated_lines="|$(sort  "$1" | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | cut -d, -f2-10 | awk '{$1=$1};1' | paste -sd '\|' | sed 's/|//')"
     grep -E  --color=auto "$duplicated_lines"  "$1"
+}
+
+declare -f check_duplicated_lines_count_bash_for_file
+check_duplicated_lines_count_bash_for_file() {
+    if [[ -z $1 ]]; then
+        echo -e "No file passed\nAborting ....... \n"
+        return 1
+    fi
+    # duplicated_lines="|$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | sort -n)"
+    duplicated_lines=$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | grep -v ^1\  | sort -n)
+    echo "$duplicated_lines"
 }
 
 
@@ -399,7 +410,24 @@ convertsecs() {
 
 declare -f free_space_on_current_partition
 free_space_on_current_partition(){
-    df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
+    free_space(){
+        df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
+    }
+    if [[ -z $1 ]]; then
+        free_space
+        return 0
+    fi
+    sleep_time=$1
+    while :; do
+        current_time=$(date +%T)
+        free_space_in_part=$(free_space)
+        echo "$current_time - $free_space_in_part"
+        sleep $sleep_time
+        # clear
+    done
+
+
+
 }
 
 
@@ -617,6 +645,12 @@ create_a_swap_file(){
     sudo swapon  "$swap_file_name"
 }
 
+declare -f record_screen
+record_screen(){
+    file_name=$(date +%d-%m-%Y_%H\:%M\:%S).mkv
+    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"
+}
+
 
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -736,6 +770,7 @@ export -f pickle_to_csv
 export -f pdf
 export -f beep
 export -f merge_subtitles_with_a_video
+export -f record_screen
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
@@ -753,3 +788,15 @@ export UNDERLINE='\033[4m'
 
 
 
+declare -f zm
+zm() { 
+    IFS=$'\n'
+    for i in mp4 webm mkv part ; do
+        # count=$(ls *.$i 2>/dev/null| wc -l)
+        count=$(find chuchu-tv-* -name "*.$i" 2>/dev/null| wc -l)
+        # size=$(dt *.$i | grep total | sed 's/total//g')
+        size=$(dt `find chuchu-tv-* -name "*.$i"` | grep total | sed 's/total//g')
+        echo -e "$i\t $count \t $size"
+    done
+}
+export -f zm
