@@ -57,14 +57,15 @@ if url_passed:
 	get_all_links(url)
 
 
-def extract_urls_from_html_file(file_name):
+def extract_urls_from_html_file(file_name, filter_sub_string=None):
 	from bs4 import BeautifulSoup
 
 	s = BeautifulSoup(open(file_name, 'r').read(), 'lxml')
 
 	lst = [i['href'] for i in s.find_all('a', href=re.compile(''))]
 	lst += [i['src'] for i in s.find_all('source', href=re.compile(''))]
-
+	if filter_sub_string is not None:
+		lst = [i for i in lst if filter_sub_string in i]
 	return lst
 
 
