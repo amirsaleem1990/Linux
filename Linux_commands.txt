@@ -2001,3 +2001,9 @@ Grep characters before and after match ................. echo "some123_string_an
 # join multiple lines with hyphen ....... lines=$(cat file.txt); joined=$(echo "$lines" | tr '\n' '-'); echo "$joined"
 
 
+# merge/unite/combine multiple pdf files into one ............... pdfunite file1.pdf file2.pdf output.pdf
+
+# show seconds in the time ................ gsettings set org.gnome.desktop.interface clock-show-seconds true
+
+# prevent a directory from creation new file, and then allow some files that you will want to override ................. sudo chmod a-w . ; chmod +w file1.txt file2.txt
+
