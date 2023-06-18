@@ -1,4 +1,4 @@
-#!/home/amir/github/virtual_envs/coursera_download_venv/bin/python3
+#!/home/virtual_envs/coursera_download_venv/bin/python3
 
 # youtube-dl --version # 2021.12.17
 
@@ -25,12 +25,19 @@ class download_coursera_course:
 		
 
 		self.EMAIL_ADRESS = "hamzaamirr2014@gmail.com" ################################################################################????
+		user_inp = input("We are going to use 'hamzaamirr2014@gmail.com' to login on coursera, Do you agree? [yes|no] ")
+		if not user_inp in ['yes', 'no']:
+			print("Wrong input.")
+			sys.exit(1)
+		elif user_inp == 'no':
+			self.EMAIL_ADRESS = input("Enter an email address to login on Coursera: ").strip()
+
 		# self.EMAIL_ADRESS = "amirsaleem1990@hotmail.com" ################################################################################????
 		
-		if self.EMAIL_ADRESS != "hamzaamirr2014@gmail.com":
-			if input("The email address is not 'hamzaamirr2014@gmail.com' Are you need to proceed? [y|n] ") != "y":
-				import sys
-				sys.exit(1)
+		# if self.EMAIL_ADRESS != "hamzaamirr2014@gmail.com":
+		# 	if input("The email address is not 'hamzaamirr2014@gmail.com' Are you need to proceed? [y|n] ") != "y":
+		# 		import sys
+		# 		sys.exit(1)
 
 
 
@@ -255,6 +262,7 @@ class download_coursera_course:
 			print(f"\nSince 'preapare_all_video_download_urls' == True, we load 'vids_download_urls' from '{self.BASE_DIR}/vids_download_urls.pkl'")
 			self.vids_download_urls = pickle.load(open(f"{self.BASE_DIR}/vids_download_urls.pkl", 'rb'))
 			self.vids = pickle.load(open(f"{self.BASE_DIR}/vids.pkl", 'rb'))
+			# breakpoint()
 		else:
 			self.preapare_all_video_page_urls() # This will create self.vids
 			self.fetch_video_urls() # This will create a self.vids_download_urls from scratch.
@@ -305,9 +313,9 @@ class download_coursera_course:
 		elif self.EMAIL_ADRESS == "amirsaleem1990@hotmail.com":
 			r="1"
 		else:
-			print("\nPassword is not defined")
-			import sys
-			sys.exit()
+			return input("Enter the password: ")
+			# import sys
+			# sys.exit()
 		os.system(f"echo {r} | {list(os.popen('which ipython3'))[0].strip()} /home/amir/github/*/*/*in2.py  2 coursera | tail -1")
 		return clipboard.paste()
 		
