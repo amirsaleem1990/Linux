@@ -22,6 +22,7 @@ import sys
 from termcolor import colored
 from pandas import DataFrame, concat
 import os
+import pandas as pd
 
 print("""
 
@@ -95,11 +96,42 @@ if ans_.strip() != '':
 
 x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
 
+substring_is_provided=False
 if x in ['1', '2']:
-	a = input("\nEnter substring, if multiple strings saperate them by | :\n")	
+	substring_is_provided=True
+	a = input("\nEnter substring, if multiple strings saperate them by | :\n")
+	provided_substring = a
 	if x == '1':
 		#df = df[df[1].str.contains(a)]
 		df = df[df[3].isin(list(df[df[1].str.contains(a)][3].unique()))]
+
+		if provided_substring.count("|") == 0:
+			remove_inp = input(f"Do you want to remove all occurence of `{provided_substring}` if there is any other file available? [yes|no] ")
+			if remove_inp == "yes":
+				if input("Are you sure? [yes|no] ") == "yes":					
+					def func(g):
+					    x = g[1].str.contains(provided_substring).mean() != 1
+					    if x:
+					        return g.name
+					    return None
+					df = df[df[3].isin(df.groupby(3).apply(func).dropna().to_list())]
+					files_to_remove = df[1][df[1].str.contains(provided_substring)].to_list()
+					size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
+					import amir_analysis_functions
+					size_can_be_reduced = amir_analysis_functions.convert_units(from_unit="by", value=size_bytes, rounded_to=3)
+					print()
+					for f_t_r in files_to_remove:
+						sub_df = df[df[3].eq(df[df[1].eq(f_t_r)].iloc[0, 3])]
+						size_KB = sub_df.iloc[0].loc["size_KB"]
+						print(colored(f"\nSize (KB): {size_KB} | {f_t_r}", "red"))
+						duplicated_files_with_current_file_to_remove = sub_df[1][sub_df[1].ne(f_t_r)].to_list()
+						print(*duplicated_files_with_current_file_to_remove, sep="\n")
+					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
+					if input("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ") == "yes":
+						if input("Are you sure? [yes | no]") == "yes":
+							for f_t_r in files_to_remove:
+								os.remove(f_t_r)
+							sys.exit(0)
 	elif x == '2':
 		df = df[~df[1].str.contains(a)]
 	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
@@ -123,7 +155,11 @@ for node in r:
 		print(f"Delete items Qty: {delete_items_qty} (among {df[0].sum()} unique files)\n")
 		for e,i in enumerate(node):
 			d = f'$(du -sh "{i}")'
-			com = f"""echo "{e}- {d}" """
+			if substring_is_provided:
+				com = f"""echo "{e}- {d}" | egrep --color \|{provided_substring} """
+			else:
+				com = f"""echo "{e}- {d}" """
+
 			os.system(com)
 		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip range (e.g. 1..7)\n\t- Skip (press any key):\n")
 		if input_ in ["o", "'o'"]:
