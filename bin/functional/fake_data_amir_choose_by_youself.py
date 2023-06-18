@@ -1,4 +1,4 @@
-#!/home/amir/github/virtual_envs/fake_data/bin/python3
+#!/home/virtual_envs/fake_data/bin/python3
 
 from faker import Faker
 import numpy as np
