@@ -129,7 +129,8 @@ get_input_from_user = False
 if os.path.exists(exclude_file):
 	e = open(exclude_file, 'r').read().strip()
 	if e:
-		user_inp = input("Are you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+		# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+		user_inp = input("Do you need to exclude last stuff [yes|no] \n")
 		if user_inp.lower().strip() == 'yes':
 			exclude = e
 		else:
