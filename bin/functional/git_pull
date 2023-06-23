@@ -11,7 +11,7 @@ if [[ ${#@} == 1 ]] ;then
 else
 	cd ~/github
 	for repo in `ls -d */`; do
+		cd ~/github
 		func_ $repo
-		cd ../
 	done
 fi
