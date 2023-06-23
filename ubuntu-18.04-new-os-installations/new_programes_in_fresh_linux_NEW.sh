@@ -91,6 +91,25 @@ func_ "apt install -y azure-functions-core-tools-4"
 func_ "apt install -y arp-scan"
 func_ "apt install -y openssh-server"
 
+func_ "apt install -y texlive-lang-cyrillic"
+func_ "apt install -y texlive-latex-extra"
+func_ "apt install -y texlive-latex-recommended"
+func_ "apt install -y texlive-pictures"
+func_ "apt install -y texlive-latex-base"
+func_ "apt install -y libfontconfig1-dev"
+func_ "apt install -y libharfbuzz-dev"
+func_ "apt install -y libfribidi-dev"
+func_ "apt install -y libfreetype6-dev"
+func_ "apt install -y libpng-dev"
+func_ "apt install -y libtiff5-dev"
+func_ "apt install -y libjpeg-dev"
+func_ "apt install -y libfontconfig1-dev"
+func_ "apt install -y libharfbuzz-dev"
+func_ "apt install -y libclang-dev"
+func_ "apt install -y libpq5"
+func_ "apt install -y sox"
+
+
 
 
 func_ "snap install vlc"
@@ -224,9 +243,22 @@ echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --appen
 
 
 
-#lated
-apt install texlive-lang-cyrillic texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-latex-base libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev -y
-apt install libfontconfig1-dev libharfbuzz-dev libclang-dev  libpq5
+
+
+ln -s ~/github/Linux/ubuntu-18.04-new-os-installations/bash_profile ~/.bash_profile
+/usr/bin/rm -rf ~/.config/autostart 2>/dev/null
+ln -s ~/github/Linux/ubuntu-18.04-new-os-installations/autostart/functional/ ~/.config/autostart
 
 
 
+echo -e "
+
+Install the following programs:
+	dbeaver
+	android-studio
+	chromium
+	opera
+	mysql-workbench
+	code
+
+"
