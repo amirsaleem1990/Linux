@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+if [[ -z $1 ]] || [[ -z $2 ]] || [[ -z $3 ]] || [[ -z $4 ]]; then
+    echo -e "
+    This function require four perameters:
+        1- Video name
+        2- Start time (eg: 00:12:20)
+        3- End Time (eg: 00:12:40)
+        4- Ouput file name
+    "
+    exit
+    #return 1
+fi
+file_name=$1
+start=$2
+end=$3
+output_file_name=$4
+
+echo -e "
+    file_name        : $file_name
+    start            : $start
+    end              : $end
+    output_file_name : $output_file_name
+"
+command="ffmpeg -i $file_name -ss $start -to $end -c copy $output_file_name"
+eval $command
+echo $command
