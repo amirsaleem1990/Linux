@@ -377,3 +377,32 @@ def connect_to_mysql_db(user, passw, host, database=None, port=3306):
 def fuzzy_matching(val_1: str, val_2: str):
 	from fuzzywuzzy import fuzz
 	return fuzz.ratio(val_1, val_2)
+
+
+
+
+def time_comparison(time_1, time_2):
+	time_1_original = time_1
+	time_2_original = time_2
+	def to_microseconds(time):
+		if not time.endswith("µs"):
+			return float(time.split()[0]) * 1000
+		return float(time.split()[0])
+	time_1 = to_microseconds(time_1)
+	time_2 = to_microseconds(time_2)
+
+
+	if time_1 > time_2:
+		times_faster = time_1 / time_2
+	else:
+		times_faster = time_2 / time_1
+
+	if time_1 == int(time_1):
+		time_1 = int(time_1)
+	if time_2 == int(time_2):
+		time_2 = int(time_2)
+
+	if time_1 > time_2:
+		print(f"Time-1 ({time_1_original}) is {round(times_faster, 3)} times faster than time-2 ({time_1_original})")
+	else:
+		print(f"Time-2 ({time_2_original}) is {round(times_faster, 3)} times faster than time-1 ({time_2_original})")
