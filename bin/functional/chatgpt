@@ -31,8 +31,10 @@ else:
 		"\n\n\t"
 		)
 
-# prompt = input("Enter your query: ")
-prompt = clipboard.paste()
+if inp in ['6']:
+	prompt = input("Enter your query: ")
+else:
+	prompt = clipboard.paste()
 if inp == "1":
 	prompt = f"""Explain the following sentence in five different ways: {prompt}"""
 elif inp == "2":
