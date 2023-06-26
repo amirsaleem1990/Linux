@@ -1062,8 +1062,10 @@ The awk Command:
 
 #------------ END
 
-# # Create array in loop from number of arguments ............ args=(); for i in "$@"; do args+=("$i"); done ............ alternative: args=("$@") ............. now access any value of the arry by its index (statrtin from 0, to -1 ..... echo "${args[0]}"; echo "${args[-1]}"; echo "${args[@]}"
+# Create array in loop from number of arguments ............ args=(); for i in "$@"; do args+=("$i"); done  ............. # IFS=$'\n' read -d "" -a args
+ ....................now access any value of the arry by its index (statrtin from 0, to -1 ..... echo "${args[0]}"; echo "${args[-1]}"; echo "${args[@]}"
 
+Create an array from user inputs ........... args=("$@")
 #----------------
 #How to convert Python code to executable file?
 pip3 install pyinstaller
@@ -1404,6 +1406,11 @@ To put this into an if ... then statement:
 if printf '%s\n' "${myarray[@]}" | grep -q -P '^mypattern$'; then
     # ...
 fi
+
+
+# array slicing: With loop: for (( i=3; i<8; i++ )); do ; echo -n "${array[$i]} "; done ................. without loop: echo "${array[@]: 3:5}"
+
+
 
 I added a -q flag to the grep expression so that it won't print matches; it will just treat the existence of a match as "true."
 
@@ -2006,4 +2013,107 @@ Grep characters before and after match ................. echo "some123_string_an
 # show seconds in the time ................ gsettings set org.gnome.desktop.interface clock-show-seconds true
 
 # prevent a directory from creation new file, and then allow some files that you will want to override ................. sudo chmod a-w . ; chmod +w file1.txt file2.txt
+
+
+# sum of array ....................... sum=$(IFS=+; echo "$((${array[*]}))")
+
+
+# get the 3rd charachter .................. echo $x | cut -b3
+
+# from 13th element to the end .................. sliced_string=${string:12}
+
+# first n characthers ........... echo $x | head -c 20
+# last n characthers ...........  echo $x | tail -c 20
+# display from 12 to 22 lines ............. cat abc.txt | sed -n '12,22p' ........... head -n 22 abc.txt | tail -n +12
+
+
+
+
+
+# while IFS= read -r line || [ -n "$line" ]; do echo "$line" >> file.txt; done ............. `IFS=`: Sets the internal field separator to an empty value, ensuring that leading and trailing whitespace in each line is preserved. .......... `read -r line`: Reads a line of input and stores it in the variable line. The `-r` option is used to treat the input line as raw text, disabling backslash interpretation. It checks if the variable line is not empty. If the line is empty, the loop terminates. This check is done using the `[ -n "$line" ]` expression. `[ -n "$line" ]`: Tests if the length of the variable line is non-zero. If the line is empty, the condition evaluates to false and the loop exits.
+
+# `(23 + 5)*2` -> `[23 + 5]*2` ------ Replace perantheses to brackets ............. echo "$x" | tr "()" "[]"
+
+# delete all the lowercase characters 'a-z' ................. echo "$x" | tr -d '[a-z]' ........... echo "$x" | tr -d '[:lower:]'  
+
+# replace all sequences of multiple spaces with just one space.... echo "$x" | tr -s " " 
+
+
+# numbers which have two or more consecutive occurences of the same digit (which may be separated by a space) ........... # grep '\([0-9]\)\s*\1' .............. grep '\(\d\) \?\1' ............. `\1` mean repeat group 1 ............ `\d` equals to `[0-9]` 
+
+# display the lines which does not matches all the given pattern. .................. grep -v -e "a" -e "b" -e "c" test-file.txt
+
+# grep -c "pattern" filename ................. count that how many lines matches the given pattern/string
+
+# grep -v -c this demo_file ......................... find out how many lines that does not match the pattern
+
+# grep -o "is.*line" demo_file ............... only the matched string
+
+# grep -o -b "pattern" file ............ Show the position of match in the line
+
+# replace all the occurrences of 'editor' by wrapping them up in brace brackets.  ............................ echo "My favorite programming editor is Emacs. Another editor I like is Vim." | sed -e s/editor/{&}/g
+# replace the second occurrence of 'editor' with 'tool'...................... `$:~/hackerrank/bash/grep/grep1$` echo "My favorite programming editor is Emacs. Another editor I like is Vim." | sed -e s/editor/tool/2
+# cat file.txt | sed 's/ab/bc/gI' ........... case ignore in `sed` using `I` in the end (after `/g`)
+
+
+# merge lines with semicolan as delimeter .............. `cat file.txt | paste -sd ';'`  .................. `paste -s` merge lines together in single line, and `-d ';'` override the default delemeter with is tab ............ The paste command is used to merge lines of files. In this case, the -s option is used to merge all lines into a single line, and the -d ';' option specifies that the delimiter between merged lines should be a semicolon (;).
+
+# restructure the large file so that every three consecutive rows are folded into one line and are separated by semicolons. ............ cat file.csv | paste - - - -d';'
+
+# replace newline with tab ....... paste -s file.txt ........... here we didn't specify the new delimeter, it's tab by default, we can specify it using '-d' option, eg: cat file.txt | paste -s -d ,
+
+# replace all the occurrences of the word 'thy' with 'your'. The search should be case insensitive ............... sed 's/\bthy\b/your/gI' ........... `gI`: `g` for ALL occurrences, and `I` for case insensitivity ........... `\b` for word, we need to replace ONLY WORDS.
+
+
+# There are multiple lines, each line have 3 or 4 space separated values, identify lines where the 4th value is missing and diplay the first value in that line .........  echo "$line" | awk 'NF!=4{print "Not all scores are available for", $1}' ........ echo "$line" | awk '{if(!$4) print "Not all scores are available for " $1}' ........ echo "$line" | awk '{if($4 == "") print "Not all scores are available for " $1 } ' ........ echo "$line" | awk '{if (NF!=4) print "Not all scores are available for " $1}'
+
+# a file contains students data, the first column is statudne's name, and the next 3 are scores in different subjects,  identify whether each of the students has passed or failed. A student is considered to have passed if (s)he has a score or more in each of the three subjects. ..............  echo "$line" | awk '{print $1,":",(($1<50 || $2<50 || $3<50)?"Fail":"Pass");}' echo "$line" | awk '{print $1,":",(($1>=50 && $2>=50 && $3>=50)?"Pass":"Fail");}' echo "$line" | awk '{if($2 >= 50 && $3 >= 50 && $4 >= 50) print $1 " : Pass"; else print $1 " : Fail" }'
+
+
+
+# a file with four space-separated columns, the last three columns have three numbers. If the average of the three scores is 80 or more, the grade is 'A'. If the average is 60 or above, but less than 80, the grade is 'B'. If the average is 50 or above, but less than 60, the grade is 'C'. Otherwise the grade is 'FAIL'. ................     echo "$line" | awk '{
+    #     avg=($2+$3+$4)/3
+    #     if (avg >= 80)
+    #         print $0,":","A";
+    #     else if(avg >= 60)
+    #         print $0,":","B";
+    #     else if(avg >= 50)
+    #         print $0,":","C";
+    #     else
+    #         print $0,":","FAIL";
+    # }'
+
+    # awk '{
+        # avg=($2+$3+$4)/3;
+        # grade=(avg>=80)? "A" : (avg>=60)? "B" : (avg>=50)? "C" : "FAIL";
+        # print $0,":",grade;
+    # }'
+
+
+
+# merge every two consective lines in a single line with semi-colon as a delimeter .............. cat file.txt | awk '{
+    {
+        if (NR%2 == 0) 
+            {print prev ";" $0} 
+        else prev=$0
+    }
+}' #`NR%2 == 0` checks if the line number (NR) is even, indicating the second line of each pair. If the condition is true, it prints the concatenation of the previous line (prev) with the current line ($0) using a semicolon as the delimiter. If the condition is false, it stores the current line in the prev variable to be used in the next iteration.
+cat file.txt | awk '
+    NR%2{
+            printf "%s;", $0; next
+        } 
+        
+        1
+'     `NR%2` checks if the current line number is odd or even. If the line number is odd (NR%2 evaluates to true), `printf "%s;", $0` prints the line followed by a semicolon without a line break. If the line number is even (NR%2 evaluates to false), 1 is used to print the line as it is without any modification. The output of awk is the concatenated lines with a semicolon as the delimiter.
+
+
+
+
+# check substring in string ............. if [[ $string == *"$substring"* ]]; then ...........
+
+# filter values in array and print only who cantains 'a' or 'A' ................ echo ${array[@]/*[Aa]*/} ............... read -ra filtered_countries <<<"${array[@]/*[aA]*}"; printf '%s\n' "${filtered_countries[@]}" .............. for country in "${array[@]}"; do [[ $country =~ [aA] ]] || echo "$country"; done ............. printf '%s\n' "${array[@]/*[aA]*}" | awk 'NF' ................ # echo ${all[@]/*[Aa]*/}
+
+
+
+# the first capital letter (if present) in each element of the array should be replaced with a dot ('.'). Then, display the entire array with a space between each value ........... echo "${array[@]/#[[:upper:]]/.}" .............. echo ${array[@]/[A-Z]/.}
 
