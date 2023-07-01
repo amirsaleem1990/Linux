@@ -195,6 +195,11 @@ func_ "pip3 install statsmodels"
 # func_ "apm install stack-overflow-help"
 
 
+#func_ "snap install dbeaver-ce"
+func_ "wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
+func_ "apt install ./dbeaver-ce_latest_amd64.deb"
+
+
 # rstudio
 latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
 
@@ -261,4 +266,8 @@ Install the following programs:
 	mysql-workbench
 	code
 
+"
+
+echo -e "
+	Add cronjobs from 'github/Amir-personal/cron-jobs.txt'
 "
