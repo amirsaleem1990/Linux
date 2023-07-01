@@ -334,31 +334,31 @@ def confusion_metrix_plot(actual, predicted, title="", normalize=None):
 
 
 def convert_units(from_unit, value, rounded_to=3):
-    """
-    >>> convert_units('gb', value=0.00009999)
-    '99.99 KB'
-    >>> convert_units('by', value=999900)
-    '999.9 KB'
-    >>> convert_units('gb', value=0.099)
-    '99.0 MB'
-    """
-    units = {
-        'by': 1, # bytes
-        'kb': 1000,
-        'mb': 1000_000,
-        'gb': 1000_000_000,
-    }
-    if not from_unit.lower() in units:
-        return "Invalid unit"
-    total_bytes = value * units[from_unit.lower()]
-    if total_bytes < 1000:
-        return f"{total_bytes} B"
-    elif total_bytes < 1000_000:
-        return f"{round(total_bytes/1000, rounded_to)} KB"
-    elif total_bytes < 1000_000_000:
-        return f"{round(total_bytes/1000_000, rounded_to)} MB"
-    else:
-        return f"{round(total_bytes/1000_000_000, rounded_to)} GB"
+	"""
+	>>> convert_units('gb', value=0.00009999)
+	'99.99 KB'
+	>>> convert_units('by', value=999900)
+	'999.9 KB'
+	>>> convert_units('gb', value=0.099)
+	'99.0 MB'
+	"""
+	units = {
+		'by': 1, # bytes
+		'kb': 1000,
+		'mb': 1000_000,
+		'gb': 1000_000_000,
+	}
+	if not from_unit.lower() in units:
+		return "Invalid unit"
+	total_bytes = value * units[from_unit.lower()]
+	if total_bytes < 1000:
+		return f"{total_bytes} B"
+	elif total_bytes < 1000_000:
+		return f"{round(total_bytes/1000, rounded_to)} KB"
+	elif total_bytes < 1000_000_000:
+		return f"{round(total_bytes/1000_000, rounded_to)} MB"
+	else:
+		return f"{round(total_bytes/1000_000_000, rounded_to)} GB"
 
 
 
@@ -406,3 +406,44 @@ def time_comparison(time_1, time_2):
 		print(f"Time-1 ({time_1_original}) is {round(times_faster, 3)} times faster than time-2 ({time_1_original})")
 	else:
 		print(f"Time-2 ({time_2_original}) is {round(times_faster, 3)} times faster than time-1 ({time_2_original})")
+
+
+
+def connect_to_my_db():
+	import sqlite3
+	conn = sqlite3.connect('/home/amir/github/Amir-personal/db.db')
+	return conn
+
+
+def all_possible_combinations(inputArray):
+	import itertools
+	n = len(inputArray)
+	lst = []
+	for indices in itertools.permutations(range(n), n):
+		inner_list = [inputArray[i] for i in indices]
+		lst.append(inner_list)
+	return lst
+
+
+
+
+
+
+def is_computer_locked():
+	import subprocess
+	screensaver_active = subprocess.run(["gnome-screensaver-command", "-q"], capture_output=True, text=True).stdout
+	if "is active" in screensaver_active:
+		# print("Computer is locked (screensaver is active).")
+		# exit(0)
+		return True
+
+	# Check if the X11 screen lock is active
+	x11_screen_lock_active = subprocess.run(["xset", "-q"], capture_output=True, text=True).stdout
+	if "Monitor is On" not in x11_screen_lock_active:
+		# print("Computer is locked (X11 screen lock is active).")
+		# exit(0)
+		return True
+
+	# print("Computer is not locked.")
+	# exit(1)
+	return False
