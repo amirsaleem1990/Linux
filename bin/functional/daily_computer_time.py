@@ -4,7 +4,7 @@ from amir_analysis_functions import connect_to_my_db, is_computer_locked
 import datetime
 
 def daily_computer_time():
-	DELAY_MINUTES=10
+	DELAY_MINUTES=3
 	conn = connect_to_my_db()
 	cursor = conn.cursor()
 	today = str(datetime.date.today())
