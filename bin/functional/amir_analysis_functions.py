@@ -366,7 +366,7 @@ def convert_units(from_unit, value, rounded_to=3):
 def connect_to_mysql_db(user, passw, host, database=None, port=3306):
 	import sqlalchemy
 	if database is None:
-		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}?charset=utf8')
+		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}/trysql_asc?charset=utf8')
 	else:
 		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}/{database}?charset=utf8')
 	conn = conn.connect()
@@ -403,9 +403,9 @@ def time_comparison(time_1, time_2):
 		time_2 = int(time_2)
 
 	if time_1 > time_2:
-		print(f"Time-1 ({time_1_original}) is {round(times_faster, 3)} times faster than time-2 ({time_1_original})")
+		print(f"Time-2 ({time_2_original}) is {round(times_faster, 3)} times faster than time-1 ({time_1_original})")
 	else:
-		print(f"Time-2 ({time_2_original}) is {round(times_faster, 3)} times faster than time-1 ({time_2_original})")
+		print(f"Time-1 ({time_1_original}) is {round(times_faster, 3)} times faster than time-2 ({time_2_original})")
 
 
 
@@ -447,3 +447,31 @@ def is_computer_locked():
 	# print("Computer is not locked.")
 	# exit(1)
 	return False
+
+
+
+
+def get_insert_query_from_df(df, dest_table: str):
+	import re
+	import clipboard
+
+	insert = """
+	INSERT INTO `{dest_table}` (
+		""".format(dest_table=dest_table)
+
+	columns_string = str(list(df.columns))[1:-1]
+	columns_string = re.sub(r' ', '\n        ', columns_string)
+	columns_string = re.sub(r'\'', '', columns_string)
+
+	values_string = ''
+
+	for row in df.itertuples(index=False,name=None):
+		values_string += re.sub(r'nan', 'null', str(row))
+		values_string += ',\n'
+	result = insert + columns_string + ')\n     VALUES\n' + values_string[:-2] + ';'
+	
+	open("/tmp/INSERT_query.sql", 'w').write(result)
+	
+	clipboard.copy(result)
+	
+	print("\nThe INSERT query copied to the clipboard, and saved as '/tmp/INSERT_query.sql', you can paste it anywhere you want.\n")
