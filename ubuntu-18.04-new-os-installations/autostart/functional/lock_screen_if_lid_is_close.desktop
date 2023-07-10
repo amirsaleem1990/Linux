@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=diry
+Exec=bash /amir_bin/lock_if_lid_is_close.sh
+Type=Application
+X-GNOME-Autostart-enabled=true
