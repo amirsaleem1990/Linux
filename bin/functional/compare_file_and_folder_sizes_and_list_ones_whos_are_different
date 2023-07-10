@@ -47,9 +47,16 @@ file_name="/tmp/lkjs"
 /usr/bin/rm $file_name
 # echo "Name,Type,There,Here,Difference" > "$file_name"
 echo "Name,Type,There,Here" > "$file_name"
+cat $file_name
 
+files_with_coma=()
 IFS=$'\n'
 for i in $(ls "$here"); do
+    echo "$i" | grep -o ',' >/dev/null
+    if [[ $? -eq 0 ]]; then # If there is a comma in the file's name
+        files_with_coma+=("$i")
+        continue
+    fi
     get_type "$i"
     size_here_kb=$(get_size_in_kb "$i")
     size_there_kb=$(get_size_in_kb "$there/$i")
@@ -95,3 +102,12 @@ def func(val):
 df[["There", "Here", "Difference"]] = df[["There", "Here", "Difference"]].applymap(func)
 print(df.to_string())
 '
+echo -e "\n\n"
+if (( ${#files_with_coma[@]} != 0 )); then
+    echo "<<<<<<<<<< Files with coma in thier names >>>>>>>>>"
+    for val in "${files_with_coma[@]}"; do
+        echo "$val"
+    done
+fi
+
+echo -e '\n'
