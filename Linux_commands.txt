@@ -2117,3 +2117,6 @@ cat file.txt | awk '
 
 # the first capital letter (if present) in each element of the array should be replaced with a dot ('.'). Then, display the entire array with a space between each value ........... echo "${array[@]/#[[:upper:]]/.}" .............. echo ${array[@]/[A-Z]/.}
 
+# extract all printable content from an html file ....... lynx --dump file.html
+
+
