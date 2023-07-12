@@ -1,26 +1,44 @@
 #!/bin/bash
 /usr/bin/rm /tmp/git_files_to_commit_or_push 2>/dev/null
+array=("On branch master Your branch is up to date with 'origin/master'. nothing to commit, working tree clean" "On branch main Your branch is up to date with 'origin/main'. nothing to commit, working tree clean")
+
+
+check_if_git_status_in_the_array(){
+	command="lst=['''On branch master\nYour branch is up to date with 'origin/master'.\nnothing to commit, working tree clean''', '''On branch main\nYour branch is up to date with 'origin/main'.\nnothing to commit, working tree clean''', '''On branch master\nYour branch is up to date with 'origin/main'.\nnothing to commit, working tree clean''']; print(bool('''$1''' in lst))"
+	python3 <<< "$command"
+}
+
 
 IFS=$'\n'
 for i in `ls /home/amir/github/`; do 
-	if [[ $i == "lfd-projects" ]] ; then 
+	if [[ $i == "lfd-projects/" ]] || [[ $i == "37-Frontier-ETL" ]] ; then 
 		continue
 	fi
-
-	echo "......................................................... $i"
-	cd /home/amir/github/$i
 	
-	git status | grep 'nothing to commit, working tree clean' >/dev/null
-	if [[ $? != 0 ]]; then
-		echo "$i" >> /tmp/git_files_to_commit_or_push
-	fi
 
+	cd /home/amir/github/$i 2>/dev/null
+	if [[ $? -ne 0 ]]; then
+		continue		
+	fi
+	test -e .git
+	if [[ $? -ne 0 ]]; then
+		continue
+	fi
+	git_status_response=$(git status | strings)
+	check_if_git_status_in_the_array=$(check_if_git_status_in_the_array "$git_status_response")
+	if [[ "$check_if_git_status_in_the_array" == "False" ]] ;then 
+		echo "$i" >> /tmp/git_files_to_commit_or_push
+	else
+		continue
+	fi
+	echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< $i >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	git status
 
-done | grep --color=auto '\|nothing to commit, working tree clean'
+done | grep --color=auto "\|git push\|git add\|git restore\|git add\/rm\|main\|master"
+#  | grep --color=auto "\|Your branch is up to date with 'origin/master'.\|nothing to commit, working tree clean\|On branch master\|On branch main"
 
 
 
-echo -e "\n\nFollowing repositories needs to be committed/pushed\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+echo -e "\n\nFollowing repositories needs to be committed/pushed\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
 cat /tmp/git_files_to_commit_or_push
 echo -e "\n"
