@@ -475,3 +475,37 @@ def get_insert_query_from_df(df, dest_table: str):
 	clipboard.copy(result)
 	
 	print("\nThe INSERT query copied to the clipboard, and saved as '/tmp/INSERT_query.sql', you can paste it anywhere you want.\n")
+
+
+def convert_time_to_appropiate_units(time, round_to=2):
+	"""
+	>>> convert_time_to_appropiate_units("23:22:01")
+	'23.37 h'
+	>>> convert_time_to_appropiate_units("00:00:01")
+	'1 s'
+	>>> convert_time_to_appropiate_units("23:59:59")
+	'24 h'
+	>>> convert_time_to_appropiate_units("00:00:00")
+	'0 s'
+	"""
+
+	h,m,s = list(map(int, time.split(":")))
+	assert 0 <= h < 24, f"Wrong time (hour) ({time})"
+	assert 0 <= m < 60, f"Wrong time (minute) ({time})"
+	assert 0 <= s < 60, f"Wrong time (second) ({time})"
+
+	total_seconds = h*60*60 + m*60 + s
+	total_minutes = h*60 + m + s/60
+	total_hours = h + m/60 + s/60/60
+
+	if total_seconds < 60:
+		return f"{total_seconds} s"
+	if total_minutes < 60:
+		x = round(total_minutes, round_to)
+		if x == int(x):
+			x = int(x)
+		return f"{x} m"
+	x = round(total_hours, round_to)
+	if x == int(x):
+		x = int(x)
+	return f"{x} h"
