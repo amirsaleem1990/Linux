@@ -35,6 +35,8 @@ for repo in repos:
 		os.chdir(f"/home/amir/github/{repo}")
 	except:
 		continue
+	if not '.git' in os.listdir():
+		continue
 	# only new files:
 	if os.path.exists(only_new_files):
 		os.remove(only_new_files)
