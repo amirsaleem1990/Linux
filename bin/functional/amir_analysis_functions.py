@@ -384,12 +384,27 @@ def fuzzy_matching(val_1: str, val_2: str):
 def time_comparison(time_1, time_2):
 	time_1_original = time_1
 	time_2_original = time_2
-	def to_microseconds(time):
-		if not time.endswith("µs"):
-			return float(time.split()[0]) * 1000
-		return float(time.split()[0])
-	time_1 = to_microseconds(time_1)
-	time_2 = to_microseconds(time_2)
+	if isinstance(time_1, float) and isinstance(time_2, float):
+		if time_1_original*1000000>1:
+			time_1_original=f"{round(time_1_original*1000000, 2)} µs"
+		else:
+			time_1_original=f"{round(time_1_original*1000000000)} ns"
+
+		if time_2_original*1000000>1:
+			time_2_original=f"{round(time_2_original*1000000, 2)} µs"
+		else:
+			time_2_original=f"{round(time_2_original*1000000000)} ns"
+
+		# to nano seconds
+		time_1 = time_1*1000000000
+		time_2 = time_2*1000000000
+	else:	
+		def to_microseconds(time):
+			if not time.endswith("µs"):
+				return float(time.split()[0]) * 1000
+			return float(time.split()[0])
+		time_1 = to_microseconds(time_1)
+		time_2 = to_microseconds(time_2)
 
 
 	if time_1 > time_2:
@@ -406,6 +421,8 @@ def time_comparison(time_1, time_2):
 		print(f"Time-2 ({time_2_original}) is {round(times_faster, 3)} times faster than time-1 ({time_1_original})")
 	else:
 		print(f"Time-1 ({time_1_original}) is {round(times_faster, 3)} times faster than time-2 ({time_2_original})")
+
+
 
 
 
