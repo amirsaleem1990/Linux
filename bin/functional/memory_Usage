@@ -12,8 +12,28 @@ echo "RAM total: $ram_total" > /home/amir/.memory_usage_info
 echo "SWAP total: $swap_total" >> /home/amir/.memory_usage_info
 echo ram_used,swap_used,time >> /home/amir/.memory_usage_info
 
-while :; do
+
+control_c() {
+	echo -e "\n\n-------------- EXITING ------------------\n"
+	python3 <<< '
+import matplotlib.pyplot as plt
+import pandas as pd
+df = pd.read_csv("/home/amir/.memory_usage_info", skiprows=1, header=1)
+if df.swap_used.eq(0).all():
+	df.drop(columns="swap_used", inplace=True)
+df.set_index("time").plot(grid=True, title=" and ".join(df.drop(columns="time").columns.to_list()))
+plt.axhline(df.ram_used.mean(), color="red")
+plt.show()
+	'
+	exit
+}
+
+trap control_c SIGINT
+
+while true; do
 	get_info
 	echo "$ram_used,$swap_used,$(date +%T)" | tee -a /home/amir/.memory_usage_info 
 	sleep 1s
 done
+
+
