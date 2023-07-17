@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+/usr/bin/rm /tmp/f 2>/dev/null
+
+(watch -d "mpstat -P ALL | awk '{print \$3, \$6}' | tail -n 9 | column -t -s' '" &)
+
+
+control_c() {
+	python3 <<< '
+import pandas as pd
+import matplotlib.pyplot as plt
+import pandas_bokeh
+
+pandas_bokeh.output_file("/tmp/cpu_consumption_plot.html")
+
+df = pd.read_csv("/tmp/f", header=None, names=["time", "cpu_consumption"], index_col=0)
+df.cpu_consumption.plot_bokeh(title="CPU consumption over time", figsize=(1800,400), kind="line", marker="-o");
+	'
+	exit
+}
+
+trap control_c SIGINT
+
+
+
+while true; do
+	mpstat -P ALL | grep all | awk '{print $1","$6}' >> /tmp/f
+	sleep 2s
+done
