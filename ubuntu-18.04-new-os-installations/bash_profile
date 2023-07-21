@@ -692,6 +692,14 @@ extract_portion_of_video_from_long_video(){
     eval $command
     echo $command
 }
+declare -f brighness_external_screen
+brighness_external_screen(){
+    sudo ls > /dev/null
+    echo -n "Current: "
+    sudo ddcutil --display 1 getvcp 10 | sed 's/\ \{1,\}/\ /g' | cut -d'=' -f2 | cut -d, -f1 | sed 's/^\ //g'
+    read -p "Enter new value (0-100): " val
+    sudo ddcutil --display 1 setvcp 10 $val
+}
 
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -841,3 +849,6 @@ zm() {
     done
 }
 export -f zm
+
+
+
