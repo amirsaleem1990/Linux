@@ -8,12 +8,29 @@ control_c() {
 	python3 <<< '
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas_bokeh
+from bokeh.models import DatetimeTicker, PrintfTickFormatter
 
 pandas_bokeh.output_file("/tmp/cpu_consumption_plot.html")
 
-df = pd.read_csv("/tmp/f", header=None, names=["time", "cpu_consumption"], index_col=0)
-df.cpu_consumption.plot_bokeh(title="CPU consumption over time", figsize=(1800,400), kind="line", marker="-o");
+df = pd.read_csv("/tmp/f", header=None, names=["time", "cpu_consumption"], parse_dates=["time"], index_col=0)
+
+# Plot the data using pandas_bokeh
+plot = df.cpu_consumption.plot_bokeh(title="CPU consumption over time", kind="line", marker="-o", figsize=(1800,400))
+
+# Adjust the x-axis tick settings
+num_ticks = 40  # Set the number of desired ticks on the x-axis
+
+# Calculate the step size for the tick interval
+num_data_points = len(df.index)
+tick_step = max(1, int(num_data_points / num_ticks))
+
+# Set the x-axis ticker to be a DatetimeTicker
+plot.xaxis.ticker = DatetimeTicker()
+
+# Set the x-axis tick formatter to display time in a readable format
+plot.xaxis.formatter = PrintfTickFormatter(format="%H:%M:%S")
 	'
 	exit
 }
