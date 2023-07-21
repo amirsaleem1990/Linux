@@ -362,15 +362,44 @@ def convert_units(from_unit, value, rounded_to=3):
 
 
 
-
-def connect_to_mysql_db(user, passw, host, database=None, port=3306):
+def get_data_from_localhost_mysql_db(query, database='Practice', port=3306, host="localhost"):
+	from dotenv import load_dotenv
+	import pandas as pd
 	import sqlalchemy
-	if database is None:
-		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}/trysql_asc?charset=utf8')
-	else:
-		conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}/{database}?charset=utf8')
-	conn = conn.connect()
-	return conn
+	import os
+
+	env_file_path = list(os.popen("ls /home/a*/g*b/A*l/.env"))[0].strip()
+	load_dotenv(dotenv_path=env_file_path)
+	
+	user=os.environ.get("localhost_mysql_user")
+	passw=os.environ.get("localhost_mysql_password")
+
+
+	conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}:{port}/{database}?charset=utf8').connect()
+
+	df = pd.DataFrame(
+			conn.execute(sqlalchemy.text(query))
+		)
+	conn.close()
+	return df
+
+
+def connect_to_mysql_db(user=None, passw=None, host="localhost", database='Practice', port=3306):
+	print("\nThis function returns a tuple: `conn` and `connect`\n")
+	import sqlalchemy
+
+	if user is None or passw is None:
+		import os
+		from dotenv import load_dotenv
+		env_file_path = list(os.popen("ls /home/a*/g*b/A*l/.env"))[0].strip()
+		load_dotenv(dotenv_path=env_file_path)
+	
+		user=os.environ.get("localhost_mysql_user")
+		passw=os.environ.get("localhost_mysql_password")
+
+	conn = sqlalchemy.create_engine(f'mysql+pymysql://{user}:{passw}@{host}:{port}/{database}?charset=utf8')
+	connect = conn.connect()
+	return conn, connect
 
 
 
