@@ -1,8 +1,0 @@
-#/swapfile                                 none            swap    sw              0       0
-
-# data drive
-#UUID=80033ec3-3b33-43a0-93b1-af302b8f87ae /media/sdb2     ext4    defaults        0       0
-UUID=80033ec3-3b33-43a0-93b1-af302b8f87ae /media/sdb2     ext4    errors=remount-ro 0       0
-
-/home/amir/Documents/swapfile swap swap sw 0 0
-
