@@ -77,6 +77,16 @@ alias jango="/home/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_proje
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 alias android-studio="/home/amir/Downloads/android-studio/bin/studio.sh"
 alias gpt3="/amir_bin/chatgpt"
+alias mirror_screen_display="xrandr --output $(xrandr --query | grep -v ^\  | grep \ connected | awk '{print $1}' | head -n1) --same-as $(xrandr --query | grep -v ^\  | grep \ connected | awk '{print $1}' | tail -n1)"
+
+# alias external_screen_turn_off="xrandr --output $(xrandr --query  | grep ^HDMI | cut -d' ' -f1) --off"
+alias external_screen_to_mirror="xrandr --output eDP-1 --same-as HDMI-1"
+alias external_screen_to_single_main_display="xrandr --output eDP-1 --auto --output HDMI-1 --off"
+alias external_screen_to_join_display="xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1"
+
+
+
+
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
@@ -390,7 +400,7 @@ time_since_first_login_today() {
 
 declare -f internet_speed
 internet_speed() {
-    ifstat -i wlp3s0
+    ifstat -t -i $(ifconfig  | grep ^wlp | cut -d: -f1)
 }
 
 
@@ -701,6 +711,27 @@ brighness_external_screen(){
     sudo ddcutil --display 1 setvcp 10 $val
 }
 
+declare -f repeat_if_fail
+repeat_if_fail() {
+    echo -e "# Write you bash code here, save it, and press Enter in the terminal\ncd $(pwd)" > /tmp/repeat_if_fail
+    echo 
+    subl /tmp/repeat_if_fail
+    read -p "Press Enter: "
+    test -e /tmp/repeat_if_fail
+    if [[ $? -ne 0 ]]; then
+        echo "Error: The file '/tmp/repeat_if_fail' doesn't exist."
+        return 1
+    fi
+    while true; do
+        bash /tmp/repeat_if_fail
+        if [[ $? -eq 0 ]]; then
+            break
+        fi
+    done
+}
+
+
+
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -851,4 +882,8 @@ zm() {
 export -f zm
 
 
+
+
+
+alias run_youtube="python3 <<< 'from amir_analysis_functions import run_youtube; run_youtube()'"
 
