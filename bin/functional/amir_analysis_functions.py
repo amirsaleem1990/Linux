@@ -555,3 +555,56 @@ def convert_time_to_appropiate_units(time, round_to=2):
 	if x == int(x):
 		x = int(x)
 	return f"{x} h"
+
+
+
+def usd_to_pkr_rate():
+	import requests
+	import json
+	def exchangeratesapi():
+		x = requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=3711e8823fb8576e76fc7943d1791d88&symbols=USD,PKR&format=1").text
+		xx = json.loads(x)['rates']
+		usd_to_pkr_rate_today = xx['PKR']/xx['USD']
+		return usd_to_pkr_rate_today
+
+	def currencyapi():
+		import currencyapicom
+		client = currencyapicom.Client('cur_live_GAmZiaaag2YIC5k53gD2vpBwnlgr3iasviYa0C5r')
+		result = client.latest('USD',currencies=['PKR'])
+		# result = 
+		# {'meta': {'last_updated_at': '2023-07-23T23:59:59Z'},
+		# 'data': {'PKR': {'code': 'PKR', 'value': 286.5697274993}}}
+		return result['data']['PKR']['value']
+
+	try:
+		return exchangeratesapi()
+	except:
+		return currencyapi()
+	
+
+
+def open_url_in_selenium(url):
+	from selenium import webdriver
+	browser = webdriver.Firefox(executable_path = "geckodriver")
+	browser.get(url)
+	print('\n\n*******************\n>>> s = bs4.BeautifulSoup(browser.page_source, "lxml")\n\n>>>browser.close()\n*******************\n\n')
+	# browser.close()
+	return browser
+
+def is_add_running(browser):
+	import bs4
+	return "Skip Ads" in bs4.BeautifulSoup(browser.page_source, "lxml").text
+
+def get_current_mouse_position():
+	import os
+	print(*list(map(lambda x: x.replace(":", ": "), list(os.popen("xdotool getmouselocation"))[0].strip().split()[:2])), sep="\n")
+
+def run_youtube():
+	# from amir_analysis_functions import open_url_in_selenium, is_add_running
+	import time
+	import os
+	browser =  open_url_in_selenium("https://www.youtube.com/")
+	while True:
+		time.sleep(1)
+		if is_add_running(browser):
+			os.system("xdotool mousemove 1831 948 click 1")
