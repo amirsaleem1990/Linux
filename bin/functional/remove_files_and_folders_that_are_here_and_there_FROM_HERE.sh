@@ -47,8 +47,6 @@ done
 
 # echo $file_name | column -t -s,
 
-
-
 python3 <<< '
 import shutil
 from amir_analysis_functions import convert_units
@@ -64,10 +62,9 @@ x = pd.DataFrame(x.to_list(), index=x.index, columns=["here_kb", "there_kb", "le
 x[["here_kb", "there_kb"]] = x[["here_kb", "there_kb"]].applymap(lambda val: convert_units(from_unit="kb", value=val))
 x = x.rename_axis(None)
 print(x.to_string())
-
+kb="kb"
 in_both = df[df.where_.eq("in_both") & df.here_kb.eq(df.there_kb)]
-print(f"\nThere are {len(in_both)} files/folders ({convert_units(from_unit='''kb''', value=in_both.here_kb.sum())}) that have the same size.\n")
-
+print(f"\nThere are {len(in_both)} files/folders ({convert_units(from_unit=kb, value=in_both.here_kb.sum())}) that have the same size.\n")
 
 if not in_both.empty:
     import os
