@@ -123,7 +123,8 @@ if x in ['1', '2']:
 					for f_t_r in files_to_remove:
 						sub_df = df[df[3].eq(df[df[1].eq(f_t_r)].iloc[0, 3])]
 						size_KB = sub_df.iloc[0].loc["size_KB"]
-						print(colored(f"\nSize (KB): {size_KB} | {f_t_r}", "red"))
+						print(f"\nSize (KB): {size_KB}")
+						print(colored(f_t_r, "red"))
 						duplicated_files_with_current_file_to_remove = sub_df[1][sub_df[1].ne(f_t_r)].to_list()
 						print(*duplicated_files_with_current_file_to_remove, sep="\n")
 					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
