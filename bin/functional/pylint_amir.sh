@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 pylint --msg-template='{msg_id}:{line:3d}:{column}:{msg}' "$1" | grep --color=auto "^[A-Za-z-]" | head -n -2 | sort -k1,4 -s > /tmp/xx
-cat /tmp/xx | cut -d: -f1 | sort -u | sort > unique_codes
-cat /tmp/xx | cut -d: -f1 | sort | uniq -c > distribution
+cat /tmp/xx | cut -d: -f1 | sort -u | sort > /tmp/unique_codes
+cat /tmp/xx | cut -d: -f1 | sort | uniq -c > /tmp/distribution
 
 cat /tmp/xx
 
@@ -12,8 +12,8 @@ import json
 def func(line):
     count, code = line.strip().split()
     return code, count
-unique_codes = open("unique_codes", "r").read().splitlines()
-distribution = open("distribution", "r").read().splitlines()
+unique_codes = open("/tmp/unique_codes", "r").read().splitlines()
+distribution = open("/tmp/distribution", "r").read().splitlines()
 pylint_codes = json.load(open("/home/amir/github/Linux/pylint_codes.txt"))
 selected_pylint_codes = {k: v for k,v in pylint_codes.items() if k in unique_codes}
 distribution = dict(map(func, distribution))
