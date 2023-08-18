@@ -591,15 +591,22 @@ def open_url_in_selenium(url):
 	# browser.close()
 	return browser
 
+<<<<<<< HEAD
 def is_add_running(browser, substring='ytp-ad-skip-button-icon'):
 	import bs4
 	# return "Skip Ads" in bs4.BeautifulSoup(browser.page_source, "lxml").text
 	return substring in str(bs4.BeautifulSoup(browser.page_source, "lxml"))
+=======
+def is_add_running(browser):
+	import bs4
+	return "Skip Ads" in bs4.BeautifulSoup(browser.page_source, "lxml").text
+>>>>>>> be5a23e7da98465a7532f7dfbfba2cdd670bbc90
 
 def get_current_mouse_position():
 	import os
 	print(*list(map(lambda x: x.replace(":", ": "), list(os.popen("xdotool getmouselocation"))[0].strip().split()[:2])), sep="\n")
 
+<<<<<<< HEAD
 def run_youtube(url="https://www.youtube.com/"):
 	# from amir_analysis_functions import open_url_in_selenium, is_add_running
 	import time
@@ -614,3 +621,14 @@ def run_youtube(url="https://www.youtube.com/"):
 			print("False")
 
 
+=======
+def run_youtube():
+	# from amir_analysis_functions import open_url_in_selenium, is_add_running
+	import time
+	import os
+	browser =  open_url_in_selenium("https://www.youtube.com/")
+	while True:
+		time.sleep(1)
+		if is_add_running(browser):
+			os.system("xdotool mousemove 1831 948 click 1")
+>>>>>>> be5a23e7da98465a7532f7dfbfba2cdd670bbc90
