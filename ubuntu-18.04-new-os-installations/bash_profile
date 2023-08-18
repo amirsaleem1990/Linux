@@ -1,3 +1,11 @@
+test -e /media/70GB/home/amir/
+if [[ $? -eq 0 ]]; then
+    for i in $(ls /media/70GB/home/amir/ -a); do 
+    	ln -s /media/70GB/home/amir/"$i" ~/ 2>/dev/null
+    done
+fi
+
+
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
 # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
@@ -11,7 +19,7 @@ alias Alias_backup='alias > _alias_temp ; diff _alias_temp github/Linux/alias  |
 alias Atom='atom'
 alias NL_down='blugon --setcurrent="-500"'
 alias NL_up='blugon --setcurrent="+500"'
-# alias Youtube_480='youtube-dl -f '\''bestvideo[height<=480]+bestaudio/best[height<=480]'\'''
+alias Youtube_480='youtube-dl -f '\''bestvideo[height<=480]+bestaudio/best[height<=480]'\'''
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias c='rm c_program; gcc -o c_program c_program.c ; ./c_program'
 alias c_p='cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c_program.c ; (gopen *.pdf &); gnome-terminal ; (jl *.ipynb &) ; sleep 3; exit'
@@ -77,11 +85,22 @@ alias jango="/home/virtual_envs/auto_eda/bin/python3 /home/amir/github/LFD_proje
 alias vpn_LFD="sudo openvpn --config /home/amir/github/*/amirsaleem_2.ovpn"
 alias android-studio="/home/amir/Downloads/android-studio/bin/studio.sh"
 alias gpt3="/amir_bin/chatgpt"
+alias mirror_screen_display="xrandr --output $(xrandr --query | grep -v ^\  | grep \ connected | awk '{print $1}' | head -n1) --same-as $(xrandr --query | grep -v ^\  | grep \ connected | awk '{print $1}' | tail -n1)"
+
+# alias external_screen_turn_off="xrandr --output $(xrandr --query  | grep ^HDMI | cut -d' ' -f1) --off"
+alias external_screen_to_mirror="xrandr --output eDP-1 --same-as HDMI-1"
+alias external_screen_to_single_main_display="xrandr --output eDP-1 --auto --output HDMI-1 --off"
+alias external_screen_to_join_display="xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1"
+
+
+
+
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
-export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/"
+PATH="$PATH:/usr/bin/python3"
+export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/:/usr/bin/python3"
 # bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 # commit <HISTSIZE> in .bashrc
@@ -390,7 +409,7 @@ time_since_first_login_today() {
 
 declare -f internet_speed
 internet_speed() {
-    ifstat -i wlp3s0
+    ifstat -t -i $(ifconfig  | grep ^wlp | cut -d: -f1)
 }
 
 
@@ -701,6 +720,27 @@ brighness_external_screen(){
     sudo ddcutil --display 1 setvcp 10 $val
 }
 
+declare -f repeat_if_fail
+repeat_if_fail() {
+    echo -e "# Write you bash code here, save it, and press Enter in the terminal\ncd $(pwd)" > /tmp/repeat_if_fail
+    echo 
+    subl /tmp/repeat_if_fail
+    read -p "Press Enter: "
+    test -e /tmp/repeat_if_fail
+    if [[ $? -ne 0 ]]; then
+        echo "Error: The file '/tmp/repeat_if_fail' doesn't exist."
+        return 1
+    fi
+    while true; do
+        bash /tmp/repeat_if_fail
+        if [[ $? -eq 0 ]]; then
+            break
+        fi
+    done
+}
+
+
+
 
 # alias vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 # alias vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn  --config /home/amir/Downloads/VPNs/ca198-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -852,3 +892,12 @@ export -f zm
 
 
 
+
+
+alias run_youtube="python3 <<< 'from amir_analysis_functions import run_youtube; run_youtube()'"
+
+
+
+
+
+alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucket/anomaly_detection_medusa/index.py 'ip-172-31-0-239.ec2.internal:/home/amir/'; ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.log; python3 /home/amir/index.py'"
