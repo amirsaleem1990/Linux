@@ -78,4 +78,8 @@ fi
 # read -p "Enter output file name:                 " output_file_name
 
 
-ffmpeg -i $(youtube-dl --get-url "$URL") -ss $startpoint -to $endpoint -c:v copy -c:a copy "$output_file_name"
+ffmpeg   -ss $startpoint   -to $endpoint   -i "$(youtube-dl -f best --get-url $URL)"   -c:v copy   -c:a copy   "$output_file_name"
+
+
+
+
