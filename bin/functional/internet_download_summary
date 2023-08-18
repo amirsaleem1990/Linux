@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file_=/home/amir/._amb
+file_=/tmp/internet_download_summary
 
 recursive=false
 
