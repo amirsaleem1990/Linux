@@ -896,11 +896,5 @@ export -f zm
 
 alias run_youtube="python3 <<< 'from amir_analysis_functions import run_youtube; run_youtube()'"
 
-<<<<<<< HEAD
-
-
-
 
 alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucket/anomaly_detection_medusa/index.py 'ip-172-31-0-239.ec2.internal:/home/amir/'; ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.log; python3 /home/amir/index.py'"
-=======
->>>>>>> be5a23e7da98465a7532f7dfbfba2cdd670bbc90
