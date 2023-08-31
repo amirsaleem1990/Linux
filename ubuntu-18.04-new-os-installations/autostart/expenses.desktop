@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Expenses
-Exec=firefox --new-tab https://docs.google.com/spreadsheets/d/1ynsGnyXW7EfYWiOUz0IBUMJqY8BD82gR-ieMzcsYS48/edit#gid=1046897338
-Type=Application
-X-GNOME-Autostart-enabled=true

@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=terminal
-Exec=gnome-terminal
-Type=Application
-X-GNOME-Autostart-enabled=true

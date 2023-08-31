@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=github-automatic-push
-Exec=bash /home/amir/github/Amir-personal/github-automatic-push-loop.sh
-Type=Application
-X-GNOME-Autostart-enabled=true
