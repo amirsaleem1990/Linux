@@ -25,7 +25,7 @@ fi
 
 IFS=$'\n'
 
-for file_name in $(ls); do
+for file_name in $(ls -a); do
 	original_file_name=$file_name
 	file_name=$(echo "$file_name" | sed "s/$to_be_replaced/$to_be_replaced_with/g")
 	if [[ "$original_file_name" != "$file_name" ]]; then

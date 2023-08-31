@@ -468,6 +468,36 @@ x="import pickle; print(len(pickle.load(open('"$1"', 'rb'))))"
 echo "$x" | python3
 }
 
+
+declare -f pickle_print_type
+pickle_print_type() {
+x="import pickle; print(str(type(pickle.load(open('"$1"', 'rb')))))"
+echo "$x" | python3
+}
+
+declare -f pickle_show_info
+pickle_show_info() {
+x="
+import pickle
+f = pickle.load(open('"$1"', 'rb'))
+print('################################################')
+print('Type:', str(type(f)))
+print('Len :', len(f))
+import pandas as pd
+if isinstance(f, pd.DataFrame):
+    print('Shape:', f.shape)
+    print()
+    print('Head :')
+    print(f.head().to_string())
+print('################################################')
+"
+echo "$x" | python3
+}
+
+
+
+
+
 declare -f pickle_show_nrows
 pickle_show_nrows() {
 x="import pandas as pd; print(pd.read_pickle('"$1"').shape[0])"
