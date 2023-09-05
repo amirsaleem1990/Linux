@@ -601,6 +601,11 @@ def get_current_mouse_position():
 	import os
 	print(*list(map(lambda x: x.replace(":", ": "), list(os.popen("xdotool getmouselocation"))[0].strip().split()[:2])), sep="\n")
 
+def click_mouse(x,y):
+	import os
+	command = f"xdotool mousemove {x} {y} click 1"
+	os.system(command)
+
 def run_youtube(url="https://www.youtube.com/"):
 	# from amir_analysis_functions import open_url_in_selenium, is_add_running
 	import time
@@ -610,6 +615,8 @@ def run_youtube(url="https://www.youtube.com/"):
 		time.sleep(1)
 		if is_add_running(browser):
 			print("True")
-			os.system("xdotool mousemove 1831 948 click 1")
+			click_mouse(x=1831, y=948)
 		else:
 			print("False")
+
+
