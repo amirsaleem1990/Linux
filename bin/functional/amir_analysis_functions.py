@@ -620,3 +620,21 @@ def run_youtube(url="https://www.youtube.com/"):
 			print("False")
 
 
+def view_data_frame(df):
+	from pandastable import Table
+	from tkinter import Tk, Frame
+
+	def set_mousewheel(widget, command):
+		"""Activate / deactivate mousewheel scrolling when 
+		cursor is over / not over the widget respectively."""
+		widget.bind("<Enter>", lambda _: widget.bind_all('<MouseWheel>', command))
+		widget.bind("<Leave>", lambda _: widget.unbind_all('<MouseWheel>'))
+
+	root = Tk()
+	root.geometry("1920x1600")
+	frame  = Frame(root)
+	set_mousewheel(frame, lambda e: frame.config(text=e.delta))
+	frame.pack(anchor="center", fill="both", expand=True, side="left")
+	table = Table(frame, dataframe=df, showtoolbar=True, showstatusbar=True)
+	table.show()
+	root.mainloop()
