@@ -26,7 +26,7 @@ alias c_p='cd ~/github/C-programming-A_Modern_Approach-book-Exercises-/ ; subl c
 alias c_server='read -p '\''Enter last 3 digits from server IP address: '\'' ip;  sudo ssh lfd-server@192.168.8.'
 alias c_subl='subl && sleep 3 && wmctrl -r :ACTIVE: -e 0,0,0,1960,660'
 alias calc='gcalccmd'
-alias copyfrom='xclip -sel cli <'
+# alias copyfrom='xclip -sel cli <'
 # alias copyto='xsel -b >'
 alias cpu_info='cat /proc/cpuinfo | grep '\''model name'\'' | uniq ; echo -en '\''Cores           : 8\n'\'''
 # alias current_wifi_name='echo yes:Jazz-LTE-438A | sed '\''s/yes://g'\'''
@@ -215,6 +215,19 @@ copyto(){
     fi
     xsel -b > ~/.temp_copy
     echo -e "$(cat ~/.temp_copy)\n" > "$1"
+}
+
+declare -f copyfrom
+copyfrom(){
+    ls /tmp/last_copy_* > /dev/null
+    if [[ $? -ne 0 ]]; then
+        files_count=0
+    else
+        files_count=$(ls /tmp/last_copy_ | wc -l)
+    fi
+    let "files_count++"
+    copyto /tmp/last_copy_$files_count
+    xclip -sel cli < "$@"
 }
 
 declare -f si
@@ -700,10 +713,40 @@ create_a_swap_file(){
     sudo swapon  "$swap_file_name"
 }
 
+declare -f record_bluetooth_headphone_audio
+record_bluetooth_headphone_audio(){
+    ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor /home/amir/output.wav
+}
+
 declare -f record_screen
 record_screen(){
     file_name=$(date +%d-%m-%Y_%H\:%M\:%S).mkv
+    # ffmpeg                \
+    # -video_size 1920x1080 \ 
+    # -framerate 50         \ 
+    # -f x11grab            \  # Specifies the input format as x11grab, which is used for capturing the X Window System (X11) screen on Linux.
+    # -i :0.0+0,0           \  # Specifies the input source. In this case, it's capturing the screen from the default X11 display, which is represented as :0.0. The +0,0 part indicates that it's capturing from the top-left corner of the screen (coordinates 0,0). 
+    # -f pulse              \  # Sets the input format for audio capture as PulseAudio, a sound server for Linux.
+    # -ac 2                 \  # Specifies that FFmpeg should capture audio in stereo (2 audio channels).
+    # -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
+    # "$file_name"
+
     ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"
+
+    # ffmpeg                \
+    # -f x11grab            \
+    # -video_size 1920x1080 \
+    # -framerate 30         \
+    # -i :0.0               \
+    # -f alsa               \
+    # -i pulse              \
+    # -ac 2                 \
+    # -c:v libx264          \
+    # -c:a aac              \
+    # -strict experimental  \
+    # -vf "format=yuv420p" 
+    # $file_name
+
 }
 
 
@@ -928,3 +971,26 @@ alias run_youtube="python3 <<< 'from amir_analysis_functions import run_youtube;
 
 
 alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucket/anomaly_detection_medusa/index.py 'ip-172-31-0-239.ec2.internal:/home/amir/'; ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.log; python3 /home/amir/index.py'"
+
+
+
+declare -f execute_file_on_vm
+execute_file_on_vm(){
+    if [[ -z $1 ]] ; then
+        file=/home/amir/github/Medusa/anomalies/index.py
+    else
+        echo "$1" | grep / >/dev/null
+        if [[ $? -eq 0 ]]; then
+            echo -e "/ in file_name\nAborting........\n"
+            return 1
+        fi
+        file=$(echo "$(pwd)/$1")
+    fi
+    file_base_name=$(basename "$file")
+    # scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
+    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
+    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/monday.com/$file_base_name"
+    scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
+    ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
+    ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
+}
