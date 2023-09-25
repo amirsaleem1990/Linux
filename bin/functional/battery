@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 RED="\033[0;31m"
 normal="\033[0m"
@@ -35,7 +35,8 @@ echo -e "\n" >> $battery_file
 
 sed -i 's/minutes/ minutes/g' $battery_file
 
-cat $battery_file  | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage\|timetoempty\|timetofull'
+cat $battery_file | sed 's/timetofull/timetofull  -------------/g' | sed 's/percentage/percentage  -------------/g' | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage\|timetoempty\|timetofull'
+# cat $battery_file | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | awk '/percentage|timetoempty|timetofull/ {print "\033[01;31m" $0 "\033[0m"} 1'
 
 # echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
 
