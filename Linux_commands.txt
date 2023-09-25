@@ -2123,3 +2123,34 @@ cat file.txt | awk '
 # sort by multiple columns in bash ............ sort -t ',' -k1,1 -k2r,2 filename.txt
 
 
+# list down all github repos ......... curl https://api.github.com/users/amirsaleem1990/repos
+
+# extract specific range of pages from pdf ......... pdftk file.pdf cat 490-511 output output.pdf
+
+# convert each pdf page to saperate pdf file ........... pdftk file.pdf burst 
+
+# convert a pdf file as each two page placed in one page side-by-side ............ pdfjam --nup 2x1 --landscape file.pdf --a4paper --twoside --outfile output.pdf
+
+# create a new pdf using two individual pdfs ......... pdftk pg_0002.pdf pg_0001.pdf cat output intermediate_01.pdf
+
+####################################################################################################
+# made hamza's 25th para, the task was to place two pages on one a4 page, in quran's order:
+# # extract specific range of pages into saperat file
+# pdftk QURAN-HAKEEM-15-LINES-TAJWEEDI.pdf cat 490-511 output output.pdf
+# # combine multiple two pages' files
+# pdftk pg_0002.pdf pg_0001.pdf cat output intermediate_01.pdf
+# pdftk pg_0004.pdf pg_0003.pdf cat output intermediate_02.pdf
+# pdftk pg_0006.pdf pg_0005.pdf cat output intermediate_03.pdf
+# pdftk pg_0008.pdf pg_0007.pdf cat output intermediate_04.pdf
+# pdftk pg_0010.pdf pg_0009.pdf cat output intermediate_05.pdf
+# pdftk pg_0012.pdf pg_0011.pdf cat output intermediate_06.pdf
+# pdftk pg_0014.pdf pg_0013.pdf cat output intermediate_07.pdf
+# pdftk pg_0016.pdf pg_0015.pdf cat output intermediate_08.pdf
+# pdftk pg_0018.pdf pg_0017.pdf cat output intermediate_09.pdf
+# pdftk pg_0020.pdf pg_0019.pdf cat output intermediate_10.pdf
+# pdftk pg_0022.pdf pg_0021.pdf cat output intermediate_11.pdf
+# # combine all intermeidate files into combined.pdf
+# pdftk intermediate_* cat output combined.pdf
+# # now make a new file where each two consecitive pages from combined.pdf placed in one a4 sized page
+# pdfjam --nup 2x1 --landscape combined.pdf --a4paper --twoside --outfile combined_2.pdf
+#####################################################################################################
