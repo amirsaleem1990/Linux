@@ -4,7 +4,19 @@ if [[ -z $1 ]]; then
 else
 	sleep_secs=$1
 fi
+read -ep "Enter source full path: " source_full_path
+read -p "It the copy process started just now? if no do you want to specify start_time? [yes|no]: " ans
+if [[ $ans == "yes" ]]; then
+	firefox https://www.epochconverter.com
+	read -p "Enter start time in Epoch: " start_time
+else
+	start_time=$(date +%s)
+fi
+
 size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
+
+source_actual_size=$(du -s -BM "$source_full_path" 2>/dev/null  | cut -d'M' -f1)
+
 RED='\033[0;31m'
 normal="\033[0m"
 /usr/bin/rm -f /home/amir/.copyt_speed.txt
@@ -13,13 +25,21 @@ normal="\033[0m"
 n=0
 
 main(){
+	current_time=$(date +%s)
 	current_size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
 	time=$(date +%T)
 	current_files=$(find . 2>/dev/null| wc -l)
 	incremental_size=$(echo "$current_size-$size"|bc -l)
 	echo -e "$(date +%T)\t$current_size MB\t$(echo $current_size-$size|bc -l) MB\t$(find . 2>/dev/null| wc -l)" >> /home/amir/.copyt_speed.txt
 	size=$current_size
-	printf '%-10s %-10s %-10s %-10s\n' $time $current_size $incremental_size $current_files
+	proportion_completed=$(echo "$current_size/$source_actual_size*100"|bc -l | cut -c -6)
+	time_elapsed=$(( $current_time - $start_time ))
+	time_left=$(echo "$time_elapsed / $proportion_completed * 100 - $time_elapsed" | bc -l | cut -d. -f1)
+
+	# proportion_left=$(echo "100 - $proportion_completed"|bc -l)
+	# $(( $time_elapsed / (100 - $proportion_completed) * 100 ))
+
+	printf '%-10s %-10s %-10s %-10s      %-10s          %-10s  %-10s\n' $time $current_size $incremental_size $current_files $proportion_completed $(convertsecs $time_elapsed) $(convertsecs $time_left)
 }
 
 plot(){
@@ -71,7 +91,7 @@ trap control_c SIGINT
 while true ; do 
    remainder=$(expr $n % 13)
    if [[ $remainder -eq 0 ]]; then
-   	echo -e "${RED}TIME       TOTAL(MB)  INCRNT(MB) TotalFilesQty.${normal}"
+   	echo -e "${RED}TIME       TOTAL(MB)  INCRNT(MB) TotalFilesQty.  ProportionCompleted TimeElapsed     TimeLeft${normal}"
    fi
    let "n++"
 
