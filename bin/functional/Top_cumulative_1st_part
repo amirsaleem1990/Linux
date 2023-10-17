@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -f ~/AB_{cpu,ram}.txt
+rm -f /tmp/AB_{cpu,ram}.txt
 RED="\033[0;31m"
 normal="\033[0m"
 # if [[ $1 == 'cpu' ]]; then
@@ -29,63 +29,63 @@ IFS=$'\n'
 echo -e "`ps -eo user,pid,%cpu,%mem,comm  | grep amir | sed 's/amir     //g' |  grep -v '0.0  0.0' \
 	| sed 's/^ //g' \
 	| sed 's/ \{1,\}/ /g' | sed 's/^ //g' | cut -d ' ' -f2-10
-	`" > ~/ab.txt
-	# |tee /home/amir/.a. \
+	`" > /tmp/ab.txt
+	# |tee /tmp/.a. \
 	# | tac \
 
-## cat ~/ab.txt | cut -d ' ' -f2-10 > ~/.amb.txt
-## mv ~/.amb.txt  ~/ab.txt
+## cat /tmp/ab.txt | cut -d ' ' -f2-10 > /tmp/amb.txt
+## mv /tmp/amb.txt  /tmp/ab.txt
 
-cat ~/ab.txt | cut -d ' ' -f1,2  > ~/.first_two_cols.txt
-cat ~/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > ~/.last_col.txt
+cat /tmp/ab.txt | cut -d ' ' -f1,2  > /tmp/first_two_cols.txt
+cat /tmp/ab.txt | cut -d ' ' -f3-5 | sed 's/ /-/g' > /tmp/last_col.txt
 
-paste ~/.first_two_cols.txt  ~/.last_col.txt > ~/ab.txt
-cat ~/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > ~/ab.txT
-yes | mv ~/ab.txT ~/ab.txt
-echo "" > ~/.amb.txt
+paste /tmp/first_two_cols.txt  /tmp/last_col.txt > /tmp/ab.txt
+cat /tmp/ab.txt | sed 's/\t/ /g' | sed 's/ /,/g' > /tmp/ab.txt
+yes | mv /tmp/ab.txt /tmp/ab.txt
+echo "" > /tmp/amb.txt
 
-for i in `cat ~/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u`; do
-	a=`cat ~/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
+for i in `cat /tmp/ab.txt | cut -d, -f3 | sort | uniq -c | sed 's/      //g' | sed 's/^\ \{1,\}//g' | grep -v '^1 ' | cut -d " " -f2-4 | sort -u`; do
+	a=`cat /tmp/ab.txt | grep $i | cut -d, -f1 | paste -sd+ | bc`
 	if [[ "${a:0:1}" == "." ]] ; then
 		a="0"$a
 	fi 
 	if [[ $a == 0 ]]; then
 		a="0.0"
 	fi
-	b=`cat ~/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
+	b=`cat /tmp/ab.txt | grep $i | cut -d, -f2 | paste -sd+ | bc`
 	if [[ "${b:0:1}" == "." ]] ; then
 		b="0"$b
 	fi 
 	if [[ $b == 0 ]]; then
 		b="0.0"
 	fi
-	echo "$a,$b,$i" >> ~/.amb.txt
-	cat ~/ab.txt | grep -v $i > ~/.AB.txt
-	yes | mv ~/.AB.txt ~/ab.txt
+	echo "$a,$b,$i" >> /tmp/amb.txt
+	cat /tmp/ab.txt | grep -v $i > /tmp/AB.txt
+	yes | mv /tmp/AB.txt /tmp/ab.txt
 done 
-sed -i '/^$/d' ~/.amb.txt
-python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/ab.txt', 'r').read().splitlines()]+['\n']))"
-paste  ~/.MM ~/ab.txt  -d,  | grep -v ',$'  >  ~/.AB.txt
-# mv  ~/ab.txt ~/.AB.txt
+sed -i '/^$/d' /tmp/amb.txt
+python3 -c "from psutil import virtual_memory ; open('/tmp/.MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/ab.txt', 'r').read().splitlines()]+['\n']))"
+paste  /tmp/MM /tmp/ab.txt  -d,  | grep -v ',$'  >  /tmp/AB.txt
+# mv  /tmp/ab.txt /tmp/AB.txt
 
-python3 -c "from psutil import virtual_memory ; open('/home/amir/.MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/home/amir/.amb.txt', 'r').read().splitlines() if i]+['\n']))"
-paste  ~/.MM2 ~/.amb.txt  -d,  | grep -v ',$'  >  ~/.AB_2.txt
-cat ~/.AB_2.txt ~/.AB.txt  >  ~/ab.txt
-# mv ~/.SS ~/.AB.txt
+python3 -c "from psutil import virtual_memory ; open('/tmp/.MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/.amb.txt', 'r').read().splitlines() if i]+['\n']))"
+paste  /tmp/MM2 /tmp/amb.txt  -d,  | grep -v ',$'  >  /tmp/AB_2.txt
+cat /tmp/AB_2.txt /tmp/AB.txt  >  /tmp/ab.txt
+# mv /tmp/SS /tmp/AB.txt
 
 
-# cat ~/.amb.txt ~/.AB.txt | grep -v ',$' > ~/ab.txt
+# cat /tmp/amb.txt /tmp/AB.txt | grep -v ',$' > /tmp/ab.txt
 # exit
 
-cpu_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
+cpu_total=`sed '/^$/d' /tmp/ab.txt | cut -d, -f2 | paste -sd+ | bc`
 cpu_total=`echo "scale=3; $cpu_total / 8" | bc | awk '{print int($1)}'`
 
-# echo "CPU,MEM,COMMAND" > ~/.AB.txt
-echo "MEM(MB),CPU,MEM,COMMAND" > ~/.AB_cpu.txt
-echo "MEM(MB),CPU,MEM,COMMAND" > ~/.AB_ram.txt
+# echo "CPU,MEM,COMMAND" > /tmp/AB.txt
+echo "MEM(MB),CPU,MEM,COMMAND" > /tmp/AB_cpu.txt
+echo "MEM(MB),CPU,MEM,COMMAND" > /tmp/AB_ram.txt
 paste_to_files() {
-	echo "$1" >> ~/.AB_cpu.txt
-	echo "$1" >> ~/.AB_ram.txt
+	echo "$1" >> /tmp/AB_cpu.txt
+	echo "$1" >> /tmp/AB_ram.txt
 }
 func_3(){
 	_total_=`echo $1 | cut -d, -f1`
@@ -173,37 +173,37 @@ func_2(){
 	echo $f
 }
 	fun() {
-	# echo '' >> ~/.AB.txt
+	# echo '' >> /tmp/AB.txt
 	paste_to_files ''
 
-	# echo "<<<,CPU,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_cpu.txt
-	# echo "<<<,MEM,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> ~/.AB_ram.txt
+	# echo "<<<,CPU,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> /tmp/AB_cpu.txt
+	# echo "<<<,MEM,<<<>>>,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >> /tmp/AB_ram.txt
 
-	echo "=======,===,===,======= CPU ============================" >> ~/.AB_cpu.txt
-	echo "=======,===,===,======= RAM ============================" >> ~/.AB_ram.txt
+	echo "=======,===,===,======= CPU ============================" >> /tmp/AB_cpu.txt
+	echo "=======,===,===,======= RAM ============================" >> /tmp/AB_ram.txt
 
-	# sort -t, -k $sort_by -n ~/ab.txt | sed 's/0\.0/---/g' >> ~/.AB.txt
+	# sort -t, -k $sort_by -n /tmp/ab.txt | sed 's/0\.0/---/g' >> /tmp/AB.txt
 	if [[ $detailed == 1 ]]; then
-		sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g'              >> ~/.AB_cpu.txt
-		sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g'              >> ~/.AB_ram.txt
+		sort -t, -k 2 -n /tmp/ab.txt | sed 's/0\.0/---/g'              >> /tmp/AB_cpu.txt
+		sort -t, -k 3 -n /tmp/ab.txt | sed 's/0\.0/---/g'              >> /tmp/AB_ram.txt
 	else
-		sort -t, -k 2 -n ~/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> ~/.AB_cpu.txt
-		sort -t, -k 3 -n ~/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> ~/.AB_ram.txt
+		sort -t, -k 2 -n /tmp/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> /tmp/AB_cpu.txt
+		sort -t, -k 3 -n /tmp/ab.txt | sed 's/0\.0/---/g' | grep -v \- >> /tmp/AB_ram.txt
 	fi
 
-	# echo "CPU,MEM,COMMAND" >> ~/.AB.txt
+	# echo "CPU,MEM,COMMAND" >> /tmp/AB.txt
 	# paste_to_files "MEM(MB),CPU,MEM,COMMAND"
 
-	# cat ~/.AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
+	# cat /tmp/AB.txt | column -t -s, | grep --color "\|CPU\|MEM\|COMMAND"
 
-	# rm -f ~/.{amb,AB}.txt ~/ab.txt
+	# rm -f /tmp/{amb,AB}.txt /tmp/ab.txt
 
 	f=`func_2`
 
-	echo "=======,===,===,======= CPU ============================" >> ~/.AB_cpu.txt
-	echo "=======,===,===,======= RAM ============================" >> ~/.AB_ram.txt
+	echo "=======,===,===,======= CPU ============================" >> /tmp/AB_cpu.txt
+	echo "=======,===,===,======= RAM ============================" >> /tmp/AB_ram.txt
 	#--------------------------------------------------------
-	# ram_total=`sed '/^$/d' ~/ab.txt | cut -d, -f2 | paste -sd+ | bc`
+	# ram_total=`sed '/^$/d' /tmp/ab.txt | cut -d, -f2 | paste -sd+ | bc`
 	# ram_total=`echo $ram_total					   | awk '{print int($1)}'`
 	# if [[ $ram_total -eq 0 ]]; then
 	# 	sleep 1
@@ -214,15 +214,15 @@ func_2(){
 	# echo
 	#--------------------------------------------------------
 
-	/usr/bin/rm -f ~/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
+	/usr/bin/rm -f /tmp/{ab,.first_two_cols,.last_col,.amb.AB}.txt ab.txT
 
 	}
 fun
-cat ~/.AB_cpu.txt | cut -d, -f2-4 > ~/.AB_cpu_temp.txt
-yes | mv ~/.AB_cpu_temp.txt ~/.AB_cpu.txt
-paste -d "," ~/.AB_cpu.txt ~/.AB_ram.txt | column -t -s, > ~/.AB.txt
+cat /tmp/AB_cpu.txt | cut -d, -f2-4 > /tmp/AB_cpu_temp.txt
+yes | mv /tmp/AB_cpu_temp.txt /tmp/AB_cpu.txt
+paste -d "," /tmp/AB_cpu.txt /tmp/AB_ram.txt | column -t -s, > /tmp/AB.txt
 
 # cat .AB.txt  | sed '/^$/d'
 # echo -e "$f" | sed '/^$/d'
 
-echo -e "$f" | sed '/^$/d' > ~/.LMSF
+echo -e "$f" | sed '/^$/d' > /tmp/LMSF
