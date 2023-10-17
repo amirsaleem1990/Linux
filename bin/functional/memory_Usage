@@ -8,9 +8,9 @@ get_info() {
 	swap_used=$(echo $swap | cut -d, -f2)   
 }
 
-echo "RAM total: $ram_total" > /home/amir/.memory_usage_info
-echo "SWAP total: $swap_total" >> /home/amir/.memory_usage_info
-echo ram_used,swap_used,time >> /home/amir/.memory_usage_info
+echo "RAM total: $ram_total" > /tmp/.memory_usage_info
+echo "SWAP total: $swap_total" >> /tmp/.memory_usage_info
+echo ram_used,swap_used,time >> /tmp/.memory_usage_info
 
 
 control_c() {
@@ -18,7 +18,7 @@ control_c() {
 	python3 <<< '
 import matplotlib.pyplot as plt
 import pandas as pd
-df = pd.read_csv("/home/amir/.memory_usage_info", skiprows=1, header=1)
+df = pd.read_csv("/tmp/.memory_usage_info", skiprows=1, header=1)
 if df.swap_used.eq(0).all():
 	df.drop(columns="swap_used", inplace=True)
 df.set_index("time").plot(grid=True, title=" and ".join(df.drop(columns="time").columns.to_list()))
@@ -32,7 +32,7 @@ trap control_c SIGINT
 
 while true; do
 	get_info
-	echo "$ram_used,$swap_used,$(date +%T)" | tee -a /home/amir/.memory_usage_info 
+	echo "$ram_used,$swap_used,$(date +%T)" | tee -a /tmp/.memory_usage_info 
 	sleep 1s
 done
 
