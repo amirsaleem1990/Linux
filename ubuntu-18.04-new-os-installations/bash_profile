@@ -1,6 +1,9 @@
 test -e /media/70GB/home/amir/
 if [[ $? -eq 0 ]]; then
     for i in $(ls /media/70GB/home/amir/ -a); do 
+        if [[ "$i" == ".bash_history" ]]; then
+            continue
+        fi
     	ln -s /media/70GB/home/amir/"$i" ~/ 2>/dev/null
     done
 fi
@@ -90,7 +93,9 @@ alias mirror_screen_display="xrandr --output $(xrandr --query | grep -v ^\  | gr
 # alias external_screen_turn_off="xrandr --output $(xrandr --query  | grep ^HDMI | cut -d' ' -f1) --off"
 alias external_screen_to_mirror="xrandr --output eDP-1 --same-as HDMI-1"
 alias external_screen_to_single_main_display="xrandr --output eDP-1 --auto --output HDMI-1 --off"
-alias external_screen_to_join_display="xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1"
+
+# alias external_screen_to_join_display="xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1"
+alias external_screen_to_join_display="xrandr --output eDP-1 --auto --pos 0x1080 --output HDMI-1 --auto --pos 0x0"
 
 
 
@@ -213,8 +218,8 @@ copyto(){
         echo -e "\nSorry, the file is exists\nAborting ......\n\n"
         return 1
     fi
-    xsel -b > ~/.temp_copy
-    echo -e "$(cat ~/.temp_copy)\n" > "$1"
+    xsel -b > /tmp/temp_copy
+    echo -e "$(cat /tmp/temp_copy)\n" > "$1"
 }
 
 declare -f copyfrom
@@ -375,26 +380,26 @@ extentions_for_given_file_names() {
 }
 
 
-declare -f check_duplicated_lines_count_bash
-check_duplicated_lines_count_bash() {
-    if [[ -z $1 ]]; then
-        echo -e "No lines passed\nAborting ....... \n"
-        return 1
-    fi
-    duplicated_lines="|$(sort  "$1" | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | cut -d, -f2-10 | awk '{$1=$1};1' | paste -sd '\|' | sed 's/|//')"
-    grep -E  --color=auto "$duplicated_lines"  "$1"
-}
+# declare -f check_duplicated_lines_count_bash
+# check_duplicated_lines_count_bash() {
+#     if [[ -z $1 ]]; then
+#         echo -e "No lines passed\nAborting ....... \n"
+#         return 1
+#     fi
+#     duplicated_lines="|$(sort  "$1" | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | cut -d, -f2-10 | awk '{$1=$1};1' | paste -sd '\|' | sed 's/|//')"
+#     grep -E  --color=auto "$duplicated_lines"  "$1"
+# }
 
-declare -f check_duplicated_lines_count_bash_for_file
-check_duplicated_lines_count_bash_for_file() {
-    if [[ -z $1 ]]; then
-        echo -e "No file passed\nAborting ....... \n"
-        return 1
-    fi
-    # duplicated_lines="|$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | sort -n)"
-    duplicated_lines=$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | grep -v ^1\  | sort -n)
-    echo "$duplicated_lines"
-}
+# declare -f check_duplicated_lines_count_bash_for_file
+# check_duplicated_lines_count_bash_for_file() {
+#     if [[ -z $1 ]]; then
+#         echo -e "No file passed\nAborting ....... \n"
+#         return 1
+#     fi
+#     # duplicated_lines="|$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | sed s'/\ /,/' | grep -v 1, | sort -n)"
+#     duplicated_lines=$(cat "$1" | sort | uniq -c | sed 's/^\ \{1,\}//g' | grep -v ^1\  | sort -n)
+#     echo "$duplicated_lines"
+# }
 
 
 declare -f todays_first_computer_on_time
@@ -715,7 +720,8 @@ create_a_swap_file(){
 
 declare -f record_bluetooth_headphone_audio
 record_bluetooth_headphone_audio(){
-    ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor /home/amir/output.wav
+    file_name=$(date +%d-%m-%Y_%H\:%M\:%S).wav
+    ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor "$file_name"
 }
 
 declare -f record_screen
@@ -731,7 +737,19 @@ record_screen(){
     # -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
     # "$file_name"
 
-    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"
+    if [[ $(xrandr --listmonitors | grep x | wc -l) -gt 1 ]]; then
+        echo -e "\nWhich screen do you want to record?\n\t1-Upper\n\t2-Lower\n"
+        read ans
+        if [[ $ans == 1 ]]; then
+            ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
+        else
+            if [[ $ans == 2 ]]; then
+                ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
+            fi
+        fi
+    else
+        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
+    fi
 
     # ffmpeg                \
     # -f x11grab            \
@@ -978,6 +996,7 @@ declare -f execute_file_on_vm
 execute_file_on_vm(){
     if [[ -z $1 ]] ; then
         file=/home/amir/github/Medusa/anomalies/index.py
+        # file=/home/amir/github/Medusa/monday.com/fetch_data_from_redshift.py
     else
         echo "$1" | grep / >/dev/null
         if [[ $? -eq 0 ]]; then
@@ -988,9 +1007,13 @@ execute_file_on_vm(){
     fi
     file_base_name=$(basename "$file")
     # scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
-    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
-    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/monday.com/$file_base_name"
     scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
+
+    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
     ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
+    
+    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "cd /home/amir/monday.com/; python3 $file_base_name"
     ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
 }
+
+
