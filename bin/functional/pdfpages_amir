@@ -1,9 +1,9 @@
 #!/bin/bash
 IFS=$'\n'
-rm -f /home/amir/.shba{,2} 2>/dev/null
+rm -f /tmp/shba{,2} 2>/dev/null
 
 echo 
-echo -e "-----|-------|-------|----------------------------------\nPages|Size_KB|Size_MB|Name\n-----|-------|-------|----------------------------------" >  /home/amir/.shba 
+echo -e "-----|-------|-------|----------------------------------\nPages|Size_KB|Size_MB|Name\n-----|-------|-------|----------------------------------" >  /tmp/shba 
 
 # agar koi paramter given nahi ho ga to cuurent direcoty me all *.pdf ki info show hon gi, or agar paramter(s) given hen (absolute path(s) of *.pdf(s)) to un given files ki info show hon gi.
 
@@ -14,10 +14,10 @@ get_pdf_info(){
 		return 1
 	fi
 	pages=`pdfinfo $1 2>/dev/null | grep Pages\:| sed 's/Pages:          //g' 2>/dev/null`
-	# echo "$pages,|$1" >> /home/amir/.shba
+	# echo "$pages,|$1" >> /tmp/shba
 	kb_size=`du -s $1 | sed 's/\t/,/g' | cut -d, -f1`
 	mb_size=`bc -l <<< $kb_size/1024 | awk '{ printf("%.1f\n", $1) }'`
-	echo "$pages,|$kb_size,|$mb_size,|$1" >> /home/amir/.shba
+	echo "$pages,|$kb_size,|$mb_size,|$1" >> /tmp/shba
 }
 
 if [[ $@ == "" ]]; then # agar koi peramter given na ho to
@@ -36,12 +36,12 @@ else
 fi
 
 
-total_pages=$(cat /home/amir/.shba | sed 1,3d | cut -d, -f1 | paste -sd+ | bc)
-total_kb_size=$(cat /home/amir/.shba | sed 1,3d | cut -d, -f2 | sed 's/|//' | paste -sd+ | bc)
+total_pages=$(cat /tmp/shba | sed 1,3d | cut -d, -f1 | paste -sd+ | bc)
+total_kb_size=$(cat /tmp/shba | sed 1,3d | cut -d, -f2 | sed 's/|//' | paste -sd+ | bc)
 total_mb_size=$(bc -l <<< $total_kb_size/1024 | awk '{ printf("%.3f\n", $1) }')
-head  -n3 /home/amir/.shba > /home/amir/.shba2 ; cat /home/amir/.shba | sed 1,3d | sort -n | sed s:,\|:\|:g >> /home/amir/.shba2
-echo -e "-----|-------|-------|----------------------------------\n$total_pages|$total_kb_size|$total_mb_size|TOTAL" >> /home/amir/.shba2 
-cat /home/amir/.shba2 | column -t -s\|
+head  -n3 /tmp/shba > /tmp/shba2 ; cat /tmp/shba | sed 1,3d | sort -n | sed s:,\|:\|:g >> /tmp/shba2
+echo -e "-----|-------|-------|----------------------------------\n$total_pages|$total_kb_size|$total_mb_size|TOTAL" >> /tmp/shba2 
+cat /tmp/shba2 | column -t -s\|
 
 
 echo

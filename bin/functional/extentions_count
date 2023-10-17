@@ -1,7 +1,7 @@
 #!/usr/bin/bash
-file_1=/home/amir/.maxdepth_1
-file_2=/home/amir/.maxdepth_2
-file_3=/home/amir/.maxdepth_3
+file_1=/tmp/.maxdepth_1
+file_2=/tmp/.maxdepth_2
+file_3=/tmp/.maxdepth_3
 
 if [[ -z $1 ]]; then
     echo -e "\nArgument not passed, so this is the result of current directory only.\nFor all subdirectories give the perameter <2>\n\n"

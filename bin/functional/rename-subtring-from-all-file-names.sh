@@ -13,14 +13,14 @@ if [[ $1 == "" ]]; then
 
 fi
 
-test -e /home/amir/.original_file_names_2
+test -e /tmp/original_file_names_2
 if [[ $? -eq 0 ]]; then
-	/amir_bin/DEL /home/amir/.original_file_names_2
+	/amir_bin/DEL /tmp/original_file_names_2
 fi
 
-test -e /home/amir/.file_names_2
+test -e /tmp/file_names_2
 if [[ $? -eq 0 ]]; then
-	/amir_bin/DEL /home/amir/.file_names_2
+	/amir_bin/DEL /tmp/file_names_2
 fi
 
 IFS=$'\n'
@@ -32,12 +32,12 @@ for file_name in $(ls -a); do
 		echo -e "\n$original_file_name"
 		echo -e "${RED}$file_name${NORMAL}"
 
-		echo "$original_file_name" >> /home/amir/.original_file_names_2
-		echo "$file_name" >> /home/amir/.file_names_2
+		echo "$original_file_name" >> /tmp/original_file_names_2
+		echo "$file_name" >> /tmp/file_names_2
 	fi
 done
 
-test -e /home/amir/.original_file_names_2
+test -e /tmp/original_file_names_2
 if [[ $? -eq 1 ]]; then
 	echo -e "\nNo file found\nAborting ....\n\n"
 	exit
@@ -47,8 +47,8 @@ echo -e "\n\nAre you need to proceed? [yes|no] "
 read ans
 if [[ $ans == "yes" ]]; then
 	echo '
-original_file_names = open("/home/amir/.original_file_names_2", "r").read().splitlines()
-file_names = open("/home/amir/.file_names_2", "r").read().splitlines()
+original_file_names = open("/tmp/original_file_names_2", "r").read().splitlines()
+file_names = open("/tmp/file_names_2", "r").read().splitlines()
 import os
 errors = []
 for original_file_name, file_name in zip(original_file_names, file_names):

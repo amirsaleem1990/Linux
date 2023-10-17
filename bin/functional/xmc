@@ -1,5 +1,5 @@
 import pandas as pd
-x = pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list()
+x = pd.Series(open("/tmp/.m", "r").read().splitlines()).str.split("/").to_list()
 df = pd.DataFrame(x, columns=(["week", "video"] if ({len(i) for i in x} == {2}) else ["course", "week", "video"] )).dropna()
 
 course_exists=False
@@ -18,8 +18,8 @@ except:
 df["video_numebr"] = (df.video.str.split("-").str[0]).astype(int)
 if course_exists:
     df = df.sort_values(["course_numebr", "week_numebr", "video_numebr"])
-    open("/home/amir/.m2", "w").write(" + ".join((df.course + "/" + df.week + "/" + df.video).to_list())+"\n")
+    open("/tmp/.m2", "w").write(" + ".join((df.course + "/" + df.week + "/" + df.video).to_list())+"\n")
 else:
     df = df.sort_values(["week_numebr", "video_numebr"])
-    open("/home/amir/.m2", "w").write(" + ".join(("'" + (df.week + "/" + df.video) + "'").to_list()) + "\n")
+    open("/tmp/.m2", "w").write(" + ".join(("'" + (df.week + "/" + df.video) + "'").to_list()) + "\n")
 

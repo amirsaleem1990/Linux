@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-rm -f /home/amir/.m
-rm -f /home/amir/.m2
+rm -f /tmp/.m
+rm -f /tmp/.m2
 
 original_IFS=$IFS
 echo -e "\n1-Current mp4 files\n2-Recursive mp4 files"
@@ -12,7 +12,7 @@ echo
 files_func(){
 	python3 <<< '
 import pandas as pd
-x = pd.Series(open("/home/amir/.m", "r").read().splitlines()).str.split("/").to_list()
+x = pd.Series(open("/tmp/.m", "r").read().splitlines()).str.split("/").to_list()
 df = pd.DataFrame(x, columns=(["week", "video"] if ({len(i) for i in x} == {2}) else ["course", "week", "video"] )).dropna()
 
 course_exists=False
@@ -31,10 +31,10 @@ except:
 df["video_numebr"] = (df.video.str.split("-").str[0]).astype(int)
 if course_exists:
 	df = df.sort_values(["course_numebr", "week_numebr", "video_numebr"])
-	open("/home/amir/.m2", "w").write(" + ".join((df.course + "/" + df.week + "/" + df.video).to_list())+"\n")
+	open("/tmp/.m2", "w").write(" + ".join((df.course + "/" + df.week + "/" + df.video).to_list())+"\n")
 else:
 	df = df.sort_values(["week_numebr", "video_numebr"])
-	open("/home/amir/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
+	open("/tmp/.m2", "w").write(" + ".join((df.week + "/" + df.video).to_list())+"\n")
 '
 	}
 
@@ -48,18 +48,18 @@ prepare_files_names() {
 		if [[ $option_ -eq 2 ]]; then
 			for i in $(find . -name "*.mp4" | sed 's/\.\///'); do 
 				echo $i
-			done > /home/amir/.m
+			done > /tmp/.m
 			files_func
 			if [[ $? -eq 0 ]]; then
 				files_func_called_once=true
 			fi
-			test -f /home/amir/.m2
+			test -f /tmp/.m2
 			if [[ $? -ne 0 ]]; then
 				exit
 			fi
 			# x=$(for i in $(find . -name "*.mp4" | sort -n | sed 's/\.\///g') ; do echo -n $i; echo -n ' + ' ; done | sed 's/\+\ $//g')
 
-			x=$(cat /home/amir/.m2)
+			x=$(cat /tmp/.m2)
 			
 			IFS=' \+'
 			for i in $x ; do 

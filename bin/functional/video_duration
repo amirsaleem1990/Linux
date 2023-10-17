@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEL -rf /home/amir/.duration
+DEL -rf /tmp/.duration
 
 IFS=$'\n'
 get_size_(){
@@ -22,7 +22,7 @@ func_(){
 	if [[ "${my_array[@]}" =~ "${extention}" ]]; then
 		duration=`get_duration $1`
 		if [[ $duration != "" ]] ; then
-			echo $duration >> /home/amir/.duration
+			echo $duration >> /tmp/.duration
 		# if [[ $? -eq  0 ]] ; then
 			get_size_ $1
 			echo -en "\t"
@@ -61,7 +61,7 @@ fi
 
 # total_secs=0
 # IFS=$'\n'
-# for duration in `cat /home/amir/.duration`; do
+# for duration in `cat /tmp/.duration`; do
 # 	h=`echo $duration | cut -d: -f1`
 # 	if [[ $h != "00" ]] ; then
 # 		h=`echo $h*3600|bc`
@@ -88,13 +88,13 @@ fi
 
 # echo $total_secs
 # echo -e "\n\nTotal time:\n`date -d@$total_secs -u +%H:%M:%S`"
-test -f /home/amir/.duration
+test -f /tmp/.duration
 if [[ $? -ne 0 ]] ;then
 	exit
 fi
 
 echo '
-f = open("/home/amir/.duration", "r").read().splitlines()
+f = open("/tmp/.duration", "r").read().splitlines()
 total_secs = 0
 for i in f:
 	if not ":" in i:
@@ -103,10 +103,10 @@ for i in f:
 	total_secs += float(s)        if s != "00" else 0
 	total_secs += float(m) * 60   if m != "00" else 0
 	total_secs += float(h) * 3600 if m != "00" else 0
-open("/home/amir/.duration", "w").write(str(int(total_secs)))
+open("/tmp/.duration", "w").write(str(int(total_secs)))
 ' | python3
 echo -e "\nDD:HH:MM:SS"
-x=$(eval "echo $(date -ud "@$(cat /home/amir/.duration)" +'$((%s/3600/24)):%H:%M:%S')")
+x=$(eval "echo $(date -ud "@$(cat /tmp/.duration)" +'$((%s/3600/24)):%H:%M:%S')")
 first_value=$(echo $x | cut -d: -f1)
 if [[ ${#first_value} -eq 1 ]] ; then
 	x=0$x

@@ -1,5 +1,5 @@
 # !/bin/bash
-rm -f /home/amir/.xm2
+rm -f /tmp/.xm2
 IFS=$'\n'
 parameter=$1
 echo -e "\n"
@@ -18,12 +18,12 @@ if [[ $parameter -eq 1 ]] ; then
 	echo -e "Folders $folders_count\nFiles $files_count\nS-links $symbolic_links_count\nNo-extention `ls | grep  -v '\.' | wc -l`" | column -t -s ' '
 	echo -e "\n"
 	for extention in `find . -maxdepth 1 -type f | grep  '\.' | rev | cut -d. -f1 | rev | sort -u | grep -v /`; do
-		echo -n  "$extention," >> /home/amir/.xm2
+		echo -n  "$extention," >> /tmp/.xm2
 		for file in `ls *.$extention`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > /tmp/xm1
 		f=$( echo `cat /tmp/xm1` | bc )
-		echo "$f,`ls *.$extention | wc -l`" >> /home/amir/.xm2
+		echo "$f,`ls *.$extention | wc -l`" >> /tmp/.xm2
 	done
 else
 	folders_count=`find . -type d 2>/dev/null | wc -l`
@@ -37,11 +37,11 @@ else
 	# for i in `find . -type f | grep "\." | rev  | sed s:\/.$::g | grep "\." | cut -d. -f1 | sort -u | rev`; do 
 	# for i in $(find . -type f | rev | cut -d. -f1 | grep -v / | sed s/[\`\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]\//g | sort -u | rev); do
 	for extention in $(find . -type f  | sed 's/^.\///g'  | sed 's/^\.//g' | rev  | cut -d/ -f1 | grep '\.'  | cut -d. -f1 | rev | sed s/[\`\!\@\#\$\%\^\&\*\(\)\_\+\-\=\{\}\|\/\,\<\>\~\[\]$\//g | sort -u); do
-		echo -n  "$extention," >> /home/amir/.xm2
+		echo -n  "$extention," >> /tmp/.xm2
 		for file in `find . -name "*$extention"`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > /tmp/xm1
-		echo "`cat /tmp/xm1`,`find . -name "*$extention" | wc -l`" >> /home/amir/.xm2
+		echo "`cat /tmp/xm1`,`find . -name "*$extention" | wc -l`" >> /tmp/.xm2
 	done
 fi
 if [[ $no_extention -eq $files_count ]]; then
@@ -52,50 +52,50 @@ python3 <<< '
 # from tabulate import tabulate
 from IPython.display import display
 from pandas import read_csv
-df =read_csv("/home/amir/.xm2", names=["Extention", "Size", "Qty"])
+df =read_csv("/tmp/.xm2", names=["Extention", "Size", "Qty"])
 df1 = df.copy()
 df1.Size = df1.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
-# df.to_csv("/home/amir/.xm2", index=False, header=False)
+# df.to_csv("/tmp/.xm2", index=False, header=False)
 # print(df.to_string())
 # print(tabulate(df, headers = "keys", tablefmt = "psql"))
-df1.to_csv("/home/amir/.Unique_extentions_df1", index=False)
+df1.to_csv("/tmp/Unique_extentions_df1", index=False)
 
 df2 = df.copy()
 df2 = df2.sort_values("Size")
 df2.Size = df2.Size.apply(lambda x: str(x)+ " KB" if x < 1024 else str(round(x/1024,1)) + " MB" if x < 1024**2 else str(round(x/1024/1024, 1)) +" GB")
-df2.to_csv("/home/amir/.Unique_extentions_df2", index=False)
+df2.to_csv("/tmp/Unique_extentions_df2", index=False)
 '
 
 echo '
 import pandas as pd
-print(pd.read_csv("/home/amir/.Unique_extentions_df1").to_string(index=False))
-' | python3 > /home/amir/.Unique_extentions_df1_2
+print(pd.read_csv("/tmp/Unique_extentions_df1").to_string(index=False))
+' | python3 > /tmp/Unique_extentions_df1_2
 echo '
 import pandas as pd
-print(pd.read_csv("/home/amir/.Unique_extentions_df2").to_string(index=False))
-' | python3 > /home/amir/.Unique_extentions_df2_2
+print(pd.read_csv("/tmp/Unique_extentions_df2").to_string(index=False))
+' | python3 > /tmp/Unique_extentions_df2_2
 
 echo -e "\n\e[1m\e[31m=== Sorted by extention ===\t\t=== Sorted by size ===   \e[22m\e[39m \n"
-paste -d '|\t' /home/amir/.Unique_extentions_df{1,2}_2 | sed 's/|/\t\t|\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
+paste -d '|\t' /tmp/Unique_extentions_df{1,2}_2 | sed 's/|/\t\t|\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
 
 
-#paste /home/amir/.Unique_extentions_df* | column -t -s, | sed 's/\t/\t\t\t\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
-# echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /home/amir/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
-# echo -e "Extention,Size,Qty.\n---------,----,----\n`cat /home/amir/.xm2`" | column -t -s,
-# cat /home/amir/.xm2 | column -t -s,
+#paste /tmp/Unique_extentions_df* | column -t -s, | sed 's/\t/\t\t\t\t/g' | grep --color=auto '\|Extention\|Size\|Qty'
+# echo -e "Extention,Size(MB),Qty\n---------,--------,---\n`cat /tmp/.xm2 | tail -n+2 | sort -k3 -nr -t, `" | column -t -s,
+# echo -e "Extention,Size,Qty.\n---------,----,----\n`cat /tmp/.xm2`" | column -t -s,
+# cat /tmp/.xm2 | column -t -s,
 
 
 
 # #---------------------------------------------------------------------
-# # rm /home/amir/.ab.txt
+# # rm /tmp/.ab.txt
 # # a=`ls | cut -d "_" -f1 | wc -l`
 # # for i in `ls | cut -d "_" -f1 | head -$(( $a -1))` ; do
 # # 	cd $i*
 # # 	for f in *.*; do
 # #			printf "%s\n" "${f##*.}" | sort -u
-# #		done | sort -u  >> /home/amir/.ab.txt
+# #		done | sort -u  >> /tmp/.ab.txt
 # # 	cd ../
 # # done
-# # cat /home/amir/.ab.txt | sort -u
+# # cat /tmp/.ab.txt | sort -u
 # #---------------------------------------------------------------------
 

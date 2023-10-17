@@ -11,14 +11,14 @@ if [[ $1 == "" ]]; then
 	read ans
 fi
 
-test -e /home/amir/.original_file_names
+test -e /tmp/.original_file_names
 if [[ $? -eq 0 ]]; then
-	/amir_bin/DEL /home/amir/.original_file_names
+	/amir_bin/DEL /tmp/.original_file_names
 fi
 
-test -e /home/amir/.file_names
+test -e /tmp/.file_names
 if [[ $? -eq 0 ]]; then
-	/amir_bin/DEL /home/amir/.file_names
+	/amir_bin/DEL /tmp/.file_names
 fi
 
 if [[ $(echo "$ans" | grep -o \| | wc -l) -gt 0 ]]; then
@@ -34,8 +34,8 @@ if [[ $(echo "$ans" | grep -o \| | wc -l) -gt 0 ]]; then
 			echo -e "\n$original_file_name"
 			echo -e "${RED}$file_name${NORMAL}"
 
-			echo "$original_file_name" >> /home/amir/.original_file_names
-			echo "$file_name" >> /home/amir/.file_names
+			echo "$original_file_name" >> /tmp/.original_file_names
+			echo "$file_name" >> /tmp/.file_names
 		fi
 	done
 else
@@ -49,13 +49,13 @@ else
 			echo -e "\n$original_file_name"
 			echo -e "${RED}$file_name${NORMAL}"
 
-			echo "$original_file_name" >> /home/amir/.original_file_names
-			echo "$file_name" >> /home/amir/.file_names
+			echo "$original_file_name" >> /tmp/.original_file_names
+			echo "$file_name" >> /tmp/.file_names
 		fi
 	done
 fi
 
-test -e /home/amir/.original_file_names
+test -e /tmp/.original_file_names
 if [[ $? -eq 1 ]]; then
 	echo -e "\nNo file found\nAborting ....\n\n"
 	exit
@@ -65,8 +65,8 @@ echo -e "\n\nAre you need to proceed? [yes|no] "
 read ans
 if [[ $ans == "yes" ]]; then
 	echo '
-original_file_names = open("/home/amir/.original_file_names", "r").read().splitlines()
-file_names = open("/home/amir/.file_names", "r").read().splitlines()
+original_file_names = open("/tmp/.original_file_names", "r").read().splitlines()
+file_names = open("/tmp/.file_names", "r").read().splitlines()
 import os
 for original_file_name, file_name in zip(original_file_names, file_names):
 	os.rename(original_file_name, file_name)

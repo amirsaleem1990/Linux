@@ -26,7 +26,7 @@
 # trans -shell :ar
 
 
-# file_name="/home/amir/.translate_temp"
+# file_name="/tmp/.translate_temp"
 # while :; do 
 # 	read -p "Enter: " ans
 # 	clear
