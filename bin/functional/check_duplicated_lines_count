@@ -2,20 +2,50 @@
 import sys
 import json
 from termcolor import colored
+
 try:
 	sys.argv[1]
-	lines = open(sys.argv[1], 'r').read().splitlines()
+	# lines = open(sys.argv[1], 'r').read().splitlines()
 except:
 	print("\nNo file passed\nAborting........\n\n")
 	sys.exit(1)
-lines_dict = {}
-for line in lines:
-	line = line.strip()
-	lines_dict[line] = lines_dict.get(line, 0) + 1
-# print(json.dumps(lines_dict, indent=4))
-for line in lines:
-	line_ = line.strip()
-	if lines_dict[line_] > 1:
-		print(colored("{:<4}".format(lines_dict[line_]), 'red'), '| ', line)
-	else:
-		print(        "{:<4}".format(lines_dict[line_])        , '| ', line)
+
+# lines_dict = {}
+# for line in lines:
+# 	line = line.strip()
+# 	lines_dict[line] = lines_dict.get(line, 0) + 1
+# # print(json.dumps(lines_dict, indent=4))
+# for line in lines:
+# 	line_ = line.strip()
+# 	if lines_dict[line_] > 1:
+# 		print(colored("{:<4}".format(lines_dict[line_]), 'red'), '| ', line)
+# 	else:
+# 		print(        "{:<4}".format(lines_dict[line_])        , '| ', line)
+
+
+
+lines = [i.rstrip() for i in open(sys.argv[1], 'r').read().splitlines() if i.strip()]
+lines_count_dict = {i: lines.count(i) for i in set(lines)}
+print("\nChooese from the following:"
+	  "\n\t1- Just list down duplicated lines and thier counts"
+	  "\n\t2- Remove all duplicated lines, and keep the first occurence of every duplicated line."
+	  "\n"
+	 )
+
+user_inp = int(input())
+if user_inp == 1:
+	x = [ [v,k] for k,v in dict(sorted(lines_count_dict.items(), key=lambda x: x[1], reverse=True)).items() if v >1 ]
+	for i in x: 
+		count, line  = i 
+		print("Count:", count, "|", "Line Numbers:", ", ".join([str(e) for e, i in enumerate(lines) if i == line]), "|", line)
+
+
+elif user_inp == 2:
+	lst = []
+	for e, i in enumerate(lines, start=1):
+		if not i in lst:
+			lst.append(i)
+		else:
+			print(f"Skipping line no. {e} ({i})")
+	print("\n")
+	print(*lst, sep="\n")
