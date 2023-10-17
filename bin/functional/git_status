@@ -25,8 +25,8 @@ repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if (not repo in not_to_commit_repos) and not (repo.startswith(".")) and (os.path.isdir(repo))]
 
 
-only_new_files     = "/home/amir/.only_new_files"
-only_updated_files = "/home/amir/.only_updated_files"
+only_new_files     = "/tmp/.only_new_files"
+only_updated_files = "/tmp/.only_updated_files"
 
 print("\n\n")
 
@@ -40,7 +40,7 @@ for repo in repos:
 	# only new files:
 	if os.path.exists(only_new_files):
 		os.remove(only_new_files)
-	os.system("git ls-files --others --exclude-standard > /home/amir/.only_new_files")
+	os.system("git ls-files --others --exclude-standard > /tmp/.only_new_files")
 	if os.path.exists(only_new_files):
 		new = open(only_new_files, 'r').read().splitlines()
 		if new:
@@ -59,7 +59,7 @@ for repo in repos:
 	# only modified files:
 	if os.path.exists(only_updated_files):
 		os.remove(only_updated_files)
-	os.system("git ls-files -m > /home/amir/.only_updated_files")
+	os.system("git ls-files -m > /tmp/.only_updated_files")
 	if os.path.exists(only_updated_files):
 		updated_files = open(only_updated_files, 'r').read().splitlines()
 		if updated_files:
