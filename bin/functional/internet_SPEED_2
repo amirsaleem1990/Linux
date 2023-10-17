@@ -50,13 +50,13 @@ print_results(){
 	free_size_in_current_partition=$(align "$free_size_in_current_partition" "$v9")
 
 	if [[ $(( $nx % 10 )) == 0 ]]; then
-		echo -e "${RED}$v8| $v6| $v7| $v1| $v2| $v3| $v4| $v5|$v9${NORMAL}" | tee -a /home/amir/.internet_speed 2> /dev/null
+		echo -e "${RED}$v8| $v6| $v7| $v1| $v2| $v3| $v4| $v5|$v9${NORMAL}" | tee -a /tmp/.internet_speed 2> /dev/null
 		nx=0
 	fi
 	let "nx+=1"
 
 
-	echo -e "$current_date_and_time|$current_download|$current_upload|$total_download_x|$total_upload_x|$total_time|$avg_download_speed|$avg_upload_speed|$free_size_in_current_partition"  | tee -a /home/amir/.internet_speed 2> /dev/null
+	echo -e "$current_date_and_time|$current_download|$current_upload|$total_download_x|$total_upload_x|$total_time|$avg_download_speed|$avg_upload_speed|$free_size_in_current_partition"  | tee -a /tmp/.internet_speed 2> /dev/null
 
 }
 
