@@ -2137,6 +2137,7 @@ cat file.txt | awk '
 # made hamza's 25th para, the task was to place two pages on one a4 page, in quran's order:
 # # extract specific range of pages into saperat file
 # pdftk QURAN-HAKEEM-15-LINES-TAJWEEDI.pdf cat 490-511 output output.pdf
+# pdftk output.pdf burst 
 # # combine multiple two pages' files
 # pdftk pg_0002.pdf pg_0001.pdf cat output intermediate_01.pdf
 # pdftk pg_0004.pdf pg_0003.pdf cat output intermediate_02.pdf
@@ -2149,8 +2150,25 @@ cat file.txt | awk '
 # pdftk pg_0018.pdf pg_0017.pdf cat output intermediate_09.pdf
 # pdftk pg_0020.pdf pg_0019.pdf cat output intermediate_10.pdf
 # pdftk pg_0022.pdf pg_0021.pdf cat output intermediate_11.pdf
+
+# pdftk pg_0024.pdf pg_0023.pdf cat output intermediate_01.pdf
+# pdftk pg_0026.pdf pg_0025.pdf cat output intermediate_02.pdf
+# pdftk pg_0028.pdf pg_0027.pdf cat output intermediate_03.pdf
+# pdftk pg_0030.pdf pg_0029.pdf cat output intermediate_04.pdf
+# pdftk pg_0032.pdf pg_0031.pdf cat output intermediate_05.pdf
+# pdftk pg_0034.pdf pg_0033.pdf cat output intermediate_06.pdf
+# pdftk pg_0036.pdf pg_0035.pdf cat output intermediate_07.pdf
+# pdftk pg_0038.pdf pg_0037.pdf cat output intermediate_08.pdf
+# pdftk pg_0040.pdf pg_0039.pdf cat output intermediate_09.pdf
+# pdftk pg_0042.pdf pg_0041.pdf cat output intermediate_10.pdf
+# pdftk pg_0044.pdf pg_0043.pdf cat output intermediate_11.pdf
+
 # # combine all intermeidate files into combined.pdf
 # pdftk intermediate_* cat output combined.pdf
 # # now make a new file where each two consecitive pages from combined.pdf placed in one a4 sized page
 # pdfjam --nup 2x1 --landscape combined.pdf --a4paper --twoside --outfile combined_2.pdf
 #####################################################################################################
+
+# lock the screen ...... xdg-screensaver lock
+
+# tab completion in 'read' ............. read -e -p "Enter file's path: " file_path
