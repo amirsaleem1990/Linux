@@ -8,13 +8,13 @@ echo "
 # This script will loop over all local github repos, and find files that are    # 
 # grater than 50 MB, beacuse we cannot push file > 50MB to github, if there     #
 # any file > 50MB i'll copy its path and size in                                #
-# </home/amir/.GIT_FILES_GRATER_THAN_50_MB> and opeh file in sublime, as well   #
+# </tmp/.GIT_FILES_GRATER_THAN_50_MB> and opeh file in sublime, as well         #
 # as print out those details on terminal, and exit                              #
 ################################################################################# 
 "
 
 cd /home/amir/github/
-rm -f /home/amir/.GIT_FILES_GRATER_THAN_50_MB
+rm -f /tmp/.GIT_FILES_GRATER_THAN_50_MB
 file_greater_than_one=0
 IFS=$'\n'
 echo -e "\n\nThese big files are not included in the git_ignore_file\n"
@@ -48,7 +48,7 @@ for i in $(find . -size  +51199k | grep -v  '^.\/\.' | grep -v '\.pack$\|lfd-pro
 	let "n++"
 
 	file_greater_than_one=$(( $file_greater_than_one + 1 )) 
-	du -sh "/home/amir/github/$i" >> /home/amir/.GIT_FILES_GRATER_THAN_50_MB
+	du -sh "/home/amir/github/$i" >> /tmp/.GIT_FILES_GRATER_THAN_50_MB
 	du -sh "/home/amir/github/$i"
 done
 
@@ -57,8 +57,8 @@ if [[ $file_greater_than_one > 0 ]]; then
 	RED='\033[0;31m'
 	NC='\033[0m' # No Color
 	echo -e "\n\n${RED}These files are > 50MB, we need files < 50MB\nAdd this/theese file/s to .gitignore or move them from repository, and try again${NC}\n\n"
-	# # echo -e "\n\nThis/these file/s is/are > 50MB, we need files < 50MB\nAdd this/theese file/s to .gitignore or move them from repository, and try again\n\n" >> /home/amir/.GIT_FILES_GRATER_THAN_50_MB
-	# # subl /home/amir/.GIT_FILES_GRATER_THAN_50_MB
+	# # echo -e "\n\nThis/these file/s is/are > 50MB, we need files < 50MB\nAdd this/theese file/s to .gitignore or move them from repository, and try again\n\n" >> /tmp/.GIT_FILES_GRATER_THAN_50_MB
+	# # subl /tmp/.GIT_FILES_GRATER_THAN_50_MB
 	# echo -e "\nAre these files in .gitignore, and you're sure that they can't be pushed? [y|n] "
 	# read ans
 	# if [[ $ans == "y" ]]; then
