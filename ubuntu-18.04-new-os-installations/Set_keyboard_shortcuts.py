@@ -59,9 +59,9 @@ lst = [
 ['night_light',               '/amir_bin/night_light',               '<Control><Alt>n'     ], # CTRL + ALT + n
 ['namaz',                     '/amir_bin/namaz',                     '<Shift><Control>n'   ], # SHIFT + CTRL + n
 ['align_pandas_code',         '/amir_bin/align_pandas_code',         '<Alt>e'              ]  # ALT + e
-['vs_code_click_in_terminal', '/amir_bin/vs_code_click_in_terminal.sh', ''                 ],
-['vs_code_click_in_terminal_back_click', '/amir_bin/vs_code_click_in_terminal.sh 1', ''    ],
-['screen_shot_all_screens',   '/amir_bin/screen_shot_all_screens',   '<Control><Alt>a'     ],
+# ['vs_code_click_in_terminal', '/amir_bin/vs_code_click_in_terminal.sh', ''                 ],
+# ['vs_code_click_in_terminal_back_click', '/amir_bin/vs_code_click_in_terminal.sh 1', ''    ],
+# ['screen_shot_all_screens',   '/amir_bin/screen_shot_all_screens',   '<Control><Alt>a'     ],
 ]
 
 for i in lst:
