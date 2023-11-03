@@ -85,7 +85,7 @@ m_1 = df.groupby(4).agg({"size_KB" : sum}).div(1024).astype(int).reset_index().r
 
 count_ = df[1].str.split("/").str[-1].str.split(".").str[-1].value_counts()
 
-m_2 = count_.reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
+m_2 = count_.rename_axis("index").rename(1).reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
 m = m_1.merge(m_2, on="Extention", how='outer')
 print(m.to_string())
 ans_ = input("\nChoose extantin(s)\nIf 1+ extenstions saperate them by pipe '|', eg(pdf|html|txt)\nFor choose all extantions press Enter\n")
