@@ -7,7 +7,7 @@ fi
 read -ep "Enter source full path: " source_full_path
 read -p "It the copy process started just now? if no do you want to specify start_time? [yes|no]: " ans
 if [[ $ans == "yes" ]]; then
-	firefox https://www.epochconverter.com
+	(firefox https://www.epochconverter.com &)
 	read -p "Enter start time in Epoch: " start_time
 else
 	start_time=$(date +%s)
