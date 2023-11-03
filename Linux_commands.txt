@@ -2172,3 +2172,7 @@ cat file.txt | awk '
 # lock the screen ...... xdg-screensaver lock
 
 # tab completion in 'read' ............. read -e -p "Enter file's path: " file_path
+# while read -r url; do /usr/bin/firefox -private-window "$url"; done < urls.txt
+
+# CTRL +  ALTR + D .......... Show desktop ........ press again, and all screens appear at the same positino
+
