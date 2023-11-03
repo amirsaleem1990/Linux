@@ -748,7 +748,7 @@ record_screen(){
             fi
         fi
     else
-        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
+        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen        
     fi
 
     # ffmpeg                \
