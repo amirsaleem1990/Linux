@@ -105,7 +105,6 @@ alias external_screen_to_join_display="xrandr --output eDP-1 --auto --pos 0x1080
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
 PATH="$PATH:/usr/bin/python3"
-export PYTHONPATH="/amir_bin/:/usr/lib/python3.8/:/usr/bin/python3"
 # bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 # commit <HISTSIZE> in .bashrc
@@ -140,7 +139,9 @@ poweroff() {
         reaturn 1
     fi
     directory="/home/amir/.firefox_backups/`date +%d-%m-%y_%T | sed "s/\//-/g"`"
-    cp -rv  /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
+    # cp -rv /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
+    # cp -rv /home/amir/snap/firefox/common/.mozilla/firefox/pwpe1uar.default/sessionstore-backups "$directory"
+    cp -rv $(locate sessionstore-backups | grep -v lz4) "$directory"
     lz4jsoncat $(locate recovery.jsonlz4 | grep -v _) | jq -r '.windows[].tabs[].entries[-1].url' > "$directory/OPNED_URLS.txt"
     echo -e "\n\nHave you puched out? [yes|no] " 
     read ans
@@ -1016,4 +1017,24 @@ execute_file_on_vm(){
     ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
 }
 
+declare -f reset_bashprofile
+reset_bashprofile(){
+    source ~/.bash_profile >/dev/null
+}
 
+declare -f change_python_path
+change_python_path(){
+    if [[ $(echo $PYTHONPATH | rev | cut -d/ -f1-2 | rev) == "python3.10/" ]]; then 
+        PYTHONPATH="/amir_bin/:/usr/bin/python3"
+        PYTHONPATH="$PYTHONPATH:/usr/lib/python3.10/:/usr/lib/python3.9/"
+    else
+        PYTHONPATH="/amir_bin/:/usr/bin/python3"
+        PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
+    fi
+    export PYTHONPATH=$PYTHONPATH
+}
+
+
+PYTHONPATH="/amir_bin/:/usr/bin/python3"
+PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
+export PYTHONPATH=$PYTHONPATH
