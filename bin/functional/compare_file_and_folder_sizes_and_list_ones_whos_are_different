@@ -86,6 +86,8 @@ done
 python3 <<< '
 import pandas as pd
 df = pd.read_csv("/tmp/lkjs")
+df = df.replace({"NOT FOUND": None})
+df[["There", "Here"]] = df[["There", "Here"]].astype(float)
 df["Difference"] = df.There - df.Here
 df = df[df.Difference.ne(0)]
 df = df.loc[df.Difference.abs().sort_values(ascending=False).index.to_list()].reset_index(drop=True)
