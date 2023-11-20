@@ -2176,3 +2176,8 @@ cat file.txt | awk '
 
 # CTRL +  ALTR + D .......... Show desktop ........ press again, and all screens appear at the same positino
 
+# use different python version with virtualenv .........  virtualenv --python="/usr/bin/python3.9" "turing_venv"
+
+file=abcdflkjadf.png; echo  abcdflkjadf.pdf
+
+# convert  wav to mp3 ......... ffmpeg -i input.wav -vn -ar 44100 -ac 2 -b:a 192k output.mp3
