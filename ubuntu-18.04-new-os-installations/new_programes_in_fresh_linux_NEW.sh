@@ -27,6 +27,16 @@ func_ "apt -y update"
 func_ "apt -y upgrade"
 
 
+func_ "apt install -y curl"
+
+func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
+func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
+func_ "apt install sublime-text -y"
+if [[ $? -ne 0 ]]; then 
+	func_ "snap install --classic sublime-text"
+fi
+
+
 func_ "apt install -y virtualbox-qt"
 func_ "apt install -y screen"
 func_ "apt install -y rdfind"
@@ -56,7 +66,6 @@ func_ "apt install -y translate-shell"
 func_ "apt install -y htop"
 func_ "apt install -y apt-transport-https"
 func_ "apt install -y ca-certificates"
-func_ "apt install -y curl"
 func_ "apt install -y software-properties-common"
 func_ "apt install -y jupyter-core"
 func_ "apt install -y adb"
@@ -86,11 +95,11 @@ func_ "apt install -y jupyter*"
 func_ "apt install -y toilet"
 func_ "apt install -y ifstat"
 func_ "apt install -y python3.8-venv"
-func_ "apt install -y azure-cli"
-func_ "apt install -y azure-functions-core-tools-4"
+# func_ "apt install -y azure-cli"
+# func_ "apt install -y azure-functions-core-tools-4"
 func_ "apt install -y arp-scan"
 func_ "apt install -y openssh-server"
-
+func_ "apt install -y jq"
 func_ "apt install -y texlive-lang-cyrillic"
 func_ "apt install -y texlive-latex-extra"
 func_ "apt install -y texlive-latex-recommended"
@@ -120,15 +129,8 @@ func_ "snap install chromium"
 func_ "snap install yt-dlp"
 func_ "snap install opera"
 func_ "snap install code --classic"
-func_ "snap install android-studio --classic"
+# func_ "snap install android-studio --classic"
 
-
-func_ "curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -"
-func_ "add-apt-repository 'deb https://download.sublimetext.com/ apt/stable/'"
-func_ "apt install sublime-text -y"
-if [[ $? -ne 0 ]]; then 
-	func_ "snap install --classic sublime-text"
-fi
 
 # func_ "wget http://download.opensuse.org/repositories/home:/colomboem/xUbuntu_16.04/amd64/dukto_6.0-1_amd64.deb"
 # dpkg -i dukto*
@@ -156,19 +158,19 @@ if [[ $? -ne 0 ]]; then
 fi
 
 func_ "R CMD javareconf"
-func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
-func_ "Rscript r_essential_packages.R"
+# func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
+# func_ "Rscript r_essential_packages.R"
 func_ "pip3 install jupyterlab"
 func_ "pip3 install xlrd==1.2.0"
-func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
-func_ "Rscript R_in_jupyter.R"
+# func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/R_in_jupyter.R"
+# func_ "Rscript R_in_jupyter.R"
 
 func_ "pip3 install bs4"
 func_ "pip3 install lxml"
 func_ "pip3 install selenium"
 func_ "pip3 install tabulate"
 func_ "pip3 install pandas"
-func_ "pip3 install sklearn "
+# func_ "pip3 install sklearn "
 func_ "pip3 install pandas_profiling "
 func_ "pip3 install clipboard "
 func_ "pip3 install termcolor"
