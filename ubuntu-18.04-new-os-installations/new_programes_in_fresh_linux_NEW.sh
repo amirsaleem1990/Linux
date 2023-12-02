@@ -36,7 +36,7 @@ if [[ $? -ne 0 ]]; then
 	func_ "snap install --classic sublime-text"
 fi
 
-
+func_ "apt install -y ddcutil"
 func_ "apt install -y virtualbox-qt"
 func_ "apt install -y screen"
 func_ "apt install -y rdfind"
@@ -171,6 +171,7 @@ func_ "pip3 install selenium"
 func_ "pip3 install tabulate"
 func_ "pip3 install pandas"
 # func_ "pip3 install sklearn "
+func_ "pip3 install -U scikit-learn"
 func_ "pip3 install pandas_profiling "
 func_ "pip3 install clipboard "
 func_ "pip3 install termcolor"
