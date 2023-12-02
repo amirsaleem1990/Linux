@@ -107,34 +107,33 @@ except:
 	sys.exit(0)
 
 X = pd.DataFrame(today[today.columns[0]].apply(fun_), index=today.index).drop(["Month", "Date"])
-d =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+d_ =  X.T.reset_index().drop("index", axis=1).T.rename(columns={0: "TIME"})
+# breakpoint()
+
 #"""
-d['NextNamaz'] = ''
-d.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
+d_['NextNamaz'] = ''
+d_.loc[current_prayer_time.name, 'NextNamaz'] = '<=======>'
 
 
-d['Accurate_time'] = None
-d.loc[3:, 'Accurate_time'] = (pd.to_datetime(d.TIME[3:]) + pd.Timedelta(hours=12)).dt.time.astype(str).to_list()
+d_['Accurate_time'] = None
+d_.loc["Asr":, 'Accurate_time'] = (pd.to_datetime(d_.TIME[3:]) + pd.Timedelta(hours=12)).dt.time.astype(str).to_list()
 
-d.iloc[:3].Accurate_time = pd.to_datetime(d.iloc[:3].TIME).dt.time.astype(str).to_list()
+d_.iloc[:3].Accurate_time = pd.to_datetime(d_.iloc[:3].TIME).dt.time.astype(str).to_list()
 
 
 
-d['Time_in_minutes'] = d.Accurate_time.apply(string_time_to_minutes) 
+d_['Time_in_minutes'] = d_.Accurate_time.apply(string_time_to_minutes) 
 now_time = string_time_to_minutes(str(datetime.now()).split()[1].split(".")[0])
-d['TimeLeft'] = (d.Time_in_minutes - now_time).astype(str)
+d_['TimeLeft'] = (d_.Time_in_minutes - now_time).astype(str)
 
-d = d.drop(columns=['Accurate_time', 'Time_in_minutes'])
+d_ = d_.drop(columns=['Accurate_time', 'Time_in_minutes'])
 
-d.loc[d.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
-
-
-d["TimeLeft_"] = d.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
-
-d = d.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
+d_.loc[d_.TimeLeft.astype(int).lt(0), 'TimeLeft'] = ''
 
 
+d_["TimeLeft_"] = d_.TimeLeft.apply(lambda x:time.strftime('%H:%M:%S', time.gmtime(int(x)*60 if x else 0))).str.replace("00:00:00", "")       
 
+d_ = d_.rename(columns={"TimeLeft" : "TimeLeft[mins]", "TimeLeft_": "TimeLeft[H:M:S]"})
 
 
 
@@ -160,7 +159,7 @@ draw.text(
 	)
 y_ += 120
 
-for i in d.iterrows(): 
+for i in d_.iterrows(): 
 	row = i[1]
 	to_print = "  | {:<12}".format(i[0]) + f" | {row.TIME} | {'{:<12}'.format(row.NextNamaz)} | {'{:<15}'.format(row['TimeLeft[mins]'])} | {row['TimeLeft[H:M:S]']}"
 	if row.NextNamaz == "<=======>":
