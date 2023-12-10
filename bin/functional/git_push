@@ -46,7 +46,7 @@ repos = os.listdir() # list of all local repositories
 repos = [repo for repo in repos if not repo in not_to_commit_repos]
 for repo in repos:   
 	if (not repo.startswith(".")) and (not "." in repo): # if that repo is not a hidden file <in linux hiddin files names starts with . dot
-		os.chdir(repo) # go to that local repo
+		os.chdir(f"/home/amir/github/{repo}")
 		git_status = os.popen("git status").read() # read current status
 
 		# os.system("git branch -M master")
