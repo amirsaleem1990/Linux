@@ -52,7 +52,7 @@ for repo in repos:
 		# os.system("git branch -M master")
 
 		if '(use "git push" to publish your local commits)' in git_status:
-			if repo in ['Learning', 'Auto_EDA_and_Modeling', 'Kids_Vids', "Medusa", 'Turing', 'virtual_envs', 'LFD_projects_6', 'portfolio_private', 'Python', 'Audit-functions', 'GitHub-Million-Repo-Analysis', 'test-repo', 'freelancing']:
+			if repo in ['Learning', 'Auto_EDA_and_Modeling', 'Kids_Vids', "Medusa", 'LFD_projects_6', 'portfolio_private', 'Python', 'Audit-functions', 'GitHub-Million-Repo-Analysis', 'test-repo', 'freelancing']:
 				os.system("git push origin main")
 			else:
 				os.system("git push origin master") 
