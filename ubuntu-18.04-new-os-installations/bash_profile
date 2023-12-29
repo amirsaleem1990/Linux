@@ -1035,6 +1035,21 @@ change_python_path(){
 }
 
 
+declare -f timer
+timer() {
+    echo;
+    n=0
+    while true; do 
+        let "n++"
+        echo -e '\e[2A\e[K';
+        convertsecs $n
+        sleep 1s
+    done
+}
+
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
 PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
 export PYTHONPATH=$PYTHONPATH
+
+
+
