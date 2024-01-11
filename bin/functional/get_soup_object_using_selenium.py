@@ -17,12 +17,14 @@ def get_soup_object_using_selenium(url, visual=False):
 	# visusl = True if input("Visual or not? [y|n]") in ['y', 'Y'] else False
 
 	if visual:
-		browser = webdriver.Firefox(executable_path = "geckodriver")
+		# browser = webdriver.Firefox(executable_path = "/home/amir/github/Linux/geckodriver")
+		browser = webdriver.Firefox()
 	else:
 		from selenium.webdriver.firefox.options import Options
 		options = Options()
 		options.add_argument("--headless")
-		browser = webdriver.Firefox(executable_path = "geckodriver", options=options)
+		# browser = webdriver.Firefox(executable_path = "/home/amir/github/Linux/geckodriver", options=options)
+		browser = webdriver.Firefox(options=options)
 	print(">>> browser.get(url)")
 	browser.get(url)
 	print('>>> s = BeautifulSoup(browser.page_source, "lxml")')
