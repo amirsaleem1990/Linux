@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/amir/github/Amir-personal/LINUX_BACKUP.sh
+Exec=#/home/amir/github/Amir-personal/LINUX_BACKUP.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
