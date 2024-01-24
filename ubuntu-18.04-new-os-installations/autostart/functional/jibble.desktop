@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Attendence
+Exec=firefox https://web.jibble.io/dashboard
+Type=Application
+X-GNOME-Autostart-enabled=true
