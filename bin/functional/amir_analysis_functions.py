@@ -713,3 +713,52 @@ def seconds_to_hh_mm_ss(seconds):
     minutes, seconds = divmod(remainder, 60)
     return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
 
+
+
+def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[]):
+
+    numeric_cols = df.select_dtypes("number").columns.to_list()
+    obj_cols = df.select_dtypes("O").columns.to_list()
+    date_cols = df.select_dtypes("datetime").columns.to_list()
+    
+    def _box_plot(series, _ax):
+        nonlocal e_int_cols
+        if not 'box' in numeric:
+            return
+        sns.boxplot(x=series, ax=_ax, color='lightcoral')
+        _ax.set_title('Box Plot')
+        # _ax.set_xlabel('X-axis label')
+        _ax.set_ylabel('Box Plot Values')
+        e_int_cols += 1
+    
+    def _hist_plot(series, _ax):
+        nonlocal e_int_cols
+        if not 'hist' in numeric:
+            return
+        _ax.hist(df[col_name], bins=20, color='skyblue', edgecolor='black')
+        _ax.set_title('Histogram')
+        # _ax.set_xlabel('X-axis label')
+        _ax.set_ylabel('Frequency')
+        e_int_cols += 1
+    
+    e_int_cols = 0
+    e_obj_cols = 0
+    e_date_cols = 0
+    
+    if len(numeric) == 1:
+        numeric.append(None)
+    if len(string) == 1:
+        string.append(None)
+    
+    for col_name in df.columns.to_list():
+        if col_name in numeric_cols:
+            if not len(numeric):
+                continue
+            fig, axes = plt.subplots(1, len(numeric), figsize=(12, 5))
+            plt.suptitle(f'Distribution of {col_name}')
+            _box_plot(df[col_name], _ax=axes[e_int_cols])
+            _hist_plot(df[col_name], _ax=axes[e_int_cols])
+    
+            plt.tight_layout(rect=[0, 0, 1, 0.95])
+            plt.show()
+            e_int_cols = 0
