@@ -38,6 +38,11 @@ done | grep --color=auto "\|git push\|git add\|git restore\|git add\/rm\|main\|m
 #  | grep --color=auto "\|Your branch is up to date with 'origin/master'.\|nothing to commit, working tree clean\|On branch master\|On branch main"
 
 
+test -e /tmp/git_files_to_commit_or_push
+if [[ $? -ne 0 ]]; then
+	echo "\nNo repository needs to be commited/pushed\n"
+	exit
+fi
 
 echo -e "\n\nFollowing repositories needs to be committed/pushed\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
 cat /tmp/git_files_to_commit_or_push
