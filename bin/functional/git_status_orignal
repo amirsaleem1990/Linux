@@ -40,7 +40,7 @@ done | grep --color=auto "\|git push\|git add\|git restore\|git add\/rm\|main\|m
 
 test -e /tmp/git_files_to_commit_or_push
 if [[ $? -ne 0 ]]; then
-	echo "\nNo repository needs to be commited/pushed\n"
+	echo -e "\nNo repository needs to be commited/pushed\n"
 	exit
 fi
 
