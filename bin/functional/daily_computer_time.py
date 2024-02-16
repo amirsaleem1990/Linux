@@ -12,7 +12,7 @@ def daily_computer_time(DELAY_MINUTES):
 	cursor.execute(
 		"INSERT INTO daily_computer_use_duration (date, delay_minutes, is_computer_locked, current_time) VALUES (?, ?, ?, ?)", 
 		(today, DELAY_MINUTES, int(amir_analysis_functions.is_computer_locked()), current_time)
-		)
+	)
 	conn.commit()
 	conn.close()
 
