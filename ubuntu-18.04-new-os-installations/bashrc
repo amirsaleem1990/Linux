@@ -3,3 +3,6 @@ if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile
 fi
 alias J="python3 manage.py runserver"
+
+HISTSIZE=-1
+HISTFILESIZE=200000000

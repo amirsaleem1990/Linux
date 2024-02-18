@@ -117,7 +117,8 @@ func_ "apt install -y libharfbuzz-dev"
 func_ "apt install -y libclang-dev"
 func_ "apt install -y libpq5"
 func_ "apt install -y sox"
-
+func_ "install gnome-shell-extensions"
+func_ "install gnome-tweaks"
 
 
 
@@ -250,9 +251,6 @@ echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --appen
 # Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
 
 
-
-
-
 ln -s ~/github/Linux/ubuntu-18.04-new-os-installations/bash_profile ~/.bash_profile
 /usr/bin/rm -rf ~/.config/autostart 2>/dev/null
 ln -s ~/github/Linux/ubuntu-18.04-new-os-installations/autostart/functional/ ~/.config/autostart
@@ -274,3 +272,4 @@ Install the following programs:
 echo -e "
 	Add cronjobs from 'github/Amir-personal/cron-jobs.txt'
 "
+gnome-tweaks

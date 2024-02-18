@@ -58,10 +58,12 @@ lst = [
 ['Night_light_modify dark',   '/amir_bin/Night_light_modify -' ,     '<Primary><Alt>minus' ], # CTRL + ATL + -
 ['night_light',               '/amir_bin/night_light',               '<Control><Alt>n'     ], # CTRL + ALT + n
 ['namaz',                     '/amir_bin/namaz',                     '<Shift><Control>n'   ], # SHIFT + CTRL + n
-['align_pandas_code',         '/amir_bin/align_pandas_code',         '<Alt>e'              ]  # ALT + e
+['align_pandas_code',         '/amir_bin/align_pandas_code',         '<Alt>e'              ],  # ALT + e
 # ['vs_code_click_in_terminal', '/amir_bin/vs_code_click_in_terminal.sh', ''                 ],
 # ['vs_code_click_in_terminal_back_click', '/amir_bin/vs_code_click_in_terminal.sh 1', ''    ],
 # ['screen_shot_all_screens',   '/amir_bin/screen_shot_all_screens',   '<Control><Alt>a'     ],
+['gpt-question-option-2',     '/amir_bin/chatgpt 2',                 '<Control><Alt>H'     ], # CTRL + ALT + H
+['gpt-question-option-7',     '/amir_bin/chatgpt 7',                 '<Control><Alt>G'     ], # CTRL + ALT + G
 ]
 
 for i in lst:
