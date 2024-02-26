@@ -119,7 +119,7 @@ func_ "apt install -y libpq5"
 func_ "apt install -y sox"
 func_ "install gnome-shell-extensions"
 func_ "install gnome-tweaks"
-
+func_ "install wmctrl"
 
 
 func_ "snap install vlc"
@@ -269,13 +269,16 @@ Install the following programs:
 
 "
 
+
+echo -e "\nSetting keyboard shortcuts: "
+curl -sSL https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/Set_keyboard_shortcuts.py | python3 -
+
+
 # Turn of 'Dim Screen When inactive' in Setting -> Power
 gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
 
-
 # Turn of 'On Battery Power' in Setting -> Power -> Automatic Suspend
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
-
 
 PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default)
 # profile_id=$(gsettings get org.gnome.Terminal.ProfilesList list | cut -c3- | rev | cut -c3- | rev)
@@ -290,7 +293,6 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ audible-bell false
 
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ font 'Monospace 20'
-
 
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ use-theme-colors false
 
