@@ -1,0 +1,22 @@
+# Download the IDE
+https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing/
+sudo echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", GROUP="plugdev", MODE="0666"' > /etc/udev/rules.d/99-arduino.rules
+
+https://www.youtube.com/watch?v=P_wNcbqLLPw
+https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing/
+
+sudo add-apt-repository universe
+sudo apt install libfuse2
+
+pip3 install esptool
+sudo usermod -a -G dialout $USER
+reboot
+
+
+
+
+ls /dev/ttyUSB*
+python3 -m esptool --port /dev/ttyUSB0 flash_id
+
+
+
