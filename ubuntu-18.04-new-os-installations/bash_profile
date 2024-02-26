@@ -1076,5 +1076,9 @@ timer() {
 
 
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
-PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
+PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/:/home/amir/github/Turing/.venv/bin/"
 export PYTHONPATH=$PYTHONPATH
+
+
+
+mkdir /tmp/inputs/ 2>/dev/null
