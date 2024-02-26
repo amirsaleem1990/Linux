@@ -1,0 +1,5 @@
+I accidentally added and commented a large file in my local repo, I solved the problem as follows:
+	Back up your local repository, it's mandatory, we will need it in the future.
+	Choose comment to which you want to roll back using 'git log'
+	git reset --hard YOUR_COMMIT_ID_GOES_HERE
+	At this point all your work after the comment to choosen lost in your local repository, now copy all files from you backup directory to your local repo, this way you have again your files/modifications AFTER THE COMMENT YOU CHOSEN, then be carefull not to comment the large file, and wallaaaaaaaaaaaaaaaaaa.
