@@ -468,6 +468,18 @@ free_space_on_current_partition(){
 
 }
 
+declare -f csv_show_head
+csv_show_head() {
+x="import pandas as pd; print(pd.read_csv('"$1"').head())"
+echo "$x" | python3
+}
+
+declare -f csv_show_sample
+csv_show_sample() {
+    read -p "How many rows do you want to be printed? " n_rows
+    x="import pandas as pd; print(pd.read_csv('$1').sample($n_rows).to_string(index=False))"
+    echo "$x" | python3 -c "$x"
+}
 
 declare -f pickle_show_head
 pickle_show_head() {
