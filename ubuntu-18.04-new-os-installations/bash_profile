@@ -468,53 +468,65 @@ free_space_on_current_partition(){
 
 }
 
-declare -f csv_show_head
-csv_show_head() {
-x="import pandas as pd; print(pd.read_csv('"$1"').head())"
-echo "$x" | python3
+declare -f data_file_show_head
+data_file_show_head(){
+    if [[ $1 == *.csv ]]; then
+        x="import pandas as pd; print(pd.read_csv('"$1"').head())"
+        echo "$x" | python3
+    else
+        if [[ $1 == *.pkl ]]; then
+            x="import pandas as pd; print(pd.read_pickle('"$1"').head())"
+            echo "$x" | python3
+        fi
+    fi
 }
 
-declare -f csv_show_sample
-csv_show_sample() {
+declare -f data_file_show_sample
+data_file_show_sample() {
     read -p "How many rows do you want to be printed? " n_rows
-    x="import pandas as pd; print(pd.read_csv('$1').sample($n_rows).to_string(index=False))"
-    echo "$x" | python3 -c "$x"
+
+    if [[ $1 == *.csv ]]; then
+        x="import pandas as pd; print(pd.read_csv('$1').sample($n_rows).to_string(index=False))"
+        echo "$x" | python3 -c "$x"
+    else
+        if [[ $1 == *.pkl ]]; then
+            x="import pandas as pd; print(pd.read_pickle('$1').sample($n_rows).to_string(index=False))"
+            echo "$x" | python3 -c "$x"
+        fi
+    fi
 }
 
-declare -f pickle_show_head
-pickle_show_head() {
-x="import pandas as pd; print(pd.read_pickle('"$1"').head())"
-echo "$x" | python3
+
+declare -f data_file_show_shape
+data_file_show_shape() {
+    if [[ $1 == *.csv ]]; then
+        x="import pandas as pd; print(pd.read_csv('"$1"').shape)"
+        echo "$x" | python3
+    else
+        if [[ $1 == *.pkl ]]; then
+            x="import pandas as pd; print(pd.read_pickle('"$1"').shape)"
+            echo "$x" | python3
+        fi
+    fi
 }
 
-declare -f pickle_show_shape
-pickle_show_shape() {
-x="import pandas as pd; print(pd.read_pickle('"$1"').shape)"
-echo "$x" | python3
-}
-
-declare -f pickle_print_lenght
-pickle_print_lenght() {
-x="import pickle; print(len(pickle.load(open('"$1"', 'rb'))))"
-echo "$x" | python3
-}
 
 
 declare -f pickle_print_type
 pickle_print_type() {
-x="import pickle; print(str(type(pickle.load(open('"$1"', 'rb')))))"
-echo "$x" | python3
+    x="import pickle; print(str(type(pickle.load(open('"$1"', 'rb')))))"
+    echo "$x" | python3
 }
 
-declare -f pickle_show_info
-pickle_show_info() {
+declare -f data_file_show_info
+data_file_show_info() {
+    if [[ $1 == *.csv ]]; then
 x="
-import pickle
-f = pickle.load(open('"$1"', 'rb'))
+import pandas as pd
+f = pd.read_csv('"$1"')
 print('################################################')
 print('Type:', str(type(f)))
 print('Len :', len(f))
-import pandas as pd
 if isinstance(f, pd.DataFrame):
     print('Shape:', f.shape)
     print()
@@ -523,18 +535,40 @@ if isinstance(f, pd.DataFrame):
 print('################################################')
 "
 echo "$x" | python3
-}
 
-
-
-
-
-declare -f pickle_show_nrows
-pickle_show_nrows() {
-x="import pandas as pd; print(pd.read_pickle('"$1"').shape[0])"
+    else
+        if [[ $1 == *.pkl ]]; then
+x="
+import pandas as pd
+f = pd.read_pickle('"$1"')
+print('################################################')
+print('Type:', str(type(f)))
+print('Len :', len(f))
+if isinstance(f, pd.DataFrame):
+    print('Shape:', f.shape)
+    print()
+    print('Head :')
+    print(f.head().to_string())
+print('################################################')
+"
 echo "$x" | python3
+        fi
+    fi
 }
 
+declare -f data_file_show_nrows
+data_file_show_nrows() {
+    if [[ $1 == *.csv ]]; then
+        x="import pandas as pd; print(pd.read_csv('"$1"').shape[0])"
+        echo "$x" | python3
+    else
+        if [[ $1 == *.pkl ]]; then
+            x="import pandas as pd; print(pd.read_pickle('"$1"').shape[0])"
+            echo "$x" | python3
+        fi
+    fi
+
+}
 
 declare -f pickle_show_content
 pickle_show_content() {
@@ -543,19 +577,35 @@ echo "$x" | python3
 }
 
 
-declare -f pickle_read_dataframe_and_go_in_inpython
-pickle_read_dataframe_and_go_in_inpython() {
-    python_code="import pandas as pd; df = pd.read_pickle('"$1"'); "
-    echo "$python_code" > /tmp/python_code
-    echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
-    ipython3 -i  /tmp/python_code
+declare -f data_file_read_dataframe_and_go_in_inpython
+data_file_read_dataframe_and_go_in_inpython() {
+    if [[ $1 == *.csv ]]; then
+        python_code="import pandas as pd; df = pd.read_csv('"$1"'); "
+        echo "$python_code" > /tmp/python_code
+        echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
+        ipython3 -i  /tmp/python_code
+    else
+        if [[ $1 == *.pkl ]]; then
+            python_code="import pandas as pd; df = pd.read_pickle('"$1"'); "
+            echo "$python_code" > /tmp/python_code
+            echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
+            ipython3 -i  /tmp/python_code
+        fi
+    fi
 }
 
+declare -f data_file_list_columns_names
+data_file_list_columns_names() {
+    if [[ $1 == *.csv ]]; then
+        python_code="import pandas as pd; print(*pd.read_csv('"$1"').columns.to_list(), sep='\n')"
+        echo $python_code | python3
+    else
+        if [[ $1 == *.pkl ]]; then
+            python_code="import pandas as pd; print(*pd.read_pickle('"$1"').columns.to_list(), sep='\n')"
+            echo $python_code | python3
+        fi
+    fi
 
-declare -f pickle_list_columns_names
-pickle_list_columns_names() {
-    python_code="import pandas as pd; print(*pd.read_pickle('"$1"').columns.to_list(), sep='\n')"
-    echo $python_code | python3
 }
 
 
@@ -969,11 +1019,15 @@ export -f max
 export -f internet_speed
 export -f convertsecs
 export -f free_space_on_current_partition
-export -f pickle_show_head
-export -f pickle_show_nrows
+export -f pickle_print_type
 export -f pickle_show_content
-export -f pickle_read_dataframe_and_go_in_inpython
-export -f pickle_list_columns_names
+export -f data_file_show_head
+export -f data_file_show_sample
+export -f data_file_show_shape
+export -f data_file_show_info
+export -f data_file_show_nrows
+export -f data_file_read_dataframe_and_go_in_inpython
+export -f data_file_list_columns_names
 export -f download_speed_stream
 export -f size_in_proper_units
 export -f pickle_to_csv
