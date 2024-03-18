@@ -2181,3 +2181,6 @@ cat file.txt | awk '
 file=abcdflkjadf.png; echo  abcdflkjadf.pdf
 
 # convert  wav to mp3 ......... ffmpeg -i input.wav -vn -ar 44100 -ac 2 -b:a 192k output.mp3
+
+# Linux kernel version ...... uname -r
+
