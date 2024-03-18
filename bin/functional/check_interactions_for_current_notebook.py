@@ -86,22 +86,6 @@ df  = pd.DataFrame(lst, columns=['number', 'is_devfeedback_exist'])
 # plt.ylabel("Accumulated sum of iterations count.")
 # plt.show()
 
-fig, axs = plt.subplots(1, 2, figsize=(14, 6))
-
-df.number.str.strip("q").str[:-1].astype(int).value_counts().sort_index().plot(kind='bar', ax=axs[0], title="Iterations Count for Interactions")
-axs[0].set_ylabel("Iterations count")
-axs[0].set_xlabel("Iterations")
-axs[0].grid(True)
-
-df.number.str.strip("q").str[:-1].astype(int).value_counts().sort_index().cumsum().plot(kind='bar', ax=axs[1], title="Accumulated sum of interactions over iterations' count")
-axs[1].set_ylabel("Accumulated sum of iterations count.")
-axs[1].set_xlabel("Iterations")
-axs[1].grid(True)
-
-plt.tight_layout()
-plt.show()
-
-
 x = df.groupby("is_devfeedback_exist").apply(lambda g: g.number).unstack().T
 if df.is_devfeedback_exist.all():
     xx = x.copy()
@@ -116,6 +100,21 @@ print(f"{total_iterations} iterations are done")
 print(f"Iterations per interaction ratio: {round(total_iterations / total_interactions, 2)}")
 print()
 
+xx = xx.str.strip("q").str[:-1].astype(int).value_counts().sort_index()
 
+fig, axs = plt.subplots(1, 2, figsize=(14, 6))
 
+xx.plot(kind='bar', ax=axs[0], title="Iterations Count for Interactions")
+axs[0].set_ylabel("Iterations count")
+axs[0].set_xlabel("Iterations")
+axs[0].grid(True)
+axs[0].axhline(xx.mean(), color='red')
+
+xx.cumsum().plot(kind='bar', ax=axs[1], title="Accumulated sum of interactions over iterations' count")
+axs[1].set_ylabel("Accumulated sum of iterations count.")
+axs[1].set_xlabel("Iterations")
+axs[1].grid(True)
+
+plt.tight_layout()
+plt.show()
 
