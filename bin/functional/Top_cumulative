@@ -34,7 +34,7 @@ info["mem(mb)"] = info["mem(kb)"].astype(float)/1024
 info_aggregated = info.groupby("service").agg(mem_sum=("mem(mb)", sum), CPU=("cpu%", sum), Count=("mem(mb)", "count"))
 info_aggregated.mem_sum = info_aggregated.mem_sum.astype(int)
 info_aggregated.CPU = info_aggregated.CPU.round(2)
-info_aggregated.columns = ["RAM (MB)" if col_name is "mem_sum" else col_name for col_name in info_aggregated.columns]
+info_aggregated.columns = ["RAM (MB)" if col_name == "mem_sum" else col_name for col_name in info_aggregated.columns]
 info_aggregated.to_pickle("/tmp/info_aggregated.pkl")
 ' | python3
 
