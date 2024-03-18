@@ -1,7 +1,90 @@
 #!/bin/bash
-/amir_bin/Top_cumulative_1st_part $1
-cat /tmp/.AB.txt  | sed '/^$/d'    | grep --color=auto '\|CPU\|RAM\|MEM\|COMMAND\|(MB)\|='
-[[ $1 == "" ]] && echo -e "\n"
-cat /tmp/.LMSF | grep --color=auto "\|Cpu\|Ram\|Swap"
-[[ $1 == "" ]] && echo -e "\n"
+# /amir_bin/Top_cumulative_1st_part $1
+# cat /tmp/.AB.txt  | sed '/^$/d'    | grep --color=auto '\|CPU\|RAM\|MEM\|COMMAND\|(MB)\|='
+# [[ $1 == "" ]] && echo -e "\n"
+# cat /tmp/.LMSF | grep --color=auto "\|Cpu\|Ram\|Swap"
+# [[ $1 == "" ]] && echo -e "\n"
 
+
+
+rm -f /tmp/process_info_cpu_{cpu,ram}.txt
+/usr/bin/rm -rf /tmp/process_info.txt /tmp/info_aggregated.pkl 2>/dev/null
+RED="\033[0;31m"
+normal="\033[0m"
+
+if [[ $1 == 1 ]] ; then
+	detailed=1
+else
+	detailed=0
+	echo -e "\n************ Short list ************\n*(for long list give '1' as a perameter)\n"
+fi
+
+
+echo ''
+IFS=$'\n'
+
+ps -eo user,pid,%cpu,rss,comm | grep ^amir | grep -v '0.0  0.0' | sed 's/amir     //g; s/^ //g; s/ \{1,\}/ /g; s/^ //g' | cut -d ' ' -f2-10 > /tmp/process_info.txt
+echo '
+import pandas as pd
+x = open("/tmp/process_info.txt", "r").read().splitlines()
+x2 = [i.replace(" ", ",", 2).rstrip("-").replace(" ", "-").split(",") for i in x]
+info = pd.DataFrame(x2, columns=["cpu%", "mem(kb)", "service"])
+info["cpu%"] = info["cpu%"].astype(float)
+info["mem(mb)"] = info["mem(kb)"].astype(float)/1024
+info_aggregated = info.groupby("service").agg(mem_sum=("mem(mb)", sum), CPU=("cpu%", sum), Count=("mem(mb)", "count"))
+info_aggregated.mem_sum = info_aggregated.mem_sum.astype(int)
+info_aggregated.CPU = info_aggregated.CPU.round(2)
+info_aggregated.columns = ["RAM (MB)" if col_name is "mem_sum" else col_name for col_name in info_aggregated.columns]
+info_aggregated.to_pickle("/tmp/info_aggregated.pkl")
+' | python3
+
+get_sort_by() {
+	echo -e "\nSort by:\n\t1-CPU\n\t2-RAM\n\t3-Count\n"
+	read sort_by
+}
+
+get_sort_by
+
+if [[ $detailed -eq 1 ]]; then
+	echo '
+import sys
+import pandas as pd
+from termcolor import colored
+from tabulate import tabulate
+sort_by = sys.argv[1]
+df = pd.read_pickle("/tmp/info_aggregated.pkl")
+print("\n" + df.sum().rename("Sum").rename_axis("Column").reset_index().to_string() + "\n")
+if sort_by == "1":
+	print(colored("\n>>> Sorted by CPU\n", "red"))
+	print(tabulate(df.sort_values("CPU", ascending=False), headers="keys", tablefmt="pretty"))
+elif sort_by == "2":
+	print(colored("\n>>> Sorted by Memory\n", "red"))
+	print(tabulate(df.sort_values("RAM (MB)", ascending=False), headers="keys", tablefmt="pretty"))
+elif sort_by == "3":
+	print(colored("\n>>> Sorted by Count\n", "red"))
+	print(tabulate(df.sort_values("Count", ascending=False), headers="keys", tablefmt="pretty"))
+' | python3 - "$sort_by"
+else
+	echo '
+from tabulate import tabulate
+from termcolor import colored
+import pandas as pd
+import sys
+sort_by = sys.argv[1]
+df = pd.read_pickle("/tmp/info_aggregated.pkl")
+print("\n" + df.sum().rename("Sum").rename_axis("Column").reset_index().to_string() + "\n")
+mask = df[["RAM (MB)", "CPU"]].gt(0).all(axis=1)
+df = df[mask].reset_index()
+headers = df.columns
+alignments = ["l"] * len(headers)
+if sort_by == "1":
+	print(colored("\n>>> Sorted by CPU\n", "red"))
+	print(tabulate(df.sort_values("CPU", ascending=False).reset_index(drop=True), headers="keys", tablefmt="pretty", colalign=alignments))
+if sort_by == "2":
+	print(colored("\n>>> Sorted by Memory\n", "red"))
+	print(tabulate(df.sort_values("RAM (MB)", ascending=False).reset_index(drop=True), headers="keys", tablefmt="pretty", colalign=alignments))
+if sort_by == "3":
+	print(colored("\n>>> Sorted by Count\n", "red"))
+	print(tabulate(df.sort_values("Count", ascending=False).reset_index(drop=True), headers="keys", tablefmt="pretty", colalign=alignments))
+' | python3 - "$sort_by"
+fi
