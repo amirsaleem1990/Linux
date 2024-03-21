@@ -461,14 +461,28 @@ def connect_to_my_db():
 	return conn
 
 
-def all_possible_combinations(inputArray):
-	import itertools
-	n = len(inputArray)
-	lst = []
-	for indices in itertools.permutations(range(n), n):
-		inner_list = [inputArray[i] for i in indices]
-		lst.append(inner_list)
-	return lst
+
+
+def all_possible_combinations(inputArray, order_matters=True, min_length=1, max_length=None):
+    import itertools
+    n = len(inputArray)
+    lst = []
+
+    if max_length is None:
+        max_length = n
+    
+    if order_matters:
+        for length in range(min_length, max_length + 1):
+            for indices in itertools.permutations(range(n), length):
+                inner_list = [inputArray[i] for i in indices]
+                lst.append(inner_list)
+    else:
+        for length in range(min_length, max_length + 1):
+            for r in range(length, min(max_length, n) + 1):
+                for combination in itertools.combinations(inputArray, r):
+                    lst.append(list(combination))
+
+    return lst
 
 
 
