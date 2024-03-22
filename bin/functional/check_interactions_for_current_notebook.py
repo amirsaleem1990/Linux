@@ -5,25 +5,29 @@ import pandas as pd  # Data manipulation library
 import os  # Operating System module for file operations
 import json  # JSON encoding and decoding module
 import warnings  # Warning control module
+import sys
 
 warnings.filterwarnings("ignore")  # Ignore warnings during execution
 
 # Get all notebook files in the current directory with the ".ipynb" extension
 notebook_path = [file_name for file_name in os.listdir() if file_name.endswith(".ipynb")]
 
-# Check if there are multiple notebooks in the directory
-if len(notebook_path) > 1:
-    print(*notebook_path, end="\n")
-    print()
-    # Allow the user to select a notebook if there are multiple
-    notebook_path = input("There are multiple notebooks. Please enter the name: ")
-elif not notebook_path:
-    print("No notebooks found in the directory.\nExiting.....")
-    import sys
-    sys.exit(1)
+if len(sys.argv) > 1:
+    notebook_path = sys.argv[1]
+else:
+    # Check if there are multiple notebooks in the directory
+    if len(notebook_path) > 1:
+        print(*notebook_path, end="\n")
+        print()
+        # Allow the user to select a notebook if there are multiple
+        notebook_path = input("There are multiple notebooks. Please enter the name: ")
+    elif not notebook_path:
+        print("No notebooks found in the directory.\nExiting.....")
+        import sys
+        sys.exit(1)
 
-# Get the first notebook path (assuming there's at least one)
-notebook_path = notebook_path[0]
+    # Get the first notebook path (assuming there's at least one)
+    notebook_path = notebook_path[0]
 
 # Open the notebook file and read it as a Jupyter notebook format
 with open(notebook_path, 'r', encoding='utf-8') as nb_file:
