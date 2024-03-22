@@ -105,6 +105,7 @@ alias external_screen_to_join_display="xrandr --output eDP-1 --auto --pos 0x1080
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
 PATH="$PATH:/usr/bin/python3"
+PATH="$PATH:/home/amir/github/Amir-personal"
 # bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 # commit <HISTSIZE> in .bashrc
@@ -1142,9 +1143,7 @@ timer() {
 
 
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
-PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/:/home/amir/github/Turing/.venv/bin/"
 export PYTHONPATH=$PYTHONPATH
-
 
 
 mkdir /tmp/inputs/ 2>/dev/null
