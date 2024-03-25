@@ -6,6 +6,7 @@ import os  # Operating System module for file operations
 import json  # JSON encoding and decoding module
 import warnings  # Warning control module
 import sys
+import numpy as np
 
 warnings.filterwarnings("ignore")  # Ignore warnings during execution
 
@@ -45,38 +46,47 @@ R = [
 
 lst = []  # List to store extracted information
 
+last_question_number_loaded_successfully = 0
 # Iterate through the cells in the Jupyter notebook
 for index, cell in enumerate(notebook_json['cells']):
-    cell_type = cell['cell_type']
+    try:
+        cell_type = cell['cell_type']
 
-    # Skip non-code cells
-    if cell_type != 'code':
-        continue
+        # Skip non-code cells
+        if cell_type != 'code':
+            continue
 
-    source_code = cell['source']
+        source_code = cell['source']
 
-    # Check if the source code contains 'dev_feedback'
-    if not 'dev_feedback' in source_code:
-        continue
-     
-    # Extract relevant information from the source code
-    source_code_cleaned = "=".join(source_code.strip().split("=")[1:]).strip()
-    source_code_cleaned = "\n".join([line for line in source_code_cleaned.splitlines() if not line.strip() in R])
+        # Check if the source code contains 'dev_feedback'
+        if not 'dev_feedback' in source_code:
+            continue
+         
+        # Extract relevant information from the source code
+        source_code_cleaned = "=".join(source_code.strip().split("=")[1:]).strip()
+        source_code_cleaned = "\n".join([line for line in source_code_cleaned.splitlines() if not line.strip() in R])
 
-    number = source_code.strip().split()[0]
+        number = source_code.strip().split()[0]
 
-    # Handle special cases in the source code formatting
-    if '"""' in source_code_cleaned:
-        source_code_cleaned = source_code_cleaned.replace('"""\n', '"').replace('\n"""', '"')
-    if '"question": NULL,' in source_code_cleaned:
-        source_code_cleaned = source_code_cleaned.replace('"question": NULL,', '"question": null,')
+        # Handle special cases in the source code formatting
+        if '"""' in source_code_cleaned:
+            source_code_cleaned = source_code_cleaned.replace('"""\n', '"').replace('\n"""', '"')
+        if '"question": NULL,' in source_code_cleaned:
+            source_code_cleaned = source_code_cleaned.replace('"question": NULL,', '"question": null,')
 
-    # Load dev_feedback from the cleaned source code
-    dev_feedback = json.loads(source_code_cleaned)['dev_feedback']
-    lst.append([number, bool(dev_feedback)])
+        # Load dev_feedback from the cleaned source code
+        dev_feedback = json.loads(source_code_cleaned)['dev_feedback']
+        lst.append([number, bool(dev_feedback)])
+        last_question_number_loaded_successfully = number
+    except:
+        print("Last question number loaded successfully:", last_question_number_loaded_successfully)
 
 # Create a DataFrame from the extracted information
 df  = pd.DataFrame(lst, columns=['number', 'is_devfeedback_exist'])
+df['question_number'] = df.number.str[1:-1].astype(int)
+df['char'] = df.number.str[-1]
+
+
 # df.number.str.strip("q").str[:-1].astype(int).value_counts().sort_index().plot(kind='bar', title="Iterations Count for Interactions");
 # plt.ylabel("Iterations count")
 # plt.xticks(rotation=0)
@@ -91,6 +101,7 @@ df  = pd.DataFrame(lst, columns=['number', 'is_devfeedback_exist'])
 # plt.show()
 
 x = df.groupby("is_devfeedback_exist").apply(lambda g: g.number).unstack().T
+
 if df.is_devfeedback_exist.all():
     xx = x.copy()
 else:
@@ -104,20 +115,28 @@ print(f"{total_iterations} iterations are done")
 print(f"Iterations per interaction ratio: {round(total_iterations / total_interactions, 2)}")
 print()
 
-xx = xx.str.strip("q").str[:-1].astype(int).value_counts().sort_index()
+# xx = xx.str.strip("q").str[:-1].astype(int).value_counts().sort_index()
+xx = df.groupby("question_number").is_devfeedback_exist.sum().where(lambda x: x>0).dropna().astype(int).rename("iterations_count").rename_axis("question_number")
+xx = xx.reset_index().assign(expected_iterations_count=np.arange(1,len(xx)+1)*1.39)
+xx['cum_sum_iteration_count'] = xx.iterations_count.cumsum()
 
+# breakpoint()
 fig, axs = plt.subplots(1, 2, figsize=(14, 6))
 
-xx.plot(kind='bar', ax=axs[0], title="Iterations Count for Interactions")
+# xx.plot(kind='bar', ax=axs[0], title="Iterations Count for Interactions")
+xx.set_index("question_number").iterations_count.plot(kind='bar', ax=axs[0], title="Iterations Count for Interactions")
+axs[0].tick_params(axis='x', rotation=0)
 axs[0].set_ylabel("Iterations count")
 axs[0].set_xlabel("Iterations")
 axs[0].grid(True)
-axs[0].axhline(xx.mean(), color='red')
+axs[0].axhline(xx.iterations_count.mean(), color='red')
 
-xx.cumsum().plot(kind='bar', ax=axs[1], title="Accumulated sum of interactions over iterations' count")
+xx.set_index("question_number").drop(columns="iterations_count").plot(kind='bar', title="Accumulated sum of interactions over iterations' count", ax=axs[1])
+# xx.cumsum().plot(kind='bar', ax=axs[1], title="Accumulated sum of interactions over iterations' count")
 axs[1].set_ylabel("Accumulated sum of iterations count.")
 axs[1].set_xlabel("Iterations")
 axs[1].grid(True)
+axs[1].tick_params(axis='x', rotation=0)
 
 plt.tight_layout()
 plt.show()
