@@ -96,8 +96,8 @@ alias external_screen_to_single_main_display="xrandr --output eDP-1 --auto --out
 
 # alias external_screen_to_join_display="xrandr --output eDP-1 --auto --output HDMI-1 --auto --above eDP-1"
 alias external_screen_to_join_display="xrandr --output eDP-1 --auto --pos 0x1080 --output HDMI-1 --auto --pos 0x0"
-
-
+# alias set_displays_positions="xrandr --output HDMI-1 --auto --pos 950x0 --output DP-1 --auto --pos 2850x0 --output eDP-1 --auto --pos 1920x1080"
+alias set_displays_positions="xrandr --output HDMI-1 --auto --pos 0x0 --output DP-1 --auto --pos 1921x0 --output eDP-1 --auto --pos 1000x1100"
 
 
 
