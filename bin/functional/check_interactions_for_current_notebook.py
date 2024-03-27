@@ -110,10 +110,15 @@ else:
 total_interactions = xx.str.strip('q').str[:-1].astype(int).max()
 total_interactions = xx.str.strip('q').str[:-1].nunique()
 total_iterations = xx.shape[0]
-print(f"\n\n{total_interactions} interactions are done")
-print(f"{total_iterations} iterations are done")
-print(f"Iterations per interaction ratio: {round(total_iterations / total_interactions, 2)}")
-print()
+main_title = ""
+# print(f"\n\n{total_interactions} interactions are done")
+# print(f"{total_iterations} iterations are done")
+# print(f"Iterations per interaction ratio: {round(total_iterations / total_interactions, 2)}")
+# print()
+
+main_title += f"\n\n{total_interactions} interactions are done\n"
+main_title += f"{total_iterations} iterations are done\n"
+main_title += f"Iterations per interaction ratio: {round(total_iterations / total_interactions, 2)}\n"
 
 # xx = xx.str.strip("q").str[:-1].astype(int).value_counts().sort_index()
 xx = df.groupby("question_number").is_devfeedback_exist.sum().where(lambda x: x>0).dropna().astype(int).rename("iterations_count").rename_axis("question_number")
@@ -137,6 +142,8 @@ axs[1].set_ylabel("Accumulated sum of iterations count.")
 axs[1].set_xlabel("Iterations")
 axs[1].grid(True)
 axs[1].tick_params(axis='x', rotation=0)
+
+plt.suptitle(main_title, fontsize=16)
 
 plt.tight_layout()
 plt.show()
