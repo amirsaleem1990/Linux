@@ -776,3 +776,24 @@ def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[
             plt.tight_layout(rect=[0, 0, 1, 0.95])
             plt.show()
             e_int_cols = 0
+
+
+
+
+def fetch_data_from_google_sheet(json_path,spreadsheet_url, worksheet_id):
+    import json
+    import gspread
+    from google.oauth2 import service_account
+    import pandas as pd
+
+    service_account_info = json.loads(open(json_path, 'r').read())
+    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    creds_with_scope = credentials.with_scopes(scope)
+    client = gspread.authorize(creds_with_scope)
+    spreadsheet = client.open_by_url(spreadsheet_url)
+    # worksheet = spreadsheet.get_worksheet(0)
+    worksheet = spreadsheet.get_worksheet_by_id(worksheet_id)
+    records_data = worksheet.get_all_values()
+    df = pd.DataFrame.from_records(records_data)
+    return df
