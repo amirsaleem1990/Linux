@@ -469,46 +469,53 @@ free_space_on_current_partition(){
 
 }
 
-declare -f data_file_show_head
-data_file_show_head(){
+_data_file_read(){
     if [[ $1 == *.csv ]]; then
-        x="import pandas as pd; print(pd.read_csv('"$1"').head())"
-        echo "$x" | python3
+        x="import pandas as pd; pd.read_csv('"$1"').to_pickle('/tmp/data_file.pkl')"
     else
         if [[ $1 == *.pkl ]]; then
-            x="import pandas as pd; print(pd.read_pickle('"$1"').head())"
-            echo "$x" | python3
+            x="import pandas as pd; pd.read_pickle('"$1"').to_pickle('/tmp/data_file.pkl')"
+        else
+            if [[ $1 == *.xlsx ]]; then
+                x="import pandas as pd; pd.read_excel('"$1"').to_pickle('/tmp/data_file.pkl')"
+            fi
         fi
     fi
+    return 0
+}
+
+declare -f data_file_show_head
+data_file_show_head(){
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
+    fi
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').head())"
+    echo "$x" | python3
 }
 
 declare -f data_file_show_sample
 data_file_show_sample() {
     read -p "How many rows do you want to be printed? " n_rows
-
-    if [[ $1 == *.csv ]]; then
-        x="import pandas as pd; print(pd.read_csv('$1').sample($n_rows).to_string(index=False))"
-        echo "$x" | python3 -c "$x"
-    else
-        if [[ $1 == *.pkl ]]; then
-            x="import pandas as pd; print(pd.read_pickle('$1').sample($n_rows).to_string(index=False))"
-            echo "$x" | python3 -c "$x"
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
+    
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_string(index=False))"
+    echo "$x" | python3 -c "$x"
 }
 
 
 declare -f data_file_show_shape
 data_file_show_shape() {
-    if [[ $1 == *.csv ]]; then
-        x="import pandas as pd; print(pd.read_csv('"$1"').shape)"
-        echo "$x" | python3
-    else
-        if [[ $1 == *.pkl ]]; then
-            x="import pandas as pd; print(pd.read_pickle('"$1"').shape)"
-            echo "$x" | python3
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
+    
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape)"
+    echo "$x" | python3
 }
 
 
@@ -521,92 +528,67 @@ pickle_print_type() {
 
 declare -f data_file_show_info
 data_file_show_info() {
-    if [[ $1 == *.csv ]]; then
-x="
-import pandas as pd
-f = pd.read_csv('"$1"')
-print('################################################')
-print('Type:', str(type(f)))
-print('Len :', len(f))
-if isinstance(f, pd.DataFrame):
-    print('Shape:', f.shape)
-    print()
-    print('Head :')
-    print(f.head().to_string())
-print('################################################')
-"
-echo "$x" | python3
-
-    else
-        if [[ $1 == *.pkl ]]; then
-x="
-import pandas as pd
-f = pd.read_pickle('"$1"')
-print('################################################')
-print('Type:', str(type(f)))
-print('Len :', len(f))
-if isinstance(f, pd.DataFrame):
-    print('Shape:', f.shape)
-    print()
-    print('Head :')
-    print(f.head().to_string())
-print('################################################')
-"
-echo "$x" | python3
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
+    
+x="
+import pandas as pd
+f = pd.read_pickle('/tmp/data_file.pkl')
+print('################################################')
+print('Type:', str(type(f)))
+print('Len :', len(f))
+if isinstance(f, pd.DataFrame):
+    print('Shape:', f.shape)
+    print()
+    print('Head :')
+    print(f.head().to_string())
+print('################################################')
+"
+echo "$x" | python3
 }
 
 declare -f data_file_show_nrows
 data_file_show_nrows() {
-    if [[ $1 == *.csv ]]; then
-        x="import pandas as pd; print(pd.read_csv('"$1"').shape[0])"
-        echo "$x" | python3
-    else
-        if [[ $1 == *.pkl ]]; then
-            x="import pandas as pd; print(pd.read_pickle('"$1"').shape[0])"
-            echo "$x" | python3
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
-
+    
+    x="import pandas as pd; pd.read_pickle('/tmp/data_file.pkl').shape[0])"
+    echo "$x" | python3
 }
 
 declare -f pickle_show_content
 pickle_show_content() {
-x="import pickle; print(pickle.load(open('"$1"', 'rb')))"
-echo "$x" | python3
+    x="import pickle; print(pickle.load(open('"$1"', 'rb')))"
+    echo "$x" | python3
 }
 
 
 declare -f data_file_read_dataframe_and_go_in_inpython
 data_file_read_dataframe_and_go_in_inpython() {
-    if [[ $1 == *.csv ]]; then
-        python_code="import pandas as pd; df = pd.read_csv('"$1"'); "
-        echo "$python_code" > /tmp/python_code
-        echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
-        ipython3 -i  /tmp/python_code
-    else
-        if [[ $1 == *.pkl ]]; then
-            python_code="import pandas as pd; df = pd.read_pickle('"$1"'); "
-            echo "$python_code" > /tmp/python_code
-            echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
-            ipython3 -i  /tmp/python_code
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
+    
+    python_code="import pandas as pd; df = pd.read_pickle('/tmp/data_file.pkl'); "
+    echo "$python_code" > /tmp/python_code
+    echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
+    ipython3 -i  /tmp/python_code
 }
 
 declare -f data_file_list_columns_names
 data_file_list_columns_names() {
-    if [[ $1 == *.csv ]]; then
-        python_code="import pandas as pd; print(*pd.read_csv('"$1"').columns.to_list(), sep='\n')"
-        echo $python_code | python3
-    else
-        if [[ $1 == *.pkl ]]; then
-            python_code="import pandas as pd; print(*pd.read_pickle('"$1"').columns.to_list(), sep='\n')"
-            echo $python_code | python3
-        fi
+    _data_file_read "$1"
+    if [[ $? -ne 0 ]]; then
+        return 0
     fi
-
+    
+    python_code="import pandas as pd; print(*pd.read_pickle('/tmp/data_file.pkl').columns.to_list(), sep='\n')"
+    echo $python_code | python3
 }
 
 
