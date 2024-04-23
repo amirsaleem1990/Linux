@@ -1,1 +1,5 @@
-/usr/share/applications/slack.desktop
+[Desktop Entry]
+Name=slack
+Exec=/snap/bin/slack
+Type=Application
+X-GNOME-Autostart-enabled=true
