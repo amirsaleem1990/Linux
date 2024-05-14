@@ -469,26 +469,72 @@ free_space_on_current_partition(){
 
 }
 
+# amir
+
 _data_file_read(){
-    if [[ $1 == *.csv ]]; then
-        x="import pandas as pd; pd.read_csv('"$1"').to_pickle('/tmp/data_file.pkl')"
-    else
-        if [[ $1 == *.pkl ]]; then
-            x="import pandas as pd; pd.read_pickle('"$1"').to_pickle('/tmp/data_file.pkl')"
-        else
-            if [[ $1 == *.xlsx ]]; then
-                x="import pandas as pd; pd.read_excel('"$1"').to_pickle('/tmp/data_file.pkl')"
+    IFS=$'\n'
+    /usr/bin/rm -f /tmp/python_code
+    file_name=$1
+
+    # If no paramter is passed and there is only data file then read it.
+    if [ -z $file_name ]; then
+        data_files_counts=$(ls *.csv *.pkl *.xlsx 2>/dev/null | wc -l)
+        if [[ $data_files_counts -eq 1 ]]; then
+            ls *.csv 2>/dev/null | wc -l
+            if [[ $? -eq 0 ]]; then
+                file_name=$(ls *.csv)
+            else
+                ls *.pkl 2>/dev/null | wc -l
+                if [[ $? -eq 0 ]]; then
+                    file_name=$(ls *.pkl)
+                else
+                    ls *.xlsx 2>/dev/null | wc -l
+                    if [[ $? -eq 0 ]]; then
+                        file_name=$(ls *.xlsx)
+                    fi
+                fi
             fi
         fi
     fi
+
+
+    if [[ $file_name == *.csv ]]; then
+        x="import pandas as pd; pd.read_csv('"$file_name"').to_pickle('/tmp/data_file.pkl')"
+    else
+        if [[ $file_name == *.pkl ]]; then
+            x="import pandas as pd; pd.read_pickle('"$file_name"').to_pickle('/tmp/data_file.pkl')"
+        else
+            if [[ $file_name == *.xlsx ]]; then
+                x="import pandas as pd; pd.read_excel('"$file_name"').to_pickle('/tmp/data_file.pkl')"
+            fi
+        fi
+    fi
+    echo "$x" | python3
+    if [[ $? -eq 0 ]]; then 
+        echo ">>>>>>>>> Saved the file successfully as /tmp/data_file.pkl"
+    else
+        echo ">>>>>>>>> Failed to save the data as /tmp/data_file.pkl"
+    fi
+
     return 0
 }
+
+
+declare -f data_read_clipboard
+data_read_clipboard() {    
+    python_code="import pandas as pd; df = pd.read_clipboard()"
+    echo "$python_code" > /tmp/python_code
+    echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
+    ipython3 -i  /tmp/python_code
+}
+
 
 declare -f data_file_show_head
 data_file_show_head(){
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').head())"
     echo "$x" | python3
@@ -499,7 +545,8 @@ data_file_show_sample() {
     read -p "How many rows do you want to be printed? " n_rows
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
     x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_string(index=False))"
@@ -511,7 +558,8 @@ declare -f data_file_show_shape
 data_file_show_shape() {
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
     x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape)"
@@ -530,7 +578,8 @@ declare -f data_file_show_info
 data_file_show_info() {
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
 x="
@@ -553,7 +602,8 @@ declare -f data_file_show_nrows
 data_file_show_nrows() {
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
     x="import pandas as pd; pd.read_pickle('/tmp/data_file.pkl').shape[0])"
@@ -566,25 +616,26 @@ pickle_show_content() {
     echo "$x" | python3
 }
 
-
+# amir
 declare -f data_file_read_dataframe_and_go_in_inpython
 data_file_read_dataframe_and_go_in_inpython() {
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
     python_code="import pandas as pd; df = pd.read_pickle('/tmp/data_file.pkl'); "
     echo "$python_code" > /tmp/python_code
-    echo -e "\n>>>>>>>>>> Your file is imported as 'df', your can use it<<<<<<<<<<\n"
-    ipython3 -i  /tmp/python_code
+    ipython3 -i /tmp/python_code
 }
 
 declare -f data_file_list_columns_names
 data_file_list_columns_names() {
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
-        return 0
+        echo "Failed to save the file as /tmp/data_file.pkl"
+        return 1
     fi
     
     python_code="import pandas as pd; print(*pd.read_pickle('/tmp/data_file.pkl').columns.to_list(), sep='\n')"
@@ -1020,6 +1071,7 @@ export -f merge_subtitles_with_a_video
 export -f record_screen
 export -f join_lines_with_space
 export -f extract_portion_of_video_from_long_video
+export -f _data_file_read
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
@@ -1088,17 +1140,17 @@ reset_bashprofile(){
     source ~/.bash_profile >/dev/null
 }
 
-declare -f change_python_path
-change_python_path(){
-    if [[ $(echo $PYTHONPATH | rev | cut -d/ -f1-2 | rev) == "python3.10/" ]]; then 
-        PYTHONPATH="/amir_bin/:/usr/bin/python3"
-        PYTHONPATH="$PYTHONPATH:/usr/lib/python3.10/:/usr/lib/python3.9/"
-    else
-        PYTHONPATH="/amir_bin/:/usr/bin/python3"
-        PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
-    fi
-    export PYTHONPATH=$PYTHONPATH
-}
+# declare -f change_python_path
+# change_python_path(){
+#     if [[ $(echo $PYTHONPATH | rev | cut -d/ -f1-2 | rev) == "python3.10/" ]]; then 
+#         PYTHONPATH="/amir_bin/:/usr/bin/python3"
+#         PYTHONPATH="$PYTHONPATH:/usr/lib/python3.10/:/usr/lib/python3.9/"
+#     else
+#         PYTHONPATH="/amir_bin/:/usr/bin/python3"
+#         PYTHONPATH="$PYTHONPATH:/usr/lib/python3.9/:/usr/lib/python3.10/"
+#     fi
+#     export PYTHONPATH=$PYTHONPATH
+# }
 
 
 declare -f timer
