@@ -157,7 +157,7 @@ for node in r:
 		for e,i in enumerate(node):
 			d = f'$(du -sh "{i}")'
 			if substring_is_provided:
-				com = f"""echo "{e}- {d}" | egrep --color \|{provided_substring} """
+				com = f"""echo "{e}- {d}" | egrep --color \|'{provided_substring}' """
 			else:
 				com = f"""echo "{e}- {d}" """
 
