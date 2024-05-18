@@ -521,8 +521,13 @@ _data_file_read(){
 
 
 declare -f data_read_clipboard
-data_read_clipboard() {    
-    python_code="import pandas as pd; df = pd.read_clipboard()"
+data_read_clipboard() {
+    read -p "Do you want to set header=None? [yes|no] " response
+    if [[ $response == "yes" ]]; then
+        python_code="import pandas as pd; df = pd.read_clipboard(header=None)"
+    else
+        python_code="import pandas as pd; df = pd.read_clipboard()"
+    fi   
     echo "$python_code" > /tmp/python_code
     echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
     ipython3 -i  /tmp/python_code
