@@ -147,13 +147,13 @@ DELTE_IT = []
 
 for_delete_size = 0
 delete_items_qty = 0
-
+unique_delete_items_qty = 0
 for node in r:
 	try:
 		node = sorted(node)
 		print("\n<<  ==========================================  >>")
 		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
-		print(f"Delete items Qty: {delete_items_qty} (among {df[0].sum()} unique files)\n")
+		print(f"Delete unique items Qty: {unique_delete_items_qty} (among {df[0].sum()} unique files)\n")
 		for e,i in enumerate(node):
 			d = f'$(du -sh "{i}")'
 			if substring_is_provided:
@@ -169,11 +169,12 @@ for node in r:
 				os.system(com)
 			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
 		input_ = input_.replace(" ", "")
+		unique_delete_items_qty += 1
 		if ".." in input_: # range index:
 			try:
 				inp = input_.strip().split("..") # ['3', '9']
 				for input_ in range(int(inp[0]), int(inp[1])+1):
-					delete_items_qty += 1
+					# unique_delete_items_qty += 1
 					func_(str(input_))
 			except:	
 				raise Exception("Wrong input\nExiting ......\n")
@@ -182,14 +183,14 @@ for node in r:
 			try:
 				inp = input_.split(".")
 				for input_ in inp:
-					delete_items_qty += 1
+					# unique_delete_items_qty += 1
 					func_(input_)
 			except:	
 				raise Exception("Wrong input\nExiting ......\n")
 				sys.exit(1)
 		else: # single index
 			try: # single index
-				delete_items_qty += 1
+				# unique_delete_items_qty += 1
 				func_(input_)
 			except: # skip
 				pass
