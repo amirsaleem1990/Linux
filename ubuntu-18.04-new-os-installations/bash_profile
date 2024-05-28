@@ -547,8 +547,12 @@ data_file_show_head(){
 
 declare -f data_file_show_sample
 data_file_show_sample() {
-    read -p "How many rows do you want to be printed? " n_rows
+    # read -p "How many rows do you want to be printed? " n_rows
     _data_file_read "$1"
+    n_rows=$2
+    if [[ -z $n_rows ]]; then
+        n_rows=10
+    fi
     if [[ $? -ne 0 ]]; then
         echo "Failed to save the file as /tmp/data_file.pkl"
         return 1
