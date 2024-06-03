@@ -474,6 +474,7 @@ free_space_on_current_partition(){
 _data_file_read(){
     IFS=$'\n'
     /usr/bin/rm -f /tmp/python_code
+    /usr/bin/rm -f /tmp/data_file.pkl
     file_name=$1
 
     # If no paramter is passed and there is only data file then read it.
