@@ -1,4 +1,7 @@
 #!/usr/bin/bash
 ###!bin/bash
 
-gnome-screenshot -d 0 -f /tmp/test && cat /tmp/test | xclip -i -selection clipboard -target image/png
+# current_date_time=$(date +%D-%T)
+current_date_time=$(date +%d-%b-%Y-%T)
+
+gnome-screenshot -d 0 -f "/tmp/$current_date_time".png && cat "/tmp/$current_date_time".png | xclip -i -selection clipboard -target image/png
