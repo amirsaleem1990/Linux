@@ -1,0 +1,16 @@
+#!/bin/bash
+read -p "Are you really need to stop git_push script?[y|n]: " ans
+if [[ $ans == "y" ]]; then
+	# if [[ `ps aux | grep git_push | grep python3 | wc -l` == 1 ]] ; then
+	# 	pid=`ps aux | grep git_push | grep python3 | sed 's/ \{1,\}/,/g' | cut -d, -f2`
+	# 	kill $pid
+	# 	echo "git_push killed on $pid PID"	
+	# fi
+	pid=`ps aux | grep github-automatic-push-loop.sh | grep bash | sed 's/ \{1,\}/,/g' | cut -d, -f2`
+	if [[ $pid == "" ]] ; then
+		echo -e "Sorry, The <github-automatic-push-loop.sh> script is not running\n"
+	else
+		kill $pid
+		echo "github-automatic-push-loop.sh killed on $pid PID"
+	fi
+fi
