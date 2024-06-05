@@ -38,7 +38,7 @@ else:
 if inp == "1":
 	prompt = f"""Explain the following sentence in five different ways: {prompt}"""
 elif inp == "2":
-	prompt = f"""Rephrase the following sentence in five different ways: {prompt}"""
+	prompt = f"""Rephrase the following sentence/phrase in five different ways: {prompt}"""
 # elif inp == "3":
 # 	prompt = f"""Write me five different cover latters for the following Upwork's project: {prompt}"""
 elif inp == "4":
@@ -83,6 +83,7 @@ print(f"\nThe query is copied to clipboard...")
 # os.system("firefox 'https://chat.openai.com/c/7269cd67-962b-4be2-99c6-cefe28041c95'")
 # os.system("firefox 'https://chat.openai.com/?model=text-davinci-002-render-sha'")
 os.system("firefox https://chat.openai.com")
+# os.system("firefox https://gemini.google.com")
 
 exit()
 # Set the maximum number of tokens to generate in the response
