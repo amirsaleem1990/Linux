@@ -2,6 +2,7 @@
 
 import amir_analysis_functions
 import datetime
+import time
 
 def daily_computer_time(DELAY_MINUTES):
 	conn = amir_analysis_functions.connect_to_my_db()
@@ -19,5 +20,6 @@ def daily_computer_time(DELAY_MINUTES):
 
 DELAY_MINUTES=3
 while True:
+	print("-")
 	daily_computer_time(DELAY_MINUTES)
 	time.sleep(DELAY_MINUTES)
