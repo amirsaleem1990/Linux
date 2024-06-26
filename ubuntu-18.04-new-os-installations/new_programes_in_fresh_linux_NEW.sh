@@ -10,7 +10,7 @@ chown amir.amir /home/amir/.local/share/Trash/files -R
 echo -e "\n\nRedirected to /home/amir/results.txT\n\n"
 func_(){
 	echo -e "\n\n>>>>>>>>>>>>>>>>>>>>>>>> Start: $1\n\n"
-	eval $1 >> /home/amir/results.txT
+	eval $1 #>> /home/amir/results.txT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< !!!!!!!!!
 	if [[ $? -ne 0 ]]; then 
 		echo "FAIL: $1"
 		exit
@@ -38,7 +38,6 @@ fi
 
 func_ "apt install -y ddcutil"
 func_ "apt install -y virtualbox-qt"
-func_ "apt install -y screen"
 func_ "apt install -y rdfind"
 func_ "apt install -y xclip"
 func_ "apt install -y dos2unix"
@@ -117,11 +116,11 @@ func_ "apt install -y libharfbuzz-dev"
 func_ "apt install -y libclang-dev"
 func_ "apt install -y libpq5"
 func_ "apt install -y sox"
-func_ "install gnome-shell-extensions"
-func_ "install gnome-tweaks"
-func_ "install wmctrl"
+func_ "apt install -y gnome-shell-extensions"
+func_ "apt install -y gnome-tweaks"
+func_ "apt install -y wmctrl"
 
-
+func_ "snap install slack"
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
@@ -201,7 +200,7 @@ func_ "pip3 install statsmodels"
 
 #func_ "snap install dbeaver-ce"
 func_ "wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
-func_ "apt install ./dbeaver-ce_latest_amd64.deb"
+func_ "apt install -y ./dbeaver-ce_latest_amd64.deb"
 
 
 # rstudio
@@ -233,10 +232,10 @@ if [[ $? -ne 0 ]]; then
 fi
 
 
-echo -e "\n\n"
-echo "Please set <nomacs> as default app as image viewer. and then entery any key ......"
-gnome-control-center default-apps
-read ans
+# echo -e "\n\n"
+# echo "Please set <nomacs> as default app as image viewer. and then entery any key ......"
+# gnome-control-center default-apps
+# read ans
 
 
 # keyboad light ka time 2m seconds kar dya h, by default is ka time 1m hota h
