@@ -5,4 +5,4 @@
 current_date_time=$(date +%d-%b-%Y-%T)
 
 # gnome-screenshot -wcf /tmp/test && cat /tmp/test | xclip -i -selection clipboard -target image/png
-gnome-screenshot -w -f "/tmp/$current_date_time".png && xclip -selection clipboard -t image/png -i "/tmp/$current_date_time".png
+gnome-screenshot -wcf "/tmp/$current_date_time".png && xclip -selection clipboard -t image/png -i "/tmp/$current_date_time".png
