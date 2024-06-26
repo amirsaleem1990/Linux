@@ -500,17 +500,25 @@ _data_file_read(){
 
 
     if [[ $file_name == *.csv ]]; then
-        x="import pandas as pd; pd.read_csv('"$file_name"').to_pickle('/tmp/data_file.pkl')"
-    else
-        if [[ $file_name == *.pkl ]]; then
-            x="import pandas as pd; pd.read_pickle('"$file_name"').to_pickle('/tmp/data_file.pkl')"
-        else
-            if [[ $file_name == *.xlsx ]]; then
-                x="import pandas as pd; pd.read_excel('"$file_name"').to_pickle('/tmp/data_file.pkl')"
-            fi
-        fi
+        echo "
+        import pandas as pd
+        try: pd.read_csv('$file_name').to_pickle('/tmp/data_file.pkl')
+        except: pd.read_csv('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+        " | ipython3 > /dev/null
+    elif [[ $file_name == *.pkl ]]; then
+        echo "
+        import pandas as pd
+        try: pd.read_pickle('$file_name').to_pickle('/tmp/data_file.pkl')
+        except: pd.read_pickle('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+        " | ipython3 > /dev/null
+    elif [[ $file_name == *.xlsx ]]; then
+        echo "
+        import pandas as pd
+        try: pd.read_excel('$file_name').to_pickle('/tmp/data_file.pkl')
+        except: pd.read_excel('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+        " | ipython3 > /dev/null
     fi
-    echo "$x" | python3
+
     if [[ $? -eq 0 ]]; then 
         echo ">>>>>>>>> Saved the file successfully as /tmp/data_file.pkl"
     else
@@ -533,6 +541,28 @@ data_read_clipboard() {
     echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
     ipython3 -i  /tmp/python_code
 }
+
+
+declare -f data_file_make_a_sample
+data_file_make_a_sample() {
+    data_file_name="$1"
+    _data_file_read "$data_file_name"
+    if [[ $? -ne 0 ]]; then
+        echo -e "\nFailed to save the file as /tmp/data_file.pkl"
+        return 1
+    fi
+    total_rows_in_the_file=$(python3 <<< 'import pandas as pd; print(pd.read_pickle("/tmp/data_file.pkl").shape[0])')
+    n_rows=$2
+    if [[ -z $n_rows ]]; then
+        echo 
+        read -p "How many rows (out of $total_rows_in_the_file total rows) do you want to sample? " n_rows
+    fi
+    
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_csv('SAMPLE.csv', index=False))"
+    echo "$x" | python3 -c "$x"
+}
+
+
 
 
 declare -f data_file_show_head
