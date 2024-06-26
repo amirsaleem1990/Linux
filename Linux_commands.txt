@@ -2184,3 +2184,5 @@ file=abcdflkjadf.png; echo  abcdflkjadf.pdf
 
 # Linux kernel version ...... uname -r
 
+# Create windows bootable flash usb drive from ubuntu ..... ventoy
+
