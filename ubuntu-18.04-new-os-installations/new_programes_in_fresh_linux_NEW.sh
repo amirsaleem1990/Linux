@@ -69,7 +69,7 @@ func_ "apt install -y software-properties-common"
 func_ "apt install -y jupyter-core"
 func_ "apt install -y adb"
 func_ "apt install -y imagemagick-6.q16hdri"
-func_ "apt install -y python3-virtualenv"
+# func_ "apt install -y python3-virtualenv"
 func_ "apt install -y unrar"
 func_ "apt install -y unrar-free"
 func_ "apt install -y dolphin"
@@ -147,17 +147,18 @@ func_ "snap install code --classic"
 # fi
 # rm -r dukto*.deb
 
-apt install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
-if [[ $? -ne 0 ]]; then 
-	func_ "apt install r-cran-littler -y"
-fi
 
-if [[ $? -ne 0 ]]; then 
-	read -p "Install R manually, and then pres any key: "; 
-	firefox https://cloud.r-project.org/
-fi
+# apt install -y r-base r-base-dev libatlas3-base libopenblas-base  >> /home/amir/results.txT
+# if [[ $? -ne 0 ]]; then 
+# 	func_ "apt install r-cran-littler -y"
+# fi
 
-func_ "R CMD javareconf"
+# if [[ $? -ne 0 ]]; then 
+# 	read -p "Install R manually, and then pres any key: "; 
+# 	firefox https://cloud.r-project.org/
+# fi
+
+# func_ "R CMD javareconf"
 # func_ "wget https://raw.githubusercontent.com/amirsaleem1990/Linux/master/ubuntu-18.04-new-os-installations/r_essential_packages.R"
 # func_ "Rscript r_essential_packages.R"
 func_ "pip3 install jupyterlab"
@@ -170,7 +171,7 @@ func_ "pip3 install lxml"
 func_ "pip3 install selenium"
 func_ "pip3 install tabulate"
 func_ "pip3 install pandas"
-# func_ "pip3 install sklearn "
+# # func_ "pip3 install sklearn "
 func_ "pip3 install -U scikit-learn"
 func_ "pip3 install pandas_profiling "
 func_ "pip3 install clipboard "
@@ -188,8 +189,8 @@ func_ "pip3 install django-browser-reload"
 func_ "pip3 install faker"
 
 
-func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
-func_ "sh get-docker.sh"
+# func_ "curl -fsSL https://get.docker.com -o get-docker.sh"
+# func_ "sh get-docker.sh"
 
 func_ "ln -s  /home/amir/github/Linux/bin/functional/ /amir_bin"
 
@@ -203,33 +204,33 @@ func_ "wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
 func_ "apt install -y ./dbeaver-ce_latest_amd64.deb"
 
 
-# rstudio
-latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
+# # rstudio
+# latest_rstudio_version=`python3 <<< "from bs4 import BeautifulSoup; import requests; print(BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml').find('h3', {'id' : 'download'}).text.strip('RStudio Desktop '))"`
 
-echo -e "\nGetting latest rstudio download link  ....,,,,,,,"
-latest_rstudio_download_link=$(python3 <<< "
-from bs4 import BeautifulSoup
-import requests
-soup = BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml') 
-for i in soup.select('a'):
-    try:
-        l = i['href']
-        if l.endswith('.deb') and not '/debian' in l:
-            print(i['href'])
-    except:
-        pass
-")
+# echo -e "\nGetting latest rstudio download link  ....,,,,,,,"
+# latest_rstudio_download_link=$(python3 <<< "
+# from bs4 import BeautifulSoup
+# import requests
+# soup = BeautifulSoup(requests.get('https://www.rstudio.com/products/rstudio/download/#download').text, 'lxml') 
+# for i in soup.select('a'):
+#     try:
+#         l = i['href']
+#         if l.endswith('.deb') and not '/debian' in l:
+#             print(i['href'])
+#     except:
+#         pass
+# ")
 
-echo -e "\nDownload latest rstudio  ....,,,,,,,"
-curl $latest_rstudio_download_link > "rstudio-$latest_rstudio_version.deb"
+# echo -e "\nDownload latest rstudio  ....,,,,,,,"
+# curl $latest_rstudio_download_link > "rstudio-$latest_rstudio_version.deb"
 # func_ "gdebi -n rstudio*.deb"
 
-echo -e "\nInstalling rstudio ....,,,,,,,"
-dpkg -i rstudio*.deb >> /home/amir/results.txT
-if [[ $? -ne 0 ]]; then
-	apt -f install -y
-	func_ "dpkg -i rstudio*.deb"
-fi
+# echo -e "\nInstalling rstudio ....,,,,,,,"
+# dpkg -i rstudio*.deb >> /home/amir/results.txT
+# if [[ $? -ne 0 ]]; then
+# 	apt -f install -y
+# 	func_ "dpkg -i rstudio*.deb"
+# fi
 
 
 # echo -e "\n\n"
@@ -241,12 +242,14 @@ fi
 # keyboad light ka time 2m seconds kar dya h, by default is ka time 1m hota h
 echo 2m > /sys/devices/platform/dell-laptop/leds/dell\:\:kbd_backlight/stop_timeout
 
-func_ "echo 100 > `locate kbd_backlight`"
-
+x=$(locate kbd_backlight | wc -l)
+if [[ $x -gt 0 ]]; then
+	func_ "echo 100 > `locate kbd_backlight`"
+fi
 echo "Apply this <'/home/amir/github/Linux/ubuntu-18.04-new-os-installations/Mount\ drive\ in\ linux\ and\ set\ auto-mount\ at\ boot\ -\ Tech\ Knowledge\ Base\ -\ jaytaala.com\ Confluence\ \(8_17_2021\ 1_41_49\ PM\).html'>"
 
 
-echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --append /etc/crontab 
+# echo -e "\n25 18   * * *   root    /amir_bin/lfd_off_notification" | tee --append /etc/crontab 
 # Remember about the (-a/--append) flag! Just tee works like > and will overwrite your file. tee -a works like >> and will write at the end of the file.
 
 
