@@ -56,7 +56,7 @@ draw = ImageDraw.Draw(img)
 font = ImageFont.truetype('FreeMono.ttf', 40)
 
 
-df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_2.csv", dtype={"Month" : "object", "Date" : "object"})
+df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_Islamabad.csv", dtype={"Month" : "object", "Date" : "object"})
 df.drop("Asr_1", axis=1, inplace=True)
 df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
 
