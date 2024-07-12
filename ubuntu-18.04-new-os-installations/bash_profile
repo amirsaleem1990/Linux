@@ -45,7 +45,7 @@ alias g='read a; firefox google.com/search?q="$a"; sleep 2; exit'
 alias grep='grep --color=auto'
 alias h1-zong='nmcli d w c H1-Zong password wifi@lfd'
 alias hotspot='nmcli device wifi hotspot con-name Amir-hotspot ssid Amir-hotspot band bg password password123'
-alias i='ipython3'
+# alias i='ipython3'
 alias jazz='nmcli d w c Jazz-LTE-438A password 34969900'
 alias jazz_3='nmcli d w c Jazz-LTE-33ED password 78384606'
 alias jl='jupyter-lab'
@@ -498,26 +498,27 @@ _data_file_read(){
         fi
     fi
 
-
-    if [[ $file_name == *.csv ]]; then
-        echo "
-        import pandas as pd
-        try: pd.read_csv('$file_name').to_pickle('/tmp/data_file.pkl')
-        except: pd.read_csv('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-        " | ipython3 > /dev/null
-    elif [[ $file_name == *.pkl ]]; then
-        echo "
-        import pandas as pd
-        try: pd.read_pickle('$file_name').to_pickle('/tmp/data_file.pkl')
-        except: pd.read_pickle('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-        " | ipython3 > /dev/null
-    elif [[ $file_name == *.xlsx ]]; then
-        echo "
-        import pandas as pd
-        try: pd.read_excel('$file_name').to_pickle('/tmp/data_file.pkl')
-        except: pd.read_excel('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-        " | ipython3 > /dev/null
-    fi
+    /amir_bin/save_input_file_as_data_file.pkl.py "$file_name"
+    
+    # if [[ $file_name == *.csv ]]; then
+    #     echo "
+    #     import pandas as pd
+    #     try: pd.read_csv('$file_name').to_pickle('/tmp/data_file.pkl')
+    #     except: pd.read_csv('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+    #     " | ipython3 > /dev/null
+    # elif [[ $file_name == *.pkl ]]; then
+    #     echo "
+    #     import pandas as pd
+    #     try: pd.read_pickle('$file_name').to_pickle('/tmp/data_file.pkl')
+    #     except: pd.read_pickle('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+    #     " | ipython3 > /dev/null
+    # elif [[ $file_name == *.xlsx ]]; then
+    #     echo "
+    #     import pandas as pd
+    #     try: pd.read_excel('$file_name').to_pickle('/tmp/data_file.pkl')
+    #     except: pd.read_excel('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+    #     " | ipython3 > /dev/null
+    # fi
 
     if [[ $? -eq 0 ]]; then 
         echo ">>>>>>>>> Saved the file successfully as /tmp/data_file.pkl"
@@ -659,6 +660,8 @@ pickle_show_content() {
 # amir
 declare -f data_file_read_dataframe_and_go_in_inpython
 data_file_read_dataframe_and_go_in_inpython() {
+    file_size_in_mb=$(du -sh $1 -BM)
+    echo -e "\n\n$file_size_in_mb $1\n\n"
     _data_file_read "$1"
     if [[ $? -ne 0 ]]; then
         echo "Failed to save the file as /tmp/data_file.pkl"
@@ -1216,6 +1219,12 @@ timer() {
 }
 
 
+declare -f i
+i() {
+    python_code="import pandas as pd; import numpy as np";
+    echo "$python_code" > /tmp/python_code;
+    ipython3 -i /tmp/python_code
+}
 
 
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
