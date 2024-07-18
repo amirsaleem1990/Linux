@@ -647,7 +647,7 @@ data_file_show_nrows() {
         return 1
     fi
     
-    x="import pandas as pd; pd.read_pickle('/tmp/data_file.pkl').shape[0])"
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape[0])"
     echo "$x" | python3
 }
 
