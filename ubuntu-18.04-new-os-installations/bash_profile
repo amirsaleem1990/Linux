@@ -106,6 +106,8 @@ PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
 PATH="$PATH:/usr/bin/python3"
 PATH="$PATH:/home/amir/github/Amir-personal"
+
+
 # bind '"\C-p": "\C-e\C-u xclip -sel cli <<"EOF"\n\C-y\nEOF\n\C-y"'
 
 # commit <HISTSIZE> in .bashrc
@@ -1228,6 +1230,7 @@ i() {
 
 
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
+# PYTHONPATH="$PYTHONPATH:/home/amir/.local/lib/python3.10/site-packages"
 export PYTHONPATH=$PYTHONPATH
 
 
