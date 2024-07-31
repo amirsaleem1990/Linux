@@ -56,8 +56,12 @@ draw = ImageDraw.Draw(img)
 font = ImageFont.truetype('FreeMono.ttf', 40)
 
 
-df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_Islamabad.csv", dtype={"Month" : "object", "Date" : "object"})
-df.drop("Asr_1", axis=1, inplace=True)
+# Namaz_Islamabad_full_year.csv: https://aladhan.com/calendar/Islamabad/Pakistan#
+
+# df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_Islamabad.csv", dtype={"Month" : "object", "Date" : "object"})
+df = pd.read_csv(f"/home/{getpass.getuser()}/github/working/Namaz-times/Namaz_Islamabad_full_year.csv", dtype={"Month" : "object", "Date" : "object"})
+
+# df.drop("Asr_1", axis=1, inplace=True)
 df.columns = ['Month', 'Date', 'Fajar', 'Tulu_aaftab', 'Zuhar', 'Asr', 'Magrib', 'Isha']
 
 d = str(datetime.now()).split()[0][5:].split("-")
