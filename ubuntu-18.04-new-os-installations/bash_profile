@@ -166,7 +166,12 @@ rdfind(){
             echo -e "\nSorry, There is only $free_space_in_current_directory MB left in current partition\nExitting ........\n\n"
             return 1
         fi 
-        /usr/bin/rdfind .
+        read -p "Do you want to consier more directories beyond the CWD? if so please provdie them: " more_directories
+        if [[ -z "$more_directories" ]]; then 
+            /usr/bin/rdfind .
+        else 
+            /usr/bin/rdfind "$more_directories"
+        fi
         if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
             rm -f results.txt
             echo -e "${RED}\n\nNo duplicate file\n\n${NORMAL}"
