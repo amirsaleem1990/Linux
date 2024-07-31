@@ -1,8 +1,71 @@
 #!/bin/bash
 
 file_=/tmp/internet_download_summary
+full_file_=/tmp/internet_download_summary_full
+/usr/bin/rm -f $file_ $full_file_ 2>/dev/null
 
 recursive=false
+
+control_c() {
+	echo -e "\n\n-------------- EXITING ------------------\n"
+	python3 <<< '
+# import matplotlib.pyplot as plt
+# import pandas as pd
+# df = pd.read_csv("/tmp/internet_download_summary_full")
+# x = pd.to_datetime(df.Time)
+# print(f"\n\nTotal time consumed: {str(x.iloc[-1] - x.iloc[0])}\n\n")
+# df.set_index("Time").TotalIncrement.plot(kind="line", marker="o")
+# plt.title("Total download over time")
+# plt.ylabel("Download")
+# plt.show()
+
+
+# mask = df.IncremenalSize.ge(0)
+# df.loc[mask].set_index("Time").IncremenalSize.plot(kind="line", figsize=(20,8), grid=True)
+# plt.axhline(df.loc[mask].IncremenalSize.mean(), color="red")
+# plt.legend(["IncremenalSize", "Average IncremenalSize"])
+
+# plt.xlabel("Time")
+# plt.ylabel("IncremenalSize")
+# plt.title("IncremenalSize Over Time")
+# plt.show()
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+import pandas as pd
+
+# Read the data
+df = pd.read_csv("/tmp/internet_download_summary_full")
+
+# Convert the Time column to datetime
+x = pd.to_datetime(df.Time)
+print(f"\n\nTotal time consumed: {str(x.iloc[-1] - x.iloc[0])}\n\n")
+
+# Create a PDF document
+with PdfPages("/tmp/plots.pdf") as pdf:
+    # Plot 1: Total download over time
+    plt.figure()
+    df.set_index("Time").TotalIncrement.plot(kind="line", marker="o")
+    plt.title("Total download over time")
+    plt.ylabel("Download")
+    pdf.savefig()  # saves the current figure into a pdf page
+    plt.close()    # close the figure to prevent it from displaying
+    
+    # Plot 2: Incremental size over time
+    mask = df.IncremenalSize.ge(0)
+    plt.figure(figsize=(20, 8))
+    df.loc[mask].set_index("Time").IncremenalSize.plot(kind="line", grid=True)
+    plt.axhline(df.loc[mask].IncremenalSize.mean(), color="red")
+    plt.legend(["IncremenalSize", "Average IncremenalSize"])
+    plt.xlabel("Time")
+    plt.ylabel("IncremenalSize")
+    plt.title("IncremenalSize Over Time")
+    pdf.savefig()  # saves the current figure into a pdf page
+    plt.close()    # close the figure to prevent it from displaying
+	'
+	evince /tmp/plots.pdf 
+	exit 
+}
 
 while [ $# -gt 0 ]; do
 	case "$1" in
@@ -93,6 +156,11 @@ else
 fi
 total_increment=0
 c=0
+
+echo "Time,IncremenalSize,TotalIncrement,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty,AvailibleDisk" > $full_file_
+
+trap control_c SIGINT
+
 while :; do
 	current=`du -shL -BM | sed 's/M..//g'`
 	if [[ $? != 0 ]]; then
@@ -122,6 +190,7 @@ while :; do
 	AvailibleDisk=$(df -hP "$current_partition" | sed 's/\ \{1,\}/,/g' | cut -d, -f4 | tail -n1)
 	echo "Time,IncremenalSize,TotalIncrement,FullSize,IncremenalFilesQty,AllFilesQty,.part Qty,AvailibleDisk" > $file_
 	echo "$date,$incremental,$total_increment,$SUM,$IncremenalFilesQty,$after_files,$part_Qty,$AvailibleDisk" >> $file_
+	echo "$date,$incremental,$total_increment,$SUM,$IncremenalFilesQty,$after_files,$part_Qty,$AvailibleDisk" >> $full_file_
 
 	let "c++"
 	if [[ $c == 1 ]]; then
@@ -134,5 +203,3 @@ while :; do
 	fi
 	sleep $sleep_time
 done
-
-rm -f $file_
