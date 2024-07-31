@@ -114,7 +114,11 @@ if x in ['1', '2']:
 					    if x:
 					        return g.name
 					    return None
-					df = df[df[3].isin(df.groupby(3).apply(func).dropna().to_list())]
+					x_ = df.groupby(3).apply(func).dropna()
+					if x_.empty:
+						import sys
+						sys.exit()
+					df = df[df[3].isin(x_.to_list())]
 					files_to_remove = df[1][df[1].str.contains(provided_substring)].to_list()
 					size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
 					import amir_analysis_functions
@@ -141,6 +145,19 @@ if x in ['1', '2']:
 df.to_csv('/home/amir/._df_1.csv', index=False)
 input("The df is saved as /home/amir/._df_1.csv\nPleas enter any key to proceed: ")
 
+print("\n")
+print(df[3].value_counts().value_counts().sort_index().to_markdown())
+print("\n")
+
+
+copies_count = input("Do you want some specific count, e.g: only where the file have exeactly two more copies? [ Provide a number or press Enter to skip ] ")
+if copies_count != '':
+	copies_count = int(copies_count)
+	# copies_count = int(input("Enter then desired number: "))
+	df = df[df[3].isin(df.groupby(3).size().loc[lambda x: x==copies_count].index.to_list())]
+	if df.empty:
+		print("The number is not found")
+		exit()
 r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1][1].to_list() for i in r]
 DELTE_IT = []
@@ -173,6 +190,13 @@ for node in r:
 		if ".." in input_: # range index:
 			try:
 				inp = input_.strip().split("..") # ['3', '9']
+				if (int(inp[-1]) - int(inp[0]) + 1) == len(node):
+					print(colored("\n\nYou are going to remove all the following files:", 'red'))
+					print(*node, sep="\n")
+					print(colored("\nAre you sure? [Yes | No] ", 'red'))
+					user_input_ = input()
+					if user_input_.lower() != 'yes':
+						continue
 				for input_ in range(int(inp[0]), int(inp[1])+1):
 					# unique_delete_items_qty += 1
 					func_(str(input_))
@@ -182,6 +206,14 @@ for node in r:
 		elif "." in input_: # multi index
 			try:
 				inp = input_.split(".")
+				if len(node) == 2:
+					print(colored("\n\nYou are going to remove all the following files:", 'red'))
+					print(*node, sep="\n")
+					print(colored("\nAre you sure? [Yes | No] ", 'red'))
+
+					user_input_ = input()
+					if user_input_.lower() != 'yes':
+						continue
 				for input_ in inp:
 					# unique_delete_items_qty += 1
 					func_(input_)
