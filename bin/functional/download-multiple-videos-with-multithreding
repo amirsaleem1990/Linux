@@ -17,7 +17,7 @@ def download(url):
 		if low_quality:
 			subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
 		else:
-			subprocess.check_call(['youtube-dl', '--no-playlist', url])
+			subprocess.check_call(['youtube-dl', '-f', 'best', '--no-playlist', url])
 		open("downloaded.txt", "a").write(url+"\n")
 	except:
 		e_ = traceback.format_exc()
@@ -167,6 +167,10 @@ urls_to_download = get_urls_to_download(exclude)
 x = get_incompleted_videos_urls(urls_file_name)
 if not x is None:
 	urls_to_download = x
+
+keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ")
+if keyword:
+	urls_to_download = [i for i in urls_to_download if keyword in i]
 
 main_func()
 
