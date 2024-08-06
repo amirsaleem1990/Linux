@@ -12,6 +12,8 @@ def get_user_input(prompt_text):
 
 source_dir = get_user_input("Enter absolute path for source dir: ")
 dest_parent_dir = get_user_input("Enter absolute path for parent destination dir: ")
+# source_dir = "/home/amir/Data_2/320GB/MultiMedia/PICS/Camera/________FAMILY/_________________MY FAMILY/_____TOOO_MOVEEEEEEEEEEEEEEE/"
+# dest_parent_dir="/home/amir/Data_2/320GB/MultiMedia/PICS/Camera/________FAMILY/_________________MY FAMILY/"
 
 
 # source_dir = "."
@@ -55,7 +57,7 @@ if user_inp == "1":
 	fig, ax = plt.subplots(figsize=(8, 6))
 
 	# Adjust the figure position for the right half of the screen
-	fig.canvas.manager.window.move(1000, 0)  # Move the window to the desired position on the screen
+	# fig.canvas.manager.window.move(1000, 0)  # Move the window to the desired position on the screen
 
 	valid_labels = list(map(str, range(len(dirs)))) + ["", "r"]
 
