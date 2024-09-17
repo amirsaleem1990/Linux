@@ -541,9 +541,21 @@ declare -f data_read_clipboard
 data_read_clipboard() {
     read -p "Do you want to set header=None? [yes|no] " response
     if [[ $response == "yes" ]]; then
-        python_code="import pandas as pd; df = pd.read_clipboard(header=None)"
+        python_code="
+import pandas as pd
+df = pd.read_clipboard(header=None)
+if df.shape[1] == 1:
+    x = df[0]
+    del df
+"
     else
-        python_code="import pandas as pd; df = pd.read_clipboard()"
+        python_code="
+import pandas as pd
+df = pd.read_clipboard()
+if df.shape[1] == 1:
+    x = df[0]
+    del df
+"
     fi   
     echo "$python_code" > /tmp/python_code
     echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
@@ -566,7 +578,7 @@ data_file_make_a_sample() {
         read -p "How many rows (out of $total_rows_in_the_file total rows) do you want to sample? " n_rows
     fi
     
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_csv('SAMPLE.csv', index=False))"
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample(int($n_rows)).to_csv('SAMPLE.csv', index=False))"
     echo "$x" | python3 -c "$x"
 }
 
@@ -597,7 +609,7 @@ data_file_show_sample() {
         return 1
     fi
     
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_string(index=False))"
+    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_markdown(index=False))"
     echo "$x" | python3 -c "$x"
 }
 
@@ -641,6 +653,19 @@ if isinstance(f, pd.DataFrame):
     print()
     print('Head :')
     print(f.head().to_string())
+    # print('Info')
+    # print(f.info())
+    # print('Memory Usage (MB):')
+    # print(f.memory_usage(deep=True))
+    print()
+    print(f.memory_usage(deep=True).div(1000_000).rename('Size (MB)').rename_axis('Col').reset_index().merge(f.dtypes.rename('Type').rename_axis('Col').reset_index()).merge(f.nunique().rename_axis('Col').rename('Nunique').reset_index()).sort_values('Size (MB)').to_markdown(index=False))
+    print('\n\n')
+    nans = f.isna().sum().rename('NaNs Count').to_frame().merge((f.isna().mean()*100).rename('Average NaNs').to_frame(), right_index=True, left_index=True).loc[lambda x: x['NaNs Count'] > 0]
+    if nans.empty:
+        print('\nNo NaNs\n\n')
+    else:
+        print(nans.to_markdown())
+        print('\n\n')
 print('################################################')
 "
 echo "$x" | python3
