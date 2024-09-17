@@ -82,9 +82,9 @@ clipboard.copy(prompt)
 print(f"\nThe query is copied to clipboard...")
 # os.system("firefox 'https://chat.openai.com/c/7269cd67-962b-4be2-99c6-cefe28041c95'")
 # os.system("firefox 'https://chat.openai.com/?model=text-davinci-002-render-sha'")
-os.system("firefox https://chat.openai.com")
+# os.system("firefox https://chat.openai.com")
 # os.system("firefox https://gemini.google.com")
-
+os.system("firefox https://gemini.google.com/u/3/app/0130413d266c6566")
 exit()
 # Set the maximum number of tokens to generate in the response
 max_tokens = 2024
