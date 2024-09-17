@@ -1,5 +1,6 @@
 #!/usr/bin/ipython3
 
+
 """
 <rdinfd> Linux me duplicate files find karny ka package h, is ki command ye h (rdfind .), is command sy 1 file <results.txt> ganerate hoti h, jis me sari duplicated files k names or some info hoti h
 
