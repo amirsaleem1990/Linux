@@ -44,8 +44,7 @@ x = list(zip(
 			)
 		)
 
-
-df = DataFrame(x)
+df = DataFrame(x, columns=['DUPTYPE_FIRST_OCCURRENCE', 'Path'])
 
 def GET_SIZE(x):
 	try:
@@ -66,32 +65,32 @@ def func_(val):
 
 #sys.exit()
 
-df['size_KB'] = df[1].apply(GET_SIZE)
-print(f"\n\nThere are {len(df)} files, among them {df[0].sum()} are unique")
-print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df[0].eq(True)].size_KB.sum()} bytes\n\n")
+df['size_KB'] = df['Path'].apply(GET_SIZE)
+print(f"\n\nThere are {len(df)} files, among them {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} are unique")
+print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].size_KB.sum()} bytes\n\n")
 
-df[3] = None
-df.iloc[df[df[0].eq(True)].index.to_list(), 3] = list(range(df[0].eq(True).sum()))
-df[3] = df[3].fillna(method='ffill')
+df['node'] = None
+df.iloc[df[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].index.to_list(), 3] = list(range(df['DUPTYPE_FIRST_OCCURRENCE'].eq(True).sum()))
+df['node'] = df['node'].fillna(method='ffill')
 
 print("\n\n############# Extenstions Distribution #############\n")
-df[4] = df[1].str.split("/").str[-1].str.split(".").str[-1]
+df['extention'] = df['Path'].str.split("/").str[-1].str.split(".").str[-1]
 
 df = df[df.size_KB.notna()]
-df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
 
-m_1 = df.groupby(4).agg({"size_KB" : sum}).div(1024).astype(int).reset_index().rename(columns={4: "Extention", 	'size_KB' : 'Total size (MB)'}).sort_values("Total size (MB)", ascending=False).reset_index(drop=True)
+m_1 = df.groupby('extention').agg({"size_KB" : sum}).div(1024).astype(int).reset_index().rename(columns={'extention': "Extention", 	'size_KB' : 'Total size (MB)'}).sort_values("Total size (MB)", ascending=False).reset_index(drop=True)
 
-count_ = df[1].str.split("/").str[-1].str.split(".").str[-1].value_counts()
+count_ = df['Path'].str.split("/").str[-1].str.split(".").str[-1].value_counts()
 
 m_2 = count_.rename_axis("index").rename(1).reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
 m = m_1.merge(m_2, on="Extention", how='outer')
 print(m.to_string())
 ans_ = input("\nChoose extantin(s)\nIf 1+ extenstions saperate them by pipe '|', eg(pdf|html|txt)\nFor choose all extantions press Enter\n")
 if ans_.strip() != '':
-	df = df[df[4].isin(ans_.split("|"))]
-	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+	df = df[df['extention'].isin(ans_.split("|"))]
+	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
 
 x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
@@ -102,34 +101,34 @@ if x in ['1', '2']:
 	a = input("\nEnter substring, if multiple strings saperate them by | :\n")
 	provided_substring = a
 	if x == '1':
-		#df = df[df[1].str.contains(a)]
-		df = df[df[3].isin(list(df[df[1].str.contains(a)][3].unique()))]
+		#df = df[df['Path'].str.contains(a)]
+		df = df[df['node'].isin(list(df[df['Path'].str.contains(a)]['node'].unique()))]
 
 		if provided_substring.count("|") == 0:
 			remove_inp = input(f"Do you want to remove all occurence of `{provided_substring}` if there is any other file available? [yes|no] ")
 			if remove_inp == "yes":
-				if input("Are you sure? [yes|no] ") == "yes":					
+				if input("Are you sure? [yes|no] ") == "yes":
 					def func(g):
-					    x = g[1].str.contains(provided_substring).mean() != 1
+					    x = g['Path'].str.contains(provided_substring).mean() != 1
 					    if x:
 					        return g.name
 					    return None
-					x_ = df.groupby(3).apply(func).dropna()
+					x_ = df.groupby('node').apply(func).dropna()
 					if x_.empty:
 						import sys
 						sys.exit()
-					df = df[df[3].isin(x_.to_list())]
-					files_to_remove = df[1][df[1].str.contains(provided_substring)].to_list()
+					df = df[df['node'].isin(x_.to_list())]
+					files_to_remove = df['Path'][df['Path'].str.contains(provided_substring)].to_list()
 					size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
 					import amir_analysis_functions
 					size_can_be_reduced = amir_analysis_functions.convert_units(from_unit="by", value=size_bytes, rounded_to=3)
 					print()
 					for f_t_r in files_to_remove:
-						sub_df = df[df[3].eq(df[df[1].eq(f_t_r)].iloc[0, 3])]
+						sub_df = df[df['node'].eq(df[df['Path'].eq(f_t_r)].iloc[0, 3])]
 						size_KB = sub_df.iloc[0].loc["size_KB"]
 						print(f"\nSize (KB): {size_KB}")
 						print(colored(f_t_r, "red"))
-						duplicated_files_with_current_file_to_remove = sub_df[1][sub_df[1].ne(f_t_r)].to_list()
+						duplicated_files_with_current_file_to_remove = sub_df['Path'][sub_df['Path'].ne(f_t_r)].to_list()
 						print(*duplicated_files_with_current_file_to_remove, sep="\n")
 					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
 					if input("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ") == "yes":
@@ -138,15 +137,15 @@ if x in ['1', '2']:
 								os.remove(f_t_r)
 							sys.exit(0)
 	elif x == '2':
-		df = df[~df[1].str.contains(a)]
-	df = df[~df[3].isin(df[3].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+		df = df[~df['Path'].str.contains(a)]
+	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
 
 df.to_csv('/home/amir/._df_1.csv', index=False)
 input("The df is saved as /home/amir/._df_1.csv\nPleas enter any key to proceed: ")
 
 print("\n")
-print(df[3].value_counts().value_counts().sort_index().to_markdown())
+print(df['node'].value_counts().value_counts().sort_index().to_markdown())
 print("\n")
 
 
@@ -154,12 +153,12 @@ copies_count = input("Do you want some specific count, e.g: only where the file 
 if copies_count != '':
 	copies_count = int(copies_count)
 	# copies_count = int(input("Enter then desired number: "))
-	df = df[df[3].isin(df.groupby(3).size().loc[lambda x: x==copies_count].index.to_list())]
+	df = df[df['node'].isin(df.groupby('node').size().loc[lambda x: x==copies_count].index.to_list())]
 	if df.empty:
 		print("The number is not found")
 		exit()
-r = sorted(df.groupby(3), key=lambda x:x[1].size_KB.max(), reverse=True)
-r = [i[1][1].to_list() for i in r]
+r = sorted(df.groupby('node'), key=lambda x:x[1].size_KB.max(), reverse=True)
+r = [i[1]['Path'].to_list() for i in r]
 DELTE_IT = []
 
 for_delete_size = 0
@@ -170,7 +169,7 @@ for node in r:
 		node = sorted(node)
 		print("\n<<  ==========================================  >>")
 		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
-		print(f"Delete unique items Qty: {unique_delete_items_qty} (among {df[0].sum()} unique files)\n")
+		print(f"Delete unique items Qty: {unique_delete_items_qty} (among {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} unique files)\n")
 		for e,i in enumerate(node):
 			d = f'$(du -sh "{i}")'
 			if substring_is_provided:
