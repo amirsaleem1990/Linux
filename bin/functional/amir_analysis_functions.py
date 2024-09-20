@@ -816,3 +816,45 @@ def fetch_data_from_google_sheet(json_path,spreadsheet_url, worksheet_id):
     records_data = worksheet.get_all_values()
     df = pd.DataFrame.from_records(records_data)
     return df
+
+
+
+
+
+def turing_google_comparative_analysis_work_for_current_week():
+	import pandas as pd
+	x = pd.to_datetime(
+			pd.read_clipboard(header=None)[0]
+		)
+	x = (
+		x
+		.to_frame("Date")
+		.assign(
+			Day=x.dt.day_name()
+		)
+		.value_counts()
+		.reset_index(
+			name="Count"
+		)
+		.sort_values(
+			by="Date"
+		)
+		.reset_index(
+			drop=True
+		)
+	)
+	x = (
+		x
+		.loc[
+			x
+			.Day.eq("Monday")
+			.loc[lambda x: x==True]
+			.index.max():
+		]
+	)
+
+	x['Count_cumsum'] = x.Count.cumsum()
+	x['Count_cummean'] = x.Count_cumsum/(x.reset_index(drop=True).index+1)
+
+	print(x.to_markdown(index=False))
+	
