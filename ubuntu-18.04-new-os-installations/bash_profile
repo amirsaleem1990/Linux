@@ -1259,9 +1259,22 @@ i() {
 }
 
 
+declare -f turing_google_comparative_analysis_work_for_current_week
+turing_google_comparative_analysis_work_for_current_week() {
+    python3 <<< '
+from amir_analysis_functions import turing_google_comparative_analysis_work_for_current_week
+turing_google_comparative_analysis_work_for_current_week()
+'
+}
+
+
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
 # PYTHONPATH="$PYTHONPATH:/home/amir/.local/lib/python3.10/site-packages"
 export PYTHONPATH=$PYTHONPATH
 
 
 mkdir /tmp/inputs/ 2>/dev/null
+
+
+
+
