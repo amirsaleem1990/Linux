@@ -36,6 +36,7 @@ if [[ $? -ne 0 ]]; then
 	func_ "snap install --classic sublime-text"
 fi
 
+func_ "apt install -y gnome-screensaver" # Version: 3.6.1-13ubuntu1
 func_ "apt install -y ddcutil"
 func_ "apt install -y virtualbox-qt"
 func_ "apt install -y rdfind"
