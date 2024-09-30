@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=lock-screen-after-n-seconds-of-login
+#Exec=/bin/bash -c 'echo true > /home/amir/github/Amir-personal/lock-screen-after-n-seconds-of-login.txt'
+Exec=/amir_bin/shutdown_after_n_seconds_of_login.sh
+Type=Application
+X-GNOME-Autostart-enabled=true
