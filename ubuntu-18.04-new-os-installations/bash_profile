@@ -9,6 +9,17 @@ if [[ $? -eq 0 ]]; then
 fi
 
 
+declare -f is_computer_screen_locked
+is_computer_screen_locked(){
+    python3 <<< 'from amir_analysis_functions import is_computer_locked; print(is_computer_locked())' | tr '[:upper:]' '[:lower:]'
+}
+
+
+declare -f disable_lock_screen_after_n_seconds_of_login
+disable_lock_screen_after_n_seconds_of_login(){
+    echo false > /home/amir/github/Amir-personal/lock-screen-after-n-seconds-of-login.txt
+}
+
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
 # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
@@ -100,6 +111,7 @@ alias external_screen_to_join_display="xrandr --output eDP-1 --auto --pos 0x1080
 alias set_displays_positions="xrandr --output HDMI-1 --auto --pos 0x0 --output DP-1 --auto --pos 1921x0 --output eDP-1 --auto --pos 1000x1100"
 alias camera_record_video="ffmpeg -f v4l2 -video_size 640x480 -i /dev/video0 vidoe_camera_$(date +%Y%m%d_%H%M%S).mp4"
 
+alias VPN="echo nhttps://www.vpnbook.com/; nmcli connection modify vpnbook-ca196-udp25000 +vpn.secrets 'password-file=/home/amir/github/Amir-personal/VPN_password.txt'; nmcli connection up vpnbook-ca196-udp25000"
 
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
@@ -215,10 +227,10 @@ calculator_while_loop(){
     done
 }
 
-declare -f VPN
-VPN(){
-    (yes | naclient login -user  $Kashat_user -password $kashat_password -profile "$kashat_profile" >/dev/null 2>&1)
-}
+# declare -f VPN
+# VPN(){
+#     (yes | naclient login -user  $Kashat_user -password $kashat_password -profile "$kashat_profile" >/dev/null 2>&1)
+# }
 
 declare -f copyto
 copyto(){
@@ -609,7 +621,14 @@ data_file_show_sample() {
         return 1
     fi
     
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample($n_rows).to_markdown(index=False))"
+    x="
+import pandas as pd
+import clipboard
+df = pd.read_pickle('/tmp/data_file.pkl').sample($n_rows)
+clipboard.copy(df.to_markdown(index=False))
+print(df.to_markdown(index=False))
+print('\nThe data sampe copied to the clipboard\n')
+"
     echo "$x" | python3 -c "$x"
 }
 
@@ -636,12 +655,13 @@ pickle_print_type() {
 
 declare -f data_file_show_info
 data_file_show_info() {
-    _data_file_read "$1"
+    file_name="$1"
+    _data_file_read "$file_name"
     if [[ $? -ne 0 ]]; then
         echo "Failed to save the file as /tmp/data_file.pkl"
         return 1
     fi
-    
+
 x="
 import pandas as pd
 f = pd.read_pickle('/tmp/data_file.pkl')
@@ -666,9 +686,17 @@ if isinstance(f, pd.DataFrame):
     else:
         print(nans.to_markdown())
         print('\n\n')
+        print('Rows                     :', f.shape[0])
+        print('Rows after dropping NuLLs:', f.dropna().shape[0])
 print('################################################')
 "
-echo "$x" | python3
+    echo "$x" | python3
+
+    echo 
+
+    du -sh "$file_name" 
+    wc -l "$file_name"
+
 }
 
 declare -f data_file_show_nrows
@@ -1227,7 +1255,7 @@ reset_bashprofile(){
 #     export PYTHONPATH=$PYTHONPATH
 # }
 
-
+declare -f break_work
 declare -f timer
 timer() {
     # echo;
@@ -1247,6 +1275,29 @@ timer() {
         echo -e '\e[11A\e[K'
         toilet -f smmono12 $l
         sleep 1s
+    done
+}
+
+declare -f break_work
+break_work() {
+    if [[ -z $1 ]]; then
+        limit_sec=300 # Default wait time (sec)
+    else
+        limit_sec=$1
+    fi
+
+    # If limit_sec is less than 30 then assume it minutes not seconds.
+    if [[ $limit_sec -le 30 ]]; then
+        limit_sec=$(echo $limit_sec*60|bc -l)
+    fi
+
+    break_started_before_sec=0
+    while true; do
+        sleep 1
+        let "break_started_before_sec+=1"
+        if [[ $break_started_before_sec -gt $limit_sec ]]; then
+            beep
+        fi
     done
 }
 
@@ -1274,7 +1325,3 @@ export PYTHONPATH=$PYTHONPATH
 
 
 mkdir /tmp/inputs/ 2>/dev/null
-
-
-
-
