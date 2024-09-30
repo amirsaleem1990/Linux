@@ -799,24 +799,45 @@ def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[
 
 
 
-def fetch_data_from_google_sheet(json_path,spreadsheet_url, worksheet_id):
-    import json
-    import gspread
-    from google.oauth2 import service_account
-    import pandas as pd
+def fetch_data_from_google_sheet(json_path, worksheet_id, scope):
+	# import json
+	# from google.oauth2 import service_account
+	import pandas as pd
+	import gspread
+	from oauth2client.service_account import ServiceAccountCredentials
 
-    service_account_info = json.loads(open(json_path, 'r').read())
-    credentials = service_account.Credentials.from_service_account_info(service_account_info)
-    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-    creds_with_scope = credentials.with_scopes(scope)
-    client = gspread.authorize(creds_with_scope)
-    spreadsheet = client.open_by_url(spreadsheet_url)
-    # worksheet = spreadsheet.get_worksheet(0)
-    worksheet = spreadsheet.get_worksheet_by_id(worksheet_id)
-    records_data = worksheet.get_all_values()
-    df = pd.DataFrame.from_records(records_data)
-    return df
+	# Add your service account credentials file
+	creds = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
 
+	# Authorize the client
+	client = gspread.authorize(creds)
+
+	# # Open the Google Sheet by its title
+	# spreadsheet = client.open("Sheet1")
+
+	# Open the Google Sheet by its ID
+	spreadsheet = client.open_by_key(worksheet_id)
+
+	# Select the first sheet
+	sheet = spreadsheet.sheet1
+
+	# Get all values from the first sheet
+	data = sheet.get_all_records()
+
+	df = pd.DataFrame(data)
+
+	return df
+
+
+def fetch_last_break_was_before_value_from_time_logging_sheet(json_path, scope, worksheet_id):
+	import gspread
+	from oauth2client.service_account import ServiceAccountCredentials
+	creds = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+	client = gspread.authorize(creds)
+	spreadsheet = client.open_by_key(worksheet_id)
+	sheet = spreadsheet.sheet1  # Use sheet1 or .worksheet('Sheet Name') for specific sheet
+	cell_value = sheet.acell('J2').value
+	return cell_value
 
 
 
@@ -843,6 +864,8 @@ def turing_google_comparative_analysis_work_for_current_week():
 			drop=True
 		)
 	)
+	print(x.to_markdown(index=False))
+	print("\n"*5)
 	x = (
 		x
 		.loc[
