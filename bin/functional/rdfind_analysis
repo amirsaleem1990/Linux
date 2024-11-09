@@ -41,7 +41,8 @@ if not x:
 
 x = list(zip(
 		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
-		[' '.join(i.split()[7:]).replace("./", '') for i in x]
+		# [' '.join(i.split()[7:]).replace("./", '') for i in x]
+		[i[i.index("/")-1:] if i[i.index("/")-1] == '.' else i[i.index("/"):] for i in x]
 			)
 		)
 
@@ -54,8 +55,7 @@ def GET_SIZE(x):
 		try:
 			return os.path.getsize(x.replace("\)", ") "))/1024
 		except:
-			return None
-		return None
+			pass
 
 def func_(val):
 	global for_delete_size
@@ -64,8 +64,6 @@ def func_(val):
 	for_delete_size += os.path.getsize(val)
 	print(f"************ <{val}> added to REMOVE list ************")
 
-#sys.exit()
-
 df['size_KB'] = df['Path'].apply(GET_SIZE)
 print(f"\n\nThere are {len(df)} files, among them {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} are unique")
 print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].size_KB.sum()} bytes\n\n")
@@ -73,6 +71,11 @@ print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is
 df['node'] = None
 df.iloc[df[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].index.to_list(), 3] = list(range(df['DUPTYPE_FIRST_OCCURRENCE'].eq(True).sum()))
 df['node'] = df['node'].fillna(method='ffill')
+
+if df.empty:
+	print("\n\nNo duplicates found.\n\n")
+	sys.exit()
+
 
 print("\n\n############# Extenstions Distribution #############\n")
 df['extention'] = df['Path'].str.split("/").str[-1].str.split(".").str[-1]
