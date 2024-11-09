@@ -9,16 +9,16 @@ if [[ $? -eq 0 ]]; then
 fi
 
 
-declare -f is_computer_screen_locked
-is_computer_screen_locked(){
-    python3 <<< 'from amir_analysis_functions import is_computer_locked; print(is_computer_locked())' | tr '[:upper:]' '[:lower:]'
-}
+# declare -f is_computer_screen_locked
+# is_computer_screen_locked(){
+#     python3 <<< 'from amir_analysis_functions import is_computer_locked; print(is_computer_locked())' | tr '[:upper:]' '[:lower:]'
+# }
 
 
-declare -f disable_lock_screen_after_n_seconds_of_login
-disable_lock_screen_after_n_seconds_of_login(){
-    echo false > /home/amir/github/Amir-personal/lock-screen-after-n-seconds-of-login.txt
-}
+# declare -f disable_lock_screen_after_n_seconds_of_login
+# disable_lock_screen_after_n_seconds_of_login(){
+#     echo false > /home/amir/github/Amir-personal/lock-screen-after-n-seconds-of-login.txt
+# }
 
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 # PS1='\[\e]0;\u@\h: \w\a\]\e[7m\D{%d-%b}|\t\e[27m:\w\$ '
@@ -182,7 +182,7 @@ rdfind(){
         if [[ -z "$more_directories" ]]; then 
             /usr/bin/rdfind .
         else 
-            /usr/bin/rdfind "$more_directories"
+            /usr/bin/rdfind . "$more_directories"
         fi
         if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
             rm -f results.txt
@@ -921,7 +921,8 @@ create_a_swap_file(){
 declare -f record_bluetooth_headphone_audio
 record_bluetooth_headphone_audio(){
     file_name=$(date +%d-%m-%Y_%H\:%M\:%S).wav
-    ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor "$file_name"
+    # ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor "$file_name"
+    ffmpeg -f x11grab -s $(xdpyinfo | grep dimensions | awk '{print $2}') -i :0.0 -f pulse -i bluez_sink.25_13_97_20_DD_0A.a2dp_sink.monitor -c:v libx264 -c:a aac "$file_name"
 }
 
 declare -f record_screen
@@ -1175,6 +1176,9 @@ export -f record_screen
 export -f join_lines_with_space
 export -f extract_portion_of_video_from_long_video
 export -f _data_file_read
+# export -f is_computer_screen_locked
+
+
 
 export RED="\033[0;31m"
 export NORMAL="\033[0m"
@@ -1304,7 +1308,7 @@ break_work() {
 
 declare -f i
 i() {
-    python_code="import pandas as pd; import numpy as np";
+    python_code="import pandas as pd; import numpy as np; import matplotlib.pyplot as plt";
     echo "$python_code" > /tmp/python_code;
     ipython3 -i /tmp/python_code
 }
