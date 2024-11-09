@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=lock-screen-after-n-seconds-of-login
+Exec=bash -c "while true; do /amir_bin/battery; sleep 5m; done"
+Type=Application
+X-GNOME-Autostart-enabled=true
