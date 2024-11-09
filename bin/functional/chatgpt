@@ -85,7 +85,7 @@ print(f"\nThe query is copied to clipboard...")
 # os.system("firefox https://chat.openai.com")
 # os.system("firefox https://gemini.google.com")
 # os.system("firefox https://gemini.google.com/u/3/app/0130413d266c6566")
-os.system("firefox https://chatgpt.com/c/66f5a2ce-5018-8011-9414-d8f44a1ac426")
+os.system("firefox https://chatgpt.com")
 exit()
 # Set the maximum number of tokens to generate in the response
 max_tokens = 2024
