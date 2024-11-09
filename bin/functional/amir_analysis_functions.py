@@ -881,3 +881,24 @@ def turing_google_comparative_analysis_work_for_current_week():
 
 	print(x.to_markdown(index=False))
 	
+
+
+def number_to_column_name_in_excel_sheet(num):
+    """
+    >>> number_to_column(1))
+    A
+    >>> number_to_column(26))
+    Z
+    >>> number_to_column(27))
+    AA
+    >>> number_to_column(52))
+    AZ
+    >>> number_to_column(53))
+    BA
+    """
+    column_name = ''
+    while num > 0:
+        num -= 1
+        column_name = chr(num % 26 + 65) + column_name
+        num //= 26
+    return column_name
