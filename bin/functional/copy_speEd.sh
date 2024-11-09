@@ -4,14 +4,17 @@ if [[ -z $1 ]]; then
 else
 	sleep_secs=$1
 fi
-read -ep "Enter source full path: " source_full_path
-read -p "It the copy process started just now? if no do you want to specify start_time? [yes|no]: " ans
-if [[ $ans == "yes" ]]; then
-	(firefox https://www.epochconverter.com &)
-	read -p "Enter start time in Epoch: " start_time
+read -p "Enter source full path: " source_full_path
+
+read -p "Did the copy process started before some time AND you want to specify the starting time? [y|n] " user_inp
+if [[ "$user_inp" != "y" ]]; then
+	read -p "Provide starting time in the following format: 22-Oct-2024 19:20:59 " starting_time
+	start_time=$(date -d "$starting_time" +"%s")
 else
 	start_time=$(date +%s)
 fi
+
+# (firefox https://www.epochconverter.com &)
 
 size=$(du -s -BM 2>/dev/null | cut -d'M' -f1)
 
