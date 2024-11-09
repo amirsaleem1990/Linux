@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=time_logs_plot_for_today
-Exec=/home/amir/github/Amir-personal/time_logs_plot_for_today.py
-Type=Application
-X-GNOME-Autostart-enabled=true
