@@ -938,7 +938,9 @@ record_screen(){
     # -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
     # "$file_name"
 
-    if [[ $(xrandr --listmonitors | grep x | wc -l) -gt 1 ]]; then
+    if [[ $(xrandr --listmonitors | grep x | wc -l) -eq 1 ]]; then
+        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"        
+    elif [[ $(xrandr --listmonitors | grep x | wc -l) -eq 2 ]]; then
         echo -e "\nWhich screen do you want to record?\n\t1-Upper\n\t2-Lower\n"
         read ans
         if [[ $ans == 1 ]]; then
@@ -948,8 +950,48 @@ record_screen(){
                 ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
             fi
         fi
-    else
-        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen        
+    else # More than two screens
+
+        # Get monitor information dynamically
+        monitor_data=$(xrandr --listmonitors | tail -n +2 | awk '{print ":0.0+" $3}' | sed -E 's:/[0-9]+::g' | sed 's/,/+/g')
+
+        # Assign monitor offsets to variables
+        upper_left="0.0+0,0"
+        upper_right="0.0+1920,0"
+        bottom_middle=$"0.0+946,1080"
+
+        # Display options to the user
+        echo "Choose a screen to record:"
+        echo "1 - Upper Left"
+        echo "2 - Upper Right"
+        echo "3 - Bottom Middle"
+
+        # Read user input
+        read -p "Enter your choice (1/2/3): " choice
+
+        # Determine the selected screen
+        case $choice in
+            1)
+                selected_screen=$upper_left
+                ;;
+            2)
+                selected_screen=$upper_right
+                ;;
+            3)
+                selected_screen=$bottom_middle
+                ;;
+            *)
+                echo "Invalid choice. Exiting."
+                exit 1
+                ;;
+        esac
+
+        # Tested
+        # upper-left:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0      -f pulse -ac 2 -i default "abc.mp4"
+        # upper-righ:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+1920,0   -f pulse -ac 2 -i default "abc.mp4"
+        # bottom-middle: ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+946,1080 -f pulse -ac 2 -i default "abc.mp4"
+
+        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :"$selected_screen" -f pulse -ac 2 -i default "$file_name"
     fi
 
     # ffmpeg                \
