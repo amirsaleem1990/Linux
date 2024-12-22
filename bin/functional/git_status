@@ -36,6 +36,7 @@ for repo in repos:
 	except:
 		continue
 	if not '.git' in os.listdir():
+		print(".git file is not found...")
 		continue
 	# only new files:
 	if os.path.exists(only_new_files):
