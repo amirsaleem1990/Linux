@@ -10,7 +10,7 @@ read option_
 echo 
 
 files_func(){
-	python3 <<< '
+	/home/amir/.venv_base/bin/python3 <<< '
 import pandas as pd
 x = pd.Series(open("/tmp/.m", "r").read().splitlines()).str.split("/").to_list()
 df = pd.DataFrame(x, columns=(["week", "video"] if ({len(i) for i in x} == {2}) else ["course", "week", "video"] )).dropna()

@@ -2186,3 +2186,6 @@ file=abcdflkjadf.png; echo  abcdflkjadf.pdf
 
 # Create windows bootable flash usb drive from ubuntu ..... ventoy
 
+
+
+# xrandr --output eDP-1 --off ............ Disable the Laptop's Internal Screen (eDP-1)

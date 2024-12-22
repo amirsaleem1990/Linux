@@ -41,9 +41,9 @@ if [[ `cat ~/git_counts.csv | cut -d "," -f 1 | uniq | grep -v Count` = 0 ]]; th
 else
 	if [ $plot == '0' ]
 		then
-			python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); df["Repo"] = df["Repo"].str.strip("/"); df = df[["Repo", "Count"]]; df["Perc"] = round(df.Count / df.Count.sum()*100); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
+			/home/amir/.venv_base/bin/python3 -c 'import pandas as pd; df=pd.read_csv("~/git_counts.csv"); import pprint; df = df[df.Count > 0].sort_values("Count", ascending=False).reset_index().drop("index", axis=1); df["Repo"] = df["Repo"].str.strip("/"); df = df[["Repo", "Count"]]; df["Perc"] = round(df.Count / df.Count.sum()*100); pprint.pprint(df); print(f"\n****  Total count: {df.Count.sum()} ****\n"); '
 		else
-			ipython3 /home/amir/github/working/git_push_plot_script.py
+			/home/amir/.venv_base/bin/python3 /home/amir/github/working/git_push_plot_script.py
 	fi
 fi
 rm ~/git_counts.csv

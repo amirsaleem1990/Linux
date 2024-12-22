@@ -6,7 +6,7 @@ for file in $(find . -type f); do
 done
 
 
-python3 <<< '
+/home/amir/.venv_base/bin/python3 <<< '
 from pandas import read_csv
 x = read_csv("/home/amir/.Rdfind_amir_file.csv", header=None)
 for index,group in x.sort_values(1).groupby([1,2]):

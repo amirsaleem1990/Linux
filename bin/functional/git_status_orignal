@@ -5,7 +5,7 @@ array=("On branch master Your branch is up to date with 'origin/master'. nothing
 
 check_if_git_status_in_the_array(){
 	command="lst=['''On branch master\nYour branch is up to date with 'origin/master'.\nnothing to commit, working tree clean''', '''On branch main\nYour branch is up to date with 'origin/main'.\nnothing to commit, working tree clean''', '''On branch master\nYour branch is up to date with 'origin/main'.\nnothing to commit, working tree clean''']; print(bool('''$1''' in lst))"
-	python3 <<< "$command"
+	/home/amir/.venv_base/bin/python3 <<< "$command"
 }
 
 

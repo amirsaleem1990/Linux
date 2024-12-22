@@ -83,7 +83,7 @@ done
 
 # cat "$file_name" | grep -v ,0\ [KMG]B$ | (sed -u 1q; sort -t"," -k5 -n) | column -t -s,
 
-python3 <<< '
+/home/amir/.venv_base/bin/python3 <<< '
 import pandas as pd
 df = pd.read_csv("/tmp/lkjs")
 df = df.replace({"NOT FOUND": None})

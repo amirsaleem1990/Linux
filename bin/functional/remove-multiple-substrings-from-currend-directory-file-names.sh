@@ -70,5 +70,5 @@ file_names = open("/tmp/.file_names", "r").read().splitlines()
 import os
 for original_file_name, file_name in zip(original_file_names, file_names):
 	os.rename(original_file_name, file_name)
-' | python3
+' | /home/amir/.venv_base/bin/python3
 fi

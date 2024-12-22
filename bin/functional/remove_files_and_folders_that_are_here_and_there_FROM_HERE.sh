@@ -47,4 +47,4 @@ done
 
 # echo $file_name | column -t -s,
 
-python3 /amir_bin/remove_files_and_folders_that_are_here_and_there_FROM_HERE_python_part.py
+/home/amir/.venv_base/bin/python3 /amir_bin/remove_files_and_folders_that_are_here_and_there_FROM_HERE_python_part.py

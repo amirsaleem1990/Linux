@@ -15,7 +15,7 @@ echo ram_used,swap_used,time >> /tmp/.memory_usage_info
 
 control_c() {
 	echo -e "\n\n-------------- EXITING ------------------\n"
-	python3 <<< '
+	/home/amir/.venv_base/bin/python3 <<< '
 import matplotlib.pyplot as plt
 import pandas as pd
 df = pd.read_csv("/tmp/.memory_usage_info", skiprows=1, header=1)

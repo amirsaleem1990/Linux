@@ -1,4 +1,4 @@
-#!/usr/bin/ipython3
+#!/home/amir/.venv_base/bin/python3
 
 import sys
 import pandas as pd

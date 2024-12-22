@@ -1,3 +1,5 @@
+#!/home/amir/.venv_base/bin/python3
+
 # compare_function_1.py
 
 import hashlib

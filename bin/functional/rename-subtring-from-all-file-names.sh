@@ -60,5 +60,5 @@ if errors:
 	print("\n"*3)
 	print("Some files are not renamed, Here they are:")
 	print(*errors, sep="\n")
-' | python3
+' | /home/amir/.venv_base/bin/python3
 fi

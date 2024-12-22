@@ -1,4 +1,5 @@
-#!/usr/bin/ipython3
+#!/home/amir/.venv_base/bin/python3
+
 print("""
 	=========== Example ===========
 	

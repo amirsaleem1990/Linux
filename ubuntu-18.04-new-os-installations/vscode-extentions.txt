@@ -1,9 +1,8 @@
-ms-toolsai.jupyter
-ms-toolsai.vscode-jupyter-cell-tags
-ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter (D)
+ms-toolsai.vscode-jupyter-cell-tags (D)
+ms-toolsai.jupyter-keymap (D)
 ms-toolsai.jupyter-renderers
-ms-toolsai.vscode-jupyter-slideshow
-ms-vscode.powershell
+ms-toolsai.vscode-jupyter-slideshow (D)
 ms-python.vscode-pylance
 ms-python.python
 ms-python.debugpy

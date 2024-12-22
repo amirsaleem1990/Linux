@@ -1,4 +1,6 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
+
+##!/usr/bin/python3
 # # /amir_bin/Top_cumulative_1st_part $1
 # # cat /tmp/.AB.txt  | sed '/^$/d'    | grep --color=auto '\|CPU\|RAM\|MEM\|COMMAND\|(MB)\|='
 # # [[ $1 == "" ]] && echo -e "\n"
@@ -36,7 +38,7 @@
 # info_aggregated.CPU = info_aggregated.CPU.round(2)
 # info_aggregated.columns = ["RAM (MB)" if col_name == "mem_sum" else col_name for col_name in info_aggregated.columns]
 # info_aggregated.to_pickle("/tmp/info_aggregated.pkl")
-# ' | python3
+# ' | /home/amir/.venv_base/bin/python3
 
 # get_sort_by() {
 # 	echo -e "\nSort by:\n\t1-CPU\n\t2-RAM\n\t3-Count\n"
@@ -63,7 +65,7 @@
 # elif sort_by == "3":
 # 	print(colored("\n>>> Sorted by Count\n", "red"))
 # 	print(tabulate(df.sort_values("Count", ascending=False), headers="keys", tablefmt="pretty"))
-# ' | python3 - "$sort_by"
+# ' | /home/amir/.venv_base/bin/python3 - "$sort_by"
 # else
 # 	echo '
 # from tabulate import tabulate
@@ -86,7 +88,7 @@
 # if sort_by == "3":
 # 	print(colored("\n>>> Sorted by Count\n", "red"))
 # 	print(tabulate(df.sort_values("Count", ascending=False).reset_index(drop=True), headers="keys", tablefmt="pretty", colalign=alignments))
-# ' | python3 - "$sort_by"
+# ' | /home/amir/.venv_base/bin/python3 - "$sort_by"
 # fi
 
 import numpy as np

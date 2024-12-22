@@ -60,11 +60,11 @@ for i in `cat /tmp/process_info.txt | cut -d, -f3 | sort | uniq -c | sed 's/    
 	yes | mv /tmp/process_info_TEMP.txt /tmp/process_info.txt
 done 
 sed -i '/^$/d' /tmp/memory_by_process.txt
-python3 -c "from psutil import virtual_memory ; open('/tmp/MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/process_info.txt', 'r').read().splitlines()]+['\n']))"
+/home/amir/.venv_base/bin/python3 -c "from psutil import virtual_memory ; open('/tmp/MM', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/process_info.txt', 'r').read().splitlines()]+['\n']))"
 paste  /tmp/MM /tmp/process_info.txt  -d,  | grep -v ',$'  >  /tmp/AB.txt
 # mv  /tmp/process_info.txt /tmp/AB.txt
 
-python3 -c "from psutil import virtual_memory ; open('/tmp/MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/memory_by_process.txt', 'r').read().splitlines() if i]+['\n']))"
+/home/amir/.venv_base/bin/python3 -c "from psutil import virtual_memory ; open('/tmp/MM2', 'w').write('\n'.join([str(round((float(i.split(',')[1]) / 100 * virtual_memory().total / 1024 **2 ))) for i in  open ('/tmp/memory_by_process.txt', 'r').read().splitlines() if i]+['\n']))"
 paste  /tmp/MM2 /tmp/memory_by_process.txt  -d,  | grep -v ',$'  >  /tmp/process_info_cpu_2.txt
 cat /tmp/process_info_cpu_2.txt /tmp/AB.txt  >  /tmp/process_info.txt
 # mv /tmp/SS /tmp/AB.txt

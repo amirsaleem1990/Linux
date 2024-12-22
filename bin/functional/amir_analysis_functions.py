@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 
 def join_summary(s1, s2):
 	s1 = set(s1)
@@ -464,25 +464,25 @@ def connect_to_my_db():
 
 
 def all_possible_combinations(inputArray, order_matters=True, min_length=1, max_length=None):
-    import itertools
-    n = len(inputArray)
-    lst = []
+	import itertools
+	n = len(inputArray)
+	lst = []
 
-    if max_length is None:
-        max_length = n
-    
-    if order_matters:
-        for length in range(min_length, max_length + 1):
-            for indices in itertools.permutations(range(n), length):
-                inner_list = [inputArray[i] for i in indices]
-                lst.append(inner_list)
-    else:
-        for length in range(min_length, max_length + 1):
-            for r in range(length, min(max_length, n) + 1):
-                for combination in itertools.combinations(inputArray, r):
-                    lst.append(list(combination))
+	if max_length is None:
+		max_length = n
+	
+	if order_matters:
+		for length in range(min_length, max_length + 1):
+			for indices in itertools.permutations(range(n), length):
+				inner_list = [inputArray[i] for i in indices]
+				lst.append(inner_list)
+	else:
+		for length in range(min_length, max_length + 1):
+			for r in range(length, min(max_length, n) + 1):
+				for combination in itertools.combinations(inputArray, r):
+					lst.append(list(combination))
 
-    return lst
+	return lst
 
 
 
@@ -742,59 +742,59 @@ def Type_casting(df_id):
 
 
 def seconds_to_hh_mm_ss(seconds):
-    hours, remainder = divmod(seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
+	hours, remainder = divmod(seconds, 3600)
+	minutes, seconds = divmod(remainder, 60)
+	return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
 
 
 
 def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[]):
 
-    numeric_cols = df.select_dtypes("number").columns.to_list()
-    obj_cols = df.select_dtypes("O").columns.to_list()
-    date_cols = df.select_dtypes("datetime").columns.to_list()
-    
-    def _box_plot(series, _ax):
-        nonlocal e_int_cols
-        if not 'box' in numeric:
-            return
-        sns.boxplot(x=series, ax=_ax, color='lightcoral')
-        _ax.set_title('Box Plot')
-        # _ax.set_xlabel('X-axis label')
-        _ax.set_ylabel('Box Plot Values')
-        e_int_cols += 1
-    
-    def _hist_plot(series, _ax):
-        nonlocal e_int_cols
-        if not 'hist' in numeric:
-            return
-        _ax.hist(df[col_name], bins=20, color='skyblue', edgecolor='black')
-        _ax.set_title('Histogram')
-        # _ax.set_xlabel('X-axis label')
-        _ax.set_ylabel('Frequency')
-        e_int_cols += 1
-    
-    e_int_cols = 0
-    e_obj_cols = 0
-    e_date_cols = 0
-    
-    if len(numeric) == 1:
-        numeric.append(None)
-    if len(string) == 1:
-        string.append(None)
-    
-    for col_name in df.columns.to_list():
-        if col_name in numeric_cols:
-            if not len(numeric):
-                continue
-            fig, axes = plt.subplots(1, len(numeric), figsize=(12, 5))
-            plt.suptitle(f'Distribution of {col_name}')
-            _box_plot(df[col_name], _ax=axes[e_int_cols])
-            _hist_plot(df[col_name], _ax=axes[e_int_cols])
-    
-            plt.tight_layout(rect=[0, 0, 1, 0.95])
-            plt.show()
-            e_int_cols = 0
+	numeric_cols = df.select_dtypes("number").columns.to_list()
+	obj_cols = df.select_dtypes("O").columns.to_list()
+	date_cols = df.select_dtypes("datetime").columns.to_list()
+	
+	def _box_plot(series, _ax):
+		nonlocal e_int_cols
+		if not 'box' in numeric:
+			return
+		sns.boxplot(x=series, ax=_ax, color='lightcoral')
+		_ax.set_title('Box Plot')
+		# _ax.set_xlabel('X-axis label')
+		_ax.set_ylabel('Box Plot Values')
+		e_int_cols += 1
+	
+	def _hist_plot(series, _ax):
+		nonlocal e_int_cols
+		if not 'hist' in numeric:
+			return
+		_ax.hist(df[col_name], bins=20, color='skyblue', edgecolor='black')
+		_ax.set_title('Histogram')
+		# _ax.set_xlabel('X-axis label')
+		_ax.set_ylabel('Frequency')
+		e_int_cols += 1
+	
+	e_int_cols = 0
+	e_obj_cols = 0
+	e_date_cols = 0
+	
+	if len(numeric) == 1:
+		numeric.append(None)
+	if len(string) == 1:
+		string.append(None)
+	
+	for col_name in df.columns.to_list():
+		if col_name in numeric_cols:
+			if not len(numeric):
+				continue
+			fig, axes = plt.subplots(1, len(numeric), figsize=(12, 5))
+			plt.suptitle(f'Distribution of {col_name}')
+			_box_plot(df[col_name], _ax=axes[e_int_cols])
+			_hist_plot(df[col_name], _ax=axes[e_int_cols])
+	
+			plt.tight_layout(rect=[0, 0, 1, 0.95])
+			plt.show()
+			e_int_cols = 0
 
 
 
@@ -884,21 +884,48 @@ def turing_google_comparative_analysis_work_for_current_week():
 
 
 def number_to_column_name_in_excel_sheet(num):
-    """
-    >>> number_to_column(1))
-    A
-    >>> number_to_column(26))
-    Z
-    >>> number_to_column(27))
-    AA
-    >>> number_to_column(52))
-    AZ
-    >>> number_to_column(53))
-    BA
-    """
-    column_name = ''
-    while num > 0:
-        num -= 1
-        column_name = chr(num % 26 + 65) + column_name
-        num //= 26
-    return column_name
+	"""
+	>>> number_to_column(1))
+	A
+	>>> number_to_column(26))
+	Z
+	>>> number_to_column(27))
+	AA
+	>>> number_to_column(52))
+	AZ
+	>>> number_to_column(53))
+	BA
+	"""
+	column_name = ''
+	while num > 0:
+		num -= 1
+		column_name = chr(num % 26 + 65) + column_name
+		num //= 26
+	return column_name
+
+def generate_dataframe_code(df, variable_name="df"):
+	all_values = [f"{variable_name} = pd.DataFrame({{"]
+	df.columns = df.columns.astype(str)
+	types = df.dtypes.astype(str)
+	x = df.astype(str).to_dict(orient="list")
+	for col_name, col_values in x.items():
+		values = "\t'" + col_name + "': ["
+		if types[col_name].startswith("int") or types[col_name].startswith("float"):
+			values += ",".join(col_values) + "],"
+		else:
+			values += "'" + "', '".join(col_values) + "'],"
+		
+		all_values.append(values)
+	all_values.append("})")
+	print("\n".join(all_values))
+
+
+def get_x_and_y_lims(ax):
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    x_from = float(xlim[0])
+    x_to = float(xlim[1])
+    y_from = float(ylim[0])
+    y_to = float(ylim[1])
+    return [x_from, x_to, y_from, y_to]
+

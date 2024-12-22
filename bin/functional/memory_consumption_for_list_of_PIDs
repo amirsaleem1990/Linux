@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython3
+#!/home/amir/.venv_base/bin/python3
 import os
 
 print("if /home/amir/PID.txt exists, the script will read PIDs from that file\n")

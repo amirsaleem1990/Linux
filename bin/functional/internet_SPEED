@@ -30,7 +30,7 @@ plt.axhline(df.Speed.mean(), color="red");
 plt.axhline(df.Speed.quantile(0.25), color="green");
 plt.axhline(df.Speed.quantile(0.75), color="green");
 plt.show()
-' | python3
+' | /home/amir/.venv_base/bin/python3
 }
 
 # live_plot(){

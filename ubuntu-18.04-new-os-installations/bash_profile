@@ -256,36 +256,6 @@ copyfrom(){
     xclip -sel cli < "$@"
 }
 
-declare -f si
-si(){
-    file_name="$1"
-    
-    if [[ -z $file_name ]] ; then
-        # echo "\nPlease Enter file name, (eg: si my_file_name\n"
-        # return 1
-        if [[ $( ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d' | wc -l) -eq 0 ]]; then
-            file_name=1
-        else
-            file_name=$(max $(ls *.png | sed 's/\.png$//g' | sed  '/[^[:digit:].+-]/d'))
-            let "file_name++"
-        fi
-        echo -e "\nYou didn't provide a file name, so we are saving it as <$file_name.png>\n"
-    fi
-
-    test -f "$file_name"
-    res_0=$?
-    test -f "$file_name.png"
-    res_1=$?
-    if [[ $res_0 -eq 0 ]] || [[ $res_1 -eq 0 ]]; then
-        echo -e "\nSorry, the file is exists\n"
-        if [[ $(ls *.png | wc -l) -gt 0 ]] ; then
-            echo -e "Currently saved .pngs are:\n-------------------\n`ls *.png`\n\n\nAborting ......\n\n"
-        fi
-        return 1
-    fi
-    xclip -selection clipboard -t image/png -o > "$file_name.png"
-}
-
 
 declare -f max
 max(){
@@ -1194,7 +1164,6 @@ todays_first_computer_on_time
 time_since_first_login_today
 
 export -f extentions_for_given_file_names
-export -f si
 export -f max
 export -f internet_speed
 export -f convertsecs
@@ -1368,6 +1337,3 @@ turing_google_comparative_analysis_work_for_current_week()
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
 # PYTHONPATH="$PYTHONPATH:/home/amir/.local/lib/python3.10/site-packages"
 export PYTHONPATH=$PYTHONPATH
-
-
-mkdir /tmp/inputs/ 2>/dev/null

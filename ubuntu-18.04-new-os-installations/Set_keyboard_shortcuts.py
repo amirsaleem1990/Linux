@@ -64,6 +64,8 @@ lst = [
 # ['screen_shot_all_screens',   '/amir_bin/screen_shot_all_screens',   '<Control><Alt>a'     ],
 ['gpt-question-option-2',     '/amir_bin/chatgpt 2',                 '<Control><Alt>H'     ], # CTRL + ALT + H
 ['gpt-question-option-7',     '/amir_bin/chatgpt 7',                 '<Control><Alt>G'     ], # CTRL + ALT + G
+['Mn',                        '/usr/bin/xdotool key space',          '<Shift><Control>M'   ], # Shift + Control + M
+['disable_lock_screen_after_n_seconds_of_login', '/amir_bin/disable_lock_screen_after_n_seconds_of_login.sh', '<Control><Alt>1'], # Ctrl + Alt + 1
 ]
 
 for i in lst:

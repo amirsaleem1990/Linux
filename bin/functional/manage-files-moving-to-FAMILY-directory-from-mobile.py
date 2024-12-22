@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import PathCompleter
 

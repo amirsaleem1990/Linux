@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 # https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
 
 # youtube-dl --version # 2021.12.17

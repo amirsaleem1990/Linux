@@ -1,4 +1,4 @@
-# !/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 
 from get_soup_object_using_selenium import get_soup_object_using_selenium
 import os

@@ -6,7 +6,7 @@ cat /tmp/xx | cut -d: -f1 | sort | uniq -c > /tmp/distribution
 
 cat /tmp/xx
 
-python3 <<< '
+/home/amir/.venv_base/bin/python3 <<< '
 import pandas as pd
 import json
 def func(line):

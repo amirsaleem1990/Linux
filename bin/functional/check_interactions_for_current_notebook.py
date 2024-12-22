@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 import matplotlib.pyplot as plt
 import nbformat  # Module for handling Jupyter notebooks
 import pandas as pd  # Data manipulation library

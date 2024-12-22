@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/amir/.venv_base/bin/python3
 import sys
 if len(sys.argv) != 2:
 	raise Exception("No url provided to script.....")

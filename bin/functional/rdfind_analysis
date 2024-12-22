@@ -1,4 +1,4 @@
-#!/usr/bin/ipython3
+#!/home/amir/.venv_base/bin/python3
 
 
 """
@@ -39,12 +39,18 @@ if not x:
 	print("\nThere is no duplicate files in results.txt\nExiting ......\n")
 	sys.exit(0)
 
+# x = list(zip(
+# 		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
+# 		# [' '.join(i.split()[7:]).replace("./", '') for i in x]
+# 		[i[i.index("/")-1:] if i[i.index("/")-1] == '.' else i[i.index("/"):] for i in x]
+# 			)
+# 		)
+
+# To use with something like the following: >>> /usr/bin/rdfind IPHONE/ DCIM/
 x = list(zip(
 		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
-		# [' '.join(i.split()[7:]).replace("./", '') for i in x]
-		[i[i.index("/")-1:] if i[i.index("/")-1] == '.' else i[i.index("/"):] for i in x]
-			)
-		)
+		[' '.join(i.split()[7:]) for i in x]
+		))
 
 df = DataFrame(x, columns=['DUPTYPE_FIRST_OCCURRENCE', 'Path'])
 
@@ -197,9 +203,9 @@ for node in r:
 					print(colored("\n\nYou are going to remove all the following files:", 'red'))
 					print(*node, sep="\n")
 					print(colored("\nAre you sure? [Yes | No] ", 'red'))
-					user_input_ = input()
-					if user_input_.lower() != 'yes':
-						continue
+					# user_input_ = input()
+					# if user_input_.lower() != 'yes':
+						# continue
 				for input_ in range(int(inp[0]), int(inp[1])+1):
 					# unique_delete_items_qty += 1
 					func_(str(input_))

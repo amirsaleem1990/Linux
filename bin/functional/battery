@@ -55,7 +55,7 @@ ${RED}mAh        :${normal} energy*1000/voltage
 # echo key,value > /home/amir/.battery_1
 # upower -d  | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u | sed 's/:\ \{1,\}/,/g' >> /home/amir/.battery_1
 # echo -e "\n\n"
-# python3 <<< '
+# /home/amir/.venv_base/bin/python3 <<< '
 # import pandas as pd
 # print(
 # 	(

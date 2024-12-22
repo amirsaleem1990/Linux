@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/amir/.venv_base/bin/python3
 import os
 import sys
 os.chdir("/home/amir/github/")

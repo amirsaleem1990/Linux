@@ -48,7 +48,7 @@ if [[ $no_extention -eq $files_count ]]; then
 	echo -e "\nThere are $files_count files, but Nothing have extention\n\n"
 	exit
 fi
-python3 <<< '
+/home/amir/.venv_base/bin/python3 <<< '
 import warnings
 warnings.filterwarnings("ignore")
 # from tabulate import tabulate
@@ -73,13 +73,13 @@ import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
 print(pd.read_csv("/tmp/Unique_extentions_df1").to_string(index=False))
-' | python3 > /tmp/Unique_extentions_df1_2
+' | /home/amir/.venv_base/bin/python3 > /tmp/Unique_extentions_df1_2
 echo '
 import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
 print(pd.read_csv("/tmp/Unique_extentions_df2").to_string(index=False))
-' | python3 > /tmp/Unique_extentions_df2_2
+' | /home/amir/.venv_base/bin/python3 > /tmp/Unique_extentions_df2_2
 
 echo -e "\n\e[1m\e[31m=== Sorted by extention ===\t\t=== Sorted by size ===   \e[22m\e[39m \n"
 paste -d '|\t' /tmp/Unique_extentions_df{1,2}_2 | sed 's/|/\t\t|\t/g' | grep --color=auto '\|Extention\|Size\|Qty'

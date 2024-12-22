@@ -8,7 +8,7 @@ recursive=false
 
 control_c() {
 	echo -e "\n\n-------------- EXITING ------------------\n"
-	python3 <<< '
+	/home/amir/.venv_base/bin/python3 <<< '
 # import matplotlib.pyplot as plt
 # import pandas as pd
 # df = pd.read_csv("/tmp/internet_download_summary_full")
