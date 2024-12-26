@@ -1336,3 +1336,8 @@ turing_google_comparative_analysis_work_for_current_week()
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
 # PYTHONPATH="$PYTHONPATH:/home/amir/.local/lib/python3.10/site-packages"
 export PYTHONPATH=$PYTHONPATH
+
+if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downloads/Google/Multimodality/Multimodelity" ]]; then
+    eval "$(register-python-argcomplete ./start_to_end.py)"
+fi
+
