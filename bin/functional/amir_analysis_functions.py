@@ -1,3 +1,4 @@
+
 #!/home/amir/.venv_base/bin/python3
 
 def join_summary(s1, s2):
@@ -921,11 +922,13 @@ def generate_dataframe_code(df, variable_name="df"):
 
 
 def get_x_and_y_lims(ax):
-    xlim = ax.get_xlim()
-    ylim = ax.get_ylim()
-    x_from = float(xlim[0])
-    x_to = float(xlim[1])
-    y_from = float(ylim[0])
-    y_to = float(ylim[1])
-    return [x_from, x_to, y_from, y_to]
+	if "<module 'matplotlib.pyplot' from " in ax.__str__():
+		ax = ax.gca() # 'ax' in 'ax.gc()' is actually 'plt'
+	xlim = ax.get_xlim()
+	ylim = ax.get_ylim()
+	x_from = float(xlim[0])
+	x_to = float(xlim[1])
+	y_from = float(ylim[0])
+	y_to = float(ylim[1])
+	return [x_from, x_to, y_from, y_to]
 
