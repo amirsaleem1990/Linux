@@ -932,3 +932,18 @@ def get_x_and_y_lims(ax):
 	y_to = float(ylim[1])
 	return [x_from, x_to, y_from, y_to]
 
+
+
+
+def convert_jupyter_notebook_to_python_script(str: notebook_path): -> str
+	"""
+	This function accepts a path of a jupyter notebook, and return a string representation of that notebook. 
+	"""
+	import nbformat
+	from nbconvert import PythonExporter
+
+	with open(notebook_path, "r", encoding="utf-8") as f:
+		notebook = nbformat.read(f, as_version=4)
+	exporter = PythonExporter()
+	script, _ = exporter.from_notebook_node(notebook)
+	return script
