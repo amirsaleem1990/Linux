@@ -935,7 +935,7 @@ def get_x_and_y_lims(ax):
 
 
 
-def convert_jupyter_notebook_to_python_script(str: notebook_path): -> str
+def convert_jupyter_notebook_to_python_script(notebook_path):
 	"""
 	This function accepts a path of a jupyter notebook, and return a string representation of that notebook. 
 	"""
