@@ -243,12 +243,12 @@ copyto(){
     echo -e "$(cat /tmp/temp_copy)\n" > "$1"
 }
 
-declare -f copyfrom
+    declare -f copyfrom
 copyfrom(){
-    if [[ $(ls /tmp/last_copy_* 2&> /dev/null | wc -l) -eq 0 ]]; then # If no results found for /tmp/last_copy_* 
+    if [[ $(ls /tmp/last_copy_* 2>/dev/null | wc -l) -eq 0 ]]; then # If no results found for /tmp/last_copy_* 
         files_count=0
     else
-        files_count=$(ls /tmp/last_copy_ 2>/dev/null | wc -l)
+        files_count=$(ls /tmp/last_copy_* 2>/dev/null | wc -l)
     fi
     let "files_count++"
     copyto /tmp/last_copy_$files_count
