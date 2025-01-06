@@ -1,4 +1,3 @@
-
 #!/usr/bin/bash
 
 # Function to display usage
@@ -91,5 +90,5 @@ if [[ $? -ne 0 ]]; then
 	read 
 fi
 link=$(echo "$output" | grep 'http')
-echo "$link"
+# echo "$link"
 echo -e "\n$target_directory:\t$link" >> /tmp/urls_$task_number.txt
