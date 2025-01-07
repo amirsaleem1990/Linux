@@ -90,5 +90,5 @@ if [[ $? -ne 0 ]]; then
 	read 
 fi
 link=$(echo "$output" | grep 'http')
-# echo "$link"
+echo -e "$link\n"
 echo -e "\n$target_directory:\t$link" >> /tmp/urls_$task_number.txt
