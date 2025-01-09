@@ -66,18 +66,18 @@ while [[ "$copied" == "false" ]]; do
 done
 
 
-try_number=1
-max_tries=5
-url=$(rclone link "$drive_path/$file_name")
-while [[ -z "$url" ]]; do
-	if [[ $try_number -gt $max_tries ]]; then
-		echo "Failed to get the url link in $max_tries retries."
-		break
-	fi
-	echo "> Retry ($try_number) to get a link for $file_name ..."
-	url=$(rclone link "$drive_path/$file_name")
-	let "try_number+=1"
-done
-url="$url&usp=drive_copy"
-echo 
-echo "$url"
+# try_number=1
+# max_tries=5
+# url=$(rclone link "$drive_path/$file_name")
+# while [[ -z "$url" ]]; do
+# 	if [[ $try_number -gt $max_tries ]]; then
+# 		echo "Failed to get the url link in $max_tries retries."
+# 		break
+# 	fi
+# 	echo "> Retry ($try_number) to get a link for $file_name ..."
+# 	url=$(rclone link "$drive_path/$file_name")
+# 	let "try_number+=1"
+# done
+# url="$url&usp=drive_copy"
+# echo 
+# echo "$url"
