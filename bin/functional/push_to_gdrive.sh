@@ -84,11 +84,13 @@ echo -e "> Copying <$absolute_path_of_file> to <$target_directory> ..."
 echo -e "\nLast Modified before:\n\nDD:HH:MM:SS"
 last_modified_before.sh "$absolute_path_of_file"
 
-output=$(push_to_g_drive_script.sh --absolute_path_of_file "$absolute_path_of_file" --drive_path "$drive_path")
-if [[ $? -ne 0 ]]; then
-	echo -e "The file <$absolute_path_of_file> <$drive_path> is failed to be UPLOADED, upload it manually and press any key "
-	read 
-fi
-link=$(echo "$output" | grep 'http')
-echo -e "$link\n"
-echo -e "\n$target_directory:\t$link" >> /tmp/urls_$task_number.txt
+push_to_g_drive_script.sh --absolute_path_of_file "$absolute_path_of_file" --drive_path "$drive_path"
+
+# output=$(push_to_g_drive_script.sh --absolute_path_of_file "$absolute_path_of_file" --drive_path "$drive_path")
+# if [[ $? -ne 0 ]]; then
+# 	echo -e "The file <$absolute_path_of_file> <$drive_path> is failed to be UPLOADED, upload it manually and press any key "
+# 	read 
+# fi
+# link=$(echo "$output" | grep 'http')
+# echo -e "$link\n"
+# echo -e "\n$target_directory:\t$link" >> /tmp/urls_$task_number.txt
