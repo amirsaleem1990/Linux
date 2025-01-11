@@ -1315,6 +1315,10 @@ break_work() {
     done
 }
 
+declare -f random_number
+random_number(){
+    echo $((RANDOM * RANDOM % 1000000000))
+}
 
 declare -f i
 i() {
@@ -1340,4 +1344,6 @@ export PYTHONPATH=$PYTHONPATH
 if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downloads/Google/Multimodality/Multimodelity" ]]; then
     eval "$(register-python-argcomplete ./start_to_end.py)"
 fi
+
+
 
