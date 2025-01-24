@@ -36,7 +36,7 @@ while true; do
         echo -e "\nDo you want to override this file? [yes|no] " 
         read user_inp
         if [[ $user_inp == "yes" ]]; then 
-            rm $file_name
+            rm "$file_name"
             echo -e "\n> Existing <$file_name> removed.\n"
             break
         fi
