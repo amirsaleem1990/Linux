@@ -50,7 +50,7 @@ done
 
 xclip -selection clipboard -t image/png -o > "$file_name"
 
-read -p "Do you want to make the screenshot as at least 1200px? [y|N] " user_inp
-if [[ $user_inp == "y" ]]; then 
-    /amir_bin/make_picture_high_resulotion "$file_name"
-fi
+# read -p "Do you want to make the screenshot as at least 1200px? [y|N] " user_inp
+# if [[ $user_inp == "y" ]]; then 
+#     /amir_bin/make_picture_high_resulotion "$file_name"
+# fi
