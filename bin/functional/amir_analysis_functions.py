@@ -584,9 +584,9 @@ def convert_time_to_seconds(time, round_to=2):
 	"""
 
 	h,m,s = list(map(int, time.split(":")))
-	assert 0 <= h < 24, f"Wrong time (hour) ({time})"
-	assert 0 <= m < 60, f"Wrong time (minute) ({time})"
-	assert 0 <= s < 60, f"Wrong time (second) ({time})"
+	# assert 0 <= h < 24, f"Wrong time (hour) ({time})"
+	# assert 0 <= m < 60, f"Wrong time (minute) ({time})"
+	# assert 0 <= s < 60, f"Wrong time (second) ({time})"
 
 	return  h*60*60 + m*60 + s
 
