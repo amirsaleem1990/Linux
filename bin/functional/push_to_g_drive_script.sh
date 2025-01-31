@@ -5,7 +5,6 @@ usage() {
 	echo "Usage: $0 --absolute_path_of_file <absolute_path_of_file> --drive_path <drive_path>"
 	exit 1
 }
-
 # Parse options using `getopt`
 OPTIONS=$(getopt -o "" --long absolute_path_of_file:,drive_path: -- "$@")
 if [ $? -ne 0 ]; then
