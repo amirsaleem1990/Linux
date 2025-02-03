@@ -947,3 +947,16 @@ def convert_jupyter_notebook_to_python_script(notebook_path):
 	exporter = PythonExporter()
 	script, _ = exporter.from_notebook_node(notebook)
 	return script
+
+
+def cksum_python(file_path):
+	import hashlib
+
+	def calculate_checksum(file_path, algorithm="sha256"):
+	    hash_func = hashlib.new(algorithm)
+	    with open(file_path, "rb") as f:
+	        while chunk := f.read(4096):  # Read in chunks for efficiency
+	            hash_func.update(chunk)
+	    return hash_func.hexdigest()
+	checksum = calculate_checksum(file_path, "sha256")  # You can also use 'md5', 'sha1', etc.
+	return checksum
