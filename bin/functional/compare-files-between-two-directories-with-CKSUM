@@ -9,7 +9,6 @@ fi
 find . -type f > /tmp/here_files
 find "$there" -type f > /tmp/there_files
 
-
 # echo '
 
 # ' > /tmp/script_2.py
@@ -22,16 +21,16 @@ find "$there" -type f > /tmp/there_files
 
 # export f=/tmp/here_files
 # python3 /tmp/script_2.py
-/home/amir/.venv_base/bin/python3 /amir_bin/compare_function_1.py /tmp/here_files
+compare_function_1.py /tmp/here_files
 
 # export f=/tmp/there_files
 # python3 /tmp/script_2.py
-/home/amir/.venv_base/bin/python3 /amir_bin/compare_function_1.py /tmp/there_files
+compare_function_1.py /tmp/there_files
 
 
 export there
 export here=$(pwd)
 
 # python3 /tmp/script_1.py
-/home/amir/.venv_base/bin/python3 /amir_bin/compare_function_2.py
+compare_function_2.py
 
