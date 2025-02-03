@@ -44,7 +44,7 @@ get_appropiate_unit_for_size(){
 
 here=$(pwd)
 file_name="/tmp/lkjs"
-/usr/bin/rm $file_name
+/usr/bin/rm $file_name 2>/dev/null
 # echo "Name,Type,There,Here,Difference" > "$file_name"
 echo "Name,Type,There,Here" > "$file_name"
 cat $file_name
@@ -101,7 +101,7 @@ def func(val):
     if abs(val) > kbs_in_MB:
         return f"{round(val/kbs_in_MB,1)} M"
     return f"{val} K"
-df[["There", "Here", "Difference"]] = df[["There", "Here", "Difference"]].applymap(func)
+df[["There", "Here", "Difference"]] = df[["There", "Here", "Difference"]].map(func)
 print(df.to_string())
 '
 echo -e "\n\n"
