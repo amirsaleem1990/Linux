@@ -130,8 +130,8 @@ if os.path.exists(exclude_file):
 	e = open(exclude_file, 'r').read().strip()
 	if e:
 		# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
-		user_inp = input("Do you need to exclude last stuff [yes|no] \n")
-		if user_inp.lower().strip() == 'yes':
+		user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
+		if user_inp.lower().strip() in ['yes', '']:
 			exclude = e
 		else:
 			get_input_from_user=True
@@ -154,7 +154,7 @@ before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
 
 
 low_quality = False
-ans = input("Are you need to download low quality videos? [yes|no]: ").strip().lower()
+ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
 if  ans == "yes":
 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
 		low_quality = True
