@@ -14,10 +14,11 @@ def download(url):
 	if url[0] == "#":
 		return
 	try:
-		if low_quality:
-			subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
-		else:
-			subprocess.check_call(['youtube-dl', '-f', 'best', '--no-playlist', url])
+		os.system(f"youtube-dl '{url}'")
+		# if low_quality:
+		# 	subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
+		# else:
+		# 	subprocess.check_call(['youtube-dl', '-f', 'best', '--no-playlist', url])
 		open("downloaded.txt", "a").write(url+"\n")
 	except:
 		e_ = traceback.format_exc()
@@ -153,11 +154,11 @@ if os.path.exists(error_file):
 before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
 
 
-low_quality = False
-ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
-if  ans == "yes":
-	if input("Are you sure? [yes|no]").lower().strip() == "yes":
-		low_quality = True
+# low_quality = False
+# ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
+# if  ans == "yes":
+# 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
+# 		low_quality = True
 
 
 
