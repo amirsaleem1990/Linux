@@ -960,3 +960,17 @@ def cksum_python(file_path):
 	    return hash_func.hexdigest()
 	checksum = calculate_checksum(file_path, "sha256")  # You can also use 'md5', 'sha1', etc.
 	return checksum
+
+
+
+def time_since_last_update_of_a_file(file_path):
+    import os
+    import time
+    modified_time = os.path.getmtime(file_path)
+    current_time = time.time()
+    time_diff = int(current_time - modified_time)
+    days = time_diff // 86400
+    hours = (time_diff % 86400) // 3600
+    minutes = (time_diff % 3600) // 60
+    seconds = time_diff % 60
+    return f"{days:02}:{hours:02}:{minutes:02}:{seconds:02}"
