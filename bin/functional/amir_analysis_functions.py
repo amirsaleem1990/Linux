@@ -549,7 +549,11 @@ def convert_time_to_appropiate_units(time, round_to=2):
 	>>> convert_time_to_appropiate_units("00:00:00")
 	'0 s'
 	"""
-
+	day=False
+	if time.count(":") == 3:
+		day = True
+		d = int(time.split(":")[0])
+		time = time[time.index(":")+1:]
 	h,m,s = list(map(int, time.split(":")))
 	assert 0 <= h < 24, f"Wrong time (hour) ({time})"
 	assert 0 <= m < 60, f"Wrong time (minute) ({time})"
@@ -558,7 +562,10 @@ def convert_time_to_appropiate_units(time, round_to=2):
 	total_seconds = h*60*60 + m*60 + s
 	total_minutes = h*60 + m + s/60
 	total_hours = h + m/60 + s/60/60
-
+	if day:
+		total_hours += 24*d
+		total_minutes += 24*d*60
+		total_seconds += 24*d*60*60
 	if total_seconds < 60:
 		return f"{total_seconds} s"
 	if total_minutes < 60:
@@ -566,10 +573,15 @@ def convert_time_to_appropiate_units(time, round_to=2):
 		if x == int(x):
 			x = int(x)
 		return f"{x} m"
-	x = round(total_hours, round_to)
+	if total_hours < 24:
+		x = round(total_hours, round_to)
+		if x == int(x):
+			x = int(x)
+		return f"{x} h"
+	x = round(d, round_to)
 	if x == int(x):
 		x = int(x)
-	return f"{x} h"
+	return f"{x} d"
 
 def convert_time_to_seconds(time, round_to=2):
 	"""
@@ -582,13 +594,16 @@ def convert_time_to_seconds(time, round_to=2):
 	>>> convert_time_to_seconds("00:00:00")
 	0
 	"""
-
+	d=0
+	if time.count(":") == 3:
+		d = int(time.split(":")[0])
+		time = time[time.index(":")+1:]
 	h,m,s = list(map(int, time.split(":")))
 	# assert 0 <= h < 24, f"Wrong time (hour) ({time})"
 	# assert 0 <= m < 60, f"Wrong time (minute) ({time})"
 	# assert 0 <= s < 60, f"Wrong time (second) ({time})"
 
-	return  h*60*60 + m*60 + s
+	return  d*24*60*60 + h*60*60 + m*60 + s
 
 
 
