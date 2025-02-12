@@ -169,9 +169,9 @@ x = get_incompleted_videos_urls(urls_file_name)
 if not x is None:
 	urls_to_download = x
 
-keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ")
+keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ").lower()
 if keyword:
-	urls_to_download = [i for i in urls_to_download if keyword in i]
+	urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
 
 main_func()
 
