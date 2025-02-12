@@ -1337,6 +1337,27 @@ turing_google_comparative_analysis_work_for_current_week()
 }
 
 
+
+# Only for Turing Multimodality project
+declare -f png
+png(){
+    # eog -f /home/amir/Multimodelity/png/$1.png
+    eog /home/amir/Multimodelity/png/$1.png
+}
+export -f png
+
+
+
+
+
+
+
+
+
+
+
+
+
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
 # PYTHONPATH="$PYTHONPATH:/home/amir/.local/lib/python3.10/site-packages"
 export PYTHONPATH=$PYTHONPATH
