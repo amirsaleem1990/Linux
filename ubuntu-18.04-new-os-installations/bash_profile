@@ -72,7 +72,7 @@ alias J="python3 manage.py runserver"
 alias open-facebook-links='/home/amir/github/Daily_facebook/open_fb_links.py'
 alias p='python3 -c '\''t=input(); print(eval(t))'\'''
 # alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
-alias pin='python3 /home/amir/github/Amir-personal/PIN/pin2.py'
+alias pin='/home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
 alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
 alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
