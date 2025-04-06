@@ -9,9 +9,16 @@ def get_user_input(prompt_text):
 # source_dir = "/media/amir/Data_2/320GB/mobile/Ayesha/DCIM/Camera/"
 # source_dir = "/home/amir/"
 # dest_parent_dir = "/home/amir/Amir/Problem solving/LeetCode/"
+import sys
+if not sys.argv[1]:
+	source_dir = get_user_input("Enter absolute path for source dir: ")
+else:
+	source_dir = sys.argv[1]
+if not sys.argv[2]:
+	dest_parent_dir = get_user_input("Enter absolute path for parent destination dir: ")
+else:
+	dest_parent_dir = sys.argv[2]
 
-source_dir = get_user_input("Enter absolute path for source dir: ")
-dest_parent_dir = get_user_input("Enter absolute path for parent destination dir: ")
 # source_dir = "/home/amir/Data_2/320GB/MultiMedia/PICS/Camera/________FAMILY/_________________MY FAMILY/_____TOOO_MOVEEEEEEEEEEEEEEE/"
 # dest_parent_dir="/home/amir/Data_2/320GB/MultiMedia/PICS/Camera/________FAMILY/_________________MY FAMILY/"
 
@@ -50,7 +57,7 @@ if user_inp == "1":
 
 	# Get the list of picture files in the directory
 	picture_files = [f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))]
-	picture_files = [i for i in picture_files if i.endswith(".jpg") or i.endswith(".jpeg") or i.endswith(".png")]
+	picture_files = [i for i in picture_files if i.lower().endswith(".jpg") or i.lower().endswith(".jpeg") or i.lower().endswith(".png")]
 	picture_files = sorted(picture_files)
 
 	# Create a figure and axes for plotting
@@ -66,8 +73,10 @@ if user_inp == "1":
 		picture_path = os.path.join(source_dir, picture_file)
 		
 		# Open the picture using PIL
-		image = Image.open(picture_path)
-		
+		try:
+			image = Image.open(picture_path)
+		except:
+			continue
 		# Display the image in the right half of the screen
 		ax.imshow(image)
 		ax.axis('off')  # Turn off the axes
