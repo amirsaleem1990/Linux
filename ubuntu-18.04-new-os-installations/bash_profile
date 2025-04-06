@@ -540,8 +540,10 @@ if df.shape[1] == 1:
     fi   
     echo "$python_code" > /tmp/python_code
     echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
-    ipython3 -i  /tmp/python_code
+    $HOME/.venv_base/bin/ipython3 -i  /tmp/python_code
 }
+
+    
 
 
 declare -f data_file_make_a_sample
@@ -699,7 +701,7 @@ data_file_read_dataframe_and_go_in_inpython() {
     
     python_code="import pandas as pd; df = pd.read_pickle('/tmp/data_file.pkl'); "
     echo "$python_code" > /tmp/python_code
-    ipython3 -i /tmp/python_code
+    $HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
 
 declare -f data_file_list_columns_names
