@@ -200,7 +200,7 @@ func_ "pip3 install statsmodels"
 # func_ "apm install stack-overflow-help"
 
 
-#func_ "snap install dbeaver-ce"
+# func_ "snap install dbeaver-ce"
 func_ "wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb"
 func_ "apt install -y ./dbeaver-ce_latest_amd64.deb"
 
