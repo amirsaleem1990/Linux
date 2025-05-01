@@ -1,0 +1,45 @@
+/////////////////////////////////////////////////////////////////////////////////
+//
+// Generated keyboard layout file with the Keyboard Layout Editor.
+// For more about the software, see http://code.google.com/p/keyboardlayouteditor
+//
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+    name[Group1]= "Amir Keyboard";
+	key <AB01> { [ Arabic_hamzaonyeh                           ] }; // ئ 
+	key <AB02> { [ Arabic_hamza                                ] }; // ء 
+	key <AB03> { [ bracketleft,        bracketright            ] }; // [ ] 
+	key <AB04> { [ Arabic_ra,          Arabic_rreh             ] }; // ر ڑ 
+	key <AB05> { [ Armenian_parenleft, Armenian_parenright     ] }; // ( ) 
+	key <AB06> { [ braceleft,          braceright              ] }; // { } 
+	key <AB07> { [ Armenian_mijaket,   U02CE                   ] }; // . ˎ 
+	key <AB08> { [ Arabic_waw                                  ] }; // و 
+	key <AB09> { [ Arabic_zain                                 ] }; // ز 
+	key <AB10> { [ Arabic_zah,         Arabic_question_mark    ] }; // ظ ؟ 
+	key <AC01> { [ Arabic_sheen                                ] }; // ش 
+	key <AC02> { [ Arabic_seen                                 ] }; // س 
+	key <AC03> { [ Farsi_yeh,          Arabic_yeh_baree        ] }; // ی ے 
+	key <AC04> { [ Arabic_beh,         Arabic_peh              ] }; // ب پ
+	key <AC05> { [ Arabic_lam                                  ] }; // ل 
+	key <AC06> { [ Arabic_alef,        Arabic_maddaonalef      ] }; // ا آ 
+	key <AC07> { [ Arabic_teh,         Arabic_tteh             ] }; // ت ٹ 
+	key <AC08> { [ Arabic_noon,        Arabic_noon_ghunna      ] }; // ن ں 
+	key <AC09> { [ Arabic_meem,        quotedbl                ] }; // م " 
+	key <AC10> { [ Arabic_kaf,         Arabic_gaf              ] }; // ك گ 
+	key <AC11> { [ Arabic_tah,         colon                   ] }; // ط : 
+	key <AD01> { [ Arabic_sad                                  ] }; // ص 
+	key <AD02> { [ Arabic_dad                                  ] }; // ض 
+	key <AD03> { [ Arabic_theh                                 ] }; // ث 
+	key <AD04> { [ Arabic_qaf                                  ] }; // ق 
+	key <AD05> { [ Arabic_feh                                  ] }; // ف 
+	key <AD06> { [ Arabic_ghain                                ] }; // غ 
+	key <AD07> { [ Arabic_ain                                  ] }; // ع 
+	key <AD08> { [ Arabic_heh_goal,    Arabic_heh_doachashmee  ] }; // ہ ھ 
+	key <AD09> { [ Arabic_khah                                 ] }; // خ 
+	key <AD10> { [ Arabic_hah                                  ] }; // ح 
+	key <AD11> { [ Arabic_jeem,        Arabic_tcheh            ] }; // ج چ 
+	key <AD12> { [ Arabic_dal,         Arabic_ddal             ] }; // د ڈ 
+	key <TLDE> { [ Arabic_thal                                 ] }; // ذ 
+};
+
+
