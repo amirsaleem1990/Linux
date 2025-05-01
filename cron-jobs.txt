@@ -1,0 +1,1 @@
+*/10 *  *   *   *     export DISPLAY=:0 && /amir_bin/daily_computer_time.py >>  /tmp/cron-daily_computer_time.log 2>&1
