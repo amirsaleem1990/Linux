@@ -10,11 +10,11 @@ def get_user_input(prompt_text):
 # source_dir = "/home/amir/"
 # dest_parent_dir = "/home/amir/Amir/Problem solving/LeetCode/"
 import sys
-if not sys.argv[1]:
+if len(sys.argv) <2:
 	source_dir = get_user_input("Enter absolute path for source dir: ")
 else:
 	source_dir = sys.argv[1]
-if not sys.argv[2]:
+if len(sys.argv) < 3:
 	dest_parent_dir = get_user_input("Enter absolute path for parent destination dir: ")
 else:
 	dest_parent_dir = sys.argv[2]
