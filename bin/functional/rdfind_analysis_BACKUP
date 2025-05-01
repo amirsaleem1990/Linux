@@ -1,0 +1,281 @@
+#!/home/amir/.venv_base/bin/python3
+
+
+"""
+<rdinfd> Linux me duplicate files find karny ka package h, is ki command ye h (rdfind .), is command sy 1 file <results.txt> ganerate hoti h, jis me sari duplicated files k names or some info hoti h
+
+>>> head results.txt
+# Automatically generated
+# duptype id depth size device inode priority  name
+DUPTYPE_FIRST_OCCURRENCE 3598  6 1 2065 16571  1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_WITHIN_SAME_TREE -3598 7 1 2065 8822   1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/Chapter02/web_scraping_test/web_scraping_test/__init__.py
+DUPTYPE_FIRST_OCCURRENCE 3273  5 23 2065 8720  1 ./DataScince/NLP/Python Natural Language Processing/github_repo2/.git/HEAD
+DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 2825  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/.git/HEAD
+DUPTYPE_WITHIN_SAME_TREE -3273 5 23 2065 12141 1 ./DataScince/NLP/Python Natural Language Processing/github_repo_Author/.git/HEAD
+DUPTYPE_FIRST_OCCURRENCE 3704  6 27 2065 3609  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/bookdown/scripts/hello.R
+DUPTYPE_WITHIN_SAME_TREE -3704 6 27 2065 6430  1 ./DataScince/Statistics/Learning-Statistics-with-R/github/original/scripts/hello.R
+
+to is (results.txt) file me mojud files me sy required files remove karny k lye me ny ye script banai h
+
+"""
+
+import sys
+from termcolor import colored
+from pandas import DataFrame, concat
+import os
+import pandas as pd
+
+print("""
+
+#####################################################################
+# At any point you can press CTRL+C to skip the process, and delete #
+# files that you marked till that time                              #
+#####################################################################
+
+""")
+
+x = open("results.txt", 'r').read().splitlines()[2:-1]
+if not x:
+	print("\nThere is no duplicate files in results.txt\nExiting ......\n")
+	sys.exit(0)
+
+# x = list(zip(
+# 		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
+# 		# [' '.join(i.split()[7:]).replace("./", '') for i in x]
+# 		[i[i.index("/")-1:] if i[i.index("/")-1] == '.' else i[i.index("/"):] for i in x]
+# 			)
+# 		)
+
+# To use with something like the following: >>> /usr/bin/rdfind IPHONE/ DCIM/
+x = list(zip(
+		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
+		[' '.join(i.split()[7:]) for i in x]
+		))
+
+df = DataFrame(x, columns=['DUPTYPE_FIRST_OCCURRENCE', 'Path'])
+
+def GET_SIZE(x):
+	try:
+		return os.path.getsize(x)/1024
+	except:
+		try:
+			return os.path.getsize(x.replace("\)", ") "))/1024
+		except:
+			pass
+
+def func_(val):
+	global for_delete_size
+	val = node[int(val)]
+	DELTE_IT.append(val)
+	for_delete_size += os.path.getsize(val)
+	print(f"************ <{val}> added to REMOVE list ************")
+
+df['size_KB'] = df['Path'].apply(GET_SIZE)
+print(f"\n\nThere are {len(df)} files, among them {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} are unique")
+print(f"The total size is {df.size_KB.sum()} bytes, and the unique files size is {df.loc[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].size_KB.sum()} bytes\n\n")
+
+df['node'] = None
+df.iloc[df[df['DUPTYPE_FIRST_OCCURRENCE'].eq(True)].index.to_list(), 3] = list(range(df['DUPTYPE_FIRST_OCCURRENCE'].eq(True).sum()))
+df['node'] = df['node'].fillna(method='ffill')
+
+if df.empty:
+	print("\n\nNo duplicates found.\n\n")
+	sys.exit()
+
+
+print("\n\n############# Extenstions Distribution #############\n")
+df['extention'] = df['Path'].str.split("/").str[-1].str.split(".").str[-1]
+
+df = df[df.size_KB.notna()]
+df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
+
+m_1 = df.groupby('extention').agg({"size_KB" : sum}).div(1024).astype(int).reset_index().rename(columns={'extention': "Extention", 	'size_KB' : 'Total size (MB)'}).sort_values("Total size (MB)", ascending=False).reset_index(drop=True)
+
+count_ = df['Path'].str.split("/").str[-1].str.split(".").str[-1].value_counts()
+
+m_2 = count_.rename_axis("index").rename(1).reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
+m = m_1.merge(m_2, on="Extention", how='outer')
+# print(m.sort_values("Count", ascending=False).to_string())
+print(m.to_string())
+ans_ = input("\nChoose extantin(s)\nIf 1+ extenstions saperate them by pipe '|', eg(pdf|html|txt)\nFor choose all extantions press Enter\n")
+if ans_.strip() != '':
+	df = df[df['extention'].isin(ans_.split("|"))]
+	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
+
+x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
+
+substring_is_provided=False
+if x in ['1', '2']:
+	substring_is_provided=True
+	a = input("\nEnter substring, if multiple strings saperate them by | :\n")
+	provided_substring = a
+	if x == '1':
+		#df = df[df['Path'].str.contains(a)]
+		df = df[df['node'].isin(list(df[df['Path'].str.contains(a)]['node'].unique()))]
+
+		if provided_substring.count("|") == 0:
+			remove_inp = input(f"Do you want to remove all occurence of `{provided_substring}` if there is any other file available? [yes|no] ")
+			if remove_inp == "yes":
+				if input("Are you sure? [yes|no] ") == "yes":
+					def func(g):
+					    x = g['Path'].str.contains(provided_substring).mean() != 1
+					    if x:
+					        return g.name
+					    return None
+					x_ = df.groupby('node').apply(func).dropna()
+					if x_.empty:
+						import sys
+						sys.exit()
+					df = df[df['node'].isin(x_.to_list())]
+					files_to_remove = df['Path'][df['Path'].str.contains(provided_substring)].to_list()
+					size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
+					import amir_analysis_functions
+					size_can_be_reduced = amir_analysis_functions.convert_units(from_unit="by", value=size_bytes, rounded_to=3)
+					print()
+					for f_t_r in files_to_remove:
+						sub_df = df[df['node'].eq(df[df['Path'].eq(f_t_r)].iloc[0, 3])]
+						size_KB = sub_df.iloc[0].loc["size_KB"]
+						print(f"\nSize (KB): {size_KB}")
+						print(colored(f_t_r, "red"))
+						duplicated_files_with_current_file_to_remove = sub_df['Path'][sub_df['Path'].ne(f_t_r)].to_list()
+						print(*duplicated_files_with_current_file_to_remove, sep="\n")
+					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
+					if input("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ") == "yes":
+						if input("Are you sure? [yes | no]") == "yes":
+							for f_t_r in files_to_remove:
+								os.remove(f_t_r)
+							sys.exit(0)
+	elif x == '2':
+		df = df[~df['Path'].str.contains(a)]
+	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+
+
+df.to_csv('/home/amir/._df_1.csv', index=False)
+input("The df is saved as /home/amir/._df_1.csv\nPleas enter any key to proceed: ")
+
+print("\n")
+print(df['node'].value_counts().value_counts().sort_index().to_markdown())
+print("\n")
+
+
+copies_count = input("Do you want some specific count, e.g: only where the file have exeactly two more copies? [ Provide a number or press Enter to skip ] ")
+if copies_count != '':
+	copies_count = int(copies_count)
+	# copies_count = int(input("Enter then desired number: "))
+	df = df[df['node'].isin(df.groupby('node').size().loc[lambda x: x==copies_count].index.to_list())]
+	if df.empty:
+		print("The number is not found")
+		exit()
+r = sorted(df.groupby('node'), key=lambda x:x[1].size_KB.max(), reverse=True)
+r = [i[1]['Path'].to_list() for i in r]
+DELTE_IT = []
+
+for_delete_size = 0
+delete_items_qty = 0
+unique_delete_items_qty = 0
+for node in r:
+	try:
+		node = sorted(node)
+		print("\n<<  ==========================================  >>")
+		print(f"Size of deletion: {round(for_delete_size/1024/1024,2)} MB")
+		print(f"Delete unique items Qty: {unique_delete_items_qty} (among {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} unique files)\n")
+		for e,i in enumerate(node):
+			d = f'$(du -sh "{i}")'
+			if substring_is_provided:
+				com = f"""echo "{e}- {d}" | egrep --color \|'{provided_substring}' """
+			else:
+				com = f"""echo "{e}- {d}" """
+
+			os.system(com)
+		input_ = input("\nFor open all these files type 'o' else\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip range (e.g. 1..7)\n\t- Skip (press any key):\n")
+		if input_ in ["o", "'o'"]:
+			for i in node:
+				com = f"gopen '{i}' 2>/dev/null"
+				os.system(com)
+			input_ = input("\nEnter index for deletion\n\t- single index, (eg: 0)\n\t- Multiple indexes (saperated by dot), eg(0.3.4)\n\t- Skip (press any key):\n")
+		input_ = input_.replace(" ", "")
+		unique_delete_items_qty += 1
+		if ".." in input_: # range index:
+			try:
+				inp = input_.strip().split("..") # ['3', '9']
+				if (int(inp[-1]) - int(inp[0]) + 1) == len(node):
+					print(colored("\n\nYou are going to remove all the following files:", 'red'))
+					print(*node, sep="\n")
+					print(colored("\nAre you sure? [Yes | No] ", 'red'))
+					# user_input_ = input()
+					# if user_input_.lower() != 'yes':
+						# continue
+				for input_ in range(int(inp[0]), int(inp[1])+1):
+					# unique_delete_items_qty += 1
+					func_(str(input_))
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		elif "." in input_: # multi index
+			try:
+				inp = input_.split(".")
+				if len(node) == 2:
+					print(colored("\n\nYou are going to remove all the following files:", 'red'))
+					print(*node, sep="\n")
+					print(colored("\nAre you sure? [Yes | No] ", 'red'))
+
+					user_input_ = input()
+					if user_input_.lower() != 'yes':
+						continue
+				for input_ in inp:
+					# unique_delete_items_qty += 1
+					func_(input_)
+			except:	
+				raise Exception("Wrong input\nExiting ......\n")
+				sys.exit(1)
+		else: # single index
+			try: # single index
+				# unique_delete_items_qty += 1
+				func_(input_)
+			except: # skip
+				pass
+	except:
+		break
+
+if DELTE_IT:
+	print("\n\n\n----------------\nFiles to delete:")
+	# print(*DELTE_IT, sep="\n\t")
+	for n,i in enumerate(DELTE_IT):
+	    print(f"\t{n}- {i}")
+	#print('\n\t' + '\n\t'.join(DELTE_IT))
+	print(colored("\n\nWe are going to delete these files.", 'red'))
+	input_ = input("\n\tpress y to continue\n\tOR\n\tEnter index number to exclude file/s from deletion (if multiple use ',' as delimeter (eg:2,4,5): \n")
+	print("")
+	if input_ == 'y':
+		for i in DELTE_IT:
+			print(f"Removing {i} ..........")
+			os.remove(i)
+	else:
+		if "," in input_:
+			indexes = [int(i.strip()) for i in input_.split(",")]
+		else:
+			indexes = int(input_.strip())
+		D_ = []
+		excluded  = []
+		for n, i in enumerate(DELTE_IT):
+			if not n in indexes:
+				D_.append(i)
+			else:
+				excluded.append(i)
+		if D_:
+			print(f"\n\n============== Excluded files from deletion ==============")
+			print(*excluded, sep="\n")
+
+			print(f"\n\n============== Files to be deleted ==============")
+			print(*D_, sep="\n")
+			if input("\n\nAre you agree to deleted above mentions files? [y|n]\n") == "y":
+				for i in D_:
+					print(f"Removing {i} ..........")
+					os.remove(i)
+		else:
+			print("\nWRONG indexes!!\n")
+else:
+	print("\nYou didn't choose any file to delete\nExiting ........")
+print()
