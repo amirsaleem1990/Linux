@@ -1,4 +1,5 @@
 #!/home/amir/.venv_base/bin/python3
+input("Make </tmp/all_files.txt> by using find . -type f > /tmp/all_files.txt, then press any key ")
 import pandas as pd
 import os
 from IPython.display import display
@@ -16,7 +17,7 @@ df = pd.DataFrame({"full" : f, "file_name" : f2, "path" : f3})
 
 
 df = df[df.full.apply(os.path.exists)]
-df = df[df.file_name.duplicated(keep=False)]
+df = df[df.file_name.duplicated(keep=False)] # Keep only duplicated files by name
 
 if MUST_BE_INCLUDED_SUB_STRINGS:
     df = df[
@@ -53,6 +54,9 @@ if MUST_BE_EXCLUDED_SUB_STRINGS:
 
 print(df.shape)
 df['size_bytes'] = df.full.apply(os.path.getsize)
+print()
+print(df.head().to_markdown(index=False))
+print()
 
 to_remove = []
 def func(user_inp, d):
@@ -125,3 +129,5 @@ if to_remove:
     if user_inp == "yes":
         for file in to_remove:
             os.remove(file)
+else:
+    print("\nNo file to be removed\nExiting....\n")
