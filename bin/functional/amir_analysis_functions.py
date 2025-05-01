@@ -968,24 +968,98 @@ def cksum_python(file_path):
 	import hashlib
 
 	def calculate_checksum(file_path, algorithm="sha256"):
-	    hash_func = hashlib.new(algorithm)
-	    with open(file_path, "rb") as f:
-	        while chunk := f.read(4096):  # Read in chunks for efficiency
-	            hash_func.update(chunk)
-	    return hash_func.hexdigest()
+		hash_func = hashlib.new(algorithm)
+		with open(file_path, "rb") as f:
+			while chunk := f.read(4096):  # Read in chunks for efficiency
+				hash_func.update(chunk)
+		return hash_func.hexdigest()
 	checksum = calculate_checksum(file_path, "sha256")  # You can also use 'md5', 'sha1', etc.
 	return checksum
 
 
 
 def time_since_last_update_of_a_file(file_path):
-    import os
-    import time
-    modified_time = os.path.getmtime(file_path)
-    current_time = time.time()
-    time_diff = int(current_time - modified_time)
-    days = time_diff // 86400
-    hours = (time_diff % 86400) // 3600
-    minutes = (time_diff % 3600) // 60
-    seconds = time_diff % 60
-    return f"{days:02}:{hours:02}:{minutes:02}:{seconds:02}"
+	import os
+	import time
+	modified_time = os.path.getmtime(file_path)
+	current_time = time.time()
+	time_diff = int(current_time - modified_time)
+	days = time_diff // 86400
+	hours = (time_diff % 86400) // 3600
+	minutes = (time_diff % 3600) // 60
+	seconds = time_diff % 60
+	return f"{days:02}:{hours:02}:{minutes:02}:{seconds:02}"
+
+
+def get_image_hash(image_path, HASH_SIZE=6):
+	from PIL import Image
+	import imagehash
+	with Image.open(image_path) as img:
+		# img_hash = str(imagehash.average_hash(img))
+		img_hash = str(imagehash.phash(img, hash_size=HASH_SIZE))
+	return img_hash
+
+def get_hashes_of_all_images_recursively_in_this_directory(directory):
+	import os
+	from PIL import Image
+	import imagehash
+	from collections import defaultdict
+	import pickle
+	import shutil
+
+	hash_file_name = "/home/amir/.duplicates.pkl"
+	error_file_name = "/home/amir/.duplicates_ERROR_files.pkl"
+	pickle.dump([], open(hash_file_name, 'wb'))
+	pickle.dump([], open(error_file_name, 'wb'))
+
+	hashes = defaultdict(list)
+	e=0
+	error_files = []
+	total_files_count = int(list(os.popen(f'find "{directory}" -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" | wc -l'))[0])
+	en = 0
+	for root, _, files in os.walk(directory):
+		for file in files:
+			en += 1
+			perc = int(en / total_files_count * 100)
+			if perc % 3 == 0:
+				print(f">>> {perc}% scanning is completed ...")
+			if file.lower().endswith(('.jpg', '.jpeg', '.png')):
+				try:
+					path = os.path.join(root, file)
+					hashes[ get_image_hash(path) ].append(path)
+					pickle.dump(hashes, open(hash_file_name, 'wb'))
+				except Exception as error:
+					error_files.append(file)
+					pickle.dump(error_files, open(error_file_name, 'wb'))
+					print(f"Error processing {file}: {error}")
+				if e%50 == 0:
+					print(f">Image# {e} with {len(hashes)} records saved in {hash_file_name}", sep=" | ")
+				e += 1
+	to_remove = []
+	hashes = pickle.load(open("/home/amir/.duplicates.pkl", 'rb'))
+	for hash_, files in hashes.items():
+		if len(files) == 1:
+			continue
+		if not any(['___TO_MOVEEEEEEEEEEEEEEEEEEEEEE' in i for i in files]):
+			continue
+
+		files = [file for file in files if os.path.exists(file)]
+
+		if len(files) < 2:
+			continue
+
+		command = ""
+		mx = max([len(file) for file in files])
+		for file in files:
+			ff = file + (mx-len(file))*' '
+			print(ff, os.path.getsize(file))
+			command += f"eog -f '{file}'; "
+		os.system(command)
+		user_inp = input("File to remove: ")
+		if not user_inp:
+			continue
+		f_to_remove = files[int(user_inp)]
+		to_remove.append(f_to_remove)
+		pickle.dump(to_remove, open("/home/amir/.duplicates_TO_REMOVE_3.pkl", 'wb'))
+		print(f"Removing {f_to_remove}.. ")
+		shutil.move(f_to_remove, '/home/amir/.local/share/Trash/files/')
