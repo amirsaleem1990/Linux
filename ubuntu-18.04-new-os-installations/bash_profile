@@ -113,6 +113,8 @@ alias camera_record_video="ffmpeg -f v4l2 -video_size 640x480 -i /dev/video0 vid
 
 alias VPN="echo nhttps://www.vpnbook.com/; nmcli connection modify vpnbook-ca196-udp25000 +vpn.secrets 'password-file=/home/amir/github/Amir-personal/VPN_password.txt'; nmcli connection up vpnbook-ca196-udp25000"
 
+# alias youtube_dl_docker='sudo docker run --rm -v "$(pwd):/downloads" youtube-dl-image:latest'
+
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
@@ -1324,7 +1326,7 @@ random_number(){
 
 declare -f i
 i() {
-    python_code="import pandas as pd; import numpy as np; import matplotlib.pyplot as plt; import pickle; print('\n\npandas, numpy, matplotlib, and pickle are imported\n\n')";
+    python_code="import pickle,  pandas as pd,  numpy as np,  matplotlib.pyplot as plt; print('\n\npickle, pandas, numpy, matplotlib, and pickle are imported\n\n')";
     echo "$python_code" > /tmp/python_code;
     $HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
