@@ -66,7 +66,7 @@ def GET_SIZE(x):
 def func_(val):
 	global for_delete_size
 	val = node[int(val)]
-	DELTE_IT.append(val)
+	DELETE_IT.append(val)
 	for_delete_size += os.path.getsize(val)
 	print(f"************ <{val}> added to REMOVE list ************")
 
@@ -87,8 +87,8 @@ print("\n\n############# Extenstions Distribution #############\n")
 df['extention'] = df['Path'].str.split("/").str[-1].str.split(".").str[-1]
 
 df = df[df.size_KB.notna()]
-df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
+df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
 m_1 = df.groupby('extention').agg({"size_KB" : sum}).div(1024).astype(int).reset_index().rename(columns={'extention': "Extention", 	'size_KB' : 'Total size (MB)'}).sort_values("Total size (MB)", ascending=False).reset_index(drop=True)
 
@@ -96,60 +96,55 @@ count_ = df['Path'].str.split("/").str[-1].str.split(".").str[-1].value_counts()
 
 m_2 = count_.rename_axis("index").rename(1).reset_index().rename(columns={"index" : "Extention", 1 : "Count"}) 
 m = m_1.merge(m_2, on="Extention", how='outer')
-# print(m.sort_values("Count", ascending=False).to_string())
-print(m.to_string())
+print(m.sort_values("Count", ascending=False).to_string())
+
 ans_ = input("\nChoose extantin(s)\nIf 1+ extenstions saperate them by pipe '|', eg(pdf|html|txt)\nFor choose all extantions press Enter\n")
 if ans_.strip() != '':
 	df = df[df['extention'].isin(ans_.split("|"))]
 	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
+to_be_included = input(f"\nDo you want {colored('ONLY', 'red')} some specific substring(s) in file_names? if yes then enter substring, if multiple then use | as a saperator, then press any key to skip\n")
+to_be_excluded = input(f"\nDo you want to {colored('AVOID', 'red')} some specific substring in file_names? if yes then enter substring, if multiple then use | as a saperator, then press any key to skip\n")
 
-x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
+if to_be_included:
+	df = df[df['node'].isin(list(df[df['Path'].str.contains(to_be_included)]['node'].unique()))]
+if to_be_excluded:
+	df = df[~df['Path'].str.contains(to_be_excluded)]
 
-substring_is_provided=False
-if x in ['1', '2']:
-	substring_is_provided=True
-	a = input("\nEnter substring, if multiple strings saperate them by | :\n")
-	provided_substring = a
-	if x == '1':
-		#df = df[df['Path'].str.contains(a)]
-		df = df[df['node'].isin(list(df[df['Path'].str.contains(a)]['node'].unique()))]
+df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
-		if provided_substring.count("|") == 0:
-			remove_inp = input(f"Do you want to remove all occurence of `{provided_substring}` if there is any other file available? [yes|no] ")
-			if remove_inp == "yes":
-				if input("Are you sure? [yes|no] ") == "yes":
-					def func(g):
-					    x = g['Path'].str.contains(provided_substring).mean() != 1
-					    if x:
-					        return g.name
-					    return None
-					x_ = df.groupby('node').apply(func).dropna()
-					if x_.empty:
-						import sys
-						sys.exit()
-					df = df[df['node'].isin(x_.to_list())]
-					files_to_remove = df['Path'][df['Path'].str.contains(provided_substring)].to_list()
-					size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
-					import amir_analysis_functions
-					size_can_be_reduced = amir_analysis_functions.convert_units(from_unit="by", value=size_bytes, rounded_to=3)
-					print()
+if to_be_included:
+	remove_inp = input(f"Do you want to {colored('REMOVE', 'red')} all occurence of `{to_be_included}` if there is any other file available? [yes|no] ")
+	if remove_inp == "yes":
+		if input("Are you sure? [yes|no] ") == "yes":
+			def func(g):
+			    x = g['Path'].str.contains(to_be_included).mean() != 1
+			    if x:
+			        return g.name
+			    return None
+			x_ = df.groupby('node').apply(func).dropna()
+			if x_.empty:
+				import sys
+				sys.exit()
+			df = df[df['node'].isin(x_.to_list())]
+			files_to_remove = df['Path'][df['Path'].str.contains(to_be_included)].to_list()
+			size_bytes = sum([os.path.getsize(i) for i in  files_to_remove])
+			import amir_analysis_functions
+			size_can_be_reduced = amir_analysis_functions.convert_units(from_unit="by", value=size_bytes, rounded_to=3)
+			print()
+			for f_t_r in files_to_remove:
+				sub_df = df[df['node'].eq(df[df['Path'].eq(f_t_r)].iloc[0, 3])]
+				size_KB = sub_df.iloc[0].loc["size_KB"]
+				print(f"\nSize (KB): {size_KB}")
+				print(colored(f_t_r, "red"))
+				duplicated_files_with_current_file_to_remove = sub_df['Path'][sub_df['Path'].ne(f_t_r)].to_list()
+				print(*duplicated_files_with_current_file_to_remove, sep="\n")
+			print(f"\nSize of All RED files combined: {size_can_be_reduced}")
+			if input(colored("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ", 'red')) == "yes":
+				if input(colored("Are you sure? [yes | no] ", 'red')) == "yes":
 					for f_t_r in files_to_remove:
-						sub_df = df[df['node'].eq(df[df['Path'].eq(f_t_r)].iloc[0, 3])]
-						size_KB = sub_df.iloc[0].loc["size_KB"]
-						print(f"\nSize (KB): {size_KB}")
-						print(colored(f_t_r, "red"))
-						duplicated_files_with_current_file_to_remove = sub_df['Path'][sub_df['Path'].ne(f_t_r)].to_list()
-						print(*duplicated_files_with_current_file_to_remove, sep="\n")
-					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
-					if input("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ") == "yes":
-						if input("Are you sure? [yes | no]") == "yes":
-							for f_t_r in files_to_remove:
-								os.remove(f_t_r)
-							sys.exit(0)
-	elif x == '2':
-		df = df[~df['Path'].str.contains(a)]
-	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
+						os.remove(f_t_r)
+					sys.exit(0)
 
 
 df.to_csv('/home/amir/._df_1.csv', index=False)
@@ -170,7 +165,7 @@ if copies_count != '':
 		exit()
 r = sorted(df.groupby('node'), key=lambda x:x[1].size_KB.max(), reverse=True)
 r = [i[1]['Path'].to_list() for i in r]
-DELTE_IT = []
+DELETE_IT = []
 
 for_delete_size = 0
 delete_items_qty = 0
@@ -183,8 +178,8 @@ for node in r:
 		print(f"Delete unique items Qty: {unique_delete_items_qty} (among {df['DUPTYPE_FIRST_OCCURRENCE'].sum()} unique files)\n")
 		for e,i in enumerate(node):
 			d = f'$(du -sh "{i}")'
-			if substring_is_provided:
-				com = f"""echo "{e}- {d}" | egrep --color \|'{provided_substring}' """
+			if to_be_included:
+				com = f"""echo "{e}- {d}" | egrep --color \|'{to_be_included}' """
 			else:
 				com = f"""echo "{e}- {d}" """
 
@@ -239,27 +234,34 @@ for node in r:
 	except:
 		break
 
-if DELTE_IT:
+if DELETE_IT:
 	print("\n\n\n----------------\nFiles to delete:")
-	# print(*DELTE_IT, sep="\n\t")
-	for n,i in enumerate(DELTE_IT):
+	# print(*DELETE_IT, sep="\n\t")
+	for n,i in enumerate(DELETE_IT):
 	    print(f"\t{n}- {i}")
-	#print('\n\t' + '\n\t'.join(DELTE_IT))
+	open("/tmp/files_to_rmoove", 'w').write("'" + "' '".join(DELETE_IT) + "'")
+	print("\n>>>>>>>>>>>>The files's names for deletion are stored at '/tmp/files_to_rmoove'\n")
+	#print('\n\t' + '\n\t'.join(DELETE_IT))
 	print(colored("\n\nWe are going to delete these files.", 'red'))
-	input_ = input("\n\tpress y to continue\n\tOR\n\tEnter index number to exclude file/s from deletion (if multiple use ',' as delimeter (eg:2,4,5): \n")
+	prompt = f"\n\tType {colored('YES', 'red')} to continue, {colored('Q', 'red')} for quit\n\tOR\n\tEnter index number to exclude file/s from deletion (if multiple use ',' as delimeter (eg:2,4,5): \n"
+	input_ = input(prompt)
+	while not input_ in ('YES', 'Q'):
+		input_ = input(prompt)
 	print("")
-	if input_ == 'y':
-		for i in DELTE_IT:
+	if input_ == 'Q':
+		sys.exit()
+	elif input_ == 'YES':
+		for i in DELETE_IT:
 			print(f"Removing {i} ..........")
 			os.remove(i)
-	else:
+	elif all([i.isdigit() or i==',' for i in input_]):
 		if "," in input_:
 			indexes = [int(i.strip()) for i in input_.split(",")]
 		else:
 			indexes = int(input_.strip())
 		D_ = []
 		excluded  = []
-		for n, i in enumerate(DELTE_IT):
+		for n, i in enumerate(DELETE_IT):
 			if not n in indexes:
 				D_.append(i)
 			else:
