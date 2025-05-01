@@ -1,205 +1,219 @@
-#!/home/amir/.venv_base/bin/python3
-# https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
-
-# youtube-dl --version # 2021.12.17
-
-import multiprocessing.dummy
-import subprocess
-import os
-import traceback
-import sys
-
-
-def download(url):
-	if url[0] == "#":
-		return
-	try:
-		os.system(f"youtube-dl '{url}'")
-		# if low_quality:
-		# 	subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
-		# else:
-		# 	subprocess.check_call(['youtube-dl', '-f', 'best', '--no-playlist', url])
-		open("downloaded.txt", "a").write(url+"\n")
-	except:
-		e_ = traceback.format_exc()
-		print("\n\nERROR --------------------------------------------------")
-		print(f"url: {url}")
-		print(e_)
-		print("---------------------------------------------- Error END\n\n")
-		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
-
-def pool_func():
-	try:
-		downloaded = open("downloaded.txt", "r").read().splitlines()
-		urls_to_download = [i for i in urls_to_download if not i in downloaded]
-	except:
-		pass        
-	p = multiprocessing.dummy.Pool()
-	return p
-
-def exclude_func(urls_to_download):
-	te_be_removed = []
-	for key_word in exclude.split("|"):
-		for url in urls_to_download:
-			if key_word.lower().strip() in url:
-				te_be_removed.append(url)
-	return [i for i in urls_to_download if not i in te_be_removed]
-
-def Exit():
-	print(f"\n\nErrors saved as {error_file}\n\n")
-	after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
-	downloaded_size= after - before
-	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
-	sys.exit(1)
-
-
-def main_func():
-	p = pool_func()
-	try:
-		p.map(download, urls_to_download)
-	except KeyboardInterrupt:
-		Exit()
-
-
-def get_incompleted_videos_urls(urls_file_name):
-	# urls = open(urls_file_name, 'r').read().splitlines()
-	# incomplete_files = " ".join([i  for i in os.listdir() if i.endswith("ytdl") or i.endswith("part")])
-	# x = list(map(lambda x: x.split("/")[-1], urls))
-	# x2 = []
-	# for i in x:
-	# 	if '.com_-_' in i:
-	# 		x2.append(i.split(".com_-_")[1].replace("_", " "))
-	# 	else:
-	# 		x2.append(i.replace("_", " "))
-	# x = [urls[e] for e, url in enumerate(x2) if url in incomplete_files and (urls[e]) and (not urls[e].startswith("#"))]
-	# if x:
-	# 	return x
-	# return
-
-
-	# all_urls_str = open(urls_file_name, 'r').read()
-	# all_urls_list = all_urls_str.splitlines()
-	# remove_these_values = set(map(lambda x: "/".join(x.split("/")[:-1]), all_urls_str.splitlines()))
-	# for i in remove_these_values:
-	#     all_urls_str = all_urls_str.replace(i+"/", "")
-	# all_urls_str = ["-".join(i.split("-")[:-3])  for i in all_urls_str.splitlines()]
-	# names = "\n".join(os.listdir()).lower().replace(" ", "-")
-	# f_urls = [all_urls_list[e] for e, i in enumerate(all_urls_str) if i in names]
-	# if f_urls:
-	# 	return f_urls
-	# return 
-
-	u = list(map(str.strip, list(os.popen("ls | grep .mp4.part$ | sed 's/.mp4.part//g' | rev | cut -d- -f1 | rev"))))
-	x = open(urls_file_name, 'r').read().splitlines()
-	r = []
-	for i in u:
-	    for ii in x:
-	        if i in ii:
-	            r.append(ii)
-	if r:
-		return r
-	return
+#/usr/bin/bash
+/amir_bin/download-multiple-videos-with-multithreding.py
+exit
 
 
 
-def get_urls_to_download(exclude):
-	global urls_file_name
-	try:
-		urls_to_download = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
-		urls_file_name = "mp4_links.txt"
-	except:
-		try:
-			urls_file_name = sys.argv[1]
-		except: 
-			import readline
-			readline.parse_and_bind("tab: complete")
-			urls_file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
-		urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+# /amir_bin/download-multiple-videos-with-multithreding.py and the below code are exact same except:
+# 	'download' function has been modified to use 'yt_dlp' python library, while the below code was using 'youtube-dl', a Linux package.
+# 	Some other very minor modifications.
 
 
-	if exclude:
-		urls_to_download = exclude_func(urls_to_download)
+
+
+
+# #!/home/amir/.venv_base/bin/python3
+# # https://stackoverflow.com/questions/50197643/youtbe-dl-multiple-downloads-at-the-same-time
+
+# # youtube-dl --version # 2021.12.17
+
+# import multiprocessing.dummy
+# import subprocess
+# import os
+# import traceback
+# import sys
+
+
+# def download(url):
+# 	if url[0] == "#":
+# 		return
+# 	try:
+# 		os.system(f"youtube-dl '{url}'")
+# 		# if low_quality:
+# 		# 	subprocess.check_call(['youtube-dl', '-f', 'bestvideo[height<=480]+bestaudio/best[height<=480]', '--no-playlist', url])
+# 		# else:
+# 		# 	subprocess.check_call(['youtube-dl', '-f', 'best', '--no-playlist', url])
+# 		open("downloaded.txt", "a").write(url+"\n")
+# 	except:
+# 		e_ = traceback.format_exc()
+# 		print("\n\nERROR --------------------------------------------------")
+# 		print(f"url: {url}")
+# 		print(e_)
+# 		print("---------------------------------------------- Error END\n\n")
+# 		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
+
+# def pool_func():
+# 	try:
+# 		downloaded = open("downloaded.txt", "r").read().splitlines()
+# 		urls_to_download = [i for i in urls_to_download if not i in downloaded]
+# 	except:
+# 		pass        
+# 	p = multiprocessing.dummy.Pool()
+# 	return p
+
+# def exclude_func(urls_to_download):
+# 	te_be_removed = []
+# 	for key_word in exclude.split("|"):
+# 		for url in urls_to_download:
+# 			if key_word.lower().strip() in url:
+# 				te_be_removed.append(url)
+# 	return [i for i in urls_to_download if not i in te_be_removed]
+
+# def Exit():
+# 	print(f"\n\nErrors saved as {error_file}\n\n")
+# 	after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+# 	downloaded_size= after - before
+# 	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
+# 	sys.exit(1)
+
+
+# def main_func():
+# 	p = pool_func()
+# 	try:
+# 		p.map(download, urls_to_download)
+# 	except KeyboardInterrupt:
+# 		Exit()
+
+
+# def get_incompleted_videos_urls(urls_file_name):
+# 	# urls = open(urls_file_name, 'r').read().splitlines()
+# 	# incomplete_files = " ".join([i  for i in os.listdir() if i.endswith("ytdl") or i.endswith("part")])
+# 	# x = list(map(lambda x: x.split("/")[-1], urls))
+# 	# x2 = []
+# 	# for i in x:
+# 	# 	if '.com_-_' in i:
+# 	# 		x2.append(i.split(".com_-_")[1].replace("_", " "))
+# 	# 	else:
+# 	# 		x2.append(i.replace("_", " "))
+# 	# x = [urls[e] for e, url in enumerate(x2) if url in incomplete_files and (urls[e]) and (not urls[e].startswith("#"))]
+# 	# if x:
+# 	# 	return x
+# 	# return
+
+
+# 	# all_urls_str = open(urls_file_name, 'r').read()
+# 	# all_urls_list = all_urls_str.splitlines()
+# 	# remove_these_values = set(map(lambda x: "/".join(x.split("/")[:-1]), all_urls_str.splitlines()))
+# 	# for i in remove_these_values:
+# 	#     all_urls_str = all_urls_str.replace(i+"/", "")
+# 	# all_urls_str = ["-".join(i.split("-")[:-3])  for i in all_urls_str.splitlines()]
+# 	# names = "\n".join(os.listdir()).lower().replace(" ", "-")
+# 	# f_urls = [all_urls_list[e] for e, i in enumerate(all_urls_str) if i in names]
+# 	# if f_urls:
+# 	# 	return f_urls
+# 	# return 
+
+# 	u = list(map(str.strip, list(os.popen("ls | grep .mp4.part$ | sed 's/.mp4.part//g' | rev | cut -d- -f1 | rev"))))
+# 	x = open(urls_file_name, 'r').read().splitlines()
+# 	r = []
+# 	for i in u:
+# 	    for ii in x:
+# 	        if i in ii:
+# 	            r.append(ii)
+# 	if r:
+# 		return r
+# 	return
+
+
+
+# def get_urls_to_download(exclude):
+# 	global urls_file_name
+# 	try:
+# 		urls_to_download = [i for i in set(open("mp4_links.txt", "r").read().splitlines()) if i.strip()]
+# 		urls_file_name = "mp4_links.txt"
+# 	except:
+# 		try:
+# 			urls_file_name = sys.argv[1]
+# 		except: 
+# 			import readline
+# 			readline.parse_and_bind("tab: complete")
+# 			urls_file_name = input("file <mp4_links.txt> not found, please Enter your file name: ")
+# 		urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+
+
+# 	if exclude:
+# 		urls_to_download = exclude_func(urls_to_download)
 	
-	return urls_to_download
+# 	return urls_to_download
 
 
-urls_file_name = ""
+# urls_file_name = ""
 
-exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
-get_input_from_user = False
-if os.path.exists(exclude_file):
-	e = open(exclude_file, 'r').read().strip()
-	if e:
-		# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
-		user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
-		if user_inp.lower().strip() in ['yes', '']:
-			exclude = e
-		else:
-			get_input_from_user=True
-	else:
-		get_input_from_user= True
-else:
-	get_input_from_user=True
-if get_input_from_user:
-	exclude = input("Words to exclude (if multiple separate them by '|')  ")
-	if exclude:
-		open(exclude_file, 'w').write(exclude)
-
-
-error_file = "/home/amir/.downloading_errors.txt"
-if os.path.exists(error_file):
-	os.remove(error_file)
+# exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+# get_input_from_user = False
+# if os.path.exists(exclude_file):
+# 	e = open(exclude_file, 'r').read().strip()
+# 	if e:
+# 		# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+# 		user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
+# 		if user_inp.lower().strip() in ['yes', '']:
+# 			exclude = e
+# 		else:
+# 			get_input_from_user=True
+# 	else:
+# 		get_input_from_user= True
+# else:
+# 	get_input_from_user=True
+# if get_input_from_user:
+# 	exclude = input("Words to exclude (if multiple separate them by '|')  ")
+# 	if exclude:
+# 		open(exclude_file, 'w').write(exclude)
 
 
-before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+# error_file = "/home/amir/.downloading_errors.txt"
+# if os.path.exists(error_file):
+# 	os.remove(error_file)
 
 
-# low_quality = False
-# ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
-# if  ans == "yes":
-# 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
-# 		low_quality = True
+# before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+
+
+# # low_quality = False
+# # ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
+# # if  ans == "yes":
+# # 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
+# # 		low_quality = True
 
 
 
-urls_to_download = get_urls_to_download(exclude)
+# urls_to_download = get_urls_to_download(exclude)
 
 
-x = get_incompleted_videos_urls(urls_file_name)
-if not x is None:
-	urls_to_download = x
+# x = get_incompleted_videos_urls(urls_file_name)
+# if not x is None:
+# 	urls_to_download = x
 
-keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ").lower()
-if keyword:
-	urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
+# keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ").lower()
+# if keyword:
+# 	urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
 
-main_func()
+# main_func()
 
-n=0
-while True:
-	part_files = [i for i in os.listdir() if i.endswith(".part")]
-	if not part_files:
-		Exit()
-	# urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
-	# part_files_str = ' '.join(part_files)
-	# part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
-	# if not part_files:
-	#   Exit()  
-	# urls_to_download = part_files
-	# if exclude:
-		# urls_to_download = exclude_func()
+# n=0
+# while True:
+# 	part_files = [i for i in os.listdir() if i.endswith(".part")]
+# 	if not part_files:
+# 		Exit()
+# 	# urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
+# 	# part_files_str = ' '.join(part_files)
+# 	# part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
+# 	# if not part_files:
+# 	#   Exit()  
+# 	# urls_to_download = part_files
+# 	# if exclude:
+# 		# urls_to_download = exclude_func()
 
-	x = get_incompleted_videos_urls(urls_file_name)
-	if not x is None:
-		urls_to_download = x
-	else:
-		urls_to_download = get_urls_to_download(exclude)
+# 	x = get_incompleted_videos_urls(urls_file_name)
+# 	if not x is None:
+# 		urls_to_download = x
+# 	else:
+# 		urls_to_download = get_urls_to_download(exclude)
 
-	if n > 5:
-		urls_to_download = get_urls_to_download(exclude)
+# 	if n > 5:
+# 		urls_to_download = get_urls_to_download(exclude)
 
-	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
-	main_func()
-	n += 1
-	if n > 20:
-		break
+# 	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
+# 	main_func()
+# 	n += 1
+# 	if n > 20:
+# 		break
