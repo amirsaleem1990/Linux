@@ -13,6 +13,7 @@ def get_soup_object_using_selenium(url, visual=False):
 	from selenium import webdriver
 	from bs4 import BeautifulSoup
 	import re
+
 	# url = input("Enter your url: ")
 	# visusl = True if input("Visual or not? [y|n]") in ['y', 'Y'] else False
 
