@@ -1,20 +1,27 @@
 #!/home/amir/.venv_base/bin/python3
 ##!/usr/bin/python3
 ##!/usr/bin/bash
-
+import warnings
 import sys
 import os
 from termcolor import colored
+
+warnings.filterwarnings("ignore")
 
 _file__ = '/tmp/.qmi'
 if os.path.exists(_file__):
 	os.remove(_file__)
 
 print("\n\n#############################################################")
-os.system("echo Filesystem,Size,Used,Avail,Use%,Mounted > /tmp/.dC")
+bash_commands_0 = '''
+echo Filesystem,Size,Used,Avail,Use%,Mounted > /tmp/.dC
+df -h | grep '/dev/sd\\|/dev/nvme' | sed 's/ \\{1,\\}/,/g' | grep -v /efi >> /tmp/.dC
+cat  /tmp/.dC | column -t -s, | grep --color "\\|Filesystem\\|Size\\|Used\\|Avail\\|Use%\\|Mounted"
+'''
 # print(colored("", "red") + "\n-----------------------------------------------------")
-os.system("df -h | grep '/dev/sd\|/dev/nvme' | sed 's/ \{1,\}/,/g' | grep -v /efi >> /tmp/.dC")
-os.system("""cat  /tmp/.dC | column -t -s, | grep --color "\|Filesystem\|Size\|Used\|Avail\|Use%\|Mounted" """)
+open("/tmp/bash_commands_0.sh", 'w').write(bash_commands_0)
+os.system("/usr/bin/bash /tmp/bash_commands_0.sh")
+
 print("#############################################################\n\n")
 
 def MB_to_GB(x, round_to_n=0):
@@ -32,11 +39,13 @@ def m(x, add_pipe_in_last=True):
 # breakpoint()
 ###############
 # mounted_at = list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | rev | cut -d, -f1 | rev  | cut -d' ' -f2-5"))
-mounted_at = list(map(str.strip, list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | grep -v /boot/efi | cut -d/ -f4-"))))
-mounted_at = ['/' if not i.strip() else f"/{i.strip()}" for i in mounted_at]
+# mounted_at = list(map(str.strip, list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | grep -v /boot/efi | cut -d/ -f4-"))))
+# mounted_at = ['/' if not i.strip() else f"/{i.strip()}" for i in mounted_at]
+
+mounted_at = os.popen("df | grep '^/dev/sd\\|/dev/nvme' | grep -v /boot/efi | awk '{print $6}'").read().splitlines()
 
 # devs = list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | cut -d, -f1"))
-devs = list(os.popen("df | grep '^/dev/sd\|/dev/nvme' |grep -v efi$| awk '{print $1}'"))
+devs = os.popen("df | grep '^/dev/sd\\|/dev/nvme' |grep -v efi$| awk '{print $1}'").read().splitlines()
 devs = [i.strip() for i in devs]
 ###############
 
@@ -67,6 +76,8 @@ for m, d in zip(mounted_at, devs):
 	total *= 0.95 # total ka 5% hissa qabil-e-istimal nahi hota
 	used_perc = round(used / total * 100)#str() + "%"
 	i = '>'*(used_perc//3) + "!"*((100-used_perc)//3)
+	if len(i) < 33:
+		i += (33-len(i))*"!"
 	# print(total, used,free)
 	total = bytes_to(total)
 	used = bytes_to(used)
@@ -78,7 +89,7 @@ for i in lst:
 	f = f"{i[0]},{i[1]},{i[2]},{i[3]},{i[4]},{i[5]}%,{i[6]}"
 	r.append(f)
 open(_file__, 'w').write('\n'.join(r)+"\n")
-os.system(f'cat {_file__} | column -t -s, | grep --color=auto "\|Total\|Used[%]*\|Avail\|Mounted\|>\|!"; rm -f /tmp/{_file__} /tmp/.dC')
+os.system(f''' cat {_file__} | column -t -s, | grep --color=auto -E ">|\\!|Total|Used[%]*|Avail|Mounted" | sed -e 's/>/\x1b[31m>\x1b[0m/g' -e 's/!/\x1b[32m!\x1b[0m/g' ''')
 print()
 
 ########################
