@@ -1326,7 +1326,7 @@ random_number(){
 
 declare -f i
 i() {
-    python_code="import pickle,  pandas as pd,  numpy as np,  matplotlib.pyplot as plt; print('\n\npickle, pandas, numpy, matplotlib, and pickle are imported\n\n')";
+    python_code="import os, pickle,  pandas as pd,  numpy as np,  matplotlib.pyplot as plt; print('\n\nos, pickle, pandas, numpy, matplotlib, and pickle are imported\n\n')";
     echo "$python_code" > /tmp/python_code;
     $HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
