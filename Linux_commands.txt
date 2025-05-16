@@ -2200,3 +2200,6 @@ file=abcdflkjadf.png; echo  abcdflkjadf.pdf
 
 
 # Save hash of all files in hashes.csv ......... find . -type f -print0 | parallel -0 md5sum > hashes.csv
+
+
+increase by one ... ((index++)) 
