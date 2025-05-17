@@ -1063,3 +1063,21 @@ def get_hashes_of_all_images_recursively_in_this_directory(directory):
 		pickle.dump(to_remove, open("/home/amir/.duplicates_TO_REMOVE_3.pkl", 'wb'))
 		print(f"Removing {f_to_remove}.. ")
 		shutil.move(f_to_remove, '/home/amir/.local/share/Trash/files/')
+
+
+def show_progress_bar_for_time(total_duration_seconds, sleep_time_sec=1):
+	import sys
+	import time
+	bar_length = 80  # Width of the progress bar
+	for i in range(total_duration_seconds):
+		# Calculate progress percentage
+		progress = (i + 1) / total_duration_seconds
+		# Calculate how many blocks to show
+		blocks = int(round(bar_length * progress))
+		# Create the progress bar string
+		bar = '█' * blocks + '-' * (bar_length - blocks)
+		# Print with \r to return to the start of the line
+		sys.stdout.write(f"\rProgress: [{bar}] {int(progress * 100)}%")
+		# sys.stdout.flush()
+		time.sleep(sleep_time_sec)
+	print()  # New line when done
