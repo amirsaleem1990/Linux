@@ -2203,3 +2203,7 @@ file=abcdflkjadf.png; echo  abcdflkjadf.pdf
 
 
 increase by one ... ((index++)) 
+
+
+subtract x from y .................
+x=5; y=10; let "result=y-x"; echo $result #5
