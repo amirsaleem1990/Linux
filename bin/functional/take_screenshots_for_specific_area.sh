@@ -2,7 +2,7 @@
 
 test -e /tmp/screen_shots_prefix
 if [[ $? -eq 0 ]]; then
-	read -p "Are you need to reuse the last prefix? [yes|no]: " ans
+	read -p "Do you need to reuse the last prefix? [yes|no]: " ans
 	if [[ $ans == "yes" ]]; then
 		prefix=$(cat /tmp/screen_shots_prefix)
 		echo $prefix > /tmp/screen_shots_prefix
@@ -18,7 +18,7 @@ fi
 
 test -e /tmp/starting_x
 if [[ $? -eq 0 ]]; then
-	read -p "Are you need to reuse the last positions? [yes|no]: " ans
+	read -p "Do you need to reuse the last positions? [yes|no]: " ans
 	if [[ $ans  == "yes" ]]; then
 		starting_x=$(cat /tmp/starting_x)
 		starting_y=$(cat /tmp/starting_y)
