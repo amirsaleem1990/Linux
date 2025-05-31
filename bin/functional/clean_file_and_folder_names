@@ -18,7 +18,7 @@ func_2() {
 	if [[ $x != "" ]]; then
 		echo -e "\nORIGNAL : $current"
 		echo      "MODIFIED: $x"
-		read -p "are you need to rename[y|n]? ....." ans
+		read -p "Do you want to rename[y|n]? ....." ans
 		if [[ $ans == 'y' ]]; then
 			mv -v "$current" "$x"
 		fi
