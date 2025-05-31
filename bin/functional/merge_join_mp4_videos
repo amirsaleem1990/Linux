@@ -67,7 +67,7 @@ prepare_files_names() {
 			done
 			IFS=$original_IFS
 
-			echo -e "\nWe are going to merge above files in mentioned order, Are you agree? [y|n]"
+			echo -e "\nWe are going to merge above files in mentioned order, Do you agree? [y|n]"
 			read answer_
 			if [[ $answer_ != "y" ]]; then
 				echo -e "\nYou are not agree!\nAborting.........\n"
