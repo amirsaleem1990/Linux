@@ -97,7 +97,7 @@ for repo in repos:
 		pass	
 	# q += len(list(os.popen("`git ls-files --others --exclude-standard`")) + list(os.popen("git ls-files -m")))
 if q > 0:
-	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nAre you need to push? [y|n]:   ")
+	ans = input("\n\nsab kush commint ho chuka h, Now you can push.\nDo you want to push? [y|n]:   ")
 	if ans == "y":
 		os.system("git_push 1")
 
