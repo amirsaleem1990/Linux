@@ -169,7 +169,7 @@ exit
 
 
 # # low_quality = False
-# # ans = input("Are you need to download low quality videos? [yes | no (default)]: ").strip().lower()
+# # ans = input("Do you want to download low quality videos? [yes | no (default)]: ").strip().lower()
 # # if  ans == "yes":
 # # 	if input("Are you sure? [yes|no]").lower().strip() == "yes":
 # # 		low_quality = True
