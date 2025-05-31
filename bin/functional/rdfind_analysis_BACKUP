@@ -104,7 +104,7 @@ if ans_.strip() != '':
 	df = df[~df['node'].isin(df['node'].value_counts().where(lambda x:x==1).dropna().index.to_list())]
 
 
-x = input("\nAre you need some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
+x = input("\nDo you want some specific substring in file_names? if yes \n\t1- include\n\t2- exclude\n\t press any key to skip\n")
 
 substring_is_provided=False
 if x in ['1', '2']:
@@ -142,7 +142,7 @@ if x in ['1', '2']:
 						duplicated_files_with_current_file_to_remove = sub_df['Path'][sub_df['Path'].ne(f_t_r)].to_list()
 						print(*duplicated_files_with_current_file_to_remove, sep="\n")
 					print(f"\nSize of All RED files combined: {size_can_be_reduced}")
-					if input("\nWe are going to remove the above files (Only those colored in RED), Are you want to proceed? [yes | no] ") == "yes":
+					if input("\nWe are going to remove the above files (Only those colored in RED), Do you want to proceed? [yes | no] ") == "yes":
 						if input("Are you sure? [yes | no]") == "yes":
 							for f_t_r in files_to_remove:
 								os.remove(f_t_r)
@@ -270,7 +270,7 @@ if DELTE_IT:
 
 			print(f"\n\n============== Files to be deleted ==============")
 			print(*D_, sep="\n")
-			if input("\n\nAre you agree to deleted above mentions files? [y|n]\n") == "y":
+			if input("\n\nDo you agree to deleted above mentions files? [y|n]\n") == "y":
 				for i in D_:
 					print(f"Removing {i} ..........")
 					os.remove(i)
