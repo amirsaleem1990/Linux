@@ -13,7 +13,7 @@ print("\nDEPRETIATED\nUse /amir_bin/get_youtube_playlist_urls2.py instead\n")
 # except:
 # 	if os.path.exists("LINK"):
 # 		play_list_url = open("LINK", 'r').read().strip()
-# 		can_we_user_LINK_url = input("We're going to use url in LINK, Are you need to proceed? [yes|no] ") == 'yes'
+# 		can_we_user_LINK_url = input("We're going to use url in LINK, Do you want to proceed? [yes|no] ") == 'yes'
 # 		if not can_we_user_LINK_url:
 # 			play_list_url = input("Enter playlist url: ")
 # 	else:	
