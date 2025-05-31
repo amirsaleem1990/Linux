@@ -43,7 +43,7 @@ if [[ $? -eq 1 ]]; then
 	exit
 fi
 
-echo -e "\n\nAre you need to proceed? [yes|no] "
+echo -e "\n\nDo you want to proceed? [yes|no] "
 read ans
 if [[ $ans == "yes" ]]; then
 	echo '
