@@ -5,7 +5,7 @@ if [[ $t == False ]]; then
 	echo "Already Stoped before"
 	exit 1
 else
-	echo -en  "Are you need to STOP local backup?\n[y|n]:  "
+	echo -en  "Do you want to STOP local backup?\n[y|n]:  "
 	read ans
 	if [[ $ans != 'y' ]]; then
 		exit 1
