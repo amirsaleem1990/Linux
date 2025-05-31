@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Are you need to include subdirectories in search? [y|n]: " ans
+read -p "Do you need to include subdirectories in search? [y|n]: " ans
 if [[ $ans == "y" ]]; then
 	echo "
 ######################################################################
@@ -17,7 +17,7 @@ if [[ $ans == "y" ]]; then
 	echo -n ">>>>>>>>>>> extentions in this directory and subdirectories <<<<<<<"
 	check_uniqe_file_extentions 2
 	echo -e "---------------------------------------------------------------------\n"
-	echo -e "The default is mp3, are you need new one (eg: wmv), if yes\n\t1-Enter without dot (eg: wmv)\n\t2-if you need multiple extentions saparate it by pipe <|>, eg: wmv|ogg\n"
+	echo -e "The default is mp3, do you need new one (eg: wmv), if yes\n\t1-Enter without dot (eg: wmv)\n\t2-if you need multiple extentions saparate it by pipe <|>, eg: wmv|ogg\n"
 	read answer
 	if [[ $answer  != "" ]]; then
 		extra_pera=1
