@@ -7,7 +7,7 @@ if len(sys.argv) == 2:
 	if not inp == "1":
 		raise Exception(f"\n\nWrong option ({inp})\nAborting..........\n")
 else:
-	inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Are you need to continue? [y|n] ")
+	inp = input("\nYou did not passed '1' option, we we can not execute check_github_files_size.sh script, Do you want to continue? [y|n] ")
 	if inp == "y":
 		inp = ""
 		pass
