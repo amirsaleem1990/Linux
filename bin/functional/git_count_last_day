@@ -2,7 +2,7 @@
 # read -p "Enter Days (eg: 1): " day
 day=$1
 plot=$2
-# if [[ $day > 1 ]] ; then read -p "Are you need Plot? [0\1]: " plot; else plot=0; fi
+# if [[ $day > 1 ]] ; then read -p "Do you want Plot? [0\1]: " plot; else plot=0; fi
 
 if [[ $day = "" ]]; then
 	current_date=`date +%F`
