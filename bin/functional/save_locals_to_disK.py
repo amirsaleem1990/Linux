@@ -33,7 +33,7 @@ def save_locals_to_disk(dict__, base_dir):
 	f = f.assign(MB=f.bytes/1000000, GB=f.bytes/1000000/1000).round(4)
 	display(f)
 	
-	ans = input("Are you need to proceed? [y|n]: ")
+	ans = input("Do you need to proceed? [y|n]: ")
 	if ans != 'y':
 		print("Interepted ............. ")
 		return None
