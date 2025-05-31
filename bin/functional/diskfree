@@ -67,24 +67,45 @@ def bytes_to(bytes_):
 	return size_str
 
 
+chars_can_fit_in_one_line=int(os.popen("tput cols").read().strip())
+
 import shutil
 r = [' , ,Total,Used,Avail,Used%,Mounted']
-
+free_bytes____ = []
 lst = []
 for m, d in zip(mounted_at, devs):
 	total, used, free = shutil.disk_usage(m) # in bytes
-	total *= 0.95 # total ka 5% hissa qabil-e-istimal nahi hota
+	free_bytes____.append(free)
+	total *= .95 # total ka 5% hissa qabil-e-istimal nahi hota
 	used_perc = round(used / total * 100)#str() + "%"
-	i = '>'*(used_perc//3) + "!"*((100-used_perc)//3)
-	if len(i) < 33:
-		i += (33-len(i))*"!"
-	# print(total, used,free)
+	# i = '>'*(used_perc//3) + "!"*((100-used_perc)//3)
+	# if len(i) < 33:
+	# 	i += (33-len(i))*"!"
+	i="{}"
 	total = bytes_to(total)
 	used = bytes_to(used)
 	free = bytes_to(free)
 	lst.append([d,i,total,used,free,used_perc,m])
 	# break
+max_free_bytes = max(free_bytes____)
+for i in range(len(lst)):
+	lst[i][1] = round(free_bytes____[i]/max_free_bytes*100, 3)
+# print()
+# print(*lst, sep="\n")
+# print()
 lst = sorted(lst, key=lambda x:x[-1])
+available_chars_in_the_line = chars_can_fit_in_one_line - max([len("".join(str(i))) for i in lst])
+available_chars_in_the_line = int(available_chars_in_the_line)
+for e, line in enumerate(lst):
+	# used_perc = line[5]/100
+	red =   int(available_chars_in_the_line * (1-(line[1]/100)))
+	green = int(available_chars_in_the_line *    (line[1]/100) )
+	abc = "!"*green + '>'*red
+	if e == 0:
+		abc = abc[1:]
+	lst[e][1] = abc
+
+# colors = 'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white', 'light_grey', 'dark_grey', 'light_red', 'light_green', 'light_yellow', 'light_blue', 'light_magenta', 'light_cyan'
 for i in lst:
 	f = f"{i[0]},{i[1]},{i[2]},{i[3]},{i[4]},{i[5]}%,{i[6]}"
 	r.append(f)
