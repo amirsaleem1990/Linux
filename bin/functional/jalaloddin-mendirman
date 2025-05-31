@@ -62,10 +62,10 @@ if next_vid_download_url:
 		print(f"\nWe dont found any download link at <{x}>\nExiting ......\n")
 		import sys
 		sys.exit(1)
-	ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+	ans_ = input(f"\n\nDo you want to update {_file_name_} file?\n[y|n]  ")
 	if ans_ == "y":
 		open(_file_name_, 'w').write(str(last_downloaded_video_number+1))
-	ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+	ans_ = input(f"\n\nDo you want to download LATEST video?\n[y|n] ")
 	if ans_ == "y":
 		com = f"youtube-dl {next_vid_download_url}"
 		print(f"\nDownload command: {com}\n\n\n")
