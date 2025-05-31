@@ -15,7 +15,7 @@ def func_3(files):
 	removed_qty = 0
 	filed_to_remove_qty = 0
 	print(*files, sep="\n")
-	print(colored("We are going to REMOVE above mentioned files, ARE YOU NEED TO PROCEED? [yes|no]", "red"), end="\t")
+	print(colored("We are going to REMOVE above mentioned files, DO YOU WANT TO PROCEED? [yes|no]", "red"), end="\t")
 	inp = input("")
 	if inp == "yes":
 		for file_to_remove in files:
