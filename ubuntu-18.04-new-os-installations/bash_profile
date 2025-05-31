@@ -26,6 +26,10 @@ fi
 # PS1='\[\e]0;\w\a\]\e[7m\D{%d-%b}|\t\e[27m:\e[1m\w\e[21m\033[00m\]\$ '
 RED="\033[0;31m"
 NORMAL="\033[0m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+YELLOW="\033[0;33m"
+ORANGE="\033[1;33m"
 
 PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
@@ -520,26 +524,37 @@ _data_file_read(){
 }
 
 
+
 declare -f data_read_clipboard
 data_read_clipboard() {
-    read -p "Do you want to set header=None? [yes|no] " response
-    if [[ $response == "yes" ]]; then
-        python_code="
+    python_code="
 import pandas as pd
-df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
+import clipboard
+from pandas import to_datetime
+
+def get_type(value):
+    for fun in (int, float, to_datetime, str):
+        try:
+            fun(value)
+            return fun.__name__
+        except:
+            ...
+
+lines =  clipboard.paste().splitlines()[:2]
+types = []
+for line in lines:
+    types.append([get_type(c) for c in line.split('\t')])
+
+if types[0] == types[1]:
+    df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
+    df.columns = [f'col_{i}' for i in range(df.shape[1])]
+else:
+    df = pd.read_clipboard(sep=',', on_bad_lines='skip')
+df = df.dropna(how='all').dropna(how='all', axis=1)
 if df.shape[1] == 1:
     x = df[0]
     del df
 "
-    else
-        python_code="
-import pandas as pd
-df = pd.read_clipboard(sep=',', on_bad_lines='skip')
-if df.shape[1] == 1:
-    x = df[0]
-    del df
-"
-    fi   
     echo "$python_code" > /tmp/python_code
     echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
     $HOME/.venv_base/bin/ipython3 -i  /tmp/python_code
