@@ -6,9 +6,9 @@ NC='\033[0m' # No Color
 
 function print__ {
 	# $1 = type, $2 = file_name
-		# echo -en "${RED}$1:${NC} $2,  ${RED}SIZE: ${NC}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "
+		# echo -en "${RED}$1:${NC} $2,  ${RED}SIZE: ${NC}`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`\nDo you really want to ${RED}DELETE${NC} this? \n[y|n]: "
 		size=`du -sh $2 | sed 's/\t/-/g' | cut -d- -f1`
-		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}$size${NC}\nAre you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
+		echo -en "Name:  $2\nType: ${RED}$1${NC}\nSIZE: ${RED}$size${NC}\nDo you really want to ${RED}DELETE${NC} this? \n[y|n]: "	
 }
 
 function file_folder { 
@@ -37,7 +37,7 @@ if [[ $array_len = 1 ]]; then
 		exit
 	fi
 	if [[ $(stat -c '%U' "${myArray[0]}") == "root" ]];then
-		print__ $type_ "${myArray[0]}" | grep -v 'Are you really want to\|\[y\|n\]:'
+		print__ $type_ "${myArray[0]}" | grep -v 'Do you really want to\|\[y\|n\]:'
 		echo -e "\nSorry, this file/directory owned by root .......... Skipping\n"
 	else	
 		if [[ $type_ -eq "FOLDER" ]] ; then
@@ -67,7 +67,7 @@ else
 		IFS=$'\n'
 		file_folder "$i"
 		if [[ $(stat -c '%U' $i ) == "root" ]];then
-			print__ $type_ $i | grep -v 'Are you really want to\|\[y\|n\]:'
+			print__ $type_ $i | grep -v 'Do you really want to\|\[y\|n\]:'
 			echo -e "\nSorry, this file/directory owned by root .......... Skipping\n"
 		else
 			print__ $type_ $i
