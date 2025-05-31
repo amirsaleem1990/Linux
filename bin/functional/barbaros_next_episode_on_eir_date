@@ -32,7 +32,7 @@ if n > last_vid_num:
 		print("\n **** Full video NOT uploaded yet ****\n")
 		os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
 	else:
-		ans_ = input(f"\n\nAre you to download LATEST video?\n[y|n] ")
+		ans_ = input(f"\n\nDo you want to download LATEST video?\n[y|n] ")
 		if ans_ == "y":
 			for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
 				try:
@@ -60,7 +60,7 @@ if n > last_vid_num:
 			com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
 			print(f"\nDownload command: {com}\n\n\n")
 			os.system(com)
-			ans_ = input(f"\n\nAre you need to update {_file_name_} file?\n[y|n]  ")
+			ans_ = input(f"\n\nDo you want to update {_file_name_} file?\n[y|n]  ")
 			if ans_ == "y":
 				open(_file_name_, 'w').write(str(n))
 
