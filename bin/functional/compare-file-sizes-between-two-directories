@@ -148,7 +148,7 @@ else:
 				print("\nWrong input\nAborting....")
 				exit(1)
 			here_remove = (which_one_to_remove == '0')
-			print(colored("\n\nWe're going to remove the following files, Are you need to proceed? [yes|no] ", 'red'))
+			print(colored("\n\nWe're going to remove the following files, Do you want to proceed? [yes|no] ", 'red'))
 			to_remove_list = df[x].File.to_list()
 			if not here_remove:
 				to_remove_list = [there+i for i in to_remove_list]
@@ -174,7 +174,7 @@ else:
 			print(colored("\n\nThe smallest in two directories", 'red'))
 			print(*to_remove_list, sep="\n")		
 		else:
-			print(colored("\n\nWe're going to remove the following files (The smallest in two directories) Are you need to proceed? [yes|no] ", 'red'))
+			print(colored("\n\nWe're going to remove the following files (The smallest in two directories) Do you want to proceed? [yes|no] ", 'red'))
 			print(*to_remove_list, sep="\n")
 			if input() != 'yes':
 				print("\nSkipping .........")
@@ -201,7 +201,7 @@ else:
 	# 			else:
 	# 				to_remove_lst.append(there+v.File)
 
-	# 	print(colored("\n\nWe're going to remove the following files, Are you need to proceed? [yes|no] ", 'red'))
+	# 	print(colored("\n\nWe're going to remove the following files, Do you want to proceed? [yes|no] ", 'red'))
 	# 	print(*to_remove_lst, sep="\n")
 	# 	if input() == 'yes':
 	# 		for i in to_remove_lst:
