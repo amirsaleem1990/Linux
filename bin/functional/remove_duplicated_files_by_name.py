@@ -124,7 +124,7 @@ if to_remove:
 
     print("\n")
     print(*to_remove, sep="\n")
-    user_inp = input("\nWe are going to remove above listed files, Are you need to proceed? [yes|no]\n")
+    user_inp = input("\nWe are going to remove above listed files, Do you want to proceed? [yes|no]\n")
     assert user_inp in ["yes", "no"], "\nWrong input\nAborting .........\n"
     if user_inp == "yes":
         for file in to_remove:
