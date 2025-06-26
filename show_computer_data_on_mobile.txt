@@ -1,0 +1,6 @@
+python3 -m http.server 4154 --bind 0.0.0.0
+
+
+Go to http://192.168.100.41:4154 from your mobile. Assuming the computer's ip is: 192.168.100.41. Note: DON't use "https", rather use "http"
+
+
