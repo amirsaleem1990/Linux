@@ -1,11 +1,11 @@
 test -e /media/70GB/home/amir/
 if [[ $? -eq 0 ]]; then
-    for i in $(ls /media/70GB/home/amir/ -a); do 
-        if [[ "$i" == ".bash_history" ]]; then
-            continue
-        fi
-    	ln -s /media/70GB/home/amir/"$i" ~/ 2>/dev/null
-    done
+	for i in $(ls /media/70GB/home/amir/ -a); do 
+		if [[ "$i" == ".bash_history" ]]; then
+			continue
+		fi
+		ln -s /media/70GB/home/amir/"$i" ~/ 2>/dev/null
+	done
 fi
 
 
@@ -140,65 +140,65 @@ HISTFILESIZE=-1
 
 declare -f Youtube_dl
 Youtube_dl() {
-    echo -e "\n\nThere are other `echo $(ps aux | grep youtube-dl | wc -l)-1|bc` youtube-dl downloading jobs running\n\n"
-    while :; do
-        echo -e "\n\n*************** New attempt ***************\n\n" 
-        $(which youtube-dl) $1
-        if [[ $? -eq 0 ]] ; then 
-            return 1
-        fi
-    done
+	echo -e "\n\nThere are other `echo $(ps aux | grep youtube-dl | wc -l)-1|bc` youtube-dl downloading jobs running\n\n"
+	while :; do
+		echo -e "\n\n*************** New attempt ***************\n\n" 
+		$(which youtube-dl) $1
+		if [[ $? -eq 0 ]] ; then 
+			return 1
+		fi
+	done
 }
 
 declare -f poweroff
 poweroff() {
 
-    /amir_bin/battery
-    test -e /home/amir/.firefox_backups/
-    if [[ $? -ne 0 ]]; then
-        echo -e "\nThe folder `/home/amir/.firefox_backups/` is not exist, please create it first..."
-        reaturn 1
-    fi
-    directory="/home/amir/.firefox_backups/`date +%d-%m-%y_%T | sed "s/\//-/g"`"
-    # cp -rv /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
-    # cp -rv /home/amir/snap/firefox/common/.mozilla/firefox/pwpe1uar.default/sessionstore-backups "$directory"
-    cp -rv $(locate sessionstore-backups | grep -v lz4) "$directory"
-    lz4jsoncat $(locate recovery.jsonlz4 | grep -v _) | jq -r '.windows[].tabs[].entries[-1].url' > "$directory/OPNED_URLS.txt"
-    echo -e "\n\nHave you puched out? [yes|no] " 
-    read ans
-    if [[ $ans == "yes" ]] ; then
-        /sbin/poweroff
-    else
-        android-studio
-    fi
+	/amir_bin/battery
+	test -e /home/amir/.firefox_backups/
+	if [[ $? -ne 0 ]]; then
+		echo -e "\nThe folder `/home/amir/.firefox_backups/` is not exist, please create it first..."
+		reaturn 1
+	fi
+	directory="/home/amir/.firefox_backups/`date +%d-%m-%y_%T | sed "s/\//-/g"`"
+	# cp -rv /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
+	# cp -rv /home/amir/snap/firefox/common/.mozilla/firefox/pwpe1uar.default/sessionstore-backups "$directory"
+	cp -rv $(locate sessionstore-backups | grep -v lz4) "$directory"
+	lz4jsoncat $(locate recovery.jsonlz4 | grep -v _) | jq -r '.windows[].tabs[].entries[-1].url' > "$directory/OPNED_URLS.txt"
+	echo -e "\n\nHave you puched out? [yes|no] " 
+	read ans
+	if [[ $ans == "yes" ]] ; then
+		/sbin/poweroff
+	else
+		android-studio
+	fi
 }
 
 declare -f rdfind
 rdfind(){
 
-    if [[ `find . -maxdepth 1  -printf '%u:'  | cut -d: -f1` == 'root' ]]; then 
-        echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
-    else 
-        free_space_in_current_directory=$(df -BM | grep `df -P . | sed -n '$s/[[:blank:]].*//p'` | sed 's/ \{1,\}/,/g' | cut -d, -f4  | cut -dM -f1)
-        if [[ $free_space_in_current_directory -lt 100 ]]; then
-            echo -e "\nSorry, There is only $free_space_in_current_directory MB left in current partition\nExitting ........\n\n"
-            return 1
-        fi 
-        read -p "Do you want to consier more directories beyond the CWD? if so please provdie them: " more_directories
-        if [[ -z "$more_directories" ]]; then 
-            /usr/bin/rdfind .
-        else 
-            /usr/bin/rdfind . "$more_directories"
-        fi
-        if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
-            rm -f results.txt
-            echo -e "${RED}\n\nNo duplicate file\n\n${NORMAL}"
-            return 0
-        fi
+	if [[ `find . -maxdepth 1  -printf '%u:'  | cut -d: -f1` == 'root' ]]; then 
+		echo -e '\n\nThe current folder is in root ownership, please run\nsudo /usr/bin/rdfind .\n'
+	else 
+		free_space_in_current_directory=$(df -BM | grep `df -P . | sed -n '$s/[[:blank:]].*//p'` | sed 's/ \{1,\}/,/g' | cut -d, -f4  | cut -dM -f1)
+		if [[ $free_space_in_current_directory -lt 100 ]]; then
+			echo -e "\nSorry, There is only $free_space_in_current_directory MB left in current partition\nExitting ........\n\n"
+			return 1
+		fi 
+		read -p "Do you want to consier more directories beyond the CWD? if so please provdie them: " more_directories
+		if [[ -z "$more_directories" ]]; then 
+			/usr/bin/rdfind .
+		else 
+			/usr/bin/rdfind . "$more_directories"
+		fi
+		if [[ $(cat results.txt | grep -v ^\# | wc -l) -eq 0 ]]; then
+			rm -f results.txt
+			echo -e "${RED}\n\nNo duplicate file\n\n${NORMAL}"
+			return 0
+		fi
 
-        /amir_bin/rdfind_analysis
+		/amir_bin/rdfind_analysis
 
-    fi 
+	fi 
 }
 
 # day_of_week=`date +%u`
@@ -212,25 +212,25 @@ rdfind(){
 
 declare -f calculator
 calculator(){
-    expression=$1
-    if [[ -z $expression ]]; then
-        read -p "Enter you expression: " expression
-    fi
-    x=$(bc <<< "scale=4; $expression")
-    if [[ "${x:0:1}" == "." ]]; then
-        echo 0$x
-    else
-        echo $x
-    fi
+	expression=$1
+	if [[ -z $expression ]]; then
+		read -p "Enter you expression: " expression
+	fi
+	x=$(bc <<< "scale=4; $expression")
+	if [[ "${x:0:1}" == "." ]]; then
+		echo 0$x
+	else
+		echo $x
+	fi
 }
 
 declare -f calculator_while_loop
 calculator_while_loop(){
-    while :; do
-        echo ''
-        read -p "Enter you expression: " expression
-        calculator "$expression"
-    done
+	while :; do
+		echo ''
+		read -p "Enter you expression: " expression
+		calculator "$expression"
+	done
 }
 
 # declare -f VPN
@@ -240,85 +240,85 @@ calculator_while_loop(){
 
 declare -f copyto
 copyto(){
-    test -f "$1"
-    if [[ $? -eq 0 ]]; then
-        echo -e "\nSorry, the file is exists\nAborting ......\n\n"
-        return 1
-    fi
-    xsel -b > /tmp/temp_copy
-    echo -e "$(cat /tmp/temp_copy)\n" > "$1"
+	test -f "$1"
+	if [[ $? -eq 0 ]]; then
+		echo -e "\nSorry, the file is exists\nAborting ......\n\n"
+		return 1
+	fi
+	xsel -b > /tmp/temp_copy
+	echo -e "$(cat /tmp/temp_copy)\n" > "$1"
 }
 
-    declare -f copyfrom
+	declare -f copyfrom
 copyfrom(){
-    if [[ $(ls /tmp/last_copy_* 2>/dev/null | wc -l) -eq 0 ]]; then # If no results found for /tmp/last_copy_* 
-        files_count=0
-    else
-        files_count=$(ls /tmp/last_copy_* 2>/dev/null | wc -l)
-    fi
-    let "files_count++"
-    copyto /tmp/last_copy_$files_count
-    xclip -sel cli < "$@"
+	if [[ $(ls /tmp/last_copy_* 2>/dev/null | wc -l) -eq 0 ]]; then # If no results found for /tmp/last_copy_* 
+		files_count=0
+	else
+		files_count=$(ls /tmp/last_copy_* 2>/dev/null | wc -l)
+	fi
+	let "files_count++"
+	copyto /tmp/last_copy_$files_count
+	xclip -sel cli < "$@"
 }
 
 
 declare -f max
 max(){
-    float_exists=$(echo "$@" | grep -o '\.' | wc -l)
-    if [[ $float_exists > 0 ]]; then
-        echo -e "\nSorry, There is a float in provided numbers, please provide ONLY INTEGERS\nAborting........\n" 
-        return 1
-    fi
-    if [[ -z $@ ]]; then
-        echo -e "\nPlease provide multiple numbers\nAborting......."
-        return 1
-    fi
-    max=-100000
-    for i in $@ ; do
-        if [[ $i -gt max ]]; then
-            max=$i
-        fi
-    done
-    echo $max
+	float_exists=$(echo "$@" | grep -o '\.' | wc -l)
+	if [[ $float_exists > 0 ]]; then
+		echo -e "\nSorry, There is a float in provided numbers, please provide ONLY INTEGERS\nAborting........\n" 
+		return 1
+	fi
+	if [[ -z $@ ]]; then
+		echo -e "\nPlease provide multiple numbers\nAborting......."
+		return 1
+	fi
+	max=-100000
+	for i in $@ ; do
+		if [[ $i -gt max ]]; then
+			max=$i
+		fi
+	done
+	echo $max
 }
 
 declare -f pwd_print
 pwd_print(){
-    x=$(eval "pwd")
-    echo -n "'$x/$1'" | xclip -sel clip
-    if [[ $? -eq 0 ]]; then
-        echo -e "\nCopied to clipboard\n"
-    fi
+	x=$(eval "pwd")
+	echo -n "'$x/$1'" | xclip -sel clip
+	if [[ $? -eq 0 ]]; then
+		echo -e "\nCopied to clipboard\n"
+	fi
 }
 
 declare -f kill_youtube
 kill_youtube() {
-    if [[ $( ps aux | grep youtube-dl |wc -l) -ne 2 ]]; then
-        echo -e "\nThere are more than one youtube-dl session"
-       return 1
-    fi
-    kill $(ps aux | grep youtube-dl | head -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2)
-    if [[ $? -eq 0 ]]; then
-        echo -e "\n\nyoutube-dl session killed successfully\n"
-    else
-        echo -e "\n\nAn error occured during killing youtube-dl sessson"
-    fi
+	if [[ $( ps aux | grep youtube-dl |wc -l) -ne 2 ]]; then
+		echo -e "\nThere are more than one youtube-dl session"
+	   return 1
+	fi
+	kill $(ps aux | grep youtube-dl | head -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f2)
+	if [[ $? -eq 0 ]]; then
+		echo -e "\n\nyoutube-dl session killed successfully\n"
+	else
+		echo -e "\n\nAn error occured during killing youtube-dl sessson"
+	fi
 }
 
 
 declare -f DEL
 DEL(){
-    RED="\033[0;31m"
-    NC='\033[0m' 
-    echo -e "\nAre you need to Remove the following: [yes|no]"
-    echo -e "${RED}NOTE: This is the $(pwd) direcotry${NC}\n"
-    for i in "$@"; do
-        echo "$i"
-    done
-    read ans
-    if [[ $ans == "yes" ]]; then
-        /amir_bin/DEL "$@"
-    fi
+	RED="\033[0;31m"
+	NC='\033[0m' 
+	echo -e "\nAre you need to Remove the following: [yes|no]"
+	echo -e "${RED}NOTE: This is the $(pwd) direcotry${NC}\n"
+	for i in "$@"; do
+		echo "$i"
+	done
+	read ans
+	if [[ $ans == "yes" ]]; then
+		/amir_bin/DEL "$@"
+	fi
 }
 
 # declare -f rm
@@ -338,41 +338,41 @@ DEL(){
 
 declare -f pylint_only_errors
 pylint_only_errors(){
-    pylint --errors-only "$1"
+	pylint --errors-only "$1"
 }
 
 declare -f change_PS1
 change_PS1(){
-    PS1="$PS1\n>>> "
-    export "$PS1" 2>/dev/null
+	PS1="$PS1\n>>> "
+	export "$PS1" 2>/dev/null
 }
 
 declare -f swap_off
 swap_off() {
-    cat /home/amir/github/*/._mz_ | sudo -S -k swapoff -a
+	cat /home/amir/github/*/._mz_ | sudo -S -k swapoff -a
 }
 
 
 declare -f ADB
 ADB() {
-    adb tcpip 5555
-    read -p "Enter any key after allow in mobile: "
-    adb connect `adb shell ifconfig wlan0 | grep 192 | cut -d: -f2 | cut -d ' ' -f1`:5555
+	adb tcpip 5555
+	read -p "Enter any key after allow in mobile: "
+	adb connect `adb shell ifconfig wlan0 | grep 192 | cut -d: -f2 | cut -d ' ' -f1`:5555
 }
 
 
 declare -f Chrome_all_tabs
 Chrome_all_tabs() {
-    IFS=$'\n'
-    cat -e `locate Current\ Session | grep chrom | sed 's/\ /\\ /g'` | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u
+	IFS=$'\n'
+	cat -e `locate Current\ Session | grep chrom | sed 's/\ /\\ /g'` | sed -e 's/\^@/\n/g' -e '/_\/chrome/d' | grep -Po '(http|https)://\K.*' | sort -u
 }
 
 declare -f extentions_for_given_file_names
 extentions_for_given_file_names() {
-    IFS=$'\n'
-    for i in "$@"; do
-        basename "$i"
-    done | rev | cut -d. -f1 | rev | sort | uniq -c | sort -n
+	IFS=$'\n'
+	for i in "$@"; do
+		basename "$i"
+	done | rev | cut -d. -f1 | rev | sort | uniq -c | sort -n
 }
 
 
@@ -400,64 +400,64 @@ extentions_for_given_file_names() {
 
 declare -f todays_first_computer_on_time
 todays_first_computer_on_time() {
-    current_date="/home/amir/.$(date +%d-%m-%y)"
-    test -e "$current_date"
-    if [[ $? -ne 0 ]]; then
-        current_time=$(date +%s)
-        echo "$current_time" > "$current_date"
-    fi
+	current_date="/home/amir/.$(date +%d-%m-%y)"
+	test -e "$current_date"
+	if [[ $? -ne 0 ]]; then
+		current_time=$(date +%s)
+		echo "$current_time" > "$current_date"
+	fi
 }
 
 
 declare -f time_since_first_login_today
 time_since_first_login_today() {
-    current_date="/home/amir/.$(date +%d-%m-%y)"
-    first_login_time=$(cat "$current_date")
-    echo -e "\nHH:MM:SS\n$(date -d@$(cat $current_date ) +%T):\tTodays first log-in time"
-    current_time=$(date +%s)
-    time_pased="$((current_time-first_login_time))"
-    convertsecs $time_pased
+	current_date="/home/amir/.$(date +%d-%m-%y)"
+	first_login_time=$(cat "$current_date")
+	echo -e "\nHH:MM:SS\n$(date -d@$(cat $current_date ) +%T):\tTodays first log-in time"
+	current_time=$(date +%s)
+	time_pased="$((current_time-first_login_time))"
+	convertsecs $time_pased
 }
 
 
 
 declare -f internet_speed
 internet_speed() {
-    ifstat -t -i $(ifconfig  | grep ^wlp | cut -d: -f1)
+	ifstat -t -i $(ifconfig  | grep ^wlp | cut -d: -f1)
 }
 
 
 declare -f convertsecs
 convertsecs() {
-    integet=${1%.*}
-    ((y=${integet}/31536000))
-    ((d=${integet}%31536000/86400))
-    ((h=${integet}%86400/3600))
-    ((m=(${integet}%3600)/60))
-    ((s=${integet}%60))
-    x=$(printf "%02d:%02d:%02d:%02d:%02d" $y $d $h $m $s)
-    # echo -e "YY:DD:HH:MM:SS\n$x" | column -t -s\:
-    echo "$x"
+	integet=${1%.*}
+	((y=${integet}/31536000))
+	((d=${integet}%31536000/86400))
+	((h=${integet}%86400/3600))
+	((m=(${integet}%3600)/60))
+	((s=${integet}%60))
+	x=$(printf "%02d:%02d:%02d:%02d:%02d" $y $d $h $m $s)
+	# echo -e "YY:DD:HH:MM:SS\n$x" | column -t -s\:
+	echo "$x"
 }
 
 
 declare -f free_space_on_current_partition
 free_space_on_current_partition(){
-    free_space(){
-        df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
-    }
-    if [[ -z $1 ]]; then
-        free_space
-        return 0
-    fi
-    sleep_time=$1
-    while :; do
-        current_time=$(date +%T)
-        free_space_in_part=$(free_space)
-        echo "$current_time - $free_space_in_part"
-        sleep $sleep_time
-        # clear
-    done
+	free_space(){
+		df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
+	}
+	if [[ -z $1 ]]; then
+		free_space
+		return 0
+	fi
+	sleep_time=$1
+	while :; do
+		current_time=$(date +%T)
+		free_space_in_part=$(free_space)
+		echo "$current_time - $free_space_in_part"
+		sleep $sleep_time
+		# clear
+	done
 
 
 
@@ -466,120 +466,120 @@ free_space_on_current_partition(){
 # amir
 
 _data_file_read(){
-    IFS=$'\n'
-    /usr/bin/rm -f /tmp/python_code
-    /usr/bin/rm -f /tmp/data_file.pkl
-    file_name=$1
+	IFS=$'\n'
+	/usr/bin/rm -f /tmp/python_code
+	/usr/bin/rm -f /tmp/data_file.pkl
+	file_name=$1
 
-    # If no paramter is passed and there is only data file then read it.
-    if [ -z $file_name ]; then
-        data_files_counts=$(ls *.csv *.pkl *.xlsx 2>/dev/null | wc -l)
-        if [[ $data_files_counts -eq 1 ]]; then
-            ls *.csv 2>/dev/null | wc -l
-            if [[ $? -eq 0 ]]; then
-                file_name=$(ls *.csv)
-            else
-                ls *.pkl 2>/dev/null | wc -l
-                if [[ $? -eq 0 ]]; then
-                    file_name=$(ls *.pkl)
-                else
-                    ls *.xlsx 2>/dev/null | wc -l
-                    if [[ $? -eq 0 ]]; then
-                        file_name=$(ls *.xlsx)
-                    fi
-                fi
-            fi
-        fi
-    fi
+	# If no paramter is passed and there is only data file then read it.
+	if [ -z $file_name ]; then
+		data_files_counts=$(ls *.csv *.pkl *.xlsx 2>/dev/null | wc -l)
+		if [[ $data_files_counts -eq 1 ]]; then
+			ls *.csv 2>/dev/null | wc -l
+			if [[ $? -eq 0 ]]; then
+				file_name=$(ls *.csv)
+			else
+				ls *.pkl 2>/dev/null | wc -l
+				if [[ $? -eq 0 ]]; then
+					file_name=$(ls *.pkl)
+				else
+					ls *.xlsx 2>/dev/null | wc -l
+					if [[ $? -eq 0 ]]; then
+						file_name=$(ls *.xlsx)
+					fi
+				fi
+			fi
+		fi
+	fi
 
-    /amir_bin/save_input_file_as_data_file.pkl.py "$file_name"
-    
-    # if [[ $file_name == *.csv ]]; then
-    #     echo "
-    #     import pandas as pd
-    #     try: pd.read_csv('$file_name').to_pickle('/tmp/data_file.pkl')
-    #     except: pd.read_csv('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-    #     " | ipython3 > /dev/null
-    # elif [[ $file_name == *.pkl ]]; then
-    #     echo "
-    #     import pandas as pd
-    #     try: pd.read_pickle('$file_name').to_pickle('/tmp/data_file.pkl')
-    #     except: pd.read_pickle('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-    #     " | ipython3 > /dev/null
-    # elif [[ $file_name == *.xlsx ]]; then
-    #     echo "
-    #     import pandas as pd
-    #     try: pd.read_excel('$file_name').to_pickle('/tmp/data_file.pkl')
-    #     except: pd.read_excel('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
-    #     " | ipython3 > /dev/null
-    # fi
+	/amir_bin/save_input_file_as_data_file.pkl.py "$file_name"
+	
+	# if [[ $file_name == *.csv ]]; then
+	#     echo "
+	#     import pandas as pd
+	#     try: pd.read_csv('$file_name').to_pickle('/tmp/data_file.pkl')
+	#     except: pd.read_csv('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+	#     " | ipython3 > /dev/null
+	# elif [[ $file_name == *.pkl ]]; then
+	#     echo "
+	#     import pandas as pd
+	#     try: pd.read_pickle('$file_name').to_pickle('/tmp/data_file.pkl')
+	#     except: pd.read_pickle('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+	#     " | ipython3 > /dev/null
+	# elif [[ $file_name == *.xlsx ]]; then
+	#     echo "
+	#     import pandas as pd
+	#     try: pd.read_excel('$file_name').to_pickle('/tmp/data_file.pkl')
+	#     except: pd.read_excel('$file_name', encoding='ISO-8859-1').to_pickle('/tmp/data_file.pkl')
+	#     " | ipython3 > /dev/null
+	# fi
 
-    if [[ $? -eq 0 ]]; then 
-        echo ">>>>>>>>> Saved the file successfully as /tmp/data_file.pkl"
-    else
-        echo ">>>>>>>>> Failed to save the data as /tmp/data_file.pkl"
-    fi
+	if [[ $? -eq 0 ]]; then 
+		echo ">>>>>>>>> Saved the file successfully as /tmp/data_file.pkl"
+	else
+		echo ">>>>>>>>> Failed to save the data as /tmp/data_file.pkl"
+	fi
 
-    return 0
+	return 0
 }
 
 
 
 declare -f data_read_clipboard
 data_read_clipboard() {
-    python_code="
+	python_code="
 import pandas as pd
 import clipboard
 from pandas import to_datetime
 
 def get_type(value):
-    for fun in (int, float, to_datetime, str):
-        try:
-            fun(value)
-            return fun.__name__
-        except:
-            ...
+	for fun in (int, float, to_datetime, str):
+		try:
+			fun(value)
+			return fun.__name__
+		except:
+			...
 
 lines =  clipboard.paste().splitlines()[:2]
 types = []
 for line in lines:
-    types.append([get_type(c) for c in line.split('\t')])
+	types.append([get_type(c) for c in line.split('\t')])
 
 if types[0] == types[1]:
-    df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
-    df.columns = [f'col_{i}' for i in range(df.shape[1])]
+	df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
+	df.columns = [f'col_{i}' for i in range(df.shape[1])]
 else:
-    df = pd.read_clipboard(sep=',', on_bad_lines='skip')
+	df = pd.read_clipboard(sep=',', on_bad_lines='skip')
 df = df.dropna(how='all').dropna(how='all', axis=1)
 if df.shape[1] == 1:
-    x = df[0]
-    del df
+	x = df['col_0']
+	del df
 "
-    echo "$python_code" > /tmp/python_code
-    echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
-    $HOME/.venv_base/bin/ipython3 -i  /tmp/python_code
+	echo "$python_code" > /tmp/python_code
+	echo -e "\n>>>>>>>>>> A dataframe created using data on the clipboad, your can use it as 'df'<<<<<<<<<<\n"
+	$HOME/.venv_base/bin/ipython3 -i  /tmp/python_code
 }
 
-    
+	
 
 
 declare -f data_file_make_a_sample
 data_file_make_a_sample() {
-    data_file_name="$1"
-    _data_file_read "$data_file_name"
-    if [[ $? -ne 0 ]]; then
-        echo -e "\nFailed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    total_rows_in_the_file=$(python3 <<< 'import pandas as pd; print(pd.read_pickle("/tmp/data_file.pkl").shape[0])')
-    n_rows=$2
-    if [[ -z $n_rows ]]; then
-        echo 
-        read -p "How many rows (out of $total_rows_in_the_file total rows) do you want to sample? " n_rows
-    fi
-    
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample(int($n_rows)).to_csv('SAMPLE.csv', index=False))"
-    echo "$x" | python3 -c "$x"
+	data_file_name="$1"
+	_data_file_read "$data_file_name"
+	if [[ $? -ne 0 ]]; then
+		echo -e "\nFailed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	total_rows_in_the_file=$(python3 <<< 'import pandas as pd; print(pd.read_pickle("/tmp/data_file.pkl").shape[0])')
+	n_rows=$2
+	if [[ -z $n_rows ]]; then
+		echo 
+		read -p "How many rows (out of $total_rows_in_the_file total rows) do you want to sample? " n_rows
+	fi
+	
+	x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').sample(int($n_rows)).to_csv('SAMPLE.csv', index=False))"
+	echo "$x" | python3 -c "$x"
 }
 
 
@@ -587,29 +587,29 @@ data_file_make_a_sample() {
 
 declare -f data_file_show_head
 data_file_show_head(){
-    _data_file_read "$1"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').head())"
-    echo "$x" | python3
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').head())"
+	echo "$x" | python3
 }
 
 declare -f data_file_show_sample
 data_file_show_sample() {
-    # read -p "How many rows do you want to be printed? " n_rows
-    _data_file_read "$1"
-    n_rows=$2
-    if [[ -z $n_rows ]]; then
-        n_rows=10
-    fi
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    
-    x="
+	# read -p "How many rows do you want to be printed? " n_rows
+	_data_file_read "$1"
+	n_rows=$2
+	if [[ -z $n_rows ]]; then
+		n_rows=10
+	fi
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	x="
 import pandas as pd
 import clipboard
 df = pd.read_pickle('/tmp/data_file.pkl').sample($n_rows)
@@ -617,38 +617,38 @@ clipboard.copy(df.to_markdown(index=False))
 print(df.to_markdown(index=False))
 print('\nThe data sampe copied to the clipboard\n')
 "
-    echo "$x" | python3 -c "$x"
+	echo "$x" | python3 -c "$x"
 }
 
 
 declare -f data_file_show_shape
 data_file_show_shape() {
-    _data_file_read "$1"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape)"
-    echo "$x" | python3
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape)"
+	echo "$x" | python3
 }
 
 
 
 declare -f pickle_print_type
 pickle_print_type() {
-    x="import pickle; print(str(type(pickle.load(open('"$1"', 'rb')))))"
-    echo "$x" | python3
+	x="import pickle; print(str(type(pickle.load(open('"$1"', 'rb')))))"
+	echo "$x" | python3
 }
 
 declare -f data_file_show_info
 data_file_show_info() {
-    file_name="$1"
-    _data_file_read "$file_name"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
+	file_name="$1"
+	_data_file_read "$file_name"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
 
 x="
 import pandas as pd
@@ -657,408 +657,408 @@ print('################################################')
 print('Type:', str(type(f)))
 print('Len :', len(f))
 if isinstance(f, pd.DataFrame):
-    print('Shape:', f.shape)
-    print()
-    print('Head :')
-    print(f.head().to_string())
-    # print('Info')
-    # print(f.info())
-    # print('Memory Usage (MB):')
-    # print(f.memory_usage(deep=True))
-    print()
-    print(f.memory_usage(deep=True).div(1000_000).rename('Size (MB)').rename_axis('Col').reset_index().merge(f.dtypes.rename('Type').rename_axis('Col').reset_index()).merge(f.nunique().rename_axis('Col').rename('Nunique').reset_index()).sort_values('Size (MB)').to_markdown(index=False))
-    print('\n\n')
-    nans = f.isna().sum().rename('NaNs Count').to_frame().merge((f.isna().mean()*100).rename('Average NaNs').to_frame(), right_index=True, left_index=True).loc[lambda x: x['NaNs Count'] > 0]
-    if nans.empty:
-        print('\nNo NaNs\n\n')
-    else:
-        print(nans.to_markdown())
-        print('\n\n')
-        print('Rows                     :', f.shape[0])
-        print('Rows after dropping NuLLs:', f.dropna().shape[0])
+	print('Shape:', f.shape)
+	print()
+	print('Head :')
+	print(f.head().to_string())
+	# print('Info')
+	# print(f.info())
+	# print('Memory Usage (MB):')
+	# print(f.memory_usage(deep=True))
+	print()
+	print(f.memory_usage(deep=True).div(1000_000).rename('Size (MB)').rename_axis('Col').reset_index().merge(f.dtypes.rename('Type').rename_axis('Col').reset_index()).merge(f.nunique().rename_axis('Col').rename('Nunique').reset_index()).sort_values('Size (MB)').to_markdown(index=False))
+	print('\n\n')
+	nans = f.isna().sum().rename('NaNs Count').to_frame().merge((f.isna().mean()*100).rename('Average NaNs').to_frame(), right_index=True, left_index=True).loc[lambda x: x['NaNs Count'] > 0]
+	if nans.empty:
+		print('\nNo NaNs\n\n')
+	else:
+		print(nans.to_markdown())
+		print('\n\n')
+		print('Rows                     :', f.shape[0])
+		print('Rows after dropping NuLLs:', f.dropna().shape[0])
 print('################################################')
 "
-    echo "$x" | python3
+	echo "$x" | python3
 
-    echo 
+	echo 
 
-    du -sh "$file_name" 
-    wc -l "$file_name"
+	du -sh "$file_name" 
+	wc -l "$file_name"
 
 }
 
 declare -f data_file_show_nrows
 data_file_show_nrows() {
-    _data_file_read "$1"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    
-    x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape[0])"
-    echo "$x" | python3
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	x="import pandas as pd; print(pd.read_pickle('/tmp/data_file.pkl').shape[0])"
+	echo "$x" | python3
 }
 
 declare -f pickle_show_content
 pickle_show_content() {
-    x="import pickle; print(pickle.load(open('"$1"', 'rb')))"
-    echo "$x" | python3
+	x="import pickle; print(pickle.load(open('"$1"', 'rb')))"
+	echo "$x" | python3
 }
 
 # amir
 declare -f data_file_read_dataframe_and_go_in_inpython
 data_file_read_dataframe_and_go_in_inpython() {
-    file_size_in_mb=$(du -sh $1 -BM)
-    echo -e "\n\n$file_size_in_mb $1\n\n"
-    _data_file_read "$1"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    
-    python_code="import pandas as pd; df = pd.read_pickle('/tmp/data_file.pkl'); "
-    echo "$python_code" > /tmp/python_code
-    $HOME/.venv_base/bin/ipython3 -i /tmp/python_code
+	file_size_in_mb=$(du -sh $1 -BM)
+	echo -e "\n\n$file_size_in_mb $1\n\n"
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	python_code="import pandas as pd; df = pd.read_pickle('/tmp/data_file.pkl'); "
+	echo "$python_code" > /tmp/python_code
+	$HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
 
 declare -f data_file_list_columns_names
 data_file_list_columns_names() {
-    _data_file_read "$1"
-    if [[ $? -ne 0 ]]; then
-        echo "Failed to save the file as /tmp/data_file.pkl"
-        return 1
-    fi
-    
-    python_code="import pandas as pd; print(*pd.read_pickle('/tmp/data_file.pkl').columns.to_list(), sep='\n')"
-    echo $python_code | python3
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	python_code="import pandas as pd; print(*pd.read_pickle('/tmp/data_file.pkl').columns.to_list(), sep='\n')"
+	echo $python_code | python3
 }
 
 
 declare -f download_speed_stream
 download_speed_stream(){ 
-    total=1
-    avg_speed=1
-    start_time=$(date +%s)
-    n=0
-    sleep 1s
-    echo -e '\n\n\n\n\n\n\n\n\n\n\n\n\n'
-    wifi_chip_name=$(ifconfig  | grep ^wlp | cut -d: -f1)
-    while :; do 
-        let "n+=1"
-        # echo -e "\n\n-------------------"
-        # sleep 1s
-        current_time=$(date +%s)
-        time_passed_sec=$((current_time-start_time))
-        time_passed=$(convertsecs $time_passed_sec)
+	total=1
+	avg_speed=1
+	start_time=$(date +%s)
+	n=0
+	sleep 1s
+	echo -e '\n\n\n\n\n\n\n\n\n\n\n\n\n'
+	wifi_chip_name=$(ifconfig  | grep ^wlp | cut -d: -f1)
+	while :; do 
+		let "n+=1"
+		# echo -e "\n\n-------------------"
+		# sleep 1s
+		current_time=$(date +%s)
+		time_passed_sec=$((current_time-start_time))
+		time_passed=$(convertsecs $time_passed_sec)
 
-        download_speed=$(ifstat -i "$wifi_chip_name" 1s 1 | awk 'NR==3 {print $1}')
-        if [[ "$download_speed" == "n/a" ]] ; then
-            sleep 1s
-            continue
-        fi
-        # download_speed=${download_speed%.*}
-        # if [[ $download_speed>1 ]]; then
-        #     download_speed=${download_speed%.*}
-        # fi
+		download_speed=$(ifstat -i "$wifi_chip_name" 1s 1 | awk 'NR==3 {print $1}')
+		if [[ "$download_speed" == "n/a" ]] ; then
+			sleep 1s
+			continue
+		fi
+		# download_speed=${download_speed%.*}
+		# if [[ $download_speed>1 ]]; then
+		#     download_speed=${download_speed%.*}
+		# fi
 
-        total=$(echo "$total+$download_speed"|bc -l)
-        # total_int=${total%.*}
-        # total_int=$(size_in_proper_units $total_int)
+		total=$(echo "$total+$download_speed"|bc -l)
+		# total_int=${total%.*}
+		# total_int=$(size_in_proper_units $total_int)
 
-        # avg_speed=$(echo "scale=1; $total/$time_passed_sec"|bc -l)
-        avg_speed=$(echo "scale=1; $total/$n"|bc -l)
-        # avg_speed_int=${avg_speed%.*}
-        # avg_speed_int=$(size_in_proper_units $avg_speed_int)
+		# avg_speed=$(echo "scale=1; $total/$time_passed_sec"|bc -l)
+		avg_speed=$(echo "scale=1; $total/$n"|bc -l)
+		# avg_speed_int=${avg_speed%.*}
+		# avg_speed_int=$(size_in_proper_units $avg_speed_int)
 
-        echo -n "          "
-        echo -e '\e[14A\e[K'
-        # echo "$(banner $download_speed)" #8
-        toilet -f smmono12 $download_speed #11
-        echo -e "YY:DD:HH:MM:SS\n$time_passed"
-        # echo -e "Total: $total_int\t Avg: $avg_speed"
-        echo -e "Avg: $avg_speed"
-    done
+		echo -n "          "
+		echo -e '\e[14A\e[K'
+		# echo "$(banner $download_speed)" #8
+		toilet -f smmono12 $download_speed #11
+		echo -e "YY:DD:HH:MM:SS\n$time_passed"
+		# echo -e "Total: $total_int\t Avg: $avg_speed"
+		echo -e "Avg: $avg_speed"
+	done
 }
 
 declare -f size_in_proper_units
 size_in_proper_units (){
-    # Assumption: This function will get an input in KBs
-    x=$(echo $1'>'1000000 | bc -l)
-    if [[ $x -eq 1 ]]; then
-        r=$(echo "scale=3; $1/1000000" | bc -l)
-        echo "$r G"
-    else
-        x=$(echo $1'>'1000 | bc -l)
-        if [[ $x -eq 1 ]]; then
-            r=$(echo "scale=1; $1/1000" | bc -l)
-            echo "$r M"
-        else
-            echo "$1 K"
-        fi
-    fi
+	# Assumption: This function will get an input in KBs
+	x=$(echo $1'>'1000000 | bc -l)
+	if [[ $x -eq 1 ]]; then
+		r=$(echo "scale=3; $1/1000000" | bc -l)
+		echo "$r G"
+	else
+		x=$(echo $1'>'1000 | bc -l)
+		if [[ $x -eq 1 ]]; then
+			r=$(echo "scale=1; $1/1000" | bc -l)
+			echo "$r M"
+		else
+			echo "$1 K"
+		fi
+	fi
 
 }
 
 declare -f pdf
 pdf() {
-    feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &
+	feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &
 }
 
 declare -f pickle_to_csv
 pickle_to_csv() {
-    # read -p "Enter csv file name: " csv_file_name
-    csv_file_name="$1.csv"
-    while : ; do 
-        test -e "$csv_file_name"
-        if [[ $? -ne 0 ]]; then
-            break
-        fi 
-    done
-    
-    x="from pandas import read_pickle; read_pickle(open('"$1"', 'rb')).to_csv('"$csv_file_name"')"
-    echo "$x" | python3
+	# read -p "Enter csv file name: " csv_file_name
+	csv_file_name="$1.csv"
+	while : ; do 
+		test -e "$csv_file_name"
+		if [[ $? -ne 0 ]]; then
+			break
+		fi 
+	done
+	
+	x="from pandas import read_pickle; read_pickle(open('"$1"', 'rb')).to_csv('"$csv_file_name"')"
+	echo "$x" | python3
 }
 
 
 declare -f beep
 beep() {
-    #play -n synth 1.0 sine 1000
-    play -n synth 0.5 sine 500
+	#play -n synth 1.0 sine 1000
+	play -n synth 0.5 sine 500
 
-    # import winsound
-    # frequency = 2500  # Set the frequency of the sound
-    # duration = 1000  # Set the duration of the sound in milliseconds
-    # winsound.Beep(frequency, duration)
+	# import winsound
+	# frequency = 2500  # Set the frequency of the sound
+	# duration = 1000  # Set the duration of the sound in milliseconds
+	# winsound.Beep(frequency, duration)
 
 }
 
 declare -f merge_subtitles_with_a_video
 merge_subtitles_with_a_video(){
-    while [ $# -gt 0 ]; do
-        # echo "$1"
-        case "$1" in
-            -v|--video_file_name)
-              video_file_name="$2"
-              ;;
-            -s|--subtitles_file_name)
-              subtitles_file_name="$2"
-              ;;
-            -o|--output_file_name)
-              output_file_name="$2"
-              ;;
-            -h|--help)
-              echo -e "
-        Usage:
-            -v, --video_file_name ---------------- Video's path
-            -s, --subtitles_file_name ------------ Subtitle's path
-            -o, --output_file_name --------------- Output's path
-            -h, --help --------------------------- help page
-           "
-           # return
-              ;;
-            *)
-              echo -e "
-            ***************************
-            * Error: Invalid argument.*
-            ***************************
-              "
-              return 
-        esac
-        shift
-        shift
-    done
-    ffmpeg -i "$video_file_name" -i "$subtitles_file_name" -c copy -c:s mov_text -metadata:s:s:0 language=eng "$output_file_name"
+	while [ $# -gt 0 ]; do
+		# echo "$1"
+		case "$1" in
+			-v|--video_file_name)
+			  video_file_name="$2"
+			  ;;
+			-s|--subtitles_file_name)
+			  subtitles_file_name="$2"
+			  ;;
+			-o|--output_file_name)
+			  output_file_name="$2"
+			  ;;
+			-h|--help)
+			  echo -e "
+		Usage:
+			-v, --video_file_name ---------------- Video's path
+			-s, --subtitles_file_name ------------ Subtitle's path
+			-o, --output_file_name --------------- Output's path
+			-h, --help --------------------------- help page
+		   "
+		   # return
+			  ;;
+			*)
+			  echo -e "
+			***************************
+			* Error: Invalid argument.*
+			***************************
+			  "
+			  return 
+		esac
+		shift
+		shift
+	done
+	ffmpeg -i "$video_file_name" -i "$subtitles_file_name" -c copy -c:s mov_text -metadata:s:s:0 language=eng "$output_file_name"
 }
 
 
 
 declare -f create_a_swap_file
 create_a_swap_file(){
-    read -p "Enter a swap file's full name: " swap_file_name
-    read -p "How big swap file do you want to create? Enter in GBs: " gbs
-    # # Get free GBs available at /media/sdb2 partion
-    # free_gb=$(df -BG  /media/sdb2/ | awk '{print $4}' | tail -n1 | sed 's/G//g')
+	read -p "Enter a swap file's full name: " swap_file_name
+	read -p "How big swap file do you want to create? Enter in GBs: " gbs
+	# # Get free GBs available at /media/sdb2 partion
+	# free_gb=$(df -BG  /media/sdb2/ | awk '{print $4}' | tail -n1 | sed 's/G//g')
 
-    # if [[ $free_gb < 21 ]]; then
-    #     echo -e "\nThere is less then 21GB available at /media/sdb2\nExisting......\n"
-    #     return
-    # fi
+	# if [[ $free_gb < 21 ]]; then
+	#     echo -e "\nThere is less then 21GB available at /media/sdb2\nExisting......\n"
+	#     return
+	# fi
 
-    # Create a 20GB file
-    # dd if=/dev/zero of=/media/sdb2/swapfile.img bs=1G count=20
-    sudo dd if=/dev/zero of="$swap_file_name" bs=1G count=$gbs
+	# Create a 20GB file
+	# dd if=/dev/zero of=/media/sdb2/swapfile.img bs=1G count=20
+	sudo dd if=/dev/zero of="$swap_file_name" bs=1G count=$gbs
 
-    # change permitions
-    # sudo chmod 0600 /media/sdb2/swapfile.img
-    sudo chmod 0600 "$swap_file_name"
+	# change permitions
+	# sudo chmod 0600 /media/sdb2/swapfile.img
+	sudo chmod 0600 "$swap_file_name"
 
-    # # Add an entry to fstab file
-    # # echo -e "\n/media/sdb2/swapfile.img swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
-    # echo -e "\"n/$swap_file_name swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
+	# # Add an entry to fstab file
+	# # echo -e "\n/media/sdb2/swapfile.img swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
+	# echo -e "\"n/$swap_file_name swap swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
 
-    # make a swap
-    # sudo mkswap /media/sdb2/swapfile.img
-    sudo mkswap "$swap_file_name"
+	# make a swap
+	# sudo mkswap /media/sdb2/swapfile.img
+	sudo mkswap "$swap_file_name"
 
 
-    # On the swap
-    # sudo swapon  /media/sdb2/swapfile.img
-    sudo swapon  "$swap_file_name"
+	# On the swap
+	# sudo swapon  /media/sdb2/swapfile.img
+	sudo swapon  "$swap_file_name"
 }
 
 declare -f record_bluetooth_headphone_audio
 record_bluetooth_headphone_audio(){
-    file_name=$(date +%d-%m-%Y_%H\:%M\:%S).wav
-    # ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor "$file_name"
-    ffmpeg -f x11grab -s $(xdpyinfo | grep dimensions | awk '{print $2}') -i :0.0 -f pulse -i bluez_sink.25_13_97_20_DD_0A.a2dp_sink.monitor -c:v libx264 -c:a aac "$file_name"
+	file_name=$(date +%d-%m-%Y_%H\:%M\:%S).wav
+	# ffmpeg -f pulse -i bluez_sink.54_25_E7_83_00_84.a2dp_sink.monitor "$file_name"
+	ffmpeg -f x11grab -s $(xdpyinfo | grep dimensions | awk '{print $2}') -i :0.0 -f pulse -i bluez_sink.25_13_97_20_DD_0A.a2dp_sink.monitor -c:v libx264 -c:a aac "$file_name"
 }
 
 declare -f record_screen
 record_screen(){
-    file_name=$(date +%d-%m-%Y_%H\:%M\:%S).mkv
-    # ffmpeg                \
-    # -video_size 1920x1080 \ 
-    # -framerate 50         \ 
-    # -f x11grab            \  # Specifies the input format as x11grab, which is used for capturing the X Window System (X11) screen on Linux.
-    # -i :0.0+0,0           \  # Specifies the input source. In this case, it's capturing the screen from the default X11 display, which is represented as :0.0. The +0,0 part indicates that it's capturing from the top-left corner of the screen (coordinates 0,0). 
-    # -f pulse              \  # Sets the input format for audio capture as PulseAudio, a sound server for Linux.
-    # -ac 2                 \  # Specifies that FFmpeg should capture audio in stereo (2 audio channels).
-    # -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
-    # "$file_name"
+	file_name=$(date +%d-%m-%Y_%H\:%M\:%S).mkv
+	# ffmpeg                \
+	# -video_size 1920x1080 \ 
+	# -framerate 50         \ 
+	# -f x11grab            \  # Specifies the input format as x11grab, which is used for capturing the X Window System (X11) screen on Linux.
+	# -i :0.0+0,0           \  # Specifies the input source. In this case, it's capturing the screen from the default X11 display, which is represented as :0.0. The +0,0 part indicates that it's capturing from the top-left corner of the screen (coordinates 0,0). 
+	# -f pulse              \  # Sets the input format for audio capture as PulseAudio, a sound server for Linux.
+	# -ac 2                 \  # Specifies that FFmpeg should capture audio in stereo (2 audio channels).
+	# -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
+	# "$file_name"
 
-    if [[ $(xrandr --listmonitors | grep x | wc -l) -eq 1 ]]; then
-        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"        
-    elif [[ $(xrandr --listmonitors | grep x | wc -l) -eq 2 ]]; then
-        echo -e "\nWhich screen do you want to record?\n\t1-Upper\n\t2-Lower\n"
-        read ans
-        if [[ $ans == 1 ]]; then
-            ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
-        else
-            if [[ $ans == 2 ]]; then
-                ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
-            fi
-        fi
-    else # More than two screens
+	if [[ $(xrandr --listmonitors | grep x | wc -l) -eq 1 ]]; then
+		ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"        
+	elif [[ $(xrandr --listmonitors | grep x | wc -l) -eq 2 ]]; then
+		echo -e "\nWhich screen do you want to record?\n\t1-Upper\n\t2-Lower\n"
+		read ans
+		if [[ $ans == 1 ]]; then
+			ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
+		else
+			if [[ $ans == 2 ]]; then
+				ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
+			fi
+		fi
+	else # More than two screens
 
-        # Get monitor information dynamically
-        monitor_data=$(xrandr --listmonitors | tail -n +2 | awk '{print ":0.0+" $3}' | sed -E 's:/[0-9]+::g' | sed 's/,/+/g')
+		# Get monitor information dynamically
+		monitor_data=$(xrandr --listmonitors | tail -n +2 | awk '{print ":0.0+" $3}' | sed -E 's:/[0-9]+::g' | sed 's/,/+/g')
 
-        # Assign monitor offsets to variables
-        upper_left="0.0+0,0"
-        upper_right="0.0+1920,0"
-        bottom_middle=$"0.0+946,1080"
+		# Assign monitor offsets to variables
+		upper_left="0.0+0,0"
+		upper_right="0.0+1920,0"
+		bottom_middle=$"0.0+946,1080"
 
-        # Display options to the user
-        echo "Choose a screen to record:"
-        echo "1 - Upper Left"
-        echo "2 - Upper Right"
-        echo "3 - Bottom Middle"
+		# Display options to the user
+		echo "Choose a screen to record:"
+		echo "1 - Upper Left"
+		echo "2 - Upper Right"
+		echo "3 - Bottom Middle"
 
-        # Read user input
-        read -p "Enter your choice (1/2/3): " choice
+		# Read user input
+		read -p "Enter your choice (1/2/3): " choice
 
-        # Determine the selected screen
-        case $choice in
-            1)
-                selected_screen=$upper_left
-                ;;
-            2)
-                selected_screen=$upper_right
-                ;;
-            3)
-                selected_screen=$bottom_middle
-                ;;
-            *)
-                echo "Invalid choice. Exiting."
-                exit 1
-                ;;
-        esac
+		# Determine the selected screen
+		case $choice in
+			1)
+				selected_screen=$upper_left
+				;;
+			2)
+				selected_screen=$upper_right
+				;;
+			3)
+				selected_screen=$bottom_middle
+				;;
+			*)
+				echo "Invalid choice. Exiting."
+				exit 1
+				;;
+		esac
 
-        # Tested
-        # upper-left:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0      -f pulse -ac 2 -i default "abc.mp4"
-        # upper-righ:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+1920,0   -f pulse -ac 2 -i default "abc.mp4"
-        # bottom-middle: ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+946,1080 -f pulse -ac 2 -i default "abc.mp4"
+		# Tested
+		# upper-left:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0      -f pulse -ac 2 -i default "abc.mp4"
+		# upper-righ:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+1920,0   -f pulse -ac 2 -i default "abc.mp4"
+		# bottom-middle: ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+946,1080 -f pulse -ac 2 -i default "abc.mp4"
 
-        ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :"$selected_screen" -f pulse -ac 2 -i default "$file_name"
-    fi
+		ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :"$selected_screen" -f pulse -ac 2 -i default "$file_name"
+	fi
 
-    # ffmpeg                \
-    # -f x11grab            \
-    # -video_size 1920x1080 \
-    # -framerate 30         \
-    # -i :0.0               \
-    # -f alsa               \
-    # -i pulse              \
-    # -ac 2                 \
-    # -c:v libx264          \
-    # -c:a aac              \
-    # -strict experimental  \
-    # -vf "format=yuv420p" 
-    # $file_name
+	# ffmpeg                \
+	# -f x11grab            \
+	# -video_size 1920x1080 \
+	# -framerate 30         \
+	# -i :0.0               \
+	# -f alsa               \
+	# -i pulse              \
+	# -ac 2                 \
+	# -c:v libx264          \
+	# -c:a aac              \
+	# -strict experimental  \
+	# -vf "format=yuv420p" 
+	# $file_name
 
 }
 
 
 declare -f join_lines_with_space
 join_lines_with_space() {
-    python3 <<< "import clipboard; x = ' '.join([i for i in clipboard.paste().splitlines() if i.strip()]); clipboard.copy(x)"
+	python3 <<< "import clipboard; x = ' '.join([i for i in clipboard.paste().splitlines() if i.strip()]); clipboard.copy(x)"
 }
 
 
 declare -f extract_portion_of_video_from_long_video
 extract_portion_of_video_from_long_video(){
-    if [[ -z $1 ]] || [[ -z $2 ]] || [[ -z $3 ]] || [[ -z $4 ]]; then
-        echo -e "
-        This function require four perameters:
-            1- Video name
-            2- Start time (eg: 00:12:20)
-            3- End Time (eg: 00:12:40)
-            4- Ouput file name
-        "
-        # exit
-        return 1
-    fi
-    file_name=$1
-    start=$2
-    end=$3
-    output_file_name=$4
+	if [[ -z $1 ]] || [[ -z $2 ]] || [[ -z $3 ]] || [[ -z $4 ]]; then
+		echo -e "
+		This function require four perameters:
+			1- Video name
+			2- Start time (eg: 00:12:20)
+			3- End Time (eg: 00:12:40)
+			4- Ouput file name
+		"
+		# exit
+		return 1
+	fi
+	file_name=$1
+	start=$2
+	end=$3
+	output_file_name=$4
 
-    echo -e "
-        file_name        : $file_name
-        start            : $start
-        end              : $end
-        output_file_name : $output_file_name
-    "
-    command="ffmpeg -i $file_name -ss $start -to $end -c copy $output_file_name"
-    eval $command
-    echo $command
+	echo -e "
+		file_name        : $file_name
+		start            : $start
+		end              : $end
+		output_file_name : $output_file_name
+	"
+	command="ffmpeg -i $file_name -ss $start -to $end -c copy $output_file_name"
+	eval $command
+	echo $command
 }
 declare -f brighness_external_screen
 brighness_external_screen(){
-    sudo ls > /dev/null
-    echo -n "Current: "
-    sudo ddcutil --display 1 getvcp 10 | sed 's/\ \{1,\}/\ /g' | cut -d'=' -f2 | cut -d, -f1 | sed 's/^\ //g'
-    read -p "Enter new value (0-100): " val
-    sudo ddcutil --display 1 setvcp 10 $val
+	sudo ls > /dev/null
+	echo -n "Current: "
+	sudo ddcutil --display 1 getvcp 10 | sed 's/\ \{1,\}/\ /g' | cut -d'=' -f2 | cut -d, -f1 | sed 's/^\ //g'
+	read -p "Enter new value (0-100): " val
+	sudo ddcutil --display 1 setvcp 10 $val
 }
 
 declare -f repeat_if_fail
 repeat_if_fail() {
-    echo -e "# Write you bash code here, save it, and press Enter in the terminal\ncd $(pwd)" > /tmp/repeat_if_fail
-    echo 
-    subl /tmp/repeat_if_fail
-    read -p "Press Enter: "
-    test -e /tmp/repeat_if_fail
-    if [[ $? -ne 0 ]]; then
-        echo "Error: The file '/tmp/repeat_if_fail' doesn't exist."
-        return 1
-    fi
-    while true; do
-        bash /tmp/repeat_if_fail
-        if [[ $? -eq 0 ]]; then
-            break
-        fi
-    done
+	echo -e "# Write you bash code here, save it, and press Enter in the terminal\ncd $(pwd)" > /tmp/repeat_if_fail
+	echo 
+	subl /tmp/repeat_if_fail
+	read -p "Press Enter: "
+	test -e /tmp/repeat_if_fail
+	if [[ $? -ne 0 ]]; then
+		echo "Error: The file '/tmp/repeat_if_fail' doesn't exist."
+		return 1
+	fi
+	while true; do
+		bash /tmp/repeat_if_fail
+		if [[ $? -eq 0 ]]; then
+			break
+		fi
+	done
 }
 
 
@@ -1225,14 +1225,14 @@ export UNDERLINE='\033[4m'
 
 declare -f zm
 zm() { 
-    IFS=$'\n'
-    for i in mp4 webm mkv part ; do
-        # count=$(ls *.$i 2>/dev/null| wc -l)
-        count=$(find chuchu-tv-* -name "*.$i" 2>/dev/null| wc -l)
-        # size=$(dt *.$i | grep total | sed 's/total//g')
-        size=$(dt `find chuchu-tv-* -name "*.$i"` | grep total | sed 's/total//g')
-        echo -e "$i\t $count \t $size"
-    done
+	IFS=$'\n'
+	for i in mp4 webm mkv part ; do
+		# count=$(ls *.$i 2>/dev/null| wc -l)
+		count=$(find chuchu-tv-* -name "*.$i" 2>/dev/null| wc -l)
+		# size=$(dt *.$i | grep total | sed 's/total//g')
+		size=$(dt `find chuchu-tv-* -name "*.$i"` | grep total | sed 's/total//g')
+		echo -e "$i\t $count \t $size"
+	done
 }
 export -f zm
 
@@ -1249,31 +1249,31 @@ alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucke
 
 declare -f execute_file_on_vm
 execute_file_on_vm(){
-    if [[ -z $1 ]] ; then
-        file=/home/amir/github/Medusa/anomalies/index.py
-        # file=/home/amir/github/Medusa/monday.com/fetch_data_from_redshift.py
-    else
-        echo "$1" | grep / >/dev/null
-        if [[ $? -eq 0 ]]; then
-            echo -e "/ in file_name\nAborting........\n"
-            return 1
-        fi
-        file=$(echo "$(pwd)/$1")
-    fi
-    file_base_name=$(basename "$file")
-    # scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
-    scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
+	if [[ -z $1 ]] ; then
+		file=/home/amir/github/Medusa/anomalies/index.py
+		# file=/home/amir/github/Medusa/monday.com/fetch_data_from_redshift.py
+	else
+		echo "$1" | grep / >/dev/null
+		if [[ $? -eq 0 ]]; then
+			echo -e "/ in file_name\nAborting........\n"
+			return 1
+		fi
+		file=$(echo "$(pwd)/$1")
+	fi
+	file_base_name=$(basename "$file")
+	# scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
+	scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
 
-    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
-    ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
-    
-    # ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "cd /home/amir/monday.com/; python3 $file_base_name"
-    ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
+	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
+	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
+	
+	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "cd /home/amir/monday.com/; python3 $file_base_name"
+	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
 }
 
 declare -f reset_bashprofile
 reset_bashprofile(){
-    source ~/.bash_profile >/dev/null
+	source ~/.bash_profile >/dev/null
 }
 
 # declare -f change_python_path
@@ -1291,65 +1291,65 @@ reset_bashprofile(){
 declare -f break_work
 declare -f timer
 timer() {
-    # echo;
-    # n=0
-    # while true; do 
-    #     let "n++"
-    #     echo -e '\e[2A\e[K';
-    #     convertsecs $n
-    #     sleep 1s
-    # done
+	# echo;
+	# n=0
+	# while true; do 
+	#     let "n++"
+	#     echo -e '\e[2A\e[K';
+	#     convertsecs $n
+	#     sleep 1s
+	# done
 
-    echo -e '\n\n\n\n\n\n\n\n\n';
-    n=0
-    while true; do 
-        l=$(convertsecs $n)
-        let "n++"
-        echo -e '\e[11A\e[K'
-        toilet -f smmono12 $l
-        sleep 1s
-    done
+	echo -e '\n\n\n\n\n\n\n\n\n';
+	n=0
+	while true; do 
+		l=$(convertsecs $n)
+		let "n++"
+		echo -e '\e[11A\e[K'
+		toilet -f smmono12 $l
+		sleep 1s
+	done
 }
 
 declare -f break_work
 break_work() {
-    if [[ -z $1 ]]; then
-        limit_sec=300 # Default wait time (sec)
-    else
-        limit_sec=$1
-    fi
+	if [[ -z $1 ]]; then
+		limit_sec=300 # Default wait time (sec)
+	else
+		limit_sec=$1
+	fi
 
-    # If limit_sec is less than 30 then assume it minutes not seconds.
-    if [[ $limit_sec -le 30 ]]; then
-        limit_sec=$(echo $limit_sec*60|bc -l)
-    fi
+	# If limit_sec is less than 30 then assume it minutes not seconds.
+	if [[ $limit_sec -le 30 ]]; then
+		limit_sec=$(echo $limit_sec*60|bc -l)
+	fi
 
-    break_started_before_sec=0
-    while true; do
-        sleep 1
-        let "break_started_before_sec+=1"
-        if [[ $break_started_before_sec -gt $limit_sec ]]; then
-            beep
-        fi
-    done
+	break_started_before_sec=0
+	while true; do
+		sleep 1
+		let "break_started_before_sec+=1"
+		if [[ $break_started_before_sec -gt $limit_sec ]]; then
+			beep
+		fi
+	done
 }
 
 declare -f random_number
 random_number(){
-    echo $((RANDOM * RANDOM % 1000000000))
+	echo $((RANDOM * RANDOM % 1000000000))
 }
 
 declare -f i
 i() {
-    python_code="import os, pickle,  pandas as pd,  numpy as np,  matplotlib.pyplot as plt; print('\n\nos, pickle, pandas, numpy, matplotlib, and pickle are imported\n\n')";
-    echo "$python_code" > /tmp/python_code;
-    $HOME/.venv_base/bin/ipython3 -i /tmp/python_code
+	python_code="import os, pickle,  pandas as pd,  numpy as np,  matplotlib.pyplot as plt; print('\n\nos, pickle, pandas, numpy, matplotlib, and pickle are imported\n\n')";
+	echo "$python_code" > /tmp/python_code;
+	$HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
 
 
 declare -f turing_google_comparative_analysis_work_for_current_week
 turing_google_comparative_analysis_work_for_current_week() {
-    python3 <<< '
+	python3 <<< '
 from amir_analysis_functions import turing_google_comparative_analysis_work_for_current_week
 turing_google_comparative_analysis_work_for_current_week()
 '
@@ -1357,25 +1357,216 @@ turing_google_comparative_analysis_work_for_current_week()
 
 declare -f copy_variable_to_clipboard
 copy_variable_to_clipboard(){
-    if [[ -z "$1" ]]; then
-        echo -e "\nNo variable given ...\nAborting....\n"
-        return 1
-    fi
-    VARIABLE="$1"
-    echo -n "$VARIABLE" | xclip -selection clipboard
+	if [[ -z "$1" ]]; then
+		echo -e "\nNo variable given ...\nAborting....\n"
+		return 1
+	fi
+	VARIABLE="$1"
+	echo -n "$VARIABLE" | xclip -selection clipboard
 }
 
 
 # Only for Turing Multimodality project
 declare -f png
 png(){
-    # eog -f /home/amir/Multimodelity/png/$1.png
-    eog /home/amir/Multimodelity/png/$1.png
+	# eog -f /home/amir/Multimodelity/png/$1.png
+	eog /home/amir/Multimodelity/png/$1.png
 }
+
+
+declare -f data_read_clipboard_check_duplicates_in_series
+data_read_clipboard_check_duplicates_in_series () 
+{ 
+	python_code="
+import pandas as pd
+import clipboard
+from pandas import to_datetime
+
+def get_type(value):
+	for fun in (int, float, to_datetime, str):
+		try:
+			fun(value)
+			return fun.__name__
+		except:
+			...
+
+lines =  clipboard.paste().splitlines()[:2]
+types = []
+for line in lines:
+	types.append([get_type(c) for c in line.split('\t')])
+
+if types[0] == types[1]:
+	df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
+	df.columns = [f'col_{i}' for i in range(df.shape[1])]
+else:
+	df = pd.read_clipboard(sep=',', on_bad_lines='skip')
+df = df.dropna(how='all').dropna(how='all', axis=1)
+if df.shape[1] == 1:
+	x = df['col_0']
+	del df
+print(x.str.lower().str.strip().value_counts().loc[lambda x: x>1].to_markdown())
+";
+	echo "$python_code" > /tmp/python_code;
+	$HOME/.venv_base/bin/ipython3  /tmp/python_code
+}
+
+declare -f data_read_clipboard_check_show_duplicates_lines
+data_read_clipboard_check_show_duplicates_lines () 
+{ 
+	python_code="
+import pandas as pd
+import clipboard
+from pandas import to_datetime
+
+def get_type(value):
+	for fun in (int, float, to_datetime, str):
+		try:
+			fun(value)
+			return fun.__name__
+		except:
+			...
+
+lines =  clipboard.paste().splitlines()[:2]
+types = []
+for line in lines:
+	types.append([get_type(c) for c in line.split('\t')])
+
+if types[0] == types[1]:
+	df = pd.read_clipboard(header=None, sep=',', on_bad_lines='skip')
+	df.columns = [f'col_{i}' for i in range(df.shape[1])]
+else:
+	df = pd.read_clipboard(sep=',', on_bad_lines='skip')
+df = df.dropna(how='all').dropna(how='all', axis=1)
+duplicated_repos = df['Actual Repository link'].value_counts().loc[lambda x: x>1].index.to_list()
+if not duplicated_repos:
+	print('No duplicated repos')
+	exit()
+
+for dr in duplicated_repos:
+	print(f'\n\n>>>>>>>>>>>>>>>> {dr}')
+	print(df.loc[df['Actual Repository link'].eq(dr), ['IC', 'Actual Repository link', 'Batch Link', 'Made the bach of the repo']].to_markdown(index=False).replace('nan', '__'))
+
+";
+	echo "$python_code" > /tmp/python_code;
+	$HOME/.venv_base/bin/ipython3  /tmp/python_code | grep '\|__'
+}
+
+get_max_lenght_splited_by_tab(){
+	string="$1"
+	IFS=$'\t' read -ra parts <<< "$string"
+	max_length=0
+	for part in "${parts[@]}"; do
+	    length=${#part}
+	    if (( length > max_length )); then
+	        max_length=$length
+	    fi
+	done
+}
+
+pad_to_len() {
+    local input="$1"
+    local len=$2
+    local input_len=${#input}
+    
+    if (( input_len >= len )); then
+        echo "$input"
+    else
+        local padding=$(( len - input_len ))
+        padded_string=$(printf "%s%${padding}s" "$input" "")
+    fi
+}
+
+
+declare -f print_numbers_after_lag
+print_numbers_after_lag(){
+	PADDING=12
+	num=1
+	test -e /tmp/commands
+	if [[ $? -ne 0 ]]; then 
+		>/tmp/commands
+		while true; do
+			echo -e "Enter your command #$num ${RED}(Enter q if not command left)${NORMAL} " 
+			read -p "" com
+			if [[ "$com" == 'q' ]]; then 
+				break
+			fi
+			echo "$com" >> /tmp/commands
+			let "num++"
+		done
+	else
+		echo
+		echo "/tmp/commands is already exist, we are going to re-use it.."
+		echo "### /tmp/commands"
+		cat /tmp/commands
+		echo 
+	fi
+
+	test -e /tmp/hreaders______.txt
+	if [[ $? -ne 0 ]]; then 
+		# echo -en "                " > /tmp/hreaders______.txt
+		for i in $(seq 1 $(cat /tmp/commands | wc -l)); do 
+			read -p "Enter header #$i: " hdr
+			echo "$hdr" >> /tmp/hreaders______.txt
+		done
+	else
+		echo -e "\n/tmp/hreaders______.txt is already exist, we are going to re-use it..\n"
+		cat /tmp/hreaders______.txt
+		echo
+	fi
+	read -p "Enter lag time (eg: 10s, 1m, etc ..) " lag
+	>/tmp/last_output.txt
+	iteration_n=0
+	while true; do
+		if ! ((iteration_n % 15)); then
+			echo -n "                "
+			IFS=$'\n'
+			for i in $(cat /tmp/hreaders______.txt); do 
+				pad_to_len "$i" $PADDING
+				echo -en "$padded_string"
+			done | grep '\|.'
+			# cat /tmp/hreaders______.txt | grep '\|.'
+		fi
+		let "iteration_n++"
+		echo -en "$(date +%T) - $lag - "
+		last_output=$(cat /tmp/last_output.txt | sed 's/\t$//g')
+		IFS=$'\t' read -r -a last_output_array <<< "$last_output"
+		current_output=()
+		while IFS= read -r com; do
+			output=$(eval "$com")
+			current_output+=("$output")
+			len="${#current_output[@]}"
+			pad_to_len "$output" $PADDING
+			echo -en "$padded_string"
+			# echo -en "$output"
+		done < '/tmp/commands' > /tmp/last_output.txt
+		echo -n $(cat /tmp/last_output.txt)
+		# echo -en "   |   "
+		# for (( i=0; i<$len; i++ )); do
+		# 	if [ -z "$last_output" ]; then
+		# 		diff_=""
+		# 	else
+		# 		current_output_i="${current_output[$i]}"
+		# 		last_output_i="${last_output_array[$i]}"
+		# 		diff_=$(echo "$current_output_i-$last_output_i"|bc -l)
+		# 		if [[ $diff_ -eq 0 ]]; then
+		# 			diff_="--"
+		# 		fi
+		# 	fi
+		# 	# pad_to_len "$diff_" $PADDING
+		# 	# echo -en "$padded_string"
+		# 	echo -en "$diff_\t"
+		# done
+		sleep $lag 
+		echo
+	done 
+}
+
 
 export -f png
 export -f copy_variable_to_clipboard
-
+export -f data_read_clipboard_check_duplicates_in_series
+export -f data_read_clipboard_check_show_duplicates_lines
+export -f print_numbers_after_lag
 
 
 
@@ -1392,7 +1583,7 @@ PYTHONPATH="/amir_bin/:/usr/bin/python3"
 export PYTHONPATH=$PYTHONPATH
 
 if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downloads/Google/Multimodality/Multimodelity" ]]; then
-    eval "$(register-python-argcomplete ./start_to_end.py)"
+	eval "$(register-python-argcomplete ./start_to_end.py)"
 fi
 
 
