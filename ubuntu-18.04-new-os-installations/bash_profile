@@ -1585,6 +1585,3 @@ export PYTHONPATH=$PYTHONPATH
 if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downloads/Google/Multimodality/Multimodelity" ]]; then
 	eval "$(register-python-argcomplete ./start_to_end.py)"
 fi
-
-
-
