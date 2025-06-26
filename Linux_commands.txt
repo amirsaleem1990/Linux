@@ -2211,3 +2211,6 @@ x=5; y=10; let "result=y-x"; echo $result #5
 
 
 Execute a Python script from the terminal and automatically terminate it after 5 minutes without modifying the script itself .......... timeout 5m python3 your_script.py
+
+
+copy the urls in the clipboard then open them in new window ...... xclip -o | while IFS= read -r url; do firefox "$url"; done
