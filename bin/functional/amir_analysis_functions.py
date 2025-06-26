@@ -1081,3 +1081,16 @@ def show_progress_bar_for_time(total_duration_seconds, sleep_time_sec=1):
 		# sys.stdout.flush()
 		time.sleep(sleep_time_sec)
 	print()  # New line when done
+
+
+def format_number_with_underscores(number):
+    # Convert the number to a string and reverse it for easier processing
+    num_str = str(number)[::-1]
+    
+    # Split the reversed string into chunks of 3 characters each
+    chunks = [num_str[i:i+3] for i in range(0, len(num_str), 3)]
+    
+    # Join the chunks with underscores and reverse back to original order
+    formatted = '_'.join(chunks)[::-1]
+    
+    return formatted
