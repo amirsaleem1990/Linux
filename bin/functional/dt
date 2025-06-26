@@ -8,6 +8,7 @@ if  [[ ${#args[@]} -gt 0 ]]; then
 else
 	#du -sch .[!.]* *            -D 2>/dev/null |sort -h | grep --color "\|total$"
 	du -sch .[!.]* *               2>/dev/null |sort -h | grep --color "\|total$"
+	du -sch .[!.]* ./*             2>/dev/null |sort -h | grep --color "\|total$"
 fi
 ##########################################################################
 # IFS=$'\n'
