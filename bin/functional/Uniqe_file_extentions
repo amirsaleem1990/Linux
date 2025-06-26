@@ -19,11 +19,11 @@ if [[ $parameter -eq 1 ]] ; then
 	echo -e "\n"
 	for extention in `find . -maxdepth 1 -type f | grep  '\.' | rev | cut -d. -f1 | rev | sort -u | grep -v /`; do
 		echo -n  "$extention," >> /tmp/.xm2
-		for file in `ls *.$extention`; do
+		for file in `ls -- *.$extention`; do
 			du -s -BK $file 2>/dev/null | cut -d 'K' -f1 
 		done | paste -sd+ | bc > /tmp/xm1
 		f=$( echo `cat /tmp/xm1` | bc )
-		echo "$f,`ls *.$extention | wc -l`" >> /tmp/.xm2
+		echo "$f,`ls -- *.$extention | wc -l`" >> /tmp/.xm2
 	done
 else
 	folders_count=`find . -type d 2>/dev/null | wc -l`
