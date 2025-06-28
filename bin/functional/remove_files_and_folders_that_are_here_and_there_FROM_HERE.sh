@@ -35,12 +35,12 @@ for i in $(ls -a . "$there" | grep -v '/:'  | grep -v ^$ | sort -u); do
 
     test -e "./$i"
     if [[ $? -eq 0 ]]; then
-        here_kb=$(du -sk "./$i" | awk '{print $1}')
+        here_kb=$(du -sk "./$i" 2>/dev/null | awk '{print $1}')
     fi
 
     test -e "$there/$i"
     if [[ $? -eq 0 ]]; then
-        there_kb=$(du -sk "$there/$i" | awk '{print $1}')
+        there_kb=$(du -sk "$there/$i" 2>/dev/null | awk '{print $1}')
     fi
     echo "$i,$here_kb,$there_kb" >> $file_name
 done
