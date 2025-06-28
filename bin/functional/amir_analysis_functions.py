@@ -758,9 +758,10 @@ def Type_casting(df_id):
 
 
 def seconds_to_hh_mm_ss(seconds):
-	hours, remainder = divmod(seconds, 3600)
+	days, remainder = divmod(seconds, 3600*24)
+	hours, remainder = divmod(remainder, 3600)
 	minutes, seconds = divmod(remainder, 60)
-	return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
+	return f'DD:HH:MM:SS\n{days:02d}:{hours:02d}:{minutes:02d}:{seconds:02d}'
 
 
 
@@ -1084,13 +1085,31 @@ def show_progress_bar_for_time(total_duration_seconds, sleep_time_sec=1):
 
 
 def format_number_with_underscores(number):
-    # Convert the number to a string and reverse it for easier processing
-    num_str = str(number)[::-1]
-    
-    # Split the reversed string into chunks of 3 characters each
-    chunks = [num_str[i:i+3] for i in range(0, len(num_str), 3)]
-    
-    # Join the chunks with underscores and reverse back to original order
-    formatted = '_'.join(chunks)[::-1]
-    
-    return formatted
+	# Convert the number to a string and reverse it for easier processing
+	num_str = str(number)[::-1]
+	
+	# Split the reversed string into chunks of 3 characters each
+	chunks = [num_str[i:i+3] for i in range(0, len(num_str), 3)]
+	
+	# Join the chunks with underscores and reverse back to original order
+	formatted = '_'.join(chunks)[::-1]
+	
+	return formatted
+
+
+def seconds_since_last_modification(file_path):
+	import os
+	import time
+	try:
+		mod_time = os.path.getmtime(file_path)
+		current_time = time.time()
+		seconds_passed = current_time - mod_time
+		return int(seconds_passed)
+	except FileNotFoundError:
+		print(f"Error: The file '{file_path}' does not exist.")
+		return None
+	except Exception as e:
+		print(f"An error occurred: {e}")
+		return None
+
+
