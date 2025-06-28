@@ -3,7 +3,8 @@
 import shutil
 from amir_analysis_functions import convert_units
 import pandas as pd
-
+import warnings
+warnings.filterwarnings("ignore")
 df = pd.read_csv("/tmp/here_there.txt", delimiter=",", header=None)
 df.columns=["file", "here_kb", "there_kb"]
 df[["here_kb", "there_kb"]] = df[["here_kb", "there_kb"]].fillna(0).astype(int)
