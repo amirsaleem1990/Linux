@@ -4,6 +4,7 @@
 import warnings
 import sys
 import os
+import re
 from termcolor import colored
 
 warnings.filterwarnings("ignore")
@@ -36,19 +37,23 @@ def m(x, add_pipe_in_last=True):
 		last_ = "|"
 	return " " * (x - 2) + last_
 
-# breakpoint()
 ###############
 # mounted_at = list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | rev | cut -d, -f1 | rev  | cut -d' ' -f2-5"))
 # mounted_at = list(map(str.strip, list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | grep -v /boot/efi | cut -d/ -f4-"))))
 # mounted_at = ['/' if not i.strip() else f"/{i.strip()}" for i in mounted_at]
 
-mounted_at = os.popen("df | grep '^/dev/sd\\|/dev/nvme' | grep -v /boot/efi | awk '{print $6}'").read().splitlines()
+# mounted_at = os.popen("df | grep '^/dev/sd\\|/dev/nvme' | grep -v /boot/efi$ | awk '{print $6}'").read().splitlines()
+mounted_at = os.popen("df | grep '^/dev/sd\\|/dev/nvme' |grep -v efi$").read().splitlines()
+mounted_at = [re.sub(r' {2,}', ' ', i) for i in mounted_at]
+mounted_at = [" ".join(i.split()[5:]) for i in mounted_at]
+
+
 
 # devs = list(os.popen("df | grep '^/dev/sd\|/dev/nvme' | sed 's/\ \{1,\}/,/g' | grep -v  /boot/efi | cut -d, -f1"))
+
 devs = os.popen("df | grep '^/dev/sd\\|/dev/nvme' |grep -v efi$| awk '{print $1}'").read().splitlines()
 devs = [i.strip() for i in devs]
 ###############
-
 
 print(colored(">>>", "red") + ": Used")
 print(colored("!!!", "green") + ": Unused")
@@ -65,7 +70,6 @@ def bytes_to(bytes_):
 			size = round(bytes_ / 1024)
 			size_str = f"{size}K"
 	return size_str
-
 
 chars_can_fit_in_one_line=int(os.popen("tput cols").read().strip())
 
