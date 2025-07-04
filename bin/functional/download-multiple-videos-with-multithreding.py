@@ -8,8 +8,10 @@ import traceback
 import sys
 import yt_dlp
 import click
+import time
 
 def download(url):
+	time.sleep(0.1)
 	if url[0] == "#":
 		return
 	if not is_best:
@@ -17,7 +19,10 @@ def download(url):
 	
 	ydl_opts = {
 		'outtmpl': '%(title)s-%(id)s.%(ext)s',
-		'merge_output_format': 'mp4'
+		'merge_output_format': 'mp4',
+		'quiet': True,               # Suppresses all stdout output
+		'no_warnings': True,         # Ignores warnings
+		# 'verbose': False,
 	}
 
 	if is_best:
@@ -36,13 +41,13 @@ def download(url):
 		open(error_file, 'a').write(f'---------------------------------\n\n\nUrl:{url}\n{e_}\n\n')
 
 
-def pool_func():
+def pool_func(N_PARALLEL_PROCESSES):
 	try:
 		downloaded = open("downloaded.txt", "r").read().splitlines()
 		urls_to_download = [i for i in urls_to_download if not i in downloaded]
 	except:
 		pass        
-	p = multiprocessing.dummy.Pool()
+	p = multiprocessing.dummy.Pool(processes=N_PARALLEL_PROCESSES)
 	return p
 
 def exclude_func(urls_to_download):
@@ -61,8 +66,9 @@ def Exit():
 	sys.exit(1)
 
 
-def main_func():
-	p = pool_func()
+
+def main_func(N_PARALLEL_PROCESSES):
+	p = pool_func(N_PARALLEL_PROCESSES)
 	try:
 		p.map(download, urls_to_download)
 	except KeyboardInterrupt:
@@ -70,30 +76,10 @@ def main_func():
 
 
 def get_incompleted_videos_urls(urls_file_name):
-	# # u = list(map(str.strip, list(os.popen("ls | grep .mp4.part$ | sed 's/.mp4.part//g' | rev | cut -d- -f1 | rev"))))
-	# part_files = [i.lower().split(".")[0] for i in os.listdir() if i.endswith("part")]
-	# urls = open(urls_file_name, 'r').read().splitlines()
-	# r = []
-	# for pf in part_files:
-	#     for url in urls:
-	#         if pf.lower() in url:
-	#             r.append(url)
-	part_files = [i.lower().split(".")[0].split("-")[0].strip() for i in os.listdir() if i.endswith(".part")]
+	part_files = [i for i in os.listdir() if i.endswith(".part")]
 	urls = open(urls_file_name, 'r').read().splitlines()
-	urls_copy = []
-	for url in urls:
-		urls_copy.append("".join([c for c in url.split("/", urls[0].count("/"))[-1] if c in string.ascii_letters + string.digits]))
-
-	part_files_copy = []
-	for pf in part_files:
-		part_files_copy.append("".join([c for c in pf if c in string.ascii_letters + string.digits]))
-
-	partial_downloaded_urls = []
-	for pf in part_files_copy:
-		for e_url, url in enumerate(urls_copy):
-			if (pf.lower() in url) and (not url in partial_downloaded_urls) and (abs(len(pf)/len(url))<0.06):
-				partial_downloaded_urls.append(urls[e_url])
-	partial_downloaded_urls = list(set(partial_downloaded_urls))
+	ids = [i.split(".mp4")[0].split("-")[-1] for i in part_files]
+	partial_downloaded_urls = [url for id_ in ids for url in urls if id_ in url]
 	print(f"\n\n\n{len(partial_downloaded_urls)} partial downloades identified\n\n\n")
 	return partial_downloaded_urls
 
@@ -119,81 +105,70 @@ def get_urls_to_download(exclude):
 	
 	return urls_to_download
 
+def exclude_substrings():
+	exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
+	get_input_from_user = False
+	if os.path.exists(exclude_file):
+		e = open(exclude_file, 'r').read().strip()
+		if e:
+			# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+			user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
+			if user_inp.lower().strip() in ['yes', '']:
+				exclude = e
+			else:
+				get_input_from_user=True
+		else:
+			get_input_from_user= True
+	else:
+		get_input_from_user=True
+	if get_input_from_user:
+		exclude = input("Words to exclude (if multiple separate them by '|')  ")
+		if exclude:
+			open(exclude_file, 'w').write(exclude)
+	return get_input_from_user, exclude
+
+
+
 
 urls_file_name = ""
-
-exclude_file = "/home/amir/github/Amir-personal/.exclude_download_bulk"
-get_input_from_user = False
-if os.path.exists(exclude_file):
-	e = open(exclude_file, 'r').read().strip()
-	if e:
-		# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
-		user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
-		if user_inp.lower().strip() in ['yes', '']:
-			exclude = e
-		else:
-			get_input_from_user=True
-	else:
-		get_input_from_user= True
-else:
-	get_input_from_user=True
-if get_input_from_user:
-	exclude = input("Words to exclude (if multiple separate them by '|')  ")
-	if exclude:
-		open(exclude_file, 'w').write(exclude)
-
 
 error_file = ".downloading_errors.txt"
 if os.path.exists(error_file):
 	os.remove(error_file)
 
 
+get_input_from_user, exclude = exclude_substrings()
+
 before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
 
-
-is_best = False
-ans = input("Do you need to download BEST quality videos? [yes | no (default)]: ").strip().lower()
-if  ans == "yes":
-	is_best = True
-
-urls_to_download = get_urls_to_download(exclude)
-
-
-x = get_incompleted_videos_urls(urls_file_name)
-if x:
-	urls_to_download = x
+is_best = True
+ans = input("Do you need to download BEST quality videos? [yes (default) | no]: ").strip().lower()
+if  ans == "no":
+	is_best = False
 
 keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ").lower()
-if keyword:
-	urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
-
-main_func()
-
 n=0
+N_PARALLEL_PROCESSES = 16
 while True:
-	part_files = [i for i in os.listdir() if i.endswith(".part")]
-	if not part_files:
-		Exit()
-	# urls_to_download = [i for i in set(open(urls_file_name, "r").read().splitlines()) if i.strip() and (not i.startswith("#"))]
-	# part_files_str = ' '.join(part_files)
-	# part_files = [i for i in urls_to_download if i.split("/")[-1].replace("watch?v=", '') in part_files_str]
-	# if not part_files:
-	#   Exit()  
-	# urls_to_download = part_files
-	# if exclude:
-		# urls_to_download = exclude_func()
+	urls_to_download = get_urls_to_download(exclude)
+	partial_completed_urls = get_incompleted_videos_urls(urls_file_name)
 
-	x = get_incompleted_videos_urls(urls_file_name)
-	if x:
-		urls_to_download = x
-	else:
-		urls_to_download = get_urls_to_download(exclude)
+	if (not urls_to_download) and (not partial_completed_urls):
+		break
+	
+	if partial_completed_urls:
+		if len(urls_to_download) >= N_PARALLEL_PROCESSES:
+			urls_to_download = partial_completed_urls
+		else:
+			partial_completed_urls = partial_completed_urls + urls_to_download[:N_PARALLEL_PROCESSES-len(partial_completed_urls)]
 
-	if n > 5:
-		urls_to_download = get_urls_to_download(exclude)
+	if keyword:
+		urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
 
-	print("\n\n------------------------------------------------------------------\nAnother attempt\n")
-	main_func()
+	main_func(N_PARALLEL_PROCESSES)
+
 	n += 1
 	if n > 20:
 		break
+
+	print(f"\n\n------------------------------------------------------------------\nAttempt #{n}\n")
