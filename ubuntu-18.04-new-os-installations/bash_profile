@@ -31,7 +31,7 @@ BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
 ORANGE="\033[1;33m"
 
-PS1='\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PS1='\n--------------------------------------------------------------------------------------------------------\n\[\e]0;\u@\h: \w\a\]\[\033[01;32m\]\D{%d-%b}|\t:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 alias Alias_backup='alias > _alias_temp ; diff _alias_temp github/Linux/alias  | grep ^\< | sed '\''s/^< //g'\'' > _alias_tempp; cat _alias_tempp >> github/Linux/alias; rm -f _alias_temp*'
 alias Atom='atom'
@@ -78,7 +78,7 @@ alias p='python3 -c '\''t=input(); print(eval(t))'\'''
 # alias pdf='(feh ~/Dropbox/pics/while-reading-pdf-on-15inch-laptop.png &)'
 alias pin='/home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
-alias pwd_current_directory_to_clipboad='echo -n "`pwd`" | xclip -sel cli'
+alias pwd_current_directory_to_clipboad='echo -n $(pwd) | xclip -sel cli'
 alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
 alias rm='mv -f -t ~/.local/share/Trash/files 2>/dev/null'
 alias sharjeel='bash ~/awesome-sharjeel-wifi-connect.wifi'
@@ -119,6 +119,7 @@ alias VPN="echo nhttps://www.vpnbook.com/; nmcli connection modify vpnbook-ca196
 
 # alias youtube_dl_docker='sudo docker run --rm -v "$(pwd):/downloads" youtube-dl-image:latest'
 
+alias arduino="/home/amir/Downloads/squashfs-root/arduino-ide --log-level debug"
 
 PATH="$PATH:/amir_bin:/home/amir/.local/bin:/home/amir/github/Kids_Vids"
 PATH="$PATH:/usr/bin/pip3"
@@ -1068,6 +1069,14 @@ repeat_if_fail() {
 
 
 
+
+
+
+alias  vpn_g_a='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_b='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_c='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_d='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+
 alias  vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca196-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias  vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca196-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias  vpn_g_3='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca196-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -1560,6 +1569,7 @@ print_numbers_after_lag(){
 		echo
 	done 
 }
+
 
 
 export -f png
