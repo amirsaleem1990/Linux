@@ -123,7 +123,7 @@ func_ "apt install -y gnome-shell-extensions"
 func_ "apt install -y gnome-tweaks"
 func_ "apt install -y wmctrl"
 
-func_ "snap install slack"
+# func_ "snap install slack"
 func_ "snap install vlc"
 func_ "snap install scrcpy"
 func_ "snap install pdftk"
@@ -306,8 +306,18 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ cursor-foreground-color "'#FFFFFF'"
 
 
+echo -e "\nhttps://slack.com/downloads/linux"
+read -p "Download slack .deb file, then install it using sudo dpkg -i ..., then press Enter "
+ 
+
+
+
 
 echo -e "
 	Add cronjobs from 'github/Amir-personal/cron-jobs.txt'
 "
 gnome-tweaks
+
+
+
+
