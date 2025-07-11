@@ -706,7 +706,7 @@ pickle_show_content() {
 	echo "$x" | python3
 }
 
-# amir
+
 declare -f data_file_read_dataframe_and_go_in_inpython
 data_file_read_dataframe_and_go_in_inpython() {
 	file_size_in_mb=$(du -sh $1 -BM)
@@ -721,6 +721,30 @@ data_file_read_dataframe_and_go_in_inpython() {
 	echo "$python_code" > /tmp/python_code
 	$HOME/.venv_base/bin/ipython3 -i /tmp/python_code
 }
+
+declare -f data_file_read_dataframe_and_copy_to_clipboard
+data_file_read_dataframe_and_copy_to_clipboard() {
+	file_size_in_mb=$(du -sh $1 -BM)
+	echo -e "\n\n$file_size_in_mb $1\n\n"
+	_data_file_read "$1"
+	if [[ $? -ne 0 ]]; then
+		echo "Failed to save the file as /tmp/data_file.pkl"
+		return 1
+	fi
+	
+	python_code='
+import pandas as pd 
+df = pd.read_pickle("/tmp/data_file.pkl")
+if isinstance(df.index, pd.core.indexes.range.RangeIndex):
+	index=False
+else:
+	index=True
+df.to_clipboard(index=index)
+'
+	echo "$python_code" > /tmp/python_code
+	$HOME/.venv_base/bin/ipython3  /tmp/python_code
+}
+
 
 declare -f data_file_list_columns_names
 data_file_list_columns_names() {
@@ -1072,10 +1096,10 @@ repeat_if_fail() {
 
 
 
-alias  vpn_g_a='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias  vpn_g_b='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias  vpn_g_c='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
-alias  vpn_g_d='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_a='echo https://www.vpnbook.com/; cat /home/amir/github/Amir-personal/p | sudo -S openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_b='echo https://www.vpnbook.com/; cat /home/amir/github/Amir-personal/p | sudo -S openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_c='echo https://www.vpnbook.com/; cat /home/amir/github/Amir-personal/p | sudo -S openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp25000.ovpn  --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
+alias  vpn_g_d='echo https://www.vpnbook.com/; cat /home/amir/github/Amir-personal/p | sudo -S openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca149-udp53.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 
 alias  vpn_g_1='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca196-tcp443.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias  vpn_g_2='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-ca196-tcp80.ovpn     --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
@@ -1471,7 +1495,7 @@ get_max_lenght_splited_by_tab(){
 	    fi
 	done
 }
-
+declare -f pad_to_len
 pad_to_len() {
     local input="$1"
     local len=$2
@@ -1485,8 +1509,6 @@ pad_to_len() {
     fi
 }
 
-
-declare -f print_numbers_after_lag
 print_numbers_after_lag(){
 	PADDING=12
 	num=1
@@ -1537,7 +1559,7 @@ print_numbers_after_lag(){
 		fi
 		let "iteration_n++"
 		echo -en "$(date +%T) - $lag - "
-		last_output=$(cat /tmp/last_output.txt | sed 's/\t$//g')
+		last_output=$(cat /tmp/last_output.txt | sed 's/\t$//g' | sed 's/\ \{1,\}/\t/g')
 		IFS=$'\t' read -r -a last_output_array <<< "$last_output"
 		current_output=()
 		while IFS= read -r com; do
@@ -1549,27 +1571,26 @@ print_numbers_after_lag(){
 			# echo -en "$output"
 		done < '/tmp/commands' > /tmp/last_output.txt
 		echo -n $(cat /tmp/last_output.txt)
-		# echo -en "   |   "
-		# for (( i=0; i<$len; i++ )); do
-		# 	if [ -z "$last_output" ]; then
-		# 		diff_=""
-		# 	else
-		# 		current_output_i="${current_output[$i]}"
-		# 		last_output_i="${last_output_array[$i]}"
-		# 		diff_=$(echo "$current_output_i-$last_output_i"|bc -l)
-		# 		if [[ $diff_ -eq 0 ]]; then
-		# 			diff_="--"
-		# 		fi
-		# 	fi
-		# 	# pad_to_len "$diff_" $PADDING
-		# 	# echo -en "$padded_string"
-		# 	echo -en "$diff_\t"
-		# done
+		echo -en "   |   "
+		for (( i=0; i<$len; i++ )); do
+			if [ -z "$last_output" ]; then
+				diff_=""
+			else
+				current_output_i="${current_output[$i]}"
+				last_output_i="${last_output_array[$i]}"
+				diff_=$(echo "$current_output_i-$last_output_i"|bc -l)
+				if [[ $diff_ -eq 0 ]]; then
+					diff_="--"
+				fi
+			fi
+			# pad_to_len "$diff_" $PADDING
+			# echo -en "$padded_string"
+			echo -en "$diff_\t"
+		done
 		sleep $lag 
 		echo
 	done 
 }
-
 
 
 export -f png
@@ -1577,8 +1598,8 @@ export -f copy_variable_to_clipboard
 export -f data_read_clipboard_check_duplicates_in_series
 export -f data_read_clipboard_check_show_duplicates_lines
 export -f print_numbers_after_lag
-
-
+export -f data_file_read_dataframe_and_copy_to_clipboard
+export -f pad_to_len
 
 
 
