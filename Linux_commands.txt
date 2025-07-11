@@ -2214,3 +2214,20 @@ Execute a Python script from the terminal and automatically terminate it after 5
 
 
 copy the urls in the clipboard then open them in new window ...... xclip -o | while IFS= read -r url; do firefox "$url"; done
+
+
+
+picke a value randomly ............. shuf -n1 -e a b c d
+
+
+
+Check version of a python package:
+curl -s https://pypi.org/pypi/LBRARYNAME/json | jq -r '.releases | to_entries[] | select(.value != []) | "\(.key): \(.value[0].upload_time)"' | sort -Vr
+OR
+pip index versions LBRARYNAME
+
+
+sed -i '1i new_first_line' file.txt ................ Add a new line at very first line of an existing file.
+
+
+sed -i '82d' file.txt ........... Remove the lines number 82
