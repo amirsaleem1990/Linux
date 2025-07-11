@@ -9,28 +9,34 @@ import sys
 import yt_dlp
 import click
 import time
+from termcolor import colored
+import check_internet
 
 def download(url):
+	global total_videso_downloaded
 	time.sleep(0.1)
 	if url[0] == "#":
 		return
+	if url in open("downloaded.txt", 'r').read():
+		return
+	print(colored(f"-------------------------------- {open('downloaded.txt', 'r').read().count('\n')+1}", 'red'))
 	if not is_best:
 		print("\nDownloading the video in default resolution, for best resolution you can add the option --is_best\n")
-	
 	ydl_opts = {
 		'outtmpl': '%(title)s-%(id)s.%(ext)s',
 		'merge_output_format': 'mp4',
-		'quiet': True,               # Suppresses all stdout output
-		'no_warnings': True,         # Ignores warnings
-		# 'verbose': False,
+		# 'quiet': True,               # Suppresses all stdout output
+		# 'no_warnings': True,         # Ignores warnings
+		# # 'verbose': False,
 	}
+
 
 	if is_best:
 		ydl_opts['format'] = 'bestvideo+bestaudio/best'
-
 	try:
 		with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 			ydl.download([url])
+		total_videso_downloaded += 1
 		open("downloaded.txt", "a").write(url+"\n")
 	except:
 		e_ = traceback.format_exc()
@@ -148,27 +154,37 @@ if  ans == "no":
 
 keyword = input("Do you want a specific keyword to be considered for downloading? [Press Enter for no keyword] ").lower()
 n=0
-N_PARALLEL_PROCESSES = 16
+N_PARALLEL_PROCESSES = 18
 while True:
+	total_videso_downloaded = 0
 	urls_to_download = get_urls_to_download(exclude)
+	if not urls_to_download:
+		break
 	partial_completed_urls = get_incompleted_videos_urls(urls_file_name)
 
-	if (not urls_to_download) and (not partial_completed_urls):
-		break
-	
 	if partial_completed_urls:
 		if len(urls_to_download) >= N_PARALLEL_PROCESSES:
 			urls_to_download = partial_completed_urls
 		else:
-			partial_completed_urls = partial_completed_urls + urls_to_download[:N_PARALLEL_PROCESSES-len(partial_completed_urls)]
-
+			urls_to_download = partial_completed_urls + urls_to_download[:N_PARALLEL_PROCESSES-len(partial_completed_urls)]
+		
 	if keyword:
 		urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
 
+	urls_to_download = list(set(urls_to_download))
+
+	print("\n\nUrls to Download: ", len(urls_to_download))
+	print()
 	main_func(N_PARALLEL_PROCESSES)
-
+	if total_videso_downloaded:
+		n = -1
 	n += 1
-	if n > 20:
+	if n > 30:
 		break
+	print(f"\n\n------------------------------------------------------------------\nAttempt #{n} without any downloading\n")
+	if n % 5 == 0:
+		time.sleep(20*60)
+	
 
-	print(f"\n\n------------------------------------------------------------------\nAttempt #{n}\n")
+
+
