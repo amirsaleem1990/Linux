@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=lock-screen-after-n-seconds-of-login
-Exec=/amir_bin/lock_after_n_seconds_of_login.sh
+#Exec=/amir_bin/lock_after_n_seconds_of_login.sh
 Type=Application
 X-GNOME-Autostart-enabled=true
