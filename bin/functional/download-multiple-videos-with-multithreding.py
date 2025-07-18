@@ -160,13 +160,13 @@ while True:
 	urls_to_download = get_urls_to_download(exclude)
 	if not urls_to_download:
 		break
-	partial_completed_urls = get_incompleted_videos_urls(urls_file_name)
+	# partial_completed_urls = get_incompleted_videos_urls(urls_file_name)
 
-	if partial_completed_urls:
-		if len(urls_to_download) >= N_PARALLEL_PROCESSES:
-			urls_to_download = partial_completed_urls
-		else:
-			urls_to_download = partial_completed_urls + urls_to_download[:N_PARALLEL_PROCESSES-len(partial_completed_urls)]
+	# if partial_completed_urls:
+	# 	if len(urls_to_download) >= N_PARALLEL_PROCESSES:
+	# 		urls_to_download = partial_completed_urls
+	# 	else:
+	# 		urls_to_download = partial_completed_urls + urls_to_download[:N_PARALLEL_PROCESSES-len(partial_completed_urls)]
 		
 	if keyword:
 		urls_to_download = [i for i in urls_to_download if keyword in i.lower()]
