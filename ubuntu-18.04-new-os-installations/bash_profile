@@ -153,7 +153,6 @@ Youtube_dl() {
 
 declare -f poweroff
 poweroff() {
-
 	/amir_bin/battery
 	test -e /home/amir/.firefox_backups/
 	if [[ $? -ne 0 ]]; then
