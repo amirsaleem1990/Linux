@@ -816,7 +816,7 @@ def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[
 
 
 
-def fetch_data_from_google_sheet(json_path, worksheet_id, scope):
+def fetch_data_from_google_sheet(json_path, worksheet_id, scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]):
 	# import json
 	# from google.oauth2 import service_account
 	import pandas as pd
