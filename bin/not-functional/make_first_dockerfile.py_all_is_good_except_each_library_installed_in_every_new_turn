@@ -1,0 +1,169 @@
+#!/home/amir/.docker_agent_venv/bin/python3
+import os
+import sys
+import time
+import subprocess
+
+class DockerTestRunner:
+    def __init__(self, test_command):
+        self.test_command = test_command
+        self.image_name = os.path.basename(os.getcwd()).lower()
+        self.dockerfile = "Dockerfile"
+        self.log_dir_host = os.path.join(os.getcwd(), 'host_logs')
+        self.log_file_host = os.path.join(self.log_dir_host, 'test_output.log')
+        self.python_version = '3.11-updated'
+        self.base_dependencies = ['pytest']
+
+        os.makedirs(self.log_dir_host, exist_ok=True)
+
+    def generate_dockerfile(self, extra_installs=None):
+        lines = [
+            f"FROM python:{self.python_version}",
+            "WORKDIR /app",
+            "COPY . .",
+            "RUN pip install --upgrade pip",
+            "RUN pip install pytest"
+        ]
+        if extra_installs:
+            for libr in extra_installs:
+                lines.append(f'RUN pip install {libr}')
+
+
+        dockerfile_content = "\n".join(lines)
+        with open(self.dockerfile, 'w') as f:
+            f.write(dockerfile_content)
+        
+        print(f"\nGenerated Dockerfile:\n{dockerfile_content}\n")
+
+    def build_image(self):
+        print("Building Docker image...")
+        subprocess.run(["docker", "build", "-t", self.image_name, "."], check=True)
+        print("Docker image built successfully.\n")
+
+    def run_test_in_container(self):
+        print("Running container to execute tests...")
+        docker_run_cmd = [
+            "docker", "run", "--rm",
+            "-v", f"{self.log_dir_host}:/app/logs",
+            self.image_name,
+            "bash", "-c", f"{' '.join(self.test_command)} | tee /app/logs/test_output.log"
+        ]
+        subprocess.run(docker_run_cmd, check=True)
+        print(f"Test run completed. Logs written to {self.log_file_host}\n")
+
+    def wait_for_log_file(self, timeout=30):
+        print("Waiting for test output log file...")
+        start_time = time.time()
+        while not os.path.exists(self.log_file_host):
+            if time.time() - start_time > timeout:
+                raise TimeoutError("Timeout waiting for the test output log file.")
+            time.sleep(1)
+        with open(self.log_file_host) as f:
+            content = f.read()
+        return content
+
+    def parse_missing_modules(self, log_content):
+        libs_dict = {
+            "cv2": "opencv-python",
+            "PIL": "Pillow",
+            "yaml": "PyYAML",
+            "dateutil": "python-dateutil",
+            "bs4": "beautifulsoup4",
+            "sklearn": "scikit-learn",
+            "skimage": "scikit-image",
+            "dotenv": "python-dotenv",
+            "PyPDF2": "PyPDF2",
+            "lxml": "lxml",
+            "Crypto": "pycryptodome",
+            "multipart": "python-multipart",
+            "jwt": "PyJWT",
+            "pandas": "pandas",
+            "matplotlib": "matplotlib",
+            "seaborn": "seaborn",
+            "tensorflow": "tensorflow",
+            "torch": "torch",
+            "torchvision": "torchvision",
+            "torchaudio": "torchaudio",
+            "serial": "pyserial",
+            "psycopg2": "psycopg2",
+            "mysql": "mysql-connector-python",
+            "sqlalchemy": "sqlalchemy",
+            "statsmodels": "statsmodels",
+            "pyarrow": "pyarrow",
+            "pytest": "pytest",
+            "pytest_cov": "pytest-cov",
+            "twisted": "twisted",
+            "scrapy": "Scrapy",
+            "alembic": "alembic",
+            "uvicorn": "uvicorn",
+            "fastapi": "fastapi",
+            "flask": "flask",
+            "django": "django",
+            "redis": "redis",
+            "celery": "celery",
+            "kombu": "kombu",
+            "channels": "channels",
+            "plotly": "plotly",
+            "spacy": "spacy",
+            "nltk": "nltk",
+            "jupyter": "jupyter",
+            "ipykernel": "ipykernel",
+            "pydantic": "pydantic",
+            "openpyxl": "openpyxl",
+            "xlrd": "xlrd",
+            "xlwt": "xlwt",
+            "PyInstaller": "pyinstaller",
+            "paramiko": "paramiko",
+            "pymysql": "pymysql",
+            "cryptography": "cryptography",
+            "markdown2": "markdown2"
+        }
+
+        missing = []
+        for line in log_content.splitlines():
+            if "ModuleNotFoundError" in line:
+                parts = line.split("'")
+                if len(parts) >= 2:
+                    lib = parts[1]
+                    missing.append(libs_dict.get(lib, lib))
+        return list(set(missing))  # unique modules only
+
+    def clean_log(self):
+        if os.path.exists(self.log_file_host):
+            os.remove(self.log_file_host)
+
+    def main(self):
+        extra_packages = []
+
+        while True:
+            self.generate_dockerfile(extra_installs=extra_packages if extra_packages else None)
+            self.build_image()
+            self.clean_log()
+            try:
+                self.run_test_in_container()
+            except subprocess.CalledProcessError:
+                print("Test run failed inside Docker, continuing to check for missing modules.\n")
+
+            log_content = self.wait_for_log_file()
+
+            missing_modules = self.parse_missing_modules(log_content)
+            if not missing_modules:
+                print("✅ No missing modules detected. Final test output:\n")
+                print(log_content)
+                break
+            else:
+                print(f"Detected missing modules: {missing_modules}")
+                for module in missing_modules:
+                    if module not in extra_packages:
+                        extra_packages.append(module)
+                print("Updating Dockerfile to include missing packages...\n")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py '<test_command>'")
+        sys.exit(1)
+
+    test_command = sys.argv[1].split()
+    runner = DockerTestRunner(test_command)
+    runner.main()
