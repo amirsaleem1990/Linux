@@ -2231,3 +2231,10 @@ sed -i '1i new_first_line' file.txt ................ Add a new line at very firs
 
 
 sed -i '82d' file.txt ........... Remove the lines number 82
+
+
+wc -l < file.txt
+
+
+
+bc -l <<< "3/45"
