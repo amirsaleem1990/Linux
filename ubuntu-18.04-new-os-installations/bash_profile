@@ -1591,6 +1591,15 @@ print_numbers_after_lag(){
 	done 
 }
 
+declare -f get_swe_link_for_repo
+get_swe_link_for_repo(){
+	if [[ -z $1 ]]; then
+		user_repo=$(git remote get-url origin | sed 's/.git$//g' | cut -d/ -f4-5 | sed 's/\//__/g')
+	else
+		user_repo=$(echo "$1" | sed 's/https:\/\/github.com\///g' | sed 's/\//__/g')
+	fi
+	echo "https://swe-bench-plus.turing.com/repos/$user_repo?filter=%7B%22minDate%22%3A%222024-11-01%22%7D"
+}
 
 export -f png
 export -f copy_variable_to_clipboard
@@ -1599,7 +1608,7 @@ export -f data_read_clipboard_check_show_duplicates_lines
 export -f print_numbers_after_lag
 export -f data_file_read_dataframe_and_copy_to_clipboard
 export -f pad_to_len
-
+export -f get_swe_link_for_repo
 
 
 
@@ -1617,4 +1626,10 @@ if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downl
 fi
 
 
-alias get_repo_link_from_dot_git_dir="git remote get-url origin"
+declare -f get_repo_link_from_dot_git_dir_func
+get_repo_link_from_dot_git_dir_func(){
+	repo=$(git remote get-url origin)
+	xclip -selection clipboard <<< "$repo"
+}
+
+export -f get_repo_link_from_dot_git_dir_func
