@@ -1,4 +1,3 @@
-
 #!/home/amir/.venv_base/bin/python3
 
 def join_summary(s1, s2):
@@ -816,7 +815,13 @@ def plot_for_different_types(df, string=['bar'], numeric=['hist', 'box'], date=[
 
 
 
-def fetch_data_from_google_sheet(json_path, worksheet_id, scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]):
+def fetch_data_from_google_sheet(
+		sheetname, 
+		json_path, 
+		worksheet_id, 
+		scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"],
+		expected_headers=None
+	):
 	# import json
 	# from google.oauth2 import service_account
 	import pandas as pd
@@ -835,11 +840,16 @@ def fetch_data_from_google_sheet(json_path, worksheet_id, scope = ["https://spre
 	# Open the Google Sheet by its ID
 	spreadsheet = client.open_by_key(worksheet_id)
 
-	# Select the first sheet
-	sheet = spreadsheet.sheet1
+	# # Select the first sheet
+	# sheet = spreadsheet.sheet1
 
-	# Get all values from the first sheet
-	data = sheet.get_all_records()
+	sheet = spreadsheet.worksheet(sheetname)
+
+	# Get all values from the sheet
+	if expected_headers:
+		data = sheet.get_all_records(expected_headers=expected_headers)
+	else:
+		data = sheet.get_all_records()
 
 	df = pd.DataFrame(data)
 
@@ -1113,3 +1123,43 @@ def seconds_since_last_modification(file_path):
 		return None
 
 
+
+
+
+def put_value_in_good_sheet(
+		column_to_lookup, column_to_update, value_to_lookup, value_to_updated, gs_key_from_url, json_path, g_id,
+		scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+	):
+	
+	from gspread.utils import a1_to_rowcol
+	import gspread
+	from oauth2client.service_account import ServiceAccountCredentials
+	from termcolor import colored
+
+	print(colored(f"Trying to put {value_to_updated} in column {column_to_update} with the lookup value of {value_to_lookup} in the column {column_to_lookup}", 'yellow'))
+
+	creds = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+	client = gspread.authorize(creds)
+
+	# Open the Google Sheet
+	spreadsheet = client.open_by_key(gs_key_from_url)
+
+	# worksheet = spreadsheet.get_worksheet(g_id) 
+	worksheet = spreadsheet.get_worksheet_by_id(g_id)  # gid=0 means first sheet
+
+
+	col_to_update_index = a1_to_rowcol(f"{column_to_update}1")[1]  # Extracts the column index from A1 notation
+	col_to_lookup_index = a1_to_rowcol(f"{column_to_lookup}1")[1]  # Extracts the column index from A1 notation
+
+
+	# Fetch lookup column values
+	lookup_column_values = worksheet.col_values(col_to_lookup_index)
+
+
+	# Find row that matches the condition
+	if value_to_lookup in lookup_column_values:
+		row_index = lookup_column_values.index(value_to_lookup) + 1  # gspread is 1-indexed
+		worksheet.update_cell(row_index, col_to_update_index, value_to_updated)
+		print(f"Updated row {row_index}, column {column_to_update} with value: {value_to_updated}")
+	else:
+		print(f"Value '{value_to_lookup}' not found in column {column_to_lookup}.")
