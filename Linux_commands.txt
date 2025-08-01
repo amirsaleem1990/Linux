@@ -2238,3 +2238,10 @@ wc -l < file.txt
 
 
 bc -l <<< "3/45"
+
+
+#################### SED
+cat -n  main.py  | sed -n '10,14p' ................. Show only 10-14 lines (both inclusive) # the `p` is for print the current line
+sed '2,3/s/are/be/' ................................ Replace all 'are' with 'be' in only the first and second lines
+
+
