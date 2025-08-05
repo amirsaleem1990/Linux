@@ -1633,3 +1633,7 @@ get_repo_link_from_dot_git_dir_func(){
 }
 
 export -f get_repo_link_from_dot_git_dir_func
+
+
+alias fast_api_TaskPilo="/home/amir/github/Learning/fastAPI-project/venv/bin/python3 -m uvicorn TaskPilot.main:app --reload"
+
