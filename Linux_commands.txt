@@ -2245,3 +2245,6 @@ cat -n  main.py  | sed -n '10,14p' ................. Show only 10-14 lines (both
 sed '2,3/s/are/be/' ................................ Replace all 'are' with 'be' in only the first and second lines
 
 
+
+reset ............ reset the terminal
+
