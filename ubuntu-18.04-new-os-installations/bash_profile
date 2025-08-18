@@ -1631,10 +1631,20 @@ get_repo_link_from_dot_git_dir_func(){
 	repo=$(git remote get-url origin)
 	xclip -selection clipboard <<< "$repo"
 }
-
 export -f get_repo_link_from_dot_git_dir_func
 
 
+
+
 # alias fast_api_TaskPilo="/home/amir/github/Learning/fastAPI-project/venv/bin/python3 -m uvicorn TaskPilot.main:app --reload"
-alias fast_api_SWE="directory=/home/amir/github/Turing2/SWE; cd $directory && $directory/SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload"
+# alias fast_api_SWE="cd /home/amir/github/Turing2/SWE/ && /home/amir/github/Turing2/SWE/SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload"
+
+declare -f fast_api_SWE
+fast_api_SWE() {
+	export $(grep -v '^#' '/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/.env' | xargs)
+	cd /home/amir/github_turing/task-manager/back-end/
+	./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload
+}
+export -f fast_api_SWE
+
 
