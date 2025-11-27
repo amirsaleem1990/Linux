@@ -25,6 +25,7 @@ def download(url):
 	ydl_opts = {
 		'outtmpl': '%(title)s-%(id)s.%(ext)s',
 		'merge_output_format': 'mp4',
+		'noplaylist' : True
 		# 'quiet': True,               # Suppresses all stdout output
 		# 'no_warnings': True,         # Ignores warnings
 		# # 'verbose': False,
