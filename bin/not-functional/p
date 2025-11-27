@@ -1,0 +1,15 @@
+#!/home/amir/.venv_base/bin/python3
+
+import sys
+t = sys.argv[:]
+if len(t) == 1:
+	t = input("Enter expression to calculate: ")
+print(eval(' '.join(t[1:])))
+
+
+# import getopt, sys
+# # Get full command-line arguments
+# full_cmd_arguments = sys.argv
+# # Keep all but the first
+# argument_list = full_cmd_arguments[1:]
+# print(argument_list)
