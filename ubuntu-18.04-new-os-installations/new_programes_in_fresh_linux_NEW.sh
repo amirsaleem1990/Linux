@@ -35,7 +35,7 @@ func_ "apt install sublime-text -y"
 if [[ $? -ne 0 ]]; then 
 	func_ "snap install --classic sublime-text"
 fi
-
+func_ "apt install -y linux-generic"
 func_ "apt install -y gnome-screenshot"
 func_ "apt install -y gnome-screensaver" # Version: 3.6.1-13ubuntu1
 func_ "apt install -y ddcutil"
@@ -58,7 +58,7 @@ func_ "apt install -y vokoscreen"
 func_ "apt install -y git"
 func_ "apt install -y speedtest-cli"
 # func_ "apt install -y pinta"
-func_ "apt install -y nautilus-dropbox"
+# func_ "apt install -y nautilus-dropbox"
 func_ "apt install -y tmux"
 func_ "apt install -y nethogs"
 func_ "apt install -y tree"
