@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+# sudo apt-get install libfribidi0 libfribidi-dev
+# Add following lines to ~/.bash_profile
+	# if ! [[ "$(ps -p $(ps -p $(echo $$) -o ppid=) -o comm=)" =~ 'bicon'* ]]; then
+	  # bicon.bin
+	# fi
+# sudo dpkg -i '/home/amir/github/Linux/bicon_0.2.0-1ubuntu0~ppa4_i386.deb'
+# if [[ $? -ne 0 ]]; then
+	# sudo apt -f install
+	# sudo dpkg -i '/home/amir/github/Linux/bicon_0.2.0-1ubuntu0~ppa4_i386.deb'
+	# if [[ $? -ne 0 ]] ; then
+		# echo -e "\nPlease install '/home/amir/github/Linux/bicon_0.2.0-1ubuntu0~ppa4_i386.deb' manutally"
+	# fi
+	# source ~/.bash_profile
+# fi
+# OR
+# sudo apt install mlterm
+# OR
+# https://askubuntu.com/questions/77657/how-to-enable-arabic-support-in-gnome-terminal
+# 1- use terminus(https://github.com/Eugeny/terminus) (an electron app - web based)
+# 2- use Konsole (the default emulator for KDE distros)
+# 3- use butterfly (https://github.com/paradoxxxzero/butterfly)(a pure web based terminal)
+
+# trans -shell :ar
+
+
+# file_name="/tmp/.translate_temp"
+# while :; do 
+# 	read -p "Enter: " ans
+# 	clear
+# 	# trans :ar -d "$(xsel -b)" | fribidi > $file_name
+# 	trans :ar -d "$ans" > $file_name
+# 	echo -e "\n==================================\n" >> $file_name
+# 	# x=$(trans :ar -b "$(xsel -b)" | fribidi)
+# 	x=$(trans :ar -b "$ans")
+# 	# echo -e "\n\t$(xsel -b):\n\t$x" >> $file_name
+# 	echo -e "\n\t$ans:\n\t$x" >> $file_name
+# 	cat $file_name
+# done
+
+
+
+
+while :; do
+	read -p "Enter: " input_
+	clear
+	# long_output=$(trans :ar -d "$(xsel -b)" | fribidi) > $file_name
+	# small_output=$(trans :ar -b "$(xsel -b)" | fribidi)
+	long_output=$(trans :ar -d "$input_" | fribidi)
+	small_output=$(trans :ar -b "$input_" | fribidi)
+	echo -e "$long_output\n==================================\n\n\t$input_:\n\t$small_output"
+done
+# soffice --infilter="Text (encoded):UTF8,,Courier New,en-US" --convert-to jpg $file_name 2>/dev/null
+# mogrify -trim -bordercolor "#FFF" -border 10 +repage $file_name.jpg 
+# feh -F $file_name.jpg 
+
+# book
