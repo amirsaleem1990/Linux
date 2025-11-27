@@ -1,0 +1,28 @@
+>>> cat /home/amir/.ssh/config 
+# Default GitHub (first account)
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+# Turing account (second)
+Host github-turing
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_turing
+    IdentitiesOnly yes
+
+
+
+
+
+The above is from my old setup, as /home/amir/.ssh is a symlink.
+So in the above I have two github accounts: github, and github-turing
+What I have to do now is to go to EVERY LOCAL repo that belong to my personal github, and run:
+git remote set-url origin git@github.com:amirsaleem1990/$(basename $(pwd)).git
+
+And then go to EVERY LOCAL repo that belong to Turing github, and run:
+git remote set-url origin git@github-turing:amirsaleemturing/$(basename $(pwd)).git
+
+
