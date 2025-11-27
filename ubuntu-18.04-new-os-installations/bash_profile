@@ -80,7 +80,7 @@ alias pin='/home/amir/github/Amir-personal/PIN/pin2.py'
 alias ping='ping 8.8.8.8'
 alias pwd_current_directory_to_clipboad='echo -n $(pwd) | xclip -sel cli'
 alias pycharm='cd /opt/pycharm-community-2019.3/bin; ./pycharm.sh'
-alias rm='mv -f -t ~/.local/share/Trash/files 2>/dev/null'
+# alias rm='mv -f -t ~/.local/share/Trash/files 2>/dev/null'
 alias sharjeel='bash ~/awesome-sharjeel-wifi-connect.wifi'
 # alias si='xclip -selection clipboard -t image/png -o >'
 alias sqlectron='/usr/Sqlectron-1.30.0/sqlectron'
@@ -321,14 +321,26 @@ DEL(){
 	fi
 }
 
-# declare -f rm
-# rm() {
-#     mv -f "$@" ~/.local/share/Trash/files/
-#     if [[ $? -ne 0 ]] ; then 
-#         /usr/bin/rm -rf "~/.local/share/Trash/file/$@"
-#     fi
-#     mv "$@" ~/.local/share/Trash/files
-# }
+declare -f rm
+rm() {
+	TRASH_DIR="$HOME/.local/share/Trash/files"
+	# for arg in "$@"; do
+	# 	if [[ "$arg" != -* ]]; then
+	# 		/usr/bin/rm -rf "$TRASH_DIR/$arg" 2>/dev/null
+	# 		mv -f "$arg" $TRASH_DIR/
+	# 	fi
+	# done
+	for arg in "$@"; do
+		if [[ "$arg" != -* ]]; then
+			if [ -f "$TRASH_DIR/$arg" ]; then
+				last_updated_at=$(date -d @$(stat -c %Y "$TRASH_DIR/$arg") +%d-%m-%Y--%H-%M-%S)
+				mv -f "$TRASH_DIR/$arg" "$TRASH_DIR/$arg-$last_updated_at"
+			fi
+			mv -f "$arg" "$TRASH_DIR/"
+		fi
+	done
+}
+export -f rm
 
 # declare -f pylint_amir
 # pylint_amir(){
@@ -442,31 +454,6 @@ convertsecs() {
 	# echo -e "YY:DD:HH:MM:SS\n$x" | column -t -s\:
 	echo "$x"
 }
-
-
-declare -f free_space_on_current_partition
-free_space_on_current_partition(){
-	free_space(){
-		df -Ph . | tail -n1  | sed 's/\ \{1,\}/,/g' | cut -d, -f4
-	}
-	if [[ -z $1 ]]; then
-		free_space
-		return 0
-	fi
-	sleep_time=$1
-	while :; do
-		current_time=$(date +%T)
-		free_space_in_part=$(free_space)
-		echo "$current_time - $free_space_in_part"
-		sleep $sleep_time
-		# clear
-	done
-
-
-
-}
-
-# amir
 
 _data_file_read(){
 	IFS=$'\n'
@@ -953,16 +940,18 @@ record_screen(){
 	# -i default            \  # Specifies the audio input source as "default," which typically represents the default audio input device on your system.
 	# "$file_name"
 
+	VIDEO_SIZE=1920x1080
+	FRAME_RATE=25
 	if [[ $(xrandr --listmonitors | grep x | wc -l) -eq 1 ]]; then
-		ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"        
+		ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name"        
 	elif [[ $(xrandr --listmonitors | grep x | wc -l) -eq 2 ]]; then
 		echo -e "\nWhich screen do you want to record?\n\t1-Upper\n\t2-Lower\n"
 		read ans
 		if [[ $ans == 1 ]]; then
-			ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
+			ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default "$file_name" # top screen
 		else
 			if [[ $ans == 2 ]]; then
-				ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
+				ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+0,1080 -f pulse -ac 2 -i default "$file_name" # bottom screen
 			fi
 		fi
 	else # More than two screens
@@ -1002,17 +991,17 @@ record_screen(){
 		esac
 
 		# Tested
-		# upper-left:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+0,0      -f pulse -ac 2 -i default "abc.mp4"
-		# upper-righ:    ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+1920,0   -f pulse -ac 2 -i default "abc.mp4"
-		# bottom-middle: ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :0.0+946,1080 -f pulse -ac 2 -i default "abc.mp4"
+		# upper-left:    ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+0,0      -f pulse -ac 2 -i default "abc.mp4"
+		# upper-righ:    ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+1920,0   -f pulse -ac 2 -i default "abc.mp4"
+		# bottom-middle: ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :0.0+946,1080 -f pulse -ac 2 -i default "abc.mp4"
 
-		ffmpeg -video_size 1920x1080 -framerate 50 -f x11grab -i :"$selected_screen" -f pulse -ac 2 -i default "$file_name"
+		ffmpeg -video_size "$VIDEO_SIZE" -framerate $FRAME_RATE -f x11grab -i :"$selected_screen" -f pulse -ac 2 -i default "$file_name"
 	fi
 
 	# ffmpeg                \
 	# -f x11grab            \
-	# -video_size 1920x1080 \
-	# -framerate 30         \
+	# -video_size "$VIDEO_SIZE" \
+	# -framerate $FRAME_RATE         \
 	# -i :0.0               \
 	# -f alsa               \
 	# -i pulse              \
@@ -1152,7 +1141,6 @@ export -f extentions_for_given_file_names
 export -f max
 export -f internet_speed
 export -f convertsecs
-export -f free_space_on_current_partition
 export -f pickle_print_type
 export -f pickle_show_content
 export -f data_file_show_head
@@ -1190,18 +1178,18 @@ export UNDERLINE='\033[4m'
 
 
 
-declare -f zm
-zm() { 
-	IFS=$'\n'
-	for i in mp4 webm mkv part ; do
-		# count=$(ls *.$i 2>/dev/null| wc -l)
-		count=$(find chuchu-tv-* -name "*.$i" 2>/dev/null| wc -l)
-		# size=$(dt *.$i | grep total | sed 's/total//g')
-		size=$(dt `find chuchu-tv-* -name "*.$i"` | grep total | sed 's/total//g')
-		echo -e "$i\t $count \t $size"
-	done
-}
-export -f zm
+# declare -f zm
+# zm() { 
+# 	IFS=$'\n'
+# 	for i in mp4 webm mkv part ; do
+# 		# count=$(ls *.$i 2>/dev/null| wc -l)
+# 		count=$(find chuchu-tv-* -name "*.$i" 2>/dev/null| wc -l)
+# 		# size=$(dt *.$i | grep total | sed 's/total//g')
+# 		size=$(dt `find chuchu-tv-* -name "*.$i"` | grep total | sed 's/total//g')
+# 		echo -e "$i\t $count \t $size"
+# 	done
+# }
+# export -f zm
 
 
 
@@ -1210,33 +1198,33 @@ export -f zm
 alias run_youtube="python3 <<< 'from amir_analysis_functions import run_youtube; run_youtube()'"
 
 
-alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucket/anomaly_detection_medusa/index.py 'ip-172-31-0-239.ec2.internal:/home/amir/'; ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.log; python3 /home/amir/index.py'"
+# alias medusa_copy_on_vm_and_run="scp -i ~/.ssh/id_rsa_medusa /home/amir/Bitbucket/anomaly_detection_medusa/index.py 'ip-172-31-0-239.ec2.internal:/home/amir/'; ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.log; python3 /home/amir/index.py'"
 
 
 
-declare -f execute_file_on_vm
-execute_file_on_vm(){
-	if [[ -z $1 ]] ; then
-		file=/home/amir/github/Medusa/anomalies/index.py
-		# file=/home/amir/github/Medusa/monday.com/fetch_data_from_redshift.py
-	else
-		echo "$1" | grep / >/dev/null
-		if [[ $? -eq 0 ]]; then
-			echo -e "/ in file_name\nAborting........\n"
-			return 1
-		fi
-		file=$(echo "$(pwd)/$1")
-	fi
-	file_base_name=$(basename "$file")
-	# scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
-	scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
+# declare -f execute_file_on_vm
+# execute_file_on_vm(){
+# 	if [[ -z $1 ]] ; then
+# 		file=/home/amir/github/Medusa/anomalies/index.py
+# 		# file=/home/amir/github/Medusa/monday.com/fetch_data_from_redshift.py
+# 	else
+# 		echo "$1" | grep / >/dev/null
+# 		if [[ $? -eq 0 ]]; then
+# 			echo -e "/ in file_name\nAborting........\n"
+# 			return 1
+# 		fi
+# 		file=$(echo "$(pwd)/$1")
+# 	fi
+# 	file_base_name=$(basename "$file")
+# 	# scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/monday.com/'
+# 	scp -i ~/.ssh/id_rsa_medusa  "$file" 'ip-172-31-0-239.ec2.internal:/home/amir/'
 
-	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
-	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
+# 	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/monday.com/*.{log,csv,txt} 2>/dev/null'
+# 	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' 'rm /home/amir/*.{log,csv,txt} 2>/dev/null'
 	
-	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "cd /home/amir/monday.com/; python3 $file_base_name"
-	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
-}
+# 	# ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "cd /home/amir/monday.com/; python3 $file_base_name"
+# 	ssh -i /home/amir/.ssh/id_rsa_medusa 'ip-172-31-0-239.ec2.internal' "python3 /home/amir/$file_base_name"
+# }
 
 declare -f reset_bashprofile
 reset_bashprofile(){
@@ -1423,24 +1411,24 @@ get_max_lenght_splited_by_tab(){
 	IFS=$'\t' read -ra parts <<< "$string"
 	max_length=0
 	for part in "${parts[@]}"; do
-	    length=${#part}
-	    if (( length > max_length )); then
-	        max_length=$length
-	    fi
+		length=${#part}
+		if (( length > max_length )); then
+			max_length=$length
+		fi
 	done
 }
 declare -f pad_to_len
 pad_to_len() {
-    local input="$1"
-    local len=$2
-    local input_len=${#input}
-    
-    if (( input_len >= len )); then
-        echo "$input"
-    else
-        local padding=$(( len - input_len ))
-        padded_string=$(printf "%s%${padding}s" "$input" "")
-    fi
+	local input="$1"
+	local len=$2
+	local input_len=${#input}
+	
+	if (( input_len >= len )); then
+		echo "$input"
+	else
+		local padding=$(( len - input_len ))
+		padded_string=$(printf "%s%${padding}s" "$input" "")
+	fi
 }
 
 print_numbers_after_lag(){
@@ -1526,15 +1514,6 @@ print_numbers_after_lag(){
 	done 
 }
 
-declare -f get_swe_link_for_repo
-get_swe_link_for_repo(){
-	if [[ -z $1 ]]; then
-		user_repo=$(git remote get-url origin | sed 's/.git$//g' | cut -d/ -f4-5 | sed 's/\//__/g')
-	else
-		user_repo=$(echo "$1" | sed 's/https:\/\/github.com\///g' | sed 's/\//__/g')
-	fi
-	echo "https://swe-bench-plus.turing.com/repos/$user_repo?filter=%7B%22minDate%22%3A%222024-11-01%22%7D"
-}
 
 export -f png
 export -f copy_variable_to_clipboard
@@ -1543,7 +1522,6 @@ export -f data_read_clipboard_check_show_duplicates_lines
 export -f print_numbers_after_lag
 export -f data_file_read_dataframe_and_copy_to_clipboard
 export -f pad_to_len
-export -f get_swe_link_for_repo
 
 
 
@@ -1553,8 +1531,8 @@ working_days_in_this_month() {
 	working_days=0
 
 	for d in $(seq 1 $(date +%d -d "$(date +%Y-%m-01) +1 month -1 day")); do 
-	    day=$(date -d "$(date +%Y-%m)-$d" +%u)
-	    [ $day -lt 6 ] && (( working_days += 1 ))
+		day=$(date -d "$(date +%Y-%m)-$d" +%u)
+		[ $day -lt 6 ] && (( working_days += 1 ))
 	done
 
 	echo $working_days
@@ -1574,88 +1552,8 @@ if [[ "$PWD" == "/home/amir/Multimodelity" ]] || [[ "$PWD" == "/media/70GB/Downl
 fi
 
 
-declare -f get_repo_link_from_dot_git_dir_func
-get_repo_link_from_dot_git_dir_func(){
-	repo=$(git remote get-url origin)
-	xclip -selection clipboard <<< "$repo"
-}
-export -f get_repo_link_from_dot_git_dir_func
 
 
-
-
-# alias fast_api_TaskPilo="/home/amir/github/Learning/fastAPI-project/venv/bin/python3 -m uvicorn TaskPilot.main:app --reload"
-# alias fast_api_SWE="cd /home/amir/github/Turing2/SWE/ && /home/amir/github/Turing2/SWE/SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload"
-
-declare -f fast_api_SWE
-fast_api_SWE() {
-	# DATABASE_URL_swe_bench_delivery="postgresql://amir:acmAkjd4WWjkd93p055@34.29.60.74:5432/swe_bench_delivery"
-	
-	export $(grep -v '^#' '/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/.env' | xargs)
-	
-	cd /home/amir/github_turing/task-manager/back-end/
-	./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload
-	
-	# cd /home/amir/github_turing/task-manager/back-end
-	# ./SWE_FastAPI_0/.uv_venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload
-
-	# $HOME/github_turing/task-manager/back-end/SWE_FastAPI_0/venv/bin/python3 -m pytest $HOME/github_turing/task-manager/back-end/tests/
-	
-	# ./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload --reload-dir SWE_FastAPI_0
-	#./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload --reload-dir SWE_FastAPI_0/routers
-
-	  # ./SWE_FastAPI_0/venv/bin/python3 -m watchfiles --filter python \
-	  # './SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app' \
-	  # SWE_FastAPI_0/database.py \
-	  # SWE_FastAPI_0/helper_functions.py \
-	  # SWE_FastAPI_0/main.py \
-	  # SWE_FastAPI_0/models.py \
-	  # SWE_FastAPI_0/schemas.py \
-	  # SWE_FastAPI_0/routers/create_order.py \
-	  # SWE_FastAPI_0/routers/sets.py \
-	  # SWE_FastAPI_0/routers/task.py \
-	  # SWE_FastAPI_0/routers/task_sets.py \
-	  # SWE_FastAPI_0/routers/users.py \
-	  # SWE_FastAPI_0/routers/analytics.py \
-	  # SWE_FastAPI_0/routers/celery_tasks.py
-	  # # SWE_FastAPI_0/celery_tasks/copy_GD_folder_contents.py 
-
-}
-
-
-# declare -f GCP_logs_prod
-# GCP_logs_prod(){
-# 	gcloud logging read   \
-# 	'resource.type=cloud_run_revision
-# 	AND resource.labels.service_name=task-manager-backend
-# 	AND httpRequest.requestUrl:*
-# 	AND NOT httpRequest.requestUrl:"xygayr6iza"' \
-# 	--limit=30   \
-# 	--format="table(timestamp,severity,httpRequest.remoteIp,httpRequest.referer,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)" \
-# 	--project=turing-delivery-swe-bench-plus
-# }
-
-# declare -f GCP_logs_staging
-# # --format="table(timestamp,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)"   \
-# # httpRequest.referer
-# GCP_logs_staging(){
-# 	gcloud logging read   \
-# 	'resource.type=cloud_run_revision
-# 	AND resource.labels.service_name=task-manager-backend-staging
-# 	AND httpRequest.requestUrl:*
-# 	AND NOT httpRequest.requestUrl:"xygayr6iza"' \
-# 	--limit=30   \
-# 	--format="table(timestamp,severity,httpRequest.remoteIp,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)" \
-# 	--project=turing-delivery-swe-bench-plus
-# }
-
-
-
-# declare -f alembic
-# alembic(){
-# 	export $(grep -v '^#' '/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/.env' | xargs)
-# 	/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/venv/bin/python3 -m alembic "$@"
-# }
 
 
 # declare -f temperature
@@ -1663,10 +1561,6 @@ fast_api_SWE() {
 # 	sensors | awk '/Core [0-9]+:/ {gsub("\\+|°C","",$3); sum+=$3; if($3>max) max=$3; n++} END {if(n>0) printf("Average: %.1f°C\nMax    : %.1f°C\n", sum/n, max)}'
 # }
 
-# export -f fast_api_SWE
-# export -f GCP_logs_prod
-# export -f GCP_logs_staging
-# export -f alembic
 # export -f temperature
 
 
@@ -1688,4 +1582,30 @@ export -f encrypt_amir
 export -f decrypt_amir
 
 
-bind 'set bell-style audible'
+declare -f time_progress_bar
+time_progress_bar(){
+	if [ -z $1 ]; then
+		echo -e "No SLEEP_SECS provided, Aboring..."
+		return 1
+	fi
+	SLEEP_SECS=$1
+	for ((i=1; i<=SLEEP_SECS; i++)); do
+		percent=$((i * 100 / SLEEP_SECS))
+		filled=$((i * 40 / SLEEP_SECS)) # width of bar = 40 chars
+		bar=$(printf "%-${filled}s" "#" | tr ' ' '#')
+		spaces=$((40 - filled))
+		printf -v empty "%${spaces}s"
+		eta=$((SLEEP_SECS - i))
+		printf "\rProgress: [${bar}${empty}] %3d%% (%2ds left)" "$percent" "$eta"
+		sleep 1
+	done
+	echo -e "\rProgress: [########################################] 100% (done!)   "
+	echo
+}
+
+export -f time_progress_bar
+
+
+if [ -f /home/amir/SWE/BASH_PROFILE_SWE ]; then
+	. /home/amir/SWE/BASH_PROFILE_SWE
+fi
