@@ -1126,7 +1126,7 @@ def seconds_since_last_modification(file_path):
 
 
 
-def put_value_in_good_sheet(
+def put_value_in_GD(
 		column_to_lookup, column_to_update, value_to_lookup, value_to_updated, gs_key_from_url, json_path, g_id,
 		scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 	):
