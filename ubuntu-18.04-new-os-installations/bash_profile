@@ -157,7 +157,7 @@ poweroff() {
 	test -e /home/amir/.firefox_backups/
 	if [[ $? -ne 0 ]]; then
 		echo -e "\nThe folder `/home/amir/.firefox_backups/` is not exist, please create it first..."
-		reaturn 1
+		return 1
 	fi
 	directory="/home/amir/.firefox_backups/`date +%d-%m-%y_%T | sed "s/\//-/g"`"
 	# cp -rv /home/amir/.mozilla/firefox/*.default-release/sessionstore-backups "$directory"
@@ -401,8 +401,7 @@ extentions_for_given_file_names() {
 declare -f todays_first_computer_on_time
 todays_first_computer_on_time() {
 	current_date="/home/amir/.$(date +%d-%m-%y)"
-	test -e "$current_date"
-	if [[ $? -ne 0 ]]; then
+	if [ ! -e $current_date ] || [ $(wc -l < $current_date) -eq 0 ]; then
 		current_time=$(date +%s)
 		echo "$current_time" > "$current_date"
 	fi
@@ -412,11 +411,15 @@ todays_first_computer_on_time() {
 declare -f time_since_first_login_today
 time_since_first_login_today() {
 	current_date="/home/amir/.$(date +%d-%m-%y)"
+	if [ $(wc -l < $current_date) -eq 0 ]; then
+		echo "The file <$current_date> not found"
+		return 1
+	fi
 	first_login_time=$(cat "$current_date")
 	echo -e "\nHH:MM:SS\n$(date -d@$(cat $current_date ) +%T):\tTodays first log-in time"
-	current_time=$(date +%s)
-	time_pased="$((current_time-first_login_time))"
-	convertsecs $time_pased
+	# current_time=$(date +%s)
+	# time_pased="$((current_time-first_login_time))"
+	# convertsecs $time_pased
 }
 
 
@@ -1141,74 +1144,6 @@ alias vpn_g_38='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir
 alias vpn_g_39='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-us2-udp25000.ovpn    --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 alias vpn_g_40='echo https://www.vpnbook.com/; sudo openvpn --config  /home/amir/Downloads/Programs/VPN/vpnbook-us2-udp53.ovpn       --auth-user-pass /home/amir/Downloads/Programs/VPN/pass_file.txt'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 change_PS1
 todays_first_computer_on_time
 time_since_first_login_today
@@ -1612,9 +1547,22 @@ export -f get_swe_link_for_repo
 
 
 
+declare -f working_days_in_this_month
+working_days_in_this_month() {
+
+	working_days=0
+
+	for d in $(seq 1 $(date +%d -d "$(date +%Y-%m-01) +1 month -1 day")); do 
+	    day=$(date -d "$(date +%Y-%m)-$d" +%u)
+	    [ $day -lt 6 ] && (( working_days += 1 ))
+	done
+
+	echo $working_days
+
+}
 
 
-
+export -f working_days_in_this_month
 
 
 PYTHONPATH="/amir_bin/:/usr/bin/python3"
@@ -1641,10 +1589,103 @@ export -f get_repo_link_from_dot_git_dir_func
 
 declare -f fast_api_SWE
 fast_api_SWE() {
+	# DATABASE_URL_swe_bench_delivery="postgresql://amir:acmAkjd4WWjkd93p055@34.29.60.74:5432/swe_bench_delivery"
+	
 	export $(grep -v '^#' '/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/.env' | xargs)
+	
 	cd /home/amir/github_turing/task-manager/back-end/
 	./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload
+	
+	# cd /home/amir/github_turing/task-manager/back-end
+	# ./SWE_FastAPI_0/.uv_venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload
+
+	# $HOME/github_turing/task-manager/back-end/SWE_FastAPI_0/venv/bin/python3 -m pytest $HOME/github_turing/task-manager/back-end/tests/
+	
+	# ./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload --reload-dir SWE_FastAPI_0
+	#./SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app --reload --reload-dir SWE_FastAPI_0/routers
+
+	  # ./SWE_FastAPI_0/venv/bin/python3 -m watchfiles --filter python \
+	  # './SWE_FastAPI_0/venv/bin/python3 -m uvicorn SWE_FastAPI_0.main:app' \
+	  # SWE_FastAPI_0/database.py \
+	  # SWE_FastAPI_0/helper_functions.py \
+	  # SWE_FastAPI_0/main.py \
+	  # SWE_FastAPI_0/models.py \
+	  # SWE_FastAPI_0/schemas.py \
+	  # SWE_FastAPI_0/routers/create_order.py \
+	  # SWE_FastAPI_0/routers/sets.py \
+	  # SWE_FastAPI_0/routers/task.py \
+	  # SWE_FastAPI_0/routers/task_sets.py \
+	  # SWE_FastAPI_0/routers/users.py \
+	  # SWE_FastAPI_0/routers/analytics.py \
+	  # SWE_FastAPI_0/routers/celery_tasks.py
+	  # # SWE_FastAPI_0/celery_tasks/copy_GD_folder_contents.py 
+
 }
-export -f fast_api_SWE
 
 
+# declare -f GCP_logs_prod
+# GCP_logs_prod(){
+# 	gcloud logging read   \
+# 	'resource.type=cloud_run_revision
+# 	AND resource.labels.service_name=task-manager-backend
+# 	AND httpRequest.requestUrl:*
+# 	AND NOT httpRequest.requestUrl:"xygayr6iza"' \
+# 	--limit=30   \
+# 	--format="table(timestamp,severity,httpRequest.remoteIp,httpRequest.referer,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)" \
+# 	--project=turing-delivery-swe-bench-plus
+# }
+
+# declare -f GCP_logs_staging
+# # --format="table(timestamp,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)"   \
+# # httpRequest.referer
+# GCP_logs_staging(){
+# 	gcloud logging read   \
+# 	'resource.type=cloud_run_revision
+# 	AND resource.labels.service_name=task-manager-backend-staging
+# 	AND httpRequest.requestUrl:*
+# 	AND NOT httpRequest.requestUrl:"xygayr6iza"' \
+# 	--limit=30   \
+# 	--format="table(timestamp,severity,httpRequest.remoteIp,httpRequest.status,httpRequest.requestMethod,httpRequest.requestUrl)" \
+# 	--project=turing-delivery-swe-bench-plus
+# }
+
+
+
+# declare -f alembic
+# alembic(){
+# 	export $(grep -v '^#' '/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/.env' | xargs)
+# 	/home/amir/github_turing/task-manager/back-end/SWE_FastAPI_0/venv/bin/python3 -m alembic "$@"
+# }
+
+
+# declare -f temperature
+# temperature(){
+# 	sensors | awk '/Core [0-9]+:/ {gsub("\\+|°C","",$3); sum+=$3; if($3>max) max=$3; n++} END {if(n>0) printf("Average: %.1f°C\nMax    : %.1f°C\n", sum/n, max)}'
+# }
+
+# export -f fast_api_SWE
+# export -f GCP_logs_prod
+# export -f GCP_logs_staging
+# export -f alembic
+# export -f temperature
+
+
+#export PROMPT_COMMAND='echo -ne "\007"'
+#trap 'echo -ne "\007"' DEBUG
+# trap 'paplay /usr/share/sounds/freedesktop/stereo/complete.oga &' DEBUG
+
+declare -f encrypt_amir
+encrypt_amir(){
+	openssl enc -aes-256-cbc -pbkdf2 -salt -in "$1" -out "$1.enc"
+}
+
+declare -f decrypt_amir
+decrypt_amir(){
+	openssl enc -d -aes-256-cbc -pbkdf2 -in "$1" -out "$1.dec"
+}
+
+export -f encrypt_amir
+export -f decrypt_amir
+
+
+bind 'set bell-style audible'

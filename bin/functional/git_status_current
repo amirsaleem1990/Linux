@@ -1,0 +1,75 @@
+#!/home/amir/.venv_base/bin/python3
+from termcolor import colored
+import sys
+import os
+
+if (list(os.popen('git_status_orignal  | grep -E -v "^$|^>>>>>>>>>>|^Your branch is up to date with|working tree clean|^On branch" | wc -l'))[0].strip())  == '0':
+	raise Exception("\nNo new commit\nAborting......\n\n")
+
+files_to_remove = list(map(str.strip, os.popen("find . -name geckodriver.log 2>/dev/null")))
+for f_t_r in files_to_remove:
+	os.remove(f_t_r)
+
+if "git_files.txt" in os.listdir():
+	os.system("rm git_files.txt")
+aa = True
+
+
+repos = [os.getcwd()]
+
+only_new_files     = "/tmp/.only_new_files"
+only_updated_files = "/tmp/.only_updated_files"
+
+print("\n\n")
+
+for repo in repos:
+	print(repo)
+	try:
+		os.chdir(repo)
+	except:
+		continue
+	if not '.git' in os.listdir():
+		print(".git file is not found...")
+		continue
+	# only new files:
+	if os.path.exists(only_new_files):
+		os.remove(only_new_files)
+	os.system("git ls-files --others --exclude-standard > /tmp/.only_new_files")
+	if os.path.exists(only_new_files):
+		new = open(only_new_files, 'r').read().splitlines()
+		if new:
+			for new_file in new:
+				if not os.path.exists(new_file):
+					continue
+				size_bytes = os.path.getsize(new_file)
+				size_mb = round(size_bytes / 1024 / 1024)
+				if size_mb > 48:
+					input(f"\n\nThis file ({new_file}) is very large ({size_mb}MB), We ignore it now, but you should add it in .gitignore\nEnter any key to proceed")
+					continue
+				print(f">>> Added new file: {repo}/{new_file}")
+
+	# only modified files:
+	if os.path.exists(only_updated_files):
+		os.remove(only_updated_files)
+	os.system("git ls-files -m > /tmp/.only_updated_files")
+	if os.path.exists(only_updated_files):
+		updated_files = open(only_updated_files, 'r').read().splitlines()
+		if updated_files:
+			for updated_file in updated_files:
+				if not os.path.exists(updated_file):
+					continue
+				size_bytes = os.path.getsize(updated_file)
+				size_mb = round(size_bytes / 1024 / 1024)
+				if size_mb > 48:
+					input(f"\n\nThis file ({updated_file}) is very large ({size_mb}MB), We ignore it now, but you should add it in .gitignore\nEnter any key to proceed")
+					continue
+				# os.system("clear")
+				print(f"\n\n============================== {repo}/{updated_file} ==============================\n")
+				com = f"git diff --color '{updated_file}'  > /tmp/git_diff ; cat /tmp/git_diff" # <--color> presever coloring
+				os.system(com)
+
+				print(f"\n\n============================== {repo}/{updated_file} ==============================\n")
+				print("\n\n\n-------------------------------------------------------")
+
+os.remove(only_new_files)
+os.remove(only_updated_files)

@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+if [ -z $1 ] | [ -z $2 ]; then
+	echo -e "Please provide both x and y values\nAbortring...\n"
+	exit
+fi
+
+xdotool mousemove $1 $2 click 1
+sleep 0.5s

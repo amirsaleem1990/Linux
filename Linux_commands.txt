@@ -2248,3 +2248,9 @@ sed '2,3/s/are/be/' ................................ Replace all 'are' with 'be'
 
 reset ............ reset the terminal
 
+
+sed -n '1,200p' .gitignore
+
+
+
+remove symlinks ........ unlink my_symlink

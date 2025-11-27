@@ -66,7 +66,7 @@ def exclude_func(urls_to_download):
 
 def Exit():
 	print(f"\n\nErrors saved as {error_file}\n\n")
-	after=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+	after=int(os.popen("du -s -BM | cut -dM -f1").strip())
 	downloaded_size= after - before
 	print (f"\n\n................... Downloaded {downloaded_size} MB ................\n\n")
 	sys.exit(1)
@@ -117,8 +117,8 @@ def exclude_substrings():
 	if os.path.exists(exclude_file):
 		e = open(exclude_file, 'r').read().strip()
 		if e:
-			# user_inp = input("Do you need to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
-			user_inp = input("Do you need to exclude last stuff [yes (default) | no]  \n")
+			# user_inp = input("Do you want to exclude last stuff [yes|no]  (which is:\n" + e + "\n")
+			user_inp = input(f"Do you want to {colored('exclude', 'green')} last stuff [{colored('yes (default)', 'green')} | no]  \n")
 			if user_inp.lower().strip() in ['yes', '']:
 				exclude = e
 			else:
@@ -145,10 +145,10 @@ if os.path.exists(error_file):
 
 get_input_from_user, exclude = exclude_substrings()
 
-before=int(list(os.popen("du -s -BM | cut -dM -f1"))[0].strip())
+before=int(os.popen("du -s -BM | cut -dM -f1").read().strip())
 
 is_best = True
-ans = input("Do you need to download BEST quality videos? [yes (default) | no]: ").strip().lower()
+ans = input(f"Do you want to download {colored('BEST quality', 'green')} videos? [{colored('yes (default)', 'green')} | no]: ").strip().lower()
 if  ans == "no":
 	is_best = False
 
