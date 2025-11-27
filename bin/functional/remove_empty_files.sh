@@ -4,12 +4,12 @@ starting_qty=$qty
 
 echo -e "$starting_qty empty files/folders"
 
-n=0
+# iteration_num=0
 while true; do
-	if [[ $n > 10 ]]; then
-		break
-	fi
-	let "n++"
+	# if [[ $iteration_num > 20 ]]; then
+	# 	break
+	# fi
+	# let "iteration_num++"
 	IFS=$'\n'
 	empty_files_and_folders_count=$(find . -empty | wc -l)
 
@@ -29,6 +29,9 @@ while true; do
 		/amir_bin/DEL -rf $(find . -empty)
 	fi
 	empty_files_and_folders_count=$(find . -empty | wc -l)
+	if [[ $empty_files_and_folders_count -eq 0 ]]; then 
+		exit
+	fi
 	echo -e "\n>>>>>>>>>>>>> $empty_files_and_folders_count empty files/folders still exist"
 done
 
