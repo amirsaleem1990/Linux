@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+xdotool getmouselocation | awk '{print $1; print $2}'
