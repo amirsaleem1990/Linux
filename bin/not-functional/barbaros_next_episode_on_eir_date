@@ -1,0 +1,67 @@
+#!/home/amir/.venv_base/bin/python3
+
+# youtube-dl --version # 2021.12.17
+
+from termcolor import colored
+print(colored("\n\n******** Barbaros ********\n", 'red'))
+import os
+import requests
+from bs4 import BeautifulSoup
+_file_name_ = "/home/amir/github/Amir-personal/.Barbaros_last_downloaded.txt"
+s = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/1.php?id=1").text, 'lxml')
+n = max([int(i.text.strip("Episode ")) for i in s.select("button", {"class" : "btn btn-info"}) if i.text.startswith("Episode") ])
+last_vid_num = int(open(_file_name_, 'r').read().strip())
+last_vid = f"https://ardirilisertugrul.net/Barbaros/1.php?id={last_vid_num}"
+
+print("Last video page:", last_vid)
+print("""\n\n#############################################################
+####-----------------""", end="")
+
+if n > last_vid_num:
+	print(colored(" CONGRATULATIONS", 'red'), end="")                                                                                                               
+else:
+	print(colored("--- NO NEW VIDEO", 'red'), end="")
+
+print(""" -------------------####
+#############################################################\n""")
+
+if n > last_vid_num:
+	# q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/1.php?id="+str(n)).text, 'lxml')
+	q = BeautifulSoup(requests.get("https://ardirilisertugrul.net/Barbaros/Barbaroslar-Episode-"+str(n)).text, 'lxml')
+	if 'Next Part soon..' in q.text:
+		print("\n **** Full video NOT uploaded yet ****\n")
+		os.popen(f"firefox https://ardirilisertugrul.net/Barbaros/1.php?id=" + str(n))
+	else:
+		ans_ = input(f"\n\nDo you want to download LATEST video?\n[y|n] ")
+		if ans_ == "y":
+			for i in q.find("div", {"class" : "WatchSection activee text-center"}).select("a"):
+				try:
+					l = i['href']
+					if "ok.ru" in l: 
+						l = 'https:' + l.replace("videoembed", "video")
+						break
+				except:
+					pass
+			else:
+				for i in q.select("li"):
+					try:
+						l = i['data-source']
+						if "ok.ru" in l: 
+							l = l.replace("videoembed", "video")
+							break 
+					except:
+						pass
+				else:
+					print("NO video url")
+					exit()
+				print(l)
+
+			#com = f"youtube-dl -f18 {l} || youtube-dl -f sd {l} || youtube-dl -f hd {l} || youtube-dl {l}"
+			com = f"/amir_bin/download-youtube-single-video-with-multithreding {l}"
+			print(f"\nDownload command: {com}\n\n\n")
+			os.system(com)
+			ans_ = input(f"\n\nDo you want to update {_file_name_} file?\n[y|n]  ")
+			if ans_ == "y":
+				open(_file_name_, 'w').write(str(n))
+
+
