@@ -1,0 +1,24 @@
+#/!usr/bin/bash
+
+file_name="$1"
+if [[ -z $file_name ]]; then 
+    echo "No file Provided"
+    exit
+fi
+# file_name="temp.png"
+xy=$(file "$file_name"  | cut -d, -f2 | sed 's/^\ //g') # 1074 x 816
+echo "$xy" > /tmp/tmp.txt
+val_=$(python3 <<< '
+xy = open("/tmp/tmp.txt", "r").read().strip()
+x,y = xy.split(" x ")
+x = int(x)
+y = int(y)
+min_ = min(x,y)
+more_px_needed = 1200 - min_
+more_perc_needed = (more_px_needed/min_) + 0.01
+print(100 + int(more_perc_needed*100))
+')
+echo $val_
+convert $file_name -resize $val_% /tmp/jlkj.png
+mv /tmp/jlkj.png "$file_name"
+file "$file_name"
