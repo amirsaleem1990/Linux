@@ -1,0 +1,38 @@
+#!/bin/bash
+RED="\033[0;31m"
+normal="\033[0m"
+
+file_name=/home/amir/.todays_first_login_time
+
+last=`cat $file_name`
+now=`date +%s`
+
+last_date=`date -d @$last +%D`
+now_date=`date -d @$now +%D`
+
+if [[ $last_date != $now_date ]]; then
+	sleep 1m
+    # echo $now > $file_name
+	/home/amir/github/Amir-personal/get_actual_login_time_at_HRM_tool.py 
+fi
+
+time_passed=`echo $now-$last | bc`
+time_left=`echo 32400 - $time_passed | bc`
+
+echo -e "\nArrival time `date -d @$last +%T\ \|\ %d-%b-%Y`"
+echo -e   "Current time `date -d @$now  +%T\ \|\ %d-%b-%Y`"
+
+echo -e "\n             HH:MM:SS"
+echo -e "Time passed  `eval "echo $(date -ud "@$time_passed" +'%H:%M:%S')"`"
+
+echo -e "\n"
+
+s_=`eval "echo $(date -ud "@$time_left"   +'%H:%M:%S')"`
+
+
+# echo -e "Time left    ${RED}\e[5m$s_${normal}" # blink
+echo -e "Time left    ${RED}$s_${normal}"
+
+echo -e   "Off time     `date -d @$( echo $now+$time_left | bc ) +%T\ \|\ %d-%b-%Y`"
+
+echo -e "\n"
