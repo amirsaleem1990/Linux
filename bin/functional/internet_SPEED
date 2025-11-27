@@ -7,16 +7,15 @@ func() {
 		echo $var_
 	else
 		add_zeros=$(echo $provided_lenght-$lenght-1|bc -l)
-		for i in $(seq $add_zeros) ; do 
+		for i in $(seq 0 $add_zeros) ; do 
 			echo -n ' '
 		done
 		echo $var_
 		echo
 	fi
 }
-
 plot() {
-	echo '
+	/home/amir/.venv_base/bin/python3 <<< '
 import pandas as pd
 import matplotlib.pyplot as plt
 df = pd.read_csv("/home/amir/.speed_hist.csv", sep="|", index_col=None)
@@ -30,7 +29,7 @@ plt.axhline(df.Speed.mean(), color="red");
 plt.axhline(df.Speed.quantile(0.25), color="green");
 plt.axhline(df.Speed.quantile(0.75), color="green");
 plt.show()
-' | /home/amir/.venv_base/bin/python3
+'
 }
 
 # live_plot(){
@@ -86,7 +85,6 @@ main () {
 	now_=$(date +%s)
 	diff_=$(echo $now_-$start|bc)
 	time_=$(eval "echo $(date -ud "@$diff_" +'$((%s/3600/24)):%H:%M:%S')")
-
 	size_after=$(du -sk | cut -d$'\t' -f1)
 	downloaded_size_mb=$(echo "scale=1; ($size_after-$size_before)/1024"|bc -l)
 	downloaded_size_gb=$(echo "scale=3; $downloaded_size_mb/1024"|bc -l)
@@ -97,6 +95,7 @@ main () {
 	current_time=$(date +%T)
 
 	free_size_in_current_partition=$(free_space_on_current_partition)
+	free_size_in_current_partition=$(echo "$free_size_in_current_partition" | rev | cut -d' ' -f1 | rev)
 	free_size_in_current_partition=$(func $free_size_in_current_partition 8)
 
 	let "x++"

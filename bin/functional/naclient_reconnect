@@ -1,9 +1,0 @@
-#!/usr/bin/bash
-naclient logout
-s=`/opt/sslvpn-plus/naclient/gui/naclient.sh`
-if [[ $s == 'Error: Session timeout occured' ]] ; then
-	echo -e "\n>>>>>>>>>>>> naclient service restarting ............"
-	echo `cat /home/amir/github/Amir-personal/pass` | sudo -S -k systemctl restart naclient.service
-	echo -e "\n>>>>>>>>>>>> naclient connecting ............"
-	/opt/sslvpn-plus/naclient/gui/naclient.sh
-fi
