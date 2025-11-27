@@ -2254,3 +2254,12 @@ sed -n '1,200p' .gitignore
 
 
 remove symlinks ........ unlink my_symlink
+
+
+Check disk health ......... sudo apt install smartmontools; sudo smartctl -H /dev/sdb
+
+
+
+scp with fource .......... scp -o IdentitiesOnly=yes -o PreferredAuthentications=password -r PR_SOURCING/ amir@192.168.110.136:/home/amir/
+
+
