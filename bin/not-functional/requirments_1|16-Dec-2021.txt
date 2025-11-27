@@ -1,0 +1,11 @@
+bs4=0.0.1
+clipboard=0.0.4
+matplotlib=3.5.0
+numpy=1.21.4
+pandas=1.3.4
+psutil=5.8.0
+requests=2.26.0
+selenium=3.141.0
+tabulate=0.8.9
+termcolor=1.1.0
+
