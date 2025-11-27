@@ -1,0 +1,45 @@
+#!/bin/bash
+input_image="/home/amir/github/Linux/autostart/lfd_notification_1.png"
+output_image="/home/amir/.config/autostart/lfd_notification_2.png"
+
+# sleep 5m
+
+# todays_first_login_time=`cat /home/amir/.todays_first_login_time`
+
+# if [[ `date -d @$todays_first_login_time +%H` == 09 ]] &&  [[ `date -d @$todays_first_login_time +%M` > 30 ]] &&  [[ `date -d @$todays_first_login_time +%M` < 46 ]]; then
+# 	x=$(date -d @`echo $todays_first_login_time` +%Y-%m-%d\ 09:30:00)
+# 	date --date "$x" +%s > /home/amir/.todays_first_login_time
+# fi
+
+# x=`echo $todays_first_login_time%86400|bc`
+# if [[ $x -gt 17160 ]] && [[ $x -lt 21600 ]]; then
+# 	x=$(date -d @`echo $todays_first_login_time` +%Y-%m-%d\ 09:30:00)
+# 	date --date "$x" +%s > /home/amir/.todays_first_login_time
+# fi
+time_left=300
+while :; do
+	# now=`date +%s`
+	# time_passed=`echo $now-$todays_first_login_time | bc`
+	# time_left=`echo 32400 - $time_passed | bc`
+
+	# if [[ $time_left -lt 600 ]] ; then 
+		# echo "only << `$time_left/60|bc` >> mins left" > /home/amir/.time_LEFT
+		# subl /home/amir/.time_LEFT
+	TEXT="only << `echo "$time_left/60"|bc` >> mins left to leave."
+	f=26
+	size=${#TEXT}
+	start=$(echo "`echo $f-$size|bc`/2"|bc )
+	let "start*=20"
+	convert -font helvetica -fill blue -pointsize 36 -draw "text $start,70 '$TEXT'" $input_image $output_image
+	feh -F $output_image
+	# fi
+	sleep 1m
+	let "time_left-=60"
+done
+# width=` identify -format "%w" $input_image`
+# height=`identify -format "%h" $input_image`
+# w_h=`identify -format '%w %h' $input_image``
+
+
+
+
