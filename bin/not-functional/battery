@@ -1,0 +1,94 @@
+#!/usr/bin/bash
+
+if [[ -z $1 ]]
+then
+	echo -e "\n>>> Pass <1> as an option to see definations of terms used below\n"
+fi
+battery_file=/tmp/battery_n
+
+Wh=$(upower -d  | grep 'energy:' | head -n1 | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+V=$(upower -d  | grep voltage | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+mah=$(echo "scale=0; $Wh*1000/$V" | bc -l)
+
+echo ""
+upower -d  | grep "capacity\|energy-full-design:" | sed 's/^    //g' | sed 's/:/:\ /g' | sort -u
+
+current_capacity=$(upower -d  | grep capacity | cut -d: -f2 | sed 's/^\ \{1,\}//g' | sed 's/%//g')
+energy_full_design_wh=$(upower -d  | grep energy-full-design | cut -d: -f2 | sed 's/^\ \{1,\}//g' | cut -d' ' -f1)
+current_energy_wh=$(echo "scale=3; $current_capacity * $energy_full_design_wh/100" | bc -l)
+
+echo "energy-now-potential: $current_energy_wh Wh"
+
+echo -e "\n\n--------------------------\n\n"
+
+# upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sort -u
+upower -d  | grep -E "energy:|voltage|energy-full:|energy-rate:|TimeToEmpty:|time to full:|time to empty:" | sed 's/^    //g' | sed 's/\ //g' | sed 's/:/,/g' | sort -u > $battery_file
+# upower -d  | grep -E "state|to\ full|percentage" | sed 's/^    //g' | sort -u
+upower -d  | grep -E "state|percentage" | sed 's/ //g' | sed 's/:/,/g' | sort -u >> $battery_file
+
+# echo "Mah:                 $mah Mah"
+echo "mAh,$mah" >> $battery_file
+
+# trap 'echo "Breakpoint hit at line $LINENO"; bash --norc -i' DEBUG
+
+sec_=$(upower -d  | grep updated | cut -d: -f2-5 | rev | cut -d' ' -f3-4 | rev | cut -d\( -f2 | head -n1)
+# org_time=$(upower -d  | grep updated | cut -d: -f2-10 | sed 's/\ \ \{1,\}//g' | cut -d' ' -f1-6 | head -n1)
+
+# org_time=$(upower -d  | grep updated | cut -d: -f2-10 | sed 's/\ \ \{1,\}//g' | cut -d' ' -f1-6 | sort -n | head -n1)
+# org_timestamp=$(date -d "$org_time" +%s)
+# state_=$(upower -d | grep 'state' | sort -u | cut -d: -f2 | sed 's/\ //g')
+# # time_=$(echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS ($org_time)")
+# time_=$(( $(date +%s) - org_timestamp ))
+time_=$(convertsecs $(upower -d | grep updated | grep -oP '\(\K\d+(?= seconds ago)' | sort -n | tail -n1))
+time_="YY:DD:HH:MM:SS\n,$time_"
+if [[ $state_ == "charging" ]]; then
+	echo -en "Charging-started-before,$time_" >> $battery_file
+else
+	echo -en "Unpluged-before,$time_" >> $battery_file
+fi
+echo -e "\n" >> $battery_file
+
+sed -i 's/minutes/ minutes/g' $battery_file
+
+cat $battery_file | sed 's/timetofull/timetofull  -------------/g' | sed 's/percentage/percentage  -------------/g' | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | grep --color=auto '\|percentage\|timetoempty\|timetofull'
+# cat $battery_file | column -t -s, | sed 's/Wh$/\ Wh/g; s/W$/\ W/g; s/hours$/\ hours/g; s/V$/\ V/g; s/\%$/\ \%/g' | awk '/percentage|timetoempty|timetofull/ {print "\033[01;31m" $0 "\033[0m"} 1'
+
+# echo "$(date -d@$sec_ -u +%H:%M:%S) #HH:MM:SS" 
+
+echo -e  "$(upower -d   | grep -E "energy:|voltage|energy-full:|energy-full-design:|energy-rate:|capacity:|TimeToEmpty:|time to full:|time to empty:|state|to\ full|percentage" | sort -u | sed 's/^    //g' | sed 's/:\ \{1,\}/,/g')\nDate,$(date +%D-%T)" | cut -d, -f2  | paste -sd "," >> /home/amir/github/Amir-personal/battery_record.csv
+
+if [[ -n $1 ]]
+then
+	echo -e "
+
+	${RED}Energy     :${normal} Amount of energy (measured in Wh) currently available in the power source.
+	${RED}EnergyFull :${normal} Amount of energy (measured in Wh) in the power source when it's considered full.
+	${RED}EnergyRate :${normal} Amount of energy being drained from the source, measured in W. If positive, the source is being discharged, if negative it's being charged.
+	${RED}TimeToEmpty:${normal} Number of seconds until the power source is considered empty.
+	${RED}TimeToFull :${normal} Number of seconds until the power source is considered full.
+	${RED}mAh        :${normal} energy*1000/voltage
+	"
+fi
+# echo key,value > /home/amir/.battery_1
+# upower -d  | grep "energy:\|energy-full:\|energy-full-design:\|energy-rate:\|capacity:\|TimeToEmpty:\|time to full:\|time to empty:" | sed 's/^    //g' | sort -u | sed 's/:\ \{1,\}/,/g' >> /home/amir/.battery_1
+# echo -e "\n\n"
+# /home/amir/.venv_base/bin/python3 <<< '
+# import pandas as pd
+# print(
+# 	(
+# 	"\n"
+# 	.join(pd.read_csv("/home/amir/.battery_1").merge(pd.read_csv("/home/amir/github/Amir-personal/.battery_2"), on="key", how="left")
+# 		.apply(lambda x:":".join(x.dropna().astype(str).to_list()), axis=1)
+# 		.to_list()
+# 		)
+# 	)
+# 	)
+# ' | column -t -s:
+
+
+# echo -e "\n\n--------------------------\n\n"
+# upower -d | grep -E "state|to\ full|percentage" | sed 's/^    //g'
+
+# echo -e "\n\n"
+
+
