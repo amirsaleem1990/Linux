@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+function free_space () { 
+    df -Ph . | tail -n1 | sed 's/\ \{1,\}/,/g' | cut -d, -f4
+}
+if [[ -z $1 ]]; then
+    echo -e "\n=== ${RED}No sleep_time argument passed, so defaulting to print only once ...${NORMAL}===\n"
+    free_space
+    exit 0
+fi
+sleep_time=$1
+echo -e "\n=== ${RED}interval: $sleep_time seconds ${NORMAL}===\n"
+
+while true; do
+    current_time=$(date +%T)
+    free_space_in_part=$(free_space)
+    echo "$current_time - $free_space_in_part"
+    sleep $sleep_time
+done
