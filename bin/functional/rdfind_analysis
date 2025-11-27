@@ -49,11 +49,10 @@ if not x:
 # To use with something like the following: >>> /usr/bin/rdfind IPHONE/ DCIM/
 x = list(zip(
 		[i.startswith("DUPTYPE_FIRST_OCCURRENCE") for i in x], 
-		[' '.join(i.split()[7:]) for i in x]
+		[' '.join(i.replace('  ', 'fqnamkjdfdf').split()[7:]).replace('fqnamkjdfdf', '  ') for i in x]
 		))
 
 df = DataFrame(x, columns=['DUPTYPE_FIRST_OCCURRENCE', 'Path'])
-
 def GET_SIZE(x):
 	try:
 		return os.path.getsize(x)/1024
