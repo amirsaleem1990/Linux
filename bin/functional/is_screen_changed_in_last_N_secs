@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+# SLEEP_SECS=4
+
+old='/home/amir/.tmp/last_screen_shot.png'
+new="/tmp/current_screenshot.png"
+
+# while true; do
+
+
+usr/bin/rm -f "$new" 2>/dev/null
+x1=$1
+y1=$2
+x2=$3
+y2=$4
+
+if [ -z $x1 ] | [ -z $y1 ] | [ -z $x2 ] | [ -z $y2 ]; then
+    echo -e "\nPlease provide all 4 values in the following sequence: x1 y1 x2 y2\nAborting..."
+    exit
+fi 
+
+
+width=$(($x2 - $x1))
+height=$(($y2 - $y1))
+import -window root -crop "${width}x${height}+${x1}+${y1}" -silent $new
+
+sleep 0.2s 
+
+# Compare images visually
+difference=$(compare -metric AE "$old" "$new" null: 2>&1)
+
+if [[ "$difference" == "0" ]]; then
+    # play -n synth 0.5 sine 1000 >/dev/null 2>&1
+    echo false
+else
+    echo true
+fi
+
+mv "$new" "$old"
+
+# sleep $SLEEP_SECS
+
+# done
+
+
