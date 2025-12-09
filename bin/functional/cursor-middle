@@ -1,0 +1,10 @@
+# #!/usr/bin/bash
+
+# # Launch cursor in background
+# cursor --new-window %F &
+
+# # Give it time to appear
+# sleep 1.5
+
+# # Move the window
+# xdotool search --class "cursor" windowmove %@ 960 200

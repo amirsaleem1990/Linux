@@ -18,13 +18,15 @@ def download_youtube_mp3(url, output_path='./'):
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
-            'preferredquality': '320',  # Highest quality MP3
+            # 'preferredquality': '320',  # Highest quality MP3
         }],
         'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),  # Output template
         'quiet': False,  # Show progress
         'no_warnings': False,  # Show warnings if any
+        'noplaylist':  True
     }
     
+
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
